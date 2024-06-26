@@ -1,0 +1,262 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Users {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  firstName      String
+  middleName     String?
+  lastName       String
+  addressLine1   String
+  addressLine2   String?
+  dateOfBirth    String
+  occupation     String
+  language       String
+  articleCategory String?
+  maritalStatus   String
+  userImage       String?
+  email          String
+  contactNo      String
+  password       String
+}
+
+model AdminUsers {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  firstName      String
+  lastName       String
+  email          String
+  password       String
+}
+
+
+model Hospital {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  type           String
+  address        String
+  description    String?
+  contactNo      String
+  email          String
+  website        String
+  facebookLink   String?
+  instagramLink  String?
+  linkedInLink   String?
+  imageUrl       String
+  bannerUrl      String?
+  videoUrl       String?
+  gallery        String[]
+  city           String
+  specialisation String
+  rating         Float?
+}
+
+model Doctor {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  speciality     String
+  qualification  String
+  doctorAddress  String[]
+  contactNo      String
+  email          String
+  website        String?
+  hoursOfOperation String?
+  facebookLink   String?
+  instagramLink  String?
+  linkedInLink   String?
+  status         String
+  about          String?
+  profileImage   String
+  bannerUrl      String?
+  hospitalVisits String[]
+  rating         Float?
+}
+
+model Pharmacy {
+  id               String          @id @default(auto()) @map("_id") @db.ObjectId
+  pharmacyName     String
+  pharmacistName   String
+  pharmacistImage  String
+  yearOfEstablishment String
+  certificateNo    String
+  address          String[]
+  city             String
+  contactNo        String
+  email            String
+  whatsappNo       String
+  website          String?
+  instagramLink    String?
+  linkedInLink     String?
+  facebookLink     String?
+  videoUrl         String?
+  gallery          String[]
+  hoursOfOperation String?
+  imageUrl         String
+  bannerUrl        String?
+  services         String[]
+  rating           Float?
+  about            String?
+}
+
+model Clinic {
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+  clinicName        String
+  doctorName        String
+  yearOfEstablishment String
+  about             String?
+  address           String[]
+  city              String
+  contactNo         String
+  whatsappNo        String
+  email             String
+  website           String?
+  instagramLink     String?
+  linkedInLink      String?
+  facebookLink      String?
+  specialistIn      String
+  gallery           String[]
+  hoursOfOperation  String?
+  videoUrl          String?
+  imageUrl          String
+  bannerUrl         String?
+  services          String[]
+  branches          String[]
+  rating            Float?
+  certificateNo     String
+  profileImage      String
+  speciality        String
+}
+
+model Salon {
+  id                 String          @id @default(auto()) @map("_id") @db.ObjectId
+  salonName          String
+  address            String[]
+  city               String
+  contactNo          String
+  whatsappNo         String
+  about              String?
+  email              String
+  instagramLink      String?
+  linkedInLink       String?
+  facebookLink       String?
+  website            String?
+  registrationNo     String
+  yearOfEstablishment String
+  beauticianName     String
+  beauticianImage    String
+  beauticianQualification String?
+  beauticianCertificateImages String?
+  branches           String[]
+  gallery            String[]
+  services           String[]
+  comments           String?
+  reviews            String?
+  booking            String?
+  videoUrl           String?
+  imageUrl           String
+  bannerUrl          String?   
+  rating         Float?  
+}
+
+model Studio {
+  id                   String          @id @default(auto()) @map("_id") @db.ObjectId
+  studioName           String
+  address              String[]
+  city                 String
+  yearOfEstablishment  String
+  contactNo            String
+  whatsappNo           String
+  email                String
+  instagramLink        String?
+  linkedInLink         String?
+  facebookLink         String?
+  website              String?
+  registrationNo       String
+  studioContactPerson  String
+  hoursOfOperation     String?     
+  gallery              String[]
+  services             String[]
+  branches             String[]   
+  comments             String?
+  reviews              String?
+  booking              String?
+  imageUrl             String
+  bannerUrl            String? 
+  videoUrl             String?
+  rating               Float?
+  profileImage         String
+  about                String?
+}
+
+model HospitalReviews {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  review   String
+  userId   String    
+  name     String
+  dateTime DateTime
+  rating   Float?
+  hospitalId String
+}
+
+model DoctorReviews {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  review   String
+  userId   String    
+  name     String
+  dateTime DateTime
+  rating   Float?
+  doctorId String
+}
+
+model ClinicReviews {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  review   String
+  userId   String    
+  name     String
+  dateTime DateTime
+  rating   Float?
+  clinicId String
+}
+
+model PharmacyReviews {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  review   String
+  userId   String    
+  name     String
+  dateTime DateTime
+  rating   Float?
+  pharmacyId String
+}
+
+model StudioReviews {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  review   String
+  userId   String    
+  name     String
+  dateTime DateTime
+  rating   Float?
+  studioId String
+}
+
+model SalonReviews {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  review   String
+  userId   String    
+  name     String
+  dateTime DateTime
+  rating   Float?
+  salonId String
+}
+
+model Advertisements {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  type     String
+  // parentId String?
+  imageUrl String
+  dateCreated DateTime?
+  dateModified DateTime?
+}

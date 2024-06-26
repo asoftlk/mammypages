@@ -1,0 +1,32 @@
+<?php
+require_once ('Mail.php');
+
+$from = 'noreply@mammypages.com'; //change this to your email address
+$to = 'reonglovi@gmail.com'; // change to address
+$subject = 'Checking mail with SMTP PHP'; // subject of mail
+$body = "Hello your mail function is working fine"; //content of mail
+
+$headers = array(
+'From' => $from,
+'To' => $to,
+'Subject' => $subject
+);
+
+$smtp = Mail::factory('smtp', array(
+'host' => 'host.venavis.in',
+'port' => '587',
+'auth' => true,
+'username' => 'noreply@mammypages.com', //your gmail account
+'password' => 'Mammy@3488' // your password
+));
+
+// Send the mail
+$mail = $smtp->send($to, $headers, $body);
+
+//check mail sent or not
+if (PEAR::isError($mail)) {
+echo '<p>'.$mail->getMessage().'</p>';
+} else {
+echo '<p>Message successfully sent!</p>';
+}
+?>
