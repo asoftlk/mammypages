@@ -13,13 +13,41 @@ ini_set('session.cookie_secure', 1);
 session_start();
 
 date_default_timezone_set('Asia/Kolkata');
+// function time_elapsed_string($datetime, $full = false) {
+//     $now = new DateTime;
+//     $ago = new DateTime($datetime);
+//     $diff = $now->diff($ago);
+
+//     $diff->w = floor($diff->d / 7);
+//     $diff->d -= $diff->w * 7;
+
+//     $string = array(
+//         'y' => 'year',
+//         'm' => 'month',
+//         'w' => 'week',
+//         'd' => 'day',
+//         'h' => 'hour',
+//         'i' => 'minute',
+//         's' => 'second',
+//     );
+//     foreach ($string as $k => &$v) {
+//         if ($diff->$k) {
+//             $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+//         } else {
+//             unset($string[$k]);
+//         }
+//     }
+
+//     if (!$full) $string = array_slice($string, 0, 1);
+//     return $string ? implode(', ', $string).' ago' : 'just now';
+// }
 function time_elapsed_string($datetime, $full = false) {
     $now = new DateTime;
     $ago = new DateTime($datetime);
     $diff = $now->diff($ago);
 
-    $diff->w = floor($diff->d / 7);
-    $diff->d -= $diff->w * 7;
+    $weeks = floor($diff->d / 7);
+    $days = $diff->d % 7;
 
     $string = array(
         'y' => 'year',
@@ -30,17 +58,33 @@ function time_elapsed_string($datetime, $full = false) {
         'i' => 'minute',
         's' => 'second',
     );
+
     foreach ($string as $k => &$v) {
-        if ($diff->$k) {
-            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+        if ($k == 'w') {
+            if ($weeks) {
+                $v = $weeks . ' ' . $v . ($weeks > 1 ? 's' : '');
+            } else {
+                unset($string[$k]);
+            }
+        } elseif ($k == 'd') {
+            if ($days) {
+                $v = $days . ' ' . $v . ($days > 1 ? 's' : '');
+            } else {
+                unset($string[$k]);
+            }
         } else {
-            unset($string[$k]);
+            if ($diff->$k) {
+                $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+            } else {
+                unset($string[$k]);
+            }
         }
     }
 
     if (!$full) $string = array_slice($string, 0, 1);
-    return $string ? implode(', ', $string).' ago' : 'just now';
+    return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
+
 ?>
  
 <html >
@@ -1138,41 +1182,84 @@ if($numrows >=5){
 <div id="right-cont-part">
 <h6 style="font-size: 16px; text-align: center;padding: 10px;background-color: #dddd;color: #A393BD;font-weight: 700; margin-top: 10px;">RELATED ARTICLES</h6>
 <?php
-$category_expand=explode(" ,", $row[category]);
- $relatedcat = "SELECT article_title, description, featured_image, posting_id FROM posts WHERE posting_id != '$_GET[id]' AND pub_datetime < NOW() AND ";
-for($i=0; $i<count($category_expand); $i++)
-{
-    if($i==(count($category_expand)-1)){
-       $relatedcat .= " category = '$category_expand[$i]' ";
-    }
-    else{
-       $relatedcat .= " category = '$category_expand[$i]' OR  ";  
+// $category_expand=explode(" ,", $row[category]);
+//  $relatedcat = "SELECT article_title, description, featured_image, posting_id FROM posts WHERE posting_id != '$_GET[id]' AND pub_datetime < NOW() AND ";
+// for($i=0; $i<count($category_expand); $i++)
+// {
+//     if($i==(count($category_expand)-1)){
+//        $relatedcat .= " category = '$category_expand[$i]' ";
+//     }
+//     else{
+//        $relatedcat .= " category = '$category_expand[$i]' OR  ";  
+//     }
+// }
+// $relatedcat .= " LIMIT 3";
+// $releatedquery= mysqli_query($conn, $relatedcat);
+// $lang = $row['language'];
+// $style= ($lang == 'tam')? 'font-family: \'Mukta Malar\', sans-serif;' : 'font-family: \'Montserrat\', sans-serif;';
+// while($releatedrow = mysqli_fetch_array($releatedquery)){
+// 	$output1="";
+// 	$description =strip_tags($releatedrow["description"]);
+// 			if($releatedrow['posting_id']==$row['category']){
+// 			}
+// 			else{
+// 				$output1 .= '<div class="row" style="border-bottom: 4px solid #f4f4f4 ;">
+// 						<div class="col-3" style="padding:0.6rem 0.4rem; text-align:center">
+// 						<a href="article?id='.$releatedrow["posting_id"].'"><img src="admin/posts/'.$releatedrow["featured_image"].'" class="img-fluid feaimg" style="border-radius:0.2rem; width:65px; height:65px; object-fit:cover; margin-left:0.8rem"></a>
+// 					</div>
+// 					<div class="col-9" style="padding:0.4rem 0.4rem; ">
+// 						<div class="row"><div class="col-md-8" style="display:flex; justify-content: space-between;"><a href="article?id='.$releatedrow["posting_id"].'" style="text-decoration:none; color:#504e4e; font-weight:bold;max-height:1.5rem;overflow:hidden;text-overflow:ellipsis; white-space:nowrap;'.$style.'">'.$releatedrow["article_title"].'</a></div>
+// 						<div class="col-md-4 d-flex" style="justify-content:flex-end"></div></div>
+// 						<div class="descript" style="color:#b1afaf; height:2.8rem;margin-bottom:0.8rem;"><a href="article?id='.$releatedrow["posting_id"].'" style="text-decoration:none"><p style=" height:2.8rem;  color:#888686; overflow: hidden; text-overflow: ellipsis;'.$style.'">'.mb_substr($description,0,300).'</p></a></div>
+// 					</div>
+// 					</div>';
+// 					echo $output1;
+// 			}
+// }
+?>
+<?php
+$category_expand = explode(" ,", $row['category']);
+$relatedcat = "SELECT article_title, description, featured_image, posting_id FROM posts 
+               WHERE posting_id != '{$_GET['id']}' AND pub_datetime < NOW() AND (";
+for ($i = 0; $i < count($category_expand); $i++) {
+    $relatedcat .= " category = '{$category_expand[$i]}'";
+    if ($i < count($category_expand) - 1) {
+        $relatedcat .= " OR ";
     }
 }
-$relatedcat .= " LIMIT 3";
-$releatedquery= mysqli_query($conn, $relatedcat);
+$relatedcat .= ") LIMIT 3";
+
+$releatedquery = mysqli_query($conn, $relatedcat);
+
 $lang = $row['language'];
-$style= ($lang == 'tam')? 'font-family: \'Mukta Malar\', sans-serif;' : 'font-family: \'Montserrat\', sans-serif;';
-while($releatedrow = mysqli_fetch_array($releatedquery)){
-	$output1="";
-	$description =strip_tags($releatedrow["description"]);
-			if($releatedrow['posting_id']==$row['category']){
-			}
-			else{
-				$output1 .= '<div class="row" style="border-bottom: 4px solid #f4f4f4 ;">
-						<div class="col-3" style="padding:0.6rem 0.4rem; text-align:center">
-						<a href="article?id='.$releatedrow["posting_id"].'"><img src="admin/posts/'.$releatedrow["featured_image"].'" class="img-fluid feaimg" style="border-radius:0.2rem; width:65px; height:65px; object-fit:cover; margin-left:0.8rem"></a>
-					</div>
-					<div class="col-9" style="padding:0.4rem 0.4rem; ">
-						<div class="row"><div class="col-md-8" style="display:flex; justify-content: space-between;"><a href="article?id='.$releatedrow["posting_id"].'" style="text-decoration:none; color:#504e4e; font-weight:bold;max-height:1.5rem;overflow:hidden;text-overflow:ellipsis; white-space:nowrap;'.$style.'">'.$releatedrow["article_title"].'</a></div>
-						<div class="col-md-4 d-flex" style="justify-content:flex-end"></div></div>
-						<div class="descript" style="color:#b1afaf; height:2.8rem;margin-bottom:0.8rem;"><a href="article?id='.$releatedrow["posting_id"].'" style="text-decoration:none"><p style=" height:2.8rem;  color:#888686; overflow: hidden; text-overflow: ellipsis;'.$style.'">'.mb_substr($description,0,300).'</p></a></div>
-					</div>
-					</div>';
-					echo $output1;
-			}
+$style = ($lang == 'tam') ? 'font-family: \'Mukta Malar\', sans-serif;' : 'font-family: \'Montserrat\', sans-serif;';
+
+while ($releatedrow = mysqli_fetch_array($releatedquery)) {
+    $description = strip_tags($releatedrow["description"]);
+    $output1 = '<div class="row" style="border-bottom: 4px solid #f4f4f4 ;">
+                    <div class="col-3" style="padding:0.6rem 0.4rem; text-align:center">
+                        <a href="article?id=' . $releatedrow["posting_id"] . '">
+                            <img src="admin/posts/' . $releatedrow["featured_image"] . '" class="img-fluid feaimg" style="border-radius:0.2rem; width:65px; height:65px; object-fit:cover; margin-left:0.8rem">
+                        </a>
+                    </div>
+                    <div class="col-9" style="padding:0.4rem 0.4rem;">
+                        <div class="row">
+                            <div class="col-md-8" style="display:flex; justify-content: space-between;">
+                                <a href="article?id=' . $releatedrow["posting_id"] . '" style="text-decoration:none; color:#504e4e; font-weight:bold;max-height:1.5rem;overflow:hidden;text-overflow:ellipsis; white-space:nowrap;' . $style . '">' . $releatedrow["article_title"] . '</a>
+                            </div>
+                            <div class="col-md-4 d-flex" style="justify-content:flex-end"></div>
+                        </div>
+                        <div class="descript" style="color:#b1afaf; height:2.8rem;margin-bottom:0.8rem;">
+                            <a href="article?id=' . $releatedrow["posting_id"] . '" style="text-decoration:none">
+                                <p style=" height:2.8rem;  color:#888686; overflow: hidden; text-overflow: ellipsis;' . $style . '">' . mb_substr($description, 0, 300) . '</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>';
+    echo $output1;
 }
 ?>
+
 <div class="row">
 <form action="category" method="post">
 <button type="submit" class="text-ceter btn btn-lg btn-block" style="border: none; margin-top:10px;font-size: 16px; background-color: #68cf68; font-weight: 600; color: white;" value="<?php echo $category_expand[0];?>" name="category">GO TO CATEGORIES</button>
@@ -1267,7 +1354,7 @@ while($galrow=mysqli_fetch_array($galquery)){
 <form id="reportform" action="ajax/reportarticle" method="POST">
 <div class="row px-3 mb-1">
         <input type="hidden" name="reportid" value="<?php echo $_GET['id']; ?>">
-        <input type="text" id="reportname" name="reportname" required="" autofocus="" placeholder="Enter Name" value="<?php echo $_SESSION[name];?>" class="form-control">
+        <input type="text" id="reportname" name="reportname" required="" autofocus="" placeholder="Enter Name" value="<?php echo $_SESSION['name'];?>" class="form-control">
         <span class="text-danger"></span>
 </div>
 <div class="row px-3 mb-1">

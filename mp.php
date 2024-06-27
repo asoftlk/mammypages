@@ -1,6 +1,5 @@
-<?php include "/home/mammypages/public_html/header.php"; 
-
-?>
+<?php //include "/home/mammypages/public_html/header.php"; ?>
+<?php include "header.php"; ?>
 <style>
 body{
     background-color: #f4f4f4 !important;

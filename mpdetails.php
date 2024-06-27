@@ -14,8 +14,8 @@ $userid= isset($_SESSION['userid'])?$_SESSION['userid']:"";
 		color:#666666;
     }
     .hospitaltype span{
-        //background-color: #000;
-        //color: #fff;
+        /* background-color: #000;
+        color: #fff; */
         padding: 2px 1px;
         margin-left: 2px;
         text-transform: uppercase;
@@ -132,7 +132,7 @@ $userid= isset($_SESSION['userid'])?$_SESSION['userid']:"";
 		
 	}
 	.dropdown-menu{
-	//transform: translate3d(24px, -58px, 0px)!important;
+	/* transform: translate3d(24px, -58px, 0px)!important; */
 	bottom:0!important;
 	top:-5px!important;
 	left:10px !important;
@@ -144,7 +144,7 @@ $userid= isset($_SESSION['userid'])?$_SESSION['userid']:"";
 	}	
 	.dropdown-menu-arrow.dropdown-menu-right:before, .dropdown-menu-arrow.dropdown-menu-right:after {
 		right: 12px;
-		//right: auto;
+		/* right: auto; */
 	}
 	.dropdown-menu-arrow:before {
 		content: "";
