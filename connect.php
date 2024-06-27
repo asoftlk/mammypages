@@ -1,8 +1,13 @@
 <?php
-//$connect = new PDO("mysql:host=localhost; dbname=mummy; charset=utf8", "mummypages", "f{J8$VRJS!5Y");
-$conn = new mysqli("localhost", "mammypages_mummypages", "T.EgWfWm)US3","mammypages_mummy");
-//$conn = mysqli_connect("localhost", "mammypages_mummypages", "T.EgWfWm)US3", "mammypages_mummy");
-// Check connection
+
+$servername = "localhost";
+$username = "root";
+$password = "1234";
+$dbname = "mammypages_mummypages";
+
+// $conn = new mysqli("localhost", "root", "1234","mammypages_mummypages");
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
 mysqli_set_charset($conn,"utf8");
  
 if ($conn->connect_error) {

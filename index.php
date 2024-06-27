@@ -35,7 +35,7 @@ body{
 .main-content-sec .left-menu-part .unscroll ul li a:hover{
     color: #68cf68;
 }
-}
+
 .main-content-sec .left-menu-part .unscroll .client-sec {
     padding-top: 20px;
     margin: 0 20px;
