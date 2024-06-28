@@ -243,7 +243,8 @@ include "mp.php";
 
         $(document).on('search', 'input[type="search"]', function(e) {
             if ($(this).val().trim().length === 0) {
-                $('.top-menu').html(initialData);
+                console.log("ff");
+                $('#load_data').append(initialData);
             }
         });
     });
@@ -274,7 +275,7 @@ include "mp.php";
         }
         if (query.length == 0) {
             $("#suggesstion-box").hide();
-            $('.top-menu').html(initialData);
+            $('#load_data').html(initialData);
         }
 
         function load_data(value) {
@@ -305,7 +306,10 @@ include "mp.php";
                             html += '<div class="d-flex">';
                             html += '<p class="text"><a href="mpdetails.php?type=Hospital&id=' + hospital.hospital_id + '" class="namehref">';
                             html += '<p class="text-heading">&nbsp;' + hospital.name + '</p></a>';
-                            html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
+                            if (hospital.priority > 0) {
+                                html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
+                                
+                            }
                             html += '</div>';
                             html += '<div class="d-flex">';
                             html += '<p class="text">&nbsp;' + speciality + '</P>';
@@ -328,9 +332,9 @@ include "mp.php";
                             html += '<a href="mpdetails.php?type=Hospital&id=' + hospital.hospital_id + '" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;Hospital</a>';
                             html += '</div></div></div>';
                         });
-                        $(".top-menu").html(html);
+                        $("#load_data").html(html);
                     } else {
-                        $(".top-menu").html('<p>No results found</p>');
+                        $("#load_data").html('<p>No results found</p>');
                     }
                 }
             });
