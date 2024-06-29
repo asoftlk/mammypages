@@ -211,7 +211,7 @@ include "mp.php";
             var count = $(this).data("vid");
             $('#btn_more').html("Loading...");
             $.ajax({
-                url: "ajax/mpclinicdatafetch",
+                url: "ajax/mpmedicaldatafetch",
                 method: "POST",
                 data: {
                     count: count,
@@ -272,7 +272,7 @@ include "mp.php";
 
         function load_data(value) {
             $.ajax({
-                url: "ajax/mpmedicaldatafetch",
+                url: "ajax/searchmedical",
                 method: "POST",
                 data: {
                     search: "search",

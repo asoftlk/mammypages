@@ -189,7 +189,7 @@
 	height: 7rem;
 	width: 7rem;
 	position: absolute;
-	top: -70%;
+	top: -32%;
 	left: 12%;
 	object-fit: contain;
 	border: 2px solid #fff;
@@ -220,7 +220,7 @@
 		.followbtn{
 		position: absolute;
 		right: 4%;
-		top: -60%;
+		top: -40%;
 		}
 	}
 </style>
@@ -385,12 +385,12 @@
 							}
 						}
 						if(($type == 'midwife') && (mysqli_num_rows($midwife)>0)){
-							$url=urlencode('https://www.mammypages.com/mpdetails?type=midwife&id='.$row["midwife_id"]);
-							$urltelegram=urlencode('https://www.mammypages.com/mpdetails?type=midwife&id='.$row["midwife_id"].'&text='.$row["name"]);
+							$url=urlencode('https://www.mammypages.com/mpmidwife_details?type=midwife&id='.$row["midwife_id"]);
+							$urltelegram=urlencode('https://www.mammypages.com/mpmidwife_details?type=midwife&id='.$row["midwife_id"].'&text='.$row["name"]);
 						echo '<div class="row fillbg l-border-radius-top">
 								<div class="text-center p-0">
 								<img src="directory/midwife/'.$row["image"].'" class="img-fluid mb-2" style="width:100%; max-height:250px; border-radius: 15px;">
-								<a href="midwife"><i class="bi bi-caret-left backbutton" data-toggle="tooltip" title="Back" data-placement="left" area-hidden="true"></i></a>
+								<a href="midwifes"><i class="bi bi-caret-left backbutton" data-toggle="tooltip" title="Back" data-placement="left" area-hidden="true"></i></a>
 								</div>
 							 </div>
 								<div class="row fillbg l-border-radius-bottom l-title-card">
@@ -465,7 +465,7 @@
 								</div>
 								</div>';
 									echo '<div class="row fillbg mt-1 l-border-radius py-2">
-									        <h5 class="heading mt-1" style="font-weight:bold; font-size:12px">ABOUT MIDWIFE';
+									        <h5 class="heading mt-1" style="font-weight:bold; font-size:12px">ABOUT midwife';
 									        
 									        $galquery= mysqli_query($conn, "SELECT image_name FROM mpgallery WHERE hospitalid= '$typeid' and image_name!=''");
 											if(mysqli_num_rows($galquery)>0){
