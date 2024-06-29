@@ -9,15 +9,7 @@
 <div class="row m-0 desktopviewArticle">
    <div class="col-md-3">
       <div class="left-menu-part">
-         <h3>MP Directory</h3>
-         <ul style="list-style-type:none; padding-left:0">
-		    <li><a role="button" href="hospital"><i class="icofont-hospital"></i> HOSPITALS</a></l>
-            <li><a class="active" role="button" href="doctors"><i class="icofont-doctor"></i> DOCTORS</a></li>
-            <li><a role="button" href="midwifes"><i class="icofont-nurse"></i> MIDWIFE CLINICS</a></li>
-            <li><a role="button" href="medical"><i class="icofont-nurse-alt"></i> MEDICAL CLINICS</a></li>
-            <li><a role="button" href="pharmacies"><i class="icofont-medical-sign"></i> PHARMACIES</a></li>
-            <li><a role="button" href="beauty"><i class="icofont-girl-alt"></i> BEAUTY SALON</a></li>
-         </ul>
+	  	<?php include "sidebar.php"; ?>
          <div class="client-sec"><a class="client-btn">Sponsors</a></div>
       </div>
    </div>

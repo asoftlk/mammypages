@@ -65,30 +65,22 @@ include "mp.php";
    <div class="container-fluid p-0">
 <div class="row m-0 desktopviewArticle">
    <div class="col-md-3">
-      <div class="left-menu-part" style="background:transparent;">
-        <div class="unscroll" style="background-color:#fff; margin:10px 0; padding:10px 0">
-         <h3>MP Directory</h3>
-         <ul style="list-style-type:none; padding-left:0">
-            <li><a class="active" role="button" href="hospital"><i class="icofont-hospital"></i> HOSPITALS</a></li>
-            <li><a role="button" href="doctors"><i class="icofont-doctor"></i> DOCTORS</a></li>
-            <li><a role="button" href="midwifes"><i class="icofont-nurse"></i> MIDWIFE CLINICS</a></li>
-            <li><a role="button" href="medical"><i class="icofont-nurse-alt"></i> MEDICAL CLINICS</a></li>
-            <li><a role="button" href="pharmacies"><i class="icofont-medical-sign"></i> PHARMACIES</a></li>
-            <li><a role="button" href="beauty"><i class="icofont-girl-alt"></i> BEAUTY SALON</a></li>
-         </ul>
-         <div class="client-sec"><a class="client-btn">Sponsors</a></div>
-         </div>
-         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		<!-- home -->
-		<ins class="adsbygoogle"
-			 style="display:block"
-			 data-ad-client="ca-pub-6640694817095655"
-			 data-ad-slot="5367742441"
-			 data-ad-format="auto"
-			 data-full-width-responsive="true"></ins>
-		<script>
-			 (adsbygoogle = window.adsbygoogle || []).push({});
-		</script>
+        <div class="left-menu-part" style="background:transparent;">
+            <div class="unscroll" style="background-color:#fff; margin:10px 0; padding:10px 0">
+                <?php include "sidebar.php"; ?>
+                <div class="client-sec"><a class="client-btn">Sponsors</a></div>
+            </div>
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- home -->
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-6640694817095655"
+                data-ad-slot="5367742441"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
       </div>
    </div>
    <div class="col-md-6">
