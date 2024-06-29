@@ -1,58 +1,64 @@
-<?php 
- include "mp.php"; 
+<?php
+include "mp.php";
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
 // error_reporting(E_ALL);
 ?>
 <style>
-    .hospitaltype{
+    .hospitaltype {
         border-left: 4px solid #68CF68;
         margin-bottom: 0;
     }
-    .hospitaltype span{
+
+    .hospitaltype span {
         background-color: #000;
         color: #fff;
         padding: 2px 1px;
         margin-left: 2px;
         text-transform: uppercase;
-        font-size:12px;
-        font-weight:100;
+        font-size: 12px;
+        font-weight: 100;
     }
-    .namehref{
-        text-decoration:none;
-        color:#212529;
+
+    .namehref {
+        text-decoration: none;
+        color: #212529;
     }
-    .namehref:hover{
-        text-decoration:none;
-        color:#212529;
+
+    .namehref:hover {
+        text-decoration: none;
+        color: #212529;
     }
+
     #title-list li {
-    padding: 10px;
-    background: #fff;
-    border-bottom: #bbb9b9 1px solid;
-	}
-	#suggesstion-box{
-		display:none;
-		z-index:4;
-		width:100%;
-		max-height: 250px;
-		overflow-y: scroll;
-		border: 2px solid #28a745;
-		border-radius: 3px;
-	}
-	#suggesstion-box::-webkit-scrollbar {
-		width: 10px;
-	}
-	 
-	#suggesstion-box::-webkit-scrollbar-track {
-		background: #f1f1f1;
-		border-radius: 10px;
-	}
-	 
-	#suggesstion-box::-webkit-scrollbar-thumb {
-		border-radius: 10px;
-		background: #c1c1c1; 
-	}
+        padding: 10px;
+        background: #fff;
+        border-bottom: #bbb9b9 1px solid;
+    }
+
+    #suggesstion-box {
+        display: none;
+        z-index: 4;
+        width: 100%;
+        max-height: 250px;
+        overflow-y: scroll;
+        border: 2px solid #28a745;
+        border-radius: 3px;
+    }
+
+    #suggesstion-box::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    #suggesstion-box::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    #suggesstion-box::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background: #c1c1c1;
+    }
 </style>
 <div class="content">
 <section class="main-content-sec">
@@ -189,104 +195,169 @@
            </div>
         </div>
         </div>
-        </section>
-        </div>
-        <?php include "footer.php";?>
-        <script>
-        $(".descript"). children(). removeAttr('style');
-        $(".descript").css('color', 'gray');
-        $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip();   
+    </section>
+</div>
+<?php include "footer.php"; ?>
+<script>
+    $(".descript").children().removeAttr('style');
+    $(".descript").css('color', 'gray');
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    $('#share').tooltip({
+        selector: "a[rel=tooltip]"
+    })
+    $('li[class="nav-item"] a[href="mpdirectory"]').addClass('active');
+</script>
+<script>
+    $('#cathome').remove();
+</script>
+<script>
+    var initialData;
+    $(document).ready(function() {
+        $(document).on('click', '#btn_more', function() {
+            var count = $(this).data("vid");
+            $('#btn_more').html("Loading...");
+            $.ajax({
+                url: "ajax/mpdatafetch",
+                method: "POST",
+                data: {
+                    count: count,
+                    type: "Hospital"
+                },
+                dataType: "text",
+                success: function(data) {
+
+                    if (data != '') {
+                        $('#remove_row').remove();
+                        $('#load_data').append(data);
+                        initialData = data;
+                    } else {
+                        $('#btn_more').attr("class", "btn btn-secondary form-control");
+                        $('#btn_more').attr("disabled", "true");
+                        $('#btn_more').html("No More Data");
+                    }
+                }
+            });
         });
-        $('#share').tooltip({
-          selector: "a[rel=tooltip]"
-        })
-		$('li[class="nav-item"] a[href="mpdirectory"]').addClass('active');
-        </script>
-		<script>
-		$('#cathome').remove();
-		</script>
-		<script>  
-		 $(document).ready(function(){  
-			  $(document).on('click', '#btn_more', function(){  
-				   var count = $(this).data("vid");  
-				   $('#btn_more').html("Loading...");  
-				   $.ajax({  
-						url:"ajax/mpdatafetch",  
-						method:"POST",  
-						data:{count:count, type:"Hospital"},  
-						dataType:"text",  
-						success:function(data)  
-						{  
-							
-							 if(data != '')  
-							 {  
-								  $('#remove_row').remove(); 
-								  $('#load_data').append(data);  
-							 }  
-							 else  
-							 {  
-								  $('#btn_more').attr("class", "btn btn-secondary form-control");
-								  $('#btn_more').attr("disabled", "true");
-								  $('#btn_more').html("No More Data");  
-							 }  
-						}  
-				   });  
-			  });  
-		 }); 
-		 var height=$("#h2").height()+20;
-		 $(".left-menu-part, .right-cont-part").css({'position':'sticky','top':height});
-		 $(window).on('resize', function(){
-		 var height=$("#h2").height()+20;
-		 $(".left-menu-part, .right-cont-part").css({'top':height, 'position':'sticky'});
-		 });
-		 var count = 0;
-		 $( document ).ajaxComplete(function() {
-			 if(count == 0){
-			  $('#btn_more').click();
-			  count++;
-			 }
-		 });
-		 
-		  $('#searchHospital').keyup(function(){
-			  var query = $('#searchHospital').val();
-			  if(query.length >= 1){
-				load_data(($('#searchHospital').val()));
-			  }
-			  if(query.length == 0){
-				  $("#suggesstion-box").hide();
-			  }
-			  function load_data(value)
-				{
-				  $.ajax({
-					url:"ajax/searchhospital",
-					method:"POST",
-					data:{search:"search", value:value},
-					success:function(data)
-					{
-						$("#suggesstion-box").show();
-					    $("#suggesstion-box").html(data);
-					}
-				  });
-				}
 
-		   });
-		$('#searchHospital').on('search', function () {
-			$('#suggesstion-box').hide()
-		});
-		$('#searchHospital').on('focus', function () {
-			
-		});
-		$("#suggesstion-box li").mousedown(function(){
-			jQuery('.title-list').click(function () {
-				window.location.href = $(this).attr('href');
-			});
-		});
+        $(document).on('search', 'input[type="search"]', function(e) {
+            if ($(this).val().trim().length === 0) {
+                console.log("ff");
+                $('#load_data').append(initialData);
+            }
+        });
+    });
+    var height = $("#h2").height() + 20;
+    $(".left-menu-part, .right-cont-part").css({
+        'position': 'sticky',
+        'top': height
+    });
+    $(window).on('resize', function() {
+        var height = $("#h2").height() + 20;
+        $(".left-menu-part, .right-cont-part").css({
+            'top': height,
+            'position': 'sticky'
+        });
+    });
+    var count = 0;
+    $(document).ajaxComplete(function() {
+        if (count == 0) {
+            $('#btn_more').click();
+            count++;
+        }
+    });
 
-		$("#searchHospital").focus(function(){
-			if($('#searchHospital').val().length == 0){
-			$('#suggesstion-box').hide()
-			}
-		});
-		 </script>
-        </body>
+    $('#searchHospital').keyup(function() {
+        var query = $('#searchHospital').val();
+        if (query.length >= 1) {
+            load_data(($('#searchHospital').val()));
+        }
+        if (query.length == 0) {
+            $("#suggesstion-box").hide();
+            $('#load_data').html(initialData);
+        }
+
+        function load_data(value) {
+            $.ajax({
+                url: "ajax/searchhospital",
+                method: "POST",
+                data: {
+                    search: "search",
+                    value: value
+                },
+                success: function(data) {
+                    var result = JSON.parse(data);
+                    $("#suggesstion-box").show();
+                    $("#suggesstion-box").html(result.html);
+                    if (result.data.length > 0) {
+                        var html = '';
+                        result.data.forEach(function(hospital) {
+                            var specialityArray = hospital.speciality.split(" ///");
+                            var speciality = specialityArray.join(", ");
+                            var rating = hospital.rating ? parseFloat(hospital.rating) : 0;
+                            
+                            html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
+                            html += '<div class="col-md-3" style="margin:auto">';
+                            html += '<a href="mpdetails.php?type=Hospital&id=' + hospital.hospital_id + '">';
+                            html += '<img src="directory/hospital/' + hospital.logo + '" class="img-fluid" style="max-height:5rem"></a>';
+                            html += '</div>';
+                            html += '<div class="col-md-9 pl-0" style="margin:1rem 0">';
+                            html += '<div class="d-flex">';
+                            html += '<p class="text"><a href="mpdetails.php?type=Hospital&id=' + hospital.hospital_id + '" class="namehref">';
+                            html += '<p class="text-heading">&nbsp;' + hospital.name + '</p></a>';
+                            if (hospital.priority > 0) {
+                                html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
+                                
+                            }
+                            html += '</div>';
+                            html += '<div class="d-flex">';
+                            html += '<p class="text">&nbsp;' + speciality + '</P>';
+                            html += '<div class="ml-auto">';
+                            
+                            for (var i = 0; i < 5; i++) {
+                                if (rating >= 1) {
+                                    html += '<i class="bi bi-star-fill"></i>&nbsp;';
+                                } else if (rating > 0) {
+                                    html += '<i class="bi bi-star-half"></i>&nbsp;';
+                                } else {
+                                    html += '<i class="bi bi-star"></i>&nbsp;';
+                                }
+                                rating--;
+                            }
+                            
+                            html += '</div></div>';
+                            html += '<div class="d-flex">';
+                            html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + hospital.address + '</P>';                          
+                            html += '<a href="mpdetails.php?type=Hospital&id=' + hospital.hospital_id + '" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;Hospital</a>';
+                            html += '</div></div></div>';
+                        });
+                        $("#load_data").html(html);
+                    } else {
+                        $("#load_data").html('<p>No results found</p>');
+                    }
+                }
+            });
+        }
+
+    });
+    $('#searchHospital').on('search', function() {
+        $('#suggesstion-box').hide()
+    });
+    $('#searchHospital').on('focus', function() {
+
+    });
+    $("#suggesstion-box li").mousedown(function() {
+        jQuery('.title-list').click(function() {
+            window.location.href = $(this).attr('href');
+        });
+    });
+
+    $("#searchHospital").focus(function() {
+        if ($('#searchHospital').val().length == 0) {
+            $('#suggesstion-box').hide()
+        }
+    });
+
+</script>
+</body>
