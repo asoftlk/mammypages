@@ -114,12 +114,12 @@ include "mp.php";
 					echo '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4 ;">
 							<div class="col-md-3" style="margin:auto">
 							<div>
-								<a href="mpmedical_details.php?type=medical&id='.$row["medical_id"].'"><img src="directory/medical/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>
+								<a href="mpdetails.php?type=medical&id='.$row["medical_id"].'"><img src="directory/medical/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>
 							</div>
 							</div>
 							<div class="col-md-9 pl-0" style="margin:1rem 0">
 							<div class="d-flex">
-                            <p class="text"><a href="mpmedical_details.php?type=medical&id='.$row["medical_id"].'" class="namehref"><p class="text-heading">&nbsp;'.$row["name"].'</p></a>
+                            <p class="text"><a href="mpdetails.php?type=medical&id='.$row["medical_id"].'" class="namehref"><p class="text-heading">&nbsp;'.$row["name"].'</p></a>
                                 <img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
                             </div>
 							<div class="d-flex">
@@ -151,7 +151,7 @@ include "mp.php";
 							<div class="d-flex">
                             <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           
                             
-                                <a href="mpmedical_details.php?type=medical&id='.$row["medical_id"].'" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;medical</a>
+                                <a href="mpdetails.php?type=medical&id='.$row["medical_id"].'" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;medical</a>
                             </div>
                          </div>   
 						</div>';
@@ -211,7 +211,7 @@ include "mp.php";
             var count = $(this).data("vid");
             $('#btn_more').html("Loading...");
             $.ajax({
-                url: "ajax/mpclinicdatafetch",
+                url: "ajax/mpdatafetch",
                 method: "POST",
                 data: {
                     count: count,
@@ -272,7 +272,7 @@ include "mp.php";
 
         function load_data(value) {
             $.ajax({
-                url: "ajax/mpmedicaldatafetch",
+                url: "ajax/searchmedical",
                 method: "POST",
                 data: {
                     search: "search",
@@ -291,12 +291,12 @@ include "mp.php";
                             
                             html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
                             html += '<div class="col-md-3" style="margin:auto">';
-                            html += '<a href="mpmedical_details.php?type=medical&id=' + medical.medical_id + '">';
+                            html += '<a href="mpdetails.php?type=medical&id=' + medical.medical_id + '">';
                             html += '<img src="directory/medical/' + medical.logo + '" class="img-fluid" style="max-height:5rem"></a>';
                             html += '</div>';
                             html += '<div class="col-md-9 pl-0" style="margin:1rem 0">';
                             html += '<div class="d-flex">';
-                            html += '<p class="text"><a href="mpmedical_details.php?type=medical&id=' + medical.medical_id + '" class="namehref">';
+                            html += '<p class="text"><a href="mpdetails.php?type=medical&id=' + medical.medical_id + '" class="namehref">';
                             html += '<p class="text-heading">&nbsp;' + medical.name + '</p></a>';
                             if (medical.priority > 0) {
                                 html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
@@ -321,7 +321,7 @@ include "mp.php";
                             html += '</div></div>';
                             html += '<div class="d-flex">';
                             html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + medical.address + '</P>';                          
-                            html += '<a href="mpmedical_details.php?type=medical&id=' + medical.medical_id + '" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;medical</a>';
+                            html += '<a href="mpdetails.php?type=medical&id=' + medical.medical_id + '" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;medical</a>';
                             html += '</div></div></div>';
                         });
                         $("#load_data").html(html);
