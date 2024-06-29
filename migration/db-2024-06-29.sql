@@ -82,4 +82,77 @@ RENAME TABLE `medicalclinic` TO `medical`;
 ALTER TABLE `medical`
 CHANGE COLUMN `id` `medical_id` INT(11) NOT NULL AUTO_INCREMENT;
 
+
+CREATE TABLE `pharmacy` (
+  `pharmacy_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` TEXT NOT NULL,
+  `type` TEXT NOT NULL,
+  `address` TEXT NOT NULL,
+  `map` TEXT NOT NULL,
+  `city` TEXT NOT NULL,
+  `mobile` VARCHAR(15) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `whatsapp` VARCHAR(15),
+  `website` VARCHAR(200) NOT NULL,
+  `subtype` VARCHAR(300),
+  `working_hours` VARCHAR(300) NOT NULL,
+  `facebook` TEXT,
+  `instagram` TEXT,
+  `linkedin` TEXT,
+  `logo` VARCHAR(300) NOT NULL,
+  `image` VARCHAR(300) NOT NULL,
+  `video` TEXT,
+  `status` TEXT NOT NULL,
+  `about` LONGTEXT NOT NULL,
+  `priority` INT(11) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`pharmacy_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+INSERT INTO `pharmacy` (`pharmacy_id`, `name`, `type`, `address`, `map`, `city`, `mobile`, `email`, `whatsapp`, `website`, `subtype`, `working_hours`, `facebook`, `instagram`, `linkedin`, `logo`, `image`, `video`, `status`, `about`, `priority`, `created_at`)
+VALUES
+(1, 'Lanka Medical Pharmacy', 'Pharmacy', '578 Elvitigala Mawatha, Colombo 00500', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.007949267762!2d79.87352081477273!3d6.889650295021574!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25a2d3e1a1f1b%3A0xe505e16b84fb506e!2sLanka%20Medical%20Clinic!5e0!3m2!1sen!2slk!4v1631624305597!5m2!1sen!2slk\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>', 'Colombo', '0115430000', 'info@lankamedicalclinic.com', '', 'https://www.lankamedicalclinic.com/', '', '24', 'https://www.facebook.com/lankamedicalclinicplc/', '', '', 'logo14-09-2021-1631599079.jpeg', 'fea01-09-2021-1630503682.jpg', '', 'Verified', '<h6><div style=\"text-align: justify;\"><span style=\"color: inherit; font-family: inherit; font-size: 1rem;\">Lanka Medical Clinic Corporation PLC commenced operations in Sri Lanka on 7th June 2002, under the brand name of Apollo Clinic, a part of the chain of Apollo Clinic founded by the renown Dr. Pratap C. Reddy in India. As the only purpose built private clinic of its kind in Sri Lanka, Apollo Colombo revolutionised Sri Lanka’s healthcare service, and today under the brand Lanka Medical Clinic, we continue to dominate and lead the healthcare sector. Ours is still considered to be the best health care facility in the country.</span></div><div style=\"text-align: justify;\"><br></div><div style=\"text-align: justify;\"><span style=\"color: inherit; font-family: inherit; font-size: 1rem;\">In 2012, we celebrated a decade of excellence in healthcare. Over the past decade, Lanka Medical Clinic has revolutionized the healthcare industry in Sri Lanka through infrastructure development and advancement of its’ product and services, through sizeable investments, with a view to deliver healthcare that is on par with global developments in medical technology. We also play a critical role in the nation’s strategy to provide to provide world-class medical care whilst balancing the equation of affordability and accessibility for all Sri Lankans.</span></div></h6>', 0, '2021-09-01 19:11:22'),
+(2, 'Nine Wells Pharmacy', 'Pharmacy', '55/1, Kirimandala Mawatha, Narahenpita, Colombo 05, 00500', 'https://www.google.com/maps?ll=6.894982,79.882854&z=13&t=m&hl=en-US&gl=LK&mapclient=embed&cid=16775475475316617991', 'Narahenpita', '0112049988', 'info@ninewellsclinic.com', '', 'https://www.ninewellsclinic.lk/', '', '24/7', 'https://www.facebook.com/Ninewellsclinic/', '', '', 'logo01-09-2021-1630505474.png', 'fea14-09-2021-1631598655.jpg', '<iframe width=\"1407\" height=\"597\" src=\"https://www.youtube.com/embed/ufsR5ipRiwI\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>', 'Verified', '<div><b>Our Mission</b></div><div>To be recognized as the Center of Excellence in Woman and Childcare</div><div><br></div><div><b>Our Vision</b></div><div>Harness the expertise of our people and state of the art technology in a professional, safe, secured, and trusted environment of care, through continuous learning and best practices, to offer experiential and affordable healthcare services to our patients locally and internationally.</div>', 1, '2021-09-01 19:41:14'),
+(3, 'Nawaloka Pharmacy', 'Pharmacy', 'Nawaloka Medical Clinic PLC, Colombo 2, Sri Lanka.', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7921.481728891075!2d79.853474057672!3d6.921550383208048!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xa12560c4d858fc3f!2sNawaloka%20Medical%20Clinic%20PLC!5e0!3m2!1sen!2sin!4v1631600523751!5m2!1sen!2sin\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>', 'Colombo 2', '0115577111', 'nawaloka@slt.lk', '', 'https://www.nawalokaclinic.com/', '', '24/7', 'https://www.facebook.com/Nawalokaclinic/photos/?ref=page_internal', '', '', 'logo01-09-2021-1630506930.png', 'fea14-09-2021-1631599995.jpg', '', 'Verified', '<div>The entry of Nawaloka Medical Clinic into the state dominated healthcare sector in 1985, saw the private health care system take root in Sri Lanka. The launch of the clinic and the overwhelming response it received from the people demonstrated a long felt need for superior healthcare in a pleasant environment.</div><div><br></div><div>As Sri Lanka’s first premier multi-specialty clinic, Nawaloka was set up to mirror reputed clinics in the region which offered advanced medical technology and expert medical care, thus eliminating the need for people to travel out of Sri Lanka for specialized medical treatment.</div><div><br></div><div>The clinic was a pioneering initiative, established under the Chairmanship of Late Deshamanya H. K. Dharmadasa, to be a centre of excellence in high technology diagnostic and curative facilities. Driven by the Vision to be the clinic of Tomorrow, the medical institution has come to be known as a centre of excellence and a preferred healthcare institution in the country.</div>', 0, '2021-09-01 20:05:30'),
+(4, 'New Delmon Pharmacy', 'Pharmacy', 'Colombo - Galle Main Rd, Colombo 00600', 'https://www.google.com/maps/dir/6.815744,80.0587776/delmon+clinic/@6.8271519,79.8205711,11z/data=!3m1!4b1!4m9!4m8!1m0!1m5!1m1!1s0x3ae25bd75af5d331:0xfb61c0d8eb6cb47d!2m2!1d79.853999!2d6.891052!3e0', 'Colombo', '0112505952', 'info@delmonclinic.com', '', 'http://delmonclinic.com/', '', '24', 'https://www.facebook.com/newdelmonclinic/', '', '', 'logo14-09-2021-1631599322.png', 'fea14-09-2021-1631599358.jpg', '', 'Verified', '<p><span style=\"font-size: 14pt; font-family: Arial; color: #2b2b2b; font-weight: normal; background-color: transparent;\">The New Delmon Medical Clinic began as a small nursing home at 104 Havelock Road, Colombo 5, registered under the Private Health Services Regulatory Council in 1969.</span></p><p><span style=\"font-size: 14pt; font-family: Arial; color: #2b2b2b; font-weight: normal; background-color: transparent;\">It is a tertiary care clinic, meaning it offers specialized consultative care, usually on referral from primary or secondary medical care personnel, by specialists working in the clinic who possess specific facilities for advanced medical investigation and treatment.</span></p><p><span style=\"font-size: 14pt; font-family: Arial; color: #2b2b2b; font-weight: normal; background-color: transparent;\">&nbsp;</span></p><p><span style=\"font-size: 14pt; font-family: Arial; color: #2b2b2b; font-weight: normal; background-color: transparent;\">Tertiary care can be provided in clinics, such as New Delmon Clinic, or in a facility that is attached to a clinic. The clinic offers 24-hour care to patients who are admitted, irrespective of race, caste or creed. The goal of New Delmon is to provide high-quality and safe care to all patients and to be recognized as a leading private clinic in Colombo.</span></p>', 0, '2021-09-01 20:06:11'),
+(5, 'Ayurveda Pharmacy', 'Pharmacy', 'No 36/9,New Hospital Rd, Colombo', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.966444201284!2d79.87721501477283!3d6.896473795013687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25bd20b72f64f%3A0xd69700aef7de28ff!2sAyurveda%20Medical%20Clinic!5e0!3m2!1sen!2slk!4v1631597962934!5m2!1sen!2slk\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>', 'Colombo', '0112565305', 'info@ayurvedamedicalclinic.com', '', 'https://www.ayurvedamedicalclinic.com/', '', '24', 'https://www.facebook.com/ayurvedamedicalclinic/', '', '', 'logo14-09-2021-1631599120.png', 'fea14-09-2021-1631599142.jpg', '', 'Verified', '<div>Ayurveda is considered to be the oldest healing science in existence, forming the foundation of all others. In Sanskrit, “Ayurveda” means “Science of Life.” Western (Allopathic) medicine tends to focus on the management of disease, while Ayurveda provides the knowledge of how to prevent disease and eliminate its root cause.</div><div><br></div><div>Ayurveda was originally an oral tradition. In India, the ancient wisdom was comprehensively organized and written down over 5,000 years ago in the Vedas (sacred texts of India) and in the Ayurvedic texts known as Samhitas. Today, the ancient knowledge of Ayurveda is combined with modern medicine to offer a complete system of care focused on preventive health, health maintenance, and the treatment of disease.</div>', 0, '2021-09-01 20:07:06');
+
+
+ALTER TABLE `pharmacy`
+ADD COLUMN `speciality` VARCHAR(200) DEFAULT NULL AFTER `created_at`;
+
+
+CREATE TABLE `saloon` (
+  `saloon_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` TEXT NOT NULL,
+  `type` TEXT NOT NULL,
+  `address` TEXT NOT NULL,
+  `map` TEXT NOT NULL,
+  `city` TEXT NOT NULL,
+  `mobile` VARCHAR(15) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `whatsapp` VARCHAR(15),
+  `website` VARCHAR(200) NOT NULL,
+  `subtype` VARCHAR(300),
+  `working_hours` VARCHAR(300) NOT NULL,
+  `facebook` TEXT,
+  `instagram` TEXT,
+  `linkedin` TEXT,
+  `logo` VARCHAR(300) NOT NULL,
+  `image` VARCHAR(300) NOT NULL,
+  `video` TEXT,
+  `status` TEXT NOT NULL,
+  `about` LONGTEXT NOT NULL,
+  `priority` INT(11) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `speciality` VARCHAR(200) DEFAULT NULL,
+  PRIMARY KEY (`saloon_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+INSERT INTO `saloon` (`saloon_id`,`name`,`speciality`,  `type`, `address`, `map`, `city`, `mobile`, `email`, `whatsapp`, `website`, `subtype`, `working_hours`, `facebook`, `instagram`, `linkedin`, `logo`, `image`, `video`, `status`, `about`, `priority`, `created_at`)
+VALUES
+(1, 'Salon One', 'unisex', 'Salon', '123 Main St, Colombo', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.966444201284!2d79.87721501477283!3d6.896473795013687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25bd20b72f64f%3A0xd69700aef7de28ff!2sSalon%20One!5e0!3m2!1sen!2slk!4v1631597962934!5m2!1sen!2slk\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>', 'Colombo', '0112345678', 'info@salonone.com', '', 'https://www.salonone.com/', '', '10-7', 'https://www.facebook.com/salonone/', '', '', 'salon_logo.png', 'salon_image.jpg', '', 'Verified', '<div>Salon One is your premier destination for hair and beauty services in Colombo. We offer a wide range of services including haircuts, styling, coloring, and more.</div>', 0, '2024-06-29 10:00:00'),
+(2, 'Salon toona', 'unisex', 'Salon', '123 Main St, Colombo', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.966444201284!2d79.87721501477283!3d6.896473795013687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25bd20b72f64f%3A0xd69700aef7de28ff!2sSalon%20One!5e0!3m2!1sen!2slk!4v1631597962934!5m2!1sen!2slk\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>', 'Colombo', '0112345678', 'info@salonone.com', '', 'https://www.salonone.com/', '', '10-7', 'https://www.facebook.com/salonone/', '', '', 'salon_logo.png', 'salon_image.jpg', '', 'Verified', '<div>Salon One is your premier destination for hair and beauty services in Colombo. We offer a wide range of services including haircuts, styling, coloring, and more.</div>', 0, '2024-06-29 10:00:00'),
+(3, 'Salon malli', 'male', 'Salon', '123 Main St, Colombo', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.966444201284!2d79.87721501477283!3d6.896473795013687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25bd20b72f64f%3A0xd69700aef7de28ff!2sSalon%20One!5e0!3m2!1sen!2slk!4v1631597962934!5m2!1sen!2slk\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>', 'Colombo', '0112345678', 'info@salonone.com', '', 'https://www.salonone.com/', '', '10-7', 'https://www.facebook.com/salonone/', '', '', 'salon_logo.png', 'salon_image.jpg', '', 'Verified', '<div>Salon One is your premier destination for hair and beauty services in Colombo. We offer a wide range of services including haircuts, styling, coloring, and more.</div>', 1, '2024-06-29 10:00:00');
+
 -- akila is here

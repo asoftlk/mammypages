@@ -1,17 +1,18 @@
 <?php include "mp.php"; 
 	$userid= isset($_SESSION['userid'])?$_SESSION['userid']:"";
 	?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.8/dist/sweetalert2.all.min.js"></script>
 <style>
 	.hosname{
 	font-size:16px;
 	font-weight:700;
 	}
-	.hospitaltype{
+	.saloontype{
 	border-left: 4px solid #68CF68;
 	margin-bottom: 0;
 	color:#666666;
 	}
-	.hospitaltype span{
+	.saloontype span{
 	/* background-color: #000;
 	color: #fff; */
 	padding: 2px 1px;
@@ -39,7 +40,24 @@
 	left: 16px;
 	top: 1.2em;
 	height: 0;
-	width: 50px;
+	width: 35px;
+	content: '';
+	border-top: 4px solid #0AD69E;
+	border-radius: 1em;
+	}
+	.heading1 {
+	position: relative;
+	line-height: 1.2em;
+	padding:0 0 0 1rem; 
+	color:#464444;
+	font-weight:bold;
+	}
+	.heading1:before {
+	position: absolute;
+	left: 0px;
+	top: 1.2em;
+	height: 0;
+	width: 35px;
 	content: '';
 	border-top: 4px solid #0AD69E;
 	border-radius: 1em;
@@ -62,8 +80,150 @@
 	width:100%;
 	height:200px;
 	}
+	.rate {
+	float: left;
+	height: 46px;
+	padding: 0 10px;
+	}
+	input[type="radio"]{display:none;}
+	.rate:not(:checked) > input {
+	position:absolute;
+	top:-9999px;
+	}
+	.rate:not(:checked) > label {
+	float:right;
+	width:1em;
+	overflow:hidden;
+	white-space:nowrap;
+	cursor:pointer;
+	font-size:30px;
+	color:#ccc;
+	}
+	.rate:not(:checked) > label:before {
+	content: '★ ';
+	}
+	.rate > input:checked ~ label {
+	color: #ffc700;    
+	}
+	.rate:not(:checked) > label:hover,
+	.rate:not(:checked) > label:hover ~ label {
+	color: #deb217;  
+	}
+	.rate > input:checked + label:hover,
+	.rate > input:checked + label:hover ~ label,
+	.rate > input:checked ~ label:hover,
+	.rate > input:checked ~ label:hover ~ label,
+	.rate > label:hover ~ input:checked ~ label {
+	color: #c59b08;
+	}
+	.checked {
+	color: orange;
+	}
+	.aboutsaloon{
+	max-height:290px;
+	overflow:hidden;
+	}
+	.expand{
+	cursor:pointer;
+	color:#0AD69E;
+	}
+	video{
+	width:100%;
+	}
+	.iframe{
+	width:100%;
+	}
+	.dropdown-menu{
+	/* transform: translate3d(24px, -58px, 0px)!important; */
+	bottom:0!important;
+	top:-5px!important;
+	left:10px !important;
+	padding:unset;
+	height:40px;
+	}
+	.dropdown-item{
+	padding: .25rem 0.2em;
+	}	
+	.dropdown-menu-arrow.dropdown-menu-right:before, .dropdown-menu-arrow.dropdown-menu-right:after {
+	right: 12px;
+	/* right: auto; */
+	}
+	.dropdown-menu-arrow:before {
+	content: "";
+	position: absolute;
+	right: 11px;
+	bottom: -10px;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 10px 10px 0 10px;
+	border-color: rgba(217,217,217,1) transparent transparent transparent;
+	z-index: 9999;
+	}
+	.backbutton{
+	position: absolute;
+	left: 20;
+	top: 15;
+	background: #00000040;
+	padding: 5px;
+	border-radius: 50%;
+	color: #fff;
+	}
+	.l-border-radius{
+	border-radius: 17px;
+	}
+	.l-border-radius-top {
+	border-top-left-radius: 17px;
+	border-top-right-radius: 17px;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	}
+	.l-border-radius-bottom {
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	border-bottom-left-radius: 17px;
+	border-bottom-right-radius: 17px;
+	}
+	.l-main-logo {
+	border-radius: 51%;
+	height: 7rem;
+	width: 7rem;
+	position: absolute;
+	top: -140%;
+	left: 12%;
+	object-fit: contain;
+	border: 2px solid #fff;
+	background-color: #fff;
+	}
+	.bi-star-fill, .bi-star-half, .bi-star{
+	color: #eb9c05;
+	}
+	textarea{
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #495057;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border-radius: .25rem;
+	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	}
+	#jssor_1 img{
+	width: 100% !important;
+	}
+	@media only screen and (min-width: 768px) {
+		.followbtn{
+		position: absolute;
+		right: 4%;
+		top: -90%;
+		}
+	}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.8/dist/sweetalert2.all.min.js"></script>
 <script type="text/javascript" src="assets/js/jssor.slider.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function ($) {
@@ -142,10 +302,10 @@
 <style>
 	/* jssor slider loading skin spin css */
 	.jssorl-009-spin img {
-        animation-name: jssorl-009-spin;
-        animation-duration: 1.6s;
-        animation-iteration-count: infinite;
-        animation-timing-function: linear;
+	animation-name: jssorl-009-spin;
+	animation-duration: 1.6s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
 	}
 	@keyframes jssorl-009-spin {
 	from {
@@ -175,221 +335,159 @@
 	.jssort101 .pav .a, .jssort101 .p:hover .a {visibility:visible;}
 	.jssort101 .t {position:absolute;top:0;left:0;width:100%;height:100%;border:none;opacity:.6;}
 	.jssort101 .pav .t, .jssort101 .p:hover .t{opacity:1;}
-	*{
-	margin: 0;
-	padding: 0;
-	}
-	.rate {
-	float: left;
-	height: 46px;
-	padding: 0 10px;
-	}
-	.rate:not(:checked) > input {
-	position:absolute;
-	top:-9999px;
-	}
-	.rate:not(:checked) > label {
-	float:right;
-	width:1em;
-	overflow:hidden;
-	white-space:nowrap;
-	cursor:pointer;
-	font-size:30px;
-	color:#ccc;
-	}
-	.rate:not(:checked) > label:before {
-	content: '★ ';
-	}
-	.rate > input:checked ~ label {
-	color: #ffc700;    
-	}
-	.rate:not(:checked) > label:hover,
-	.rate:not(:checked) > label:hover ~ label {
-	color: #deb217;  
-	}
-	.rate > input:checked + label:hover,
-	.rate > input:checked + label:hover ~ label,
-	.rate > input:checked ~ label:hover,
-	.rate > input:checked ~ label:hover ~ label,
-	.rate > label:hover ~ input:checked ~ label {
-	color: #c59b08;
-	}
-	/* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
-	.checked {
-	color: orange;
-	}
-    .l-border-radius{
-	border-radius: 17px;
-	}
-	.l-border-radius-top {
-	border-top-left-radius: 17px;
-	border-top-right-radius: 17px;
-	border-bottom-left-radius: 0;
-	border-bottom-right-radius: 0;
-	}
-	.l-border-radius-bottom {
-	border-top-left-radius: 0;
-	border-top-right-radius: 0;
-	border-bottom-left-radius: 17px;
-	border-bottom-right-radius: 17px;
-	}
-	.l-main-logo {
-	border-radius: 51%;
-	height: 7rem;
-	width: 7rem;
-	object-fit: fill;
-	border: 2px solid #fff;
-	background-color: #fff;
-	}
-	.bi-star-fill, .bi-star-half, .bi-star{
-	color: #eb9c05;
-	}
-	textarea{
-	padding: .375rem .75rem;
-	font-size: 1rem;
-	font-weight: 400;
-	line-height: 1.5;
-	color: #495057;
-	background-color: #fff;
-	background-clip: padding-box;
-	border: 1px solid #ced4da;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	appearance: none;
-	border-radius: .25rem;
-	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-	}
-	#jssor_1 img{
-	    width: 100% !important;
-	}
-	@media only screen and (min-width: 768px) {
-		.followbtn{
-		position: absolute;
-		right: 4%;
-		top: -40%;
-		}
-        .l-main-logo{
-            position: absolute;
-            top: -50%;
-            left: 17%;
-        }
-	}
 </style>
 <div class="content">
 	<section class="main-content-sec">
 		<div class="container-fluid p-0">
 			<div class="row m-0 desktopviewArticle">
 				<div class="col-md-3">
-					<div class="left-menu-part">
-						<?php include "sidebar.php"; ?>
-						<div class="client-sec"><a class="client-btn">Sponsors</a></div>
+					<div class="left-menu-part" style="background:transparent;">
+						<div class="unscroll" style="background-color:#fff; margin:10px 0; padding:10px 0">
+                            <?php include "sidebar.php"; ?>
+							<div class="client-sec mb"><a class="client-btn">Sponsors</a></div>
+						</div>
+						<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+						<!-- home -->
+						<ins class="adsbygoogle"
+							style="display:block"
+							data-ad-client="ca-pub-6640694817095655"
+							data-ad-slot="5367742441"
+							data-ad-format="auto"
+							data-full-width-responsive="true"></ins>
+						<script>
+							(adsbygoogle = window.adsbygoogle || []).push({});
+						</script>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<?php $type = $_GET['type'];
-						        $typeid = $_GET['id'];
-								$doctor =mysqli_query($conn, "SELECT * FROM doctor WHERE doctor_id= '$typeid'");
-								$row= mysqli_fetch_array($doctor);
-								$specialityarray = explode(" ///", $row['speciality']);
-								$speciality = "";
-						                
-								for($i=0; $i< count($specialityarray); $i++){
-									if($i == count($specialityarray)-1){
+						$typeid = $_GET['id'];
+						$saloon =mysqli_query($conn, "SELECT * FROM saloon WHERE saloon_id= '$typeid'");
+						$row= mysqli_fetch_array($saloon);
+						$specialityarray = explode(" ///", $row['speciality']);
+						$speciality = "";
+						$videourl = $row['video'];
+						for($i=0; $i< count($specialityarray); $i++){
+							if($i == count($specialityarray)-1){
+								
+								$speciality .= $specialityarray[$i];
+							}
+							else{
+								$speciality .= $specialityarray[$i].", ";
+							}
+						}
+						if(($type == 'saloon') && (mysqli_num_rows($saloon)>0)){
+							$url=urlencode('https://www.mammypages.com/mpsaloon_details?type=saloon&id='.$row["saloon_id"]);
+							$urltelegram=urlencode('https://www.mammypages.com/mpsaloon_details?type=saloon&id='.$row["saloon_id"].'&text='.$row["name"]);
+						echo '<div class="row fillbg l-border-radius-top">
+								<div class="text-center p-0">
+								<img src="directory/saloon/'.$row["image"].'" class="img-fluid mb-2" style="width:100%; max-height:250px; border-radius: 15px;">
+								<a href="saloon"><i class="bi bi-caret-left backbutton" data-toggle="tooltip" title="Back" data-placement="left" area-hidden="true"></i></a>
+								</div>
+							 </div>
+								<div class="row fillbg l-border-radius-bottom l-title-card">
+								    <div class="col-4 col-md-3"><img src="directory/saloon/'.$row["logo"].'" class="img-fluid l-main-logo"></div>
+								    <div class="col-5 col-md-6">
+								        <p class="hosname mb-0">'.$row['name'].'</p>
+								        <p class="mb-0">'.$speciality.'</p>';
+										$ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$typeid'");
+										$ratingrow = mysqli_fetch_assoc($ratingquery);
+										if($ratingrow['count'] != 0){
+											$rating= $ratingrow['total']/$ratingrow['count'];
+										}
+										else{
+											$rating=0;
+										}
+										if(isset($rating)){ 
+											echo '<span class="rating">';
+											$i=0;
+											for($i=0; $i<5; $i++){
+											if($rating >=1){
+											echo '<i class="bi bi-star-fill"></i>&nbsp;';
+											}
+											elseif($rating > 0 and $rating < 1){
+											echo '<i class="bi bi-star-half"></i>&nbsp;';
+											}
+											else{
+											echo '<i class="bi bi-star"></i>&nbsp;';
+											}
+											$rating=$rating-1;									
+											}
+											echo '</span>';
+										}
+										$followquery= mysqli_query($conn, "SELECT count(*) as totalfollow FROM mp_comments WHERE mp_id='$row[saloon_id]' and follow_status=1");
+										$followrow=mysqli_fetch_array($followquery);
+										$totalfollowers = countFormat($followrow["totalfollow"]);
+										if($followrow["totalfollow"]>0){
+										echo '<p class="mt-1" style="font-size:13px; font-weight:bold">'.$totalfollowers.' Followers</p>';
+										}
+										else{
+											echo '<p class="mt-1 mb-0" style="font-size:13px; font-weight:bold"></p>';
+										}
+									echo '</div>';
 										
-										
-						                         $speciality .= $specialityarray[$i];
-									}
-									else{
-										$speciality .= $specialityarray[$i].", ";
-									}
-								}
-								if(($type == 'doctor') && (mysqli_num_rows($doctor)>0)){
-								echo '<div class="row fillbg l-border-radius-top">
-										<div class="text-center p-0">
-										<img src="directory/doctor/'.$row["image"].'" class="img-fluid mb-2" style="width:100%; max-height:250px; border-radius: 15px;"">
-										</div>
-									 </div>
-										<div class="row fillbg l-border-radius-bottom l-title-card">
-										    <div class="col-4 col-sm-3"><img src="directory/doctor/'.$row["logo"].'" class="img-fluid l-main-logo"></div>
-										    <div class="col-8 col-sm-6 p-0">
-										        <p class="hosname mb-0">'.$row['name'].'</p>
-										        <p class="mb-0">'.$speciality.'</p>';
-                                                $ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$typeid'");
-                                                $ratingrow = mysqli_fetch_assoc($ratingquery);
-                                                if($ratingrow['count'] != 0){
-                                                    $rating= $ratingrow['total']/$ratingrow['count'];
-                                                }
-                                                else{
-                                                    $rating=0;
-                                                }
-                                                if(isset($rating)){ 
-                                                    echo '<span class="rating">';
-                                                    $i=0;
-                                                    for($i=0; $i<5; $i++){
-                                                    if($rating >=1){
-                                                    echo '<i class="bi bi-star-fill"></i>&nbsp;';
-                                                    }
-                                                    elseif($rating > 0 and $rating < 1){
-                                                    echo '<i class="bi bi-star-half"></i>&nbsp;';
-                                                    }
-                                                    else{
-                                                    echo '<i class="bi bi-star"></i>&nbsp;';
-                                                    }
-                                                    $rating=$rating-1;									
-                                                    }
-                                                    echo '</span>';
-                                                }
-                                                $followquery= mysqli_query($conn, "SELECT count(*) as totalfollow FROM mp_comments WHERE mp_id='$row[doctor_id]' and follow_status=1");
-                                                $followrow=mysqli_fetch_array($followquery);
-                                                $totalfollowers = countFormat($followrow["totalfollow"]);
-                                                if($followrow["totalfollow"]>0){
-                                                echo '<p class="mt-1" style="font-size:13px; font-weight:bold">'.$totalfollowers.' Followers</p>';
-                                                }
-                                                else{
-                                                    echo '<p class="mt-1 mb-0" style="font-size:13px; font-weight:bold"></p>';
-                                                }
-                                            echo '</div>
-										    <div class="col-12 col-sm-3 position-relative">
-										        <p class="hospitaltype position-absolute" style="right:10px"><span>'.$row['type'].'</span></p><br>
-										        <div class="text-right">';
-                                                    echo !empty($row['facebook']) ?  '<a href="'.$row["facebook"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-facebook p-1"></i></a>&nbsp;':"";
-                                                    echo !empty($row['instagram']) ?  '<a href="'.$row["instagram"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-instagram p-1"></i></a>&nbsp;':"";
-                                                    echo !empty($row['linkedin']) ?  '<a href="'.$row["linkedin"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-linkedin p-1"></i></a>&nbsp;':"";
-						 							echo '<i class="bi bi-share p-1"></i>&nbsp;';
-
-                                                $followstatus = mysqli_query($conn, "SELECT * FROM mp_comments WHERE userid='$userid' AND mp_id='$row[doctor_id]' and follow_status=1");
-                                                $followstatusrow = mysqli_fetch_array($followstatus);
-                                
-                                                if ($followstatusrow && $followstatusrow['follow_status'] == 0) {
-                                                    echo '<button class="btn btn-success followbtn ml-2" value="'.$row["doctor_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
-                                                } else {
-                                                    echo '<button class="btn btn-secondary followbtn ml-2" value="'.$row["doctor_id"].'" style="font-size: 13px; padding: 0 5px;">Following</button>';
-                                                } 
-										     echo '</div>
+								    echo '<div class="col-3 col-md-3 position-relative">
+								        <p class="saloontype position-absolute" style="right:10px"><span>'.$row['type'].'</span></p><br>
+								        <div class="d-flex float-right">';
+										echo !empty($row['facebook']) ?  '<a href="'.$row["facebook"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-facebook p-1"></i></a>&nbsp;':"";
+										echo !empty($row['instagram']) ?  '<a href="'.$row["instagram"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-instagram p-1"></i></a>&nbsp;':"";
+										echo !empty($row['linkedin']) ?  '<a href="'.$row["linkedin"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-linkedin p-1"></i></a>&nbsp;':"";
+										echo '<div class="dropup d-flex header-settings"> 
+										<a href="#" class="nav-link p-1" data-toggle="dropdown" style="display:flex; text-decoration:none; color:black"><i class="bi bi-share"  style=""></i></a> 
+										<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" style="" > 
+											<div class="d-flex" >
+												<a class="dropdown-item d-flex"  href=""><img src="assets/images/MP-Favi.png" style="width:32px; height:30px;"></a>
+												<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://www.facebook.com/sharer/sharer.php?u='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/Facebook.png" style="width:32px; height:30px;"></a> 
+												<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://twitter.com/intent/tweet?url='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;"href=""><img src="assets/images/Twitter.png" style="width:32px; height:30px;"></a> 
+												<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://www.linkedin.com/shareArticle?mini=true&url='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/linkedin.png" style="width:32px; height:30px;"></a> 
+												<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://telegram.me/share/url?url='.$urltelegram.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/telegram.png" style="width:32px; height:30px;"></a> 
+												<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://api.whatsapp.com/send?text='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/Whatsapp.png" style="width:32px; height:30px;"></a> 
+											</div>
 										</div>
 										</div>';
-											echo '<div class="row fillbg  mt-1 l-border-radius py-2">
-											        <h5 class="heading" style="font-weight:bold; font-size:16px; text-transform: uppercase;">ABOUT '.$row['name'].' </h5>';
-											        
-											echo '<p>'.$row["about"].'</p>';
-											    
-											/*$images = mysqli_query($conn, "SELECT * FROM mpgallery WHERE doctorid = '$row[doctorid]'");
-											$count= mysqli_num_rows($images);
-											if($count>0){
-												echo '<br><h5 style="font-weight:bold">Gallery</h5>
-													<div class="col">';
-											while($row1= mysqli_fetch_array($images)){
-												echo '<img src="directory/hospitals/'.$row1["image_name"].'" class="img-fluid">';
+										$followstatus = mysqli_query($conn, "SELECT * FROM mp_comments WHERE userid='$userid' AND mp_id='$row[saloon_id]' and follow_status=1");
+										$followstatusrow = mysqli_fetch_array($followstatus);
+						
+										if ($followstatusrow && $followstatusrow['follow_status'] == 0) {
+											echo '<button class="btn btn-success followbtn ml-2" value="'.$row["saloon_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
+										} else {
+											echo '<button class="btn btn-secondary followbtn ml-2" value="'.$row["saloon_id"].'" style="font-size: 13px; padding: 0 5px;">Following</button>';
+										} 
+									echo '</div>
+								</div>
+								</div>';
+									echo '<div class="row fillbg mt-1 l-border-radius py-2">
+									        <h5 class="heading mt-1" style="font-weight:bold; font-size:12px">ABOUT SALON';
+									        
+									        $galquery= mysqli_query($conn, "SELECT image_name FROM mpgallery WHERE hospitalid= '$typeid' and image_name!=''");
+											if(mysqli_num_rows($galquery)>0){
+											echo	'<span class="galimage">GALLERY</span>';	
 											}
-								 			echo '</div>';
-											}*/
-						                            
-                                            echo'</div>';
-						                  ?>
-					
-					<div class="row fillbg mt-2 l-border-radius py-2">
-                    <?php 
-						$reviewquery = mysqli_query($conn, "SELECT comment from mp_comments WHERE mp_id ='$row[doctor_id]' AND userid='$userid'");
+									        if(!empty($row['video'])){
+									        echo '<span class="galvideo">VIDEO</span>';
+											}
+						       						    echo '</h5>';
+									        
+									    echo '
+									<div class="aboutsaloon" id="aboutsaloon">'.$row["about"].'</div>
+									<p class="expand text-right" style="display:none">Read More</p>';
+									/*$images = mysqli_query($conn, "SELECT * FROM mpgallery WHERE saloonid = '$row[saloonid]'");
+									$count= mysqli_num_rows($images);
+									if($count>0){
+										echo '<br><h5 style="font-weight:bold">Gallery</h5>
+											<div class="col">';
+									while($row1= mysqli_fetch_array($images)){
+										echo '<img src="directory/saloon/'.$row1["image_name"].'" class="img-fluid">';
+									}
+						 			echo '</div>';
+									}*/
+							echo	'</div>
+								';
+							
+						}
+						?>
+					<?php 
+						$reviewquery = mysqli_query($conn, "SELECT comment from mp_comments WHERE mp_id ='$row[saloon_id]' AND userid='$userid'");
 						$reviewrow = mysqli_fetch_assoc($reviewquery);
 						if(mysqli_num_rows($reviewquery)>0){
 						    if(strlen($reviewrow["comment"])<=0){
@@ -412,7 +510,7 @@
 							</div>
 							<div class="" style="width:88%">
 								<form method="POST" action="ajax/mp_review" id="reviewform">
-									<input type="hidden" name="doctorid" value="<?php echo $typeid;?>">
+									<input type="hidden" name="saloonid" value="<?php echo $typeid;?>">
 									<input type="hidden" name="email" value="<?php echo $userid;?>">
 									<textarea name="reviewdata" style="width:100%; height:4rem; resize:none; border:1px solid #C7C7C7"></textarea>
 									<br style="clear:both">
@@ -455,9 +553,8 @@
 							</div>
 							<div class="" style="width:88%">
 								<form method="POST" action="ajax/mp_review" id="reviewform">
-									<input type="hidden" name="review_type" value="doctor">
-									<input type="hidden" name="mp_id" value="<?php echo $typeid; ?>">
-									<input type="hidden" name="email" value="<?php echo $userid; ?>">
+									<input type="hidden" name="saloonid" value="<?php echo $typeid;?>">
+									<input type="hidden" name="email" value="<?php echo $userid;?>">
 									<textarea name="reviewdata" style="width:100%; height:4rem; resize:none; border:1px solid #C7C7C7"></textarea>
 									<br style="clear:both">
 									<div class="rate">
@@ -470,7 +567,7 @@
 										<input type="radio" id="star2" name="rate" value="2" />
 										<label for="star2" title="2">2 stars</label>
 										<input type="radio" id="star1" name="rate" value="1" />
-										<label for="star1" title="1">1 star</label>
+										<label for="star1" title="1">1 star</label>	
 									</div>
 									<br style="clear:both">
 									<p id="rating_error" style="color:red; text-align:left; margin-bottom:0px"></p>
@@ -487,7 +584,7 @@
 							$numrows=mysqli_num_rows($fetch);
 							$count =$numrows;
 							if($count>0){
-								echo '<div class="row fillbg  mt-2 l-border-radius py-2"><p class="heading mt-1" style="font-weight:bold; font-size:12px;    text-transform: uppercase;">'.$row['name'].' REVIEW</p></div>';
+								echo '<div class="row fillbg "><p class="heading mt-1" style="font-weight:bold; font-size:12px">saloon REVIEW</p></div>';
 							
 							while($reviewrow= mysqli_fetch_array($fetch)){
 								echo '
@@ -553,42 +650,37 @@
 							}
 							?>
 					</div>
-					<br>
-					<?php
-						echo'</div>';
-						
-						}
-						?>
-					<!--div class="col-md-3">
-						<div class="fillbg px-2">
-						<?php	
-                        // if(strpos($row["map"], 'iframe')){
-						// 	echo '<div class="map">'.$row["map"].'</div><br>';
-						// 	}
-						// 	else{
-						// 	echo '<iframe width="100%" height="200" src="https://maps.google.com/maps?q='.$row["map"].'&output=embed"></iframe><br>';
-						// 	}
-						// 	echo	($row["address"]!==null)?'<p><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
-						// 	echo 	($row["mobile"]!==null)?'<p><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
-						// 	echo	($row["email"]!==null)?'<p><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
-						// 	echo	($row["website"]!==null)?'<p><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
-						// 	echo 	'<a href="#" class="btn btn-success mb-4">Branches</a>
-						// 	';
-							
-							
-							 ?></div -->
+				</div>
+				<div class="col-md-3">
+					<div class="right-cont-part">
+						<div class="fillbg px-2 l-border-radius">
+							<?php	if(strpos($row["map"], 'iframe')){
+								echo '<div class="map">'.$row["map"].'</div><br>';
+								}
+								else{
+								echo '<iframe width="100%" height="200" src="https://maps.google.com/maps?q='.$row["map"].'&output=embed"></iframe><br>';
+								}
+								echo	($row["address"]!==null)?'<p class="mt-4"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
+								echo 	($row["mobile"]!==null)?'<p><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
+								echo	($row["email"]!==null)?'<p><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
+								echo	($row["website"]!==null)?'<p><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
+								echo 	'<a href="#" class="btn btn-success mb-4">Branches</a>
+								';
+								
+								
+								?>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 </div>
-<?php include "footer.php";?>
-
 <div class="modal fade" id="gallery" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
-			<div class="modal-header" style="padding:0 1rem">
-				<h5 class="modal-title" id="galleryModalLabel">doctor Gallery</h5>
+			<div class="modal-header" style="padding:0.2rem 1rem">
+				<h5 class="modal-title" id="galleryModalLabel"><?php echo $row['name'] . " Gallery"; ?></h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button>
@@ -601,12 +693,12 @@
 					</div>
 					<div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:980px;height:380px;overflow:hidden; text-align:center">
 						<?php
-							$galquery = mysqli_query($conn, "SELECT * FROM mpgallery WHERE doctorid= '$typeid'");
+							$galquery = mysqli_query($conn, "SELECT * FROM mpgallery WHERE saloonid= '$typeid'");
 							while($galrow=mysqli_fetch_array($galquery)){
 								echo ' 
 										<div>
-										<img data-u="image" src="directory/doctor/'.$galrow["image_name"].'">
-										<img data-u="thumb" src="directory/doctor/'.$galrow["image_name"].'"   height="90">
+										<img data-u="image" src="directory/saloon/'.$galrow["image_name"].'">
+										<img data-u="thumb" src="directory/saloon/'.$galrow["image_name"].'"   height="90">
 										</div>
 									';
 							}
@@ -645,13 +737,33 @@
 		</div>
 	</div>
 </div>
-<script>
-	$(document).on('click', '.galimage', function(){
-	$('#gallery').modal('show');
-	$("[data-u=image]").css({'height': '380px','top': '0px','left': '0px','display': 'block','position': 'absolute','max-width': '10000px','z-index': '1', 'width':'auto'});
-	
-	});
-</script>
+<div class="modal fade" id="video" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header" style="padding:0.2rem 1rem">
+				<h5 class="modal-title" id="videoModalLabel">
+					<?php echo $row['name'] . " Video"; ?>
+				</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body m-auto mb-1 p-0">
+				<?php
+					if (strpos($videourl, 'iframe') !== false) {
+						echo $videourl;
+					} 
+					else{
+						echo '<video controls>
+								  <source src="directory/saloon/video/'.$videourl.'" type="video/mp4">
+								  Your browser does not support the video tag.
+							   </video>';
+					}
+					?>
+			</div>
+		</div>
+	</div>
+</div>
 <script>
 	$(document).on('click', '.galimage', function(){
 		$('#gallery').modal('show');
@@ -708,7 +820,7 @@
 	                            required: "Review text cannot be empty",
 	                        },
 							rate:{
-								required: "Give Rating to the Doctor",
+								required: "Give Rating to the saloon",
 							},
 							
 						},
@@ -833,7 +945,7 @@
 	                            required: "Review text cannot be empty",
 	                        },
 							rate:{
-								required: "Give Rating to the doctor",
+								required: "Give Rating to the saloon",
 							},
 							
 						},
@@ -924,17 +1036,17 @@
 	    readMore();
 	  });
 	  $(document).on('click', '.expand', function(){
-		if($('#abouthospital').hasClass('abouthospital')){
-			$('#abouthospital').removeClass('abouthospital');
-			$('#abouthospital').css({'height':'auto', 'overflow':'none'});
+		if($('#aboutsaloon').hasClass('aboutsaloon')){
+			$('#aboutsaloon').removeClass('aboutsaloon');
+			$('#aboutsaloon').css({'height':'auto', 'overflow':'none'});
 			$('.expand').text('Read Less');
 		}
 		else{
-			$('#abouthospital').addClass('abouthospital');
+			$('#aboutsaloon').addClass('aboutsaloon');
 			$('.expand').text('Read More');
 		}
 	  });
-	  if ($('#abouthospital')[0].scrollHeight >  $('#abouthospital').innerHeight()) {
+	  if ($('#aboutsaloon')[0].scrollHeight >  $('#aboutsaloon').innerHeight()) {
 	    $('.expand').css({'display':'block'});
 	}
 	
@@ -1022,10 +1134,10 @@
 </script>
 <script>
 	var follow="";
-	async function update_follow(email, doctor_id, value){
+	async function update_follow(email, saloon_id, value){
 	   let result = await $.ajax({
 	        url: "ajax/followupdate",
-	        data: {email : email, doctor_id:doctor_id, follow:'follow', value:value},
+	        data: {email : email, saloon_id:saloon_id, follow:'follow', value:value},
 			type: "POST",
 	        success: function(data) {
 				//debugger;
@@ -1050,11 +1162,11 @@
 	if(sessionuser != ""){
 		var classname = $(this).attr('class');
 		var value = (classname.includes("btn-success"))?1:0;
-		var doctor_id=$(this).attr('value');
+		var saloon_id=$(this).attr('value');
 		var element = $(this);
 		//update_like(sessionuser, articleid, 1).then(console.log); 
 		async function main() {
-		  var status = await update_follow(sessionuser, doctor_id, value)
+		  var status = await update_follow(sessionuser, saloon_id, value)
 			status = JSON.parse(status);
 			if(status.status=='success'){
 			var a = new Audio('audio/mixkit-hard-click-1118.wav');
@@ -1089,3 +1201,4 @@
 	  }
 	});
 </script>
+<?php include "footer.php";?>
