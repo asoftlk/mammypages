@@ -266,11 +266,11 @@
 		.followbtn{
 		position: absolute;
 		right: 4%;
-		top: -60%;
+		top: -40%;
 		}
         .l-main-logo{
             position: absolute;
-            top: -50%;
+            top: -32%;
             left: 17%;
         }
 	}
@@ -295,9 +295,7 @@
 						                
 								for($i=0; $i< count($specialityarray); $i++){
 									if($i == count($specialityarray)-1){
-										
-										
-						                         $speciality .= $specialityarray[$i];
+						               $speciality .= $specialityarray[$i];
 									}
 									else{
 										$speciality .= $specialityarray[$i].", ";
@@ -346,7 +344,7 @@
                                                 echo '<p class="mt-1" style="font-size:13px; font-weight:bold">'.$totalfollowers.' Followers</p>';
                                                 }
                                                 else{
-                                                    echo '<p class="mt-1 mb-0" style="font-size:13px; font-weight:bold"></p>';
+                                                    echo '<p class="mt-1" style="font-size:13px; font-weight:bold; height: 19.5px;"></p>';
                                                 }
                                             echo '</div>
 										    <div class="col-12 col-sm-3 position-relative">
@@ -357,14 +355,18 @@
                                                     echo !empty($row['linkedin']) ?  '<a href="'.$row["linkedin"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-linkedin p-1"></i></a>&nbsp;':"";
 						 							echo '<i class="bi bi-share p-1"></i>&nbsp;';
 
-													$followstatus = mysqli_query($conn, "SELECT * FROM mp_comments WHERE userid='$userid' AND mp_id='$row[doctor_id]' and follow_status=1");
-													$followstatusrow = mysqli_fetch_array($followstatus);
-									
-													if ($followstatusrow && $followstatusrow['follow_status'] == 0) {
-														echo '<button class="btn btn-success followbtn ml-2" value="'.$row["doctor_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
-													} else {
-														echo '<button class="btn btn-secondary followbtn ml-2" value="'.$row["doctor_id"].'" style="font-size: 13px; padding: 0 5px;">Following</button>';
-													} 
+													 $followstatus = mysqli_query($conn, "SELECT * FROM mp_comments WHERE userid='$userid' AND mp_id='{$row['doctor_id']}' AND follow_status=1");
+													 $followstatusrow = mysqli_fetch_array($followstatus);
+		 
+													 if ($followstatusrow && isset($followstatusrow['follow_status'])) {
+														 if ($followstatusrow['follow_status'] == 0) {
+															 echo '<button class="btn btn-success followbtn" value="'.$row["doctor_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
+														 } else {
+															 echo '<button class="btn btn-secondary followbtn" value="'.$row["doctor_id"].'" style="font-size: 13px; padding: 0 5px;">Following</button>';
+														 }
+													 } else {
+														 echo '<button class="btn btn-success followbtn" value="'.$row["doctor_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
+													 }
 										     echo '</div>
 										</div>
 										</div>';
@@ -373,7 +375,7 @@
 											        
 											echo '<p>'.$row["about"].'</p>';
 											    
-											/*$images = mysqli_query($conn, "SELECT * FROM mpgallery WHERE doctorid = '$row[doctorid]'");
+											/*$images = mysqli_query($conn, "SELECT * FROM mpdoctor_gallery WHERE doctorid = '$row[doctorid]'");
 											$count= mysqli_num_rows($images);
 											if($count>0){
 												echo '<br><h5 style="font-weight:bold">Gallery</h5>
@@ -411,8 +413,8 @@
 									?>
 							</div>
 							<div class="" style="width:88%">
-								<form method="POST" action="ajax/mpdoctor_review" id="reviewform">
-									<input type="hidden" name="doctorid" value="<?php echo $typeid;?>">
+								<form method="POST" action="ajax/mp_review" id="reviewform">
+									<input type="hidden" name="typeid" value="<?php echo $typeid;?>">
 									<input type="hidden" name="email" value="<?php echo $userid;?>">
 									<textarea name="reviewdata" style="width:100%; height:4rem; resize:none; border:1px solid #C7C7C7"></textarea>
 									<br style="clear:both">
@@ -454,9 +456,8 @@
 									?>
 							</div>
 							<div class="" style="width:88%">
-								<form method="POST" action="ajax/mpdoctor_review" id="reviewform">
-									<input type="hidden" name="review_type" value="doctor">
-									<input type="hidden" name="mp_id" value="<?php echo $typeid; ?>">
+								<form method="POST" action="ajax/mp_review" id="reviewform">
+									<input type="hidden" name="typeid" value="<?php echo $typeid;?>">
 									<input type="hidden" name="email" value="<?php echo $userid; ?>">
 									<textarea name="reviewdata" style="width:100%; height:4rem; resize:none; border:1px solid #C7C7C7"></textarea>
 									<br style="clear:both">
@@ -515,7 +516,7 @@
 										echo '<div class="d-flex" style="font-size:0.8rem; margin-bottom:0.1rem"><input type="button" id="edit'.$i.'" class="edit" style="border:none; background:transparent;" value="Edit">
 										<p style="margin-bottom:0.1rem">&nbsp;|&nbsp;</p><input type="button" id="delete'.$i.'" class="delete" style="border:none; background:transparent; float:right;" value="Delete"></div>';
 									}
-								echo '</div><form method="POST" action="ajax/mpdoctor_review" id="reviewform'.$i.'">
+								echo '</div><form method="POST" action="ajax/mp_review" id="reviewform'.$i.'">
 											<input type="hidden" name="mp_id" value="'.$reviewrow["mp_id"].'">
 											<input type="hidden" name="email" value="'.$reviewrow["email"].'">
 											<input type="hidden" name="id" id="id'.$i.'" value="'.$reviewrow["id"].'">
@@ -601,16 +602,20 @@
 					</div>
 					<div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:980px;height:380px;overflow:hidden; text-align:center">
 						<?php
-							$galquery = mysqli_query($conn, "SELECT * FROM mpgallery WHERE doctorid= '$typeid'");
-							while($galrow=mysqli_fetch_array($galquery)){
-								echo ' 
+							$galquery = mysqli_query($conn, "SELECT * FROM mpdoctor_gallery WHERE doctor_id= '$typeid'");
+							if (mysqli_num_rows($galquery) > 0) {
+								while ($galrow = mysqli_fetch_array($galquery)) {
+									echo '
 										<div>
-										<img data-u="image" src="directory/doctor/'.$galrow["image_name"].'">
-										<img data-u="thumb" src="directory/doctor/'.$galrow["image_name"].'"   height="90">
+											<img data-u="image" src="directory/doctor/' . $galrow["image_name"] . '">
+											<img data-u="thumb" src="directory/doctor/' . $galrow["image_name"] . '" height="90">
 										</div>
 									';
+								}
+							} else {
+								echo '<div>No images found for this doctor.</div>';
 							}
-							?>     
+						?>     
 					</div>
 					<!-- Thumbnail Navigator -->
 					<div data-u="thumbnavigator" class="jssort101" style="position:absolute;left:0px;bottom:0px;width:980px;height:100px;background-color:#000;" data-autocenter="1" data-scale-bottom="0.75">
@@ -762,7 +767,7 @@
 		  if (result.isConfirmed) {
 			$.ajax({
 				type:'post',
-				url: 'ajax/mpdoctor_review',
+				url: 'ajax/mp_review',
 				mimeType: "multipart/form-data",
 				data:{id : id, deleteid:"delete"},
 				
@@ -1025,7 +1030,7 @@
 	async function update_follow(email, doctor_id, value){
 	   let result = await $.ajax({
 	        url: "ajax/followupdate",
-	        data: {email : email, doctor_id:doctor_id, follow:'follow', value:value},
+	        data: {email : email, type_id:doctor_id, follow:'follow', value:value},
 			type: "POST",
 	        success: function(data) {
 				//debugger;
@@ -1050,11 +1055,11 @@
 	if(sessionuser != ""){
 		var classname = $(this).attr('class');
 		var value = (classname.includes("btn-success"))?1:0;
-		var doctor_id=$(this).attr('value');
+		var type_id=$(this).attr('value');
 		var element = $(this);
 		//update_like(sessionuser, articleid, 1).then(console.log); 
 		async function main() {
-		  var status = await update_follow(sessionuser, doctor_id, value)
+		  var status = await update_follow(sessionuser, type_id, value)
 			status = JSON.parse(status);
 			if(status.status=='success'){
 			var a = new Audio('audio/mixkit-hard-click-1118.wav');

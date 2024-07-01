@@ -33,7 +33,7 @@ if(isset($_POST['submitreview'])){
 		}
 	}
 	else{
-	$mp_id = mysqli_real_escape_string($conn, $_POST['hospitalid']);
+	$mp_id = mysqli_real_escape_string($conn, $_POST['typeid']);
 	$userid =mysqli_real_escape_string($conn, $_POST['email']);
 	$comment = mysqli_real_escape_string($conn, $_POST['reviewdata']);
    $rating= mysqli_real_escape_string($conn, $_POST['rate']);

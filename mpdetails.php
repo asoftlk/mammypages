@@ -396,8 +396,12 @@
 								<div class="row fillbg l-border-radius-bottom l-title-card">
 								    <div class="col-4 col-md-3"><img src="directory/hospital/'.$row["logo"].'" class="img-fluid l-main-logo"></div>
 								    <div class="col-5 col-md-6">
-								        <p class="hosname mb-0">'.$row['name'].'</p>
-								        <p class="mb-0">'.$speciality.'</p>';
+								        <p class="hosname mb-0">'.$row['name'].'</p>';
+								          if(!empty($speciality)){
+											echo '<p class="mb-0">'.$speciality.'</p>';
+										} else {
+											echo '<p class="mb-0" style="height:24px;"></p>';
+										}
 										$ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$typeid'");
 										$ratingrow = mysqli_fetch_assoc($ratingquery);
 										if($ratingrow['count'] != 0){
@@ -427,10 +431,10 @@
 										$followrow=mysqli_fetch_array($followquery);
 										$totalfollowers = countFormat($followrow["totalfollow"]);
 										if($followrow["totalfollow"]>0){
-										echo '<p class="mt-1" style="font-size:13px; font-weight:bold">'.$totalfollowers.' Followers</p>';
+											echo '<p class="mt-1" style="font-size:13px; font-weight:bold">'.$totalfollowers.' Followers</p>';
 										}
 										else{
-											echo '<p class="mt-1 mb-0" style="font-size:13px; font-weight:bold"></p>';
+											echo '<p class="mt-1" style="font-size:13px; font-weight:bold; height: 19.5px;"></p>';
 										}
 									echo '</div>';
 										
@@ -453,14 +457,18 @@
 											</div>
 										</div>
 										</div>';
-										$followstatus = mysqli_query($conn, "SELECT * FROM mp_comments WHERE userid='$userid' AND mp_id='$row[hospital_id]' and follow_status=1");
-										$followstatusrow = mysqli_fetch_array($followstatus);
-						
-										if ($followstatusrow && $followstatusrow['follow_status'] == 0) {
-											echo '<button class="btn btn-success followbtn ml-2" value="'.$row["hospital_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
-										} else {
-											echo '<button class="btn btn-secondary followbtn ml-2" value="'.$row["hospital_id"].'" style="font-size: 13px; padding: 0 5px;">Following</button>';
-										} 
+											$followstatus = mysqli_query($conn, "SELECT * FROM mp_comments WHERE userid='$userid' AND mp_id='{$row['hospital_id']}' AND follow_status=1");
+											$followstatusrow = mysqli_fetch_array($followstatus);
+
+											if ($followstatusrow && isset($followstatusrow['follow_status'])) {
+												if ($followstatusrow['follow_status'] == 0) {
+													echo '<button class="btn btn-success followbtn" value="'.$row["hospital_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
+												} else {
+													echo '<button class="btn btn-secondary followbtn" value="'.$row["hospital_id"].'" style="font-size: 13px; padding: 0 5px;">Following</button>';
+												}
+											} else {
+												echo '<button class="btn btn-success followbtn" value="'.$row["hospital_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
+											}
 									echo '</div>
 								</div>
 								</div>';
@@ -518,7 +526,7 @@
 							</div>
 							<div class="" style="width:88%">
 								<form method="POST" action="ajax/mp_review" id="reviewform">
-									<input type="hidden" name="hospitalid" value="<?php echo $typeid;?>">
+									<input type="hidden" name="typeid" value="<?php echo $typeid;?>">
 									<input type="hidden" name="email" value="<?php echo $userid;?>">
 									<textarea name="reviewdata" style="width:100%; height:4rem; resize:none; border:1px solid #C7C7C7"></textarea>
 									<br style="clear:both">
@@ -561,7 +569,7 @@
 							</div>
 							<div class="" style="width:88%">
 								<form method="POST" action="ajax/mp_review" id="reviewform">
-									<input type="hidden" name="hospitalid" value="<?php echo $typeid;?>">
+									<input type="hidden" name="typeid" value="<?php echo $typeid;?>">
 									<input type="hidden" name="email" value="<?php echo $userid;?>">
 									<textarea name="reviewdata" style="width:100%; height:4rem; resize:none; border:1px solid #C7C7C7"></textarea>
 									<br style="clear:both">
@@ -1145,7 +1153,7 @@
 	async function update_follow(email, hospital_id, value){
 	   let result = await $.ajax({
 	        url: "ajax/followupdate",
-	        data: {email : email, hospital_id:hospital_id, follow:'follow', value:value},
+	        data: {email : email, type_id:hospital_id, follow:'follow', value:value},
 			type: "POST",
 	        success: function(data) {
 				//debugger;
@@ -1170,11 +1178,11 @@
 	if(sessionuser != ""){
 		var classname = $(this).attr('class');
 		var value = (classname.includes("btn-success"))?1:0;
-		var hospital_id=$(this).attr('value');
+		var type_id=$(this).attr('value');
 		var element = $(this);
 		//update_like(sessionuser, articleid, 1).then(console.log); 
 		async function main() {
-		  var status = await update_follow(sessionuser, hospital_id, value)
+		  var status = await update_follow(sessionuser, type_id, value)
 			status = JSON.parse(status);
 			if(status.status=='success'){
 			var a = new Audio('audio/mixkit-hard-click-1118.wav');

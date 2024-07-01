@@ -156,3 +156,89 @@ VALUES
 (3, 'Salon malli', 'male', 'Salon', '123 Main St, Colombo', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.966444201284!2d79.87721501477283!3d6.896473795013687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25bd20b72f64f%3A0xd69700aef7de28ff!2sSalon%20One!5e0!3m2!1sen!2slk!4v1631597962934!5m2!1sen!2slk\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>', 'Colombo', '0112345678', 'info@salonone.com', '', 'https://www.salonone.com/', '', '10-7', 'https://www.facebook.com/salonone/', '', '', 'salon_logo.png', 'salon_image.jpg', '', 'Verified', '<div>Salon One is your premier destination for hair and beauty services in Colombo. We offer a wide range of services including haircuts, styling, coloring, and more.</div>', 1, '2024-06-29 10:00:00');
 
 -- akila is here
+-- thushitha is here
+
+DROP TABLE IF EXISTS `mpdoctor_gallery`;
+DROP TABLE IF EXISTS `mpmidwife_gallery`;
+DROP TABLE IF EXISTS `mpmedical_gallery`;
+DROP TABLE IF EXISTS `mppharmacy_gallery`;
+DROP TABLE IF EXISTS `mpsaloon_gallery`;
+DROP TABLE IF EXISTS `mpstudio_gallery`;
+
+CREATE TABLE `mpdoctor_gallery` (
+  `id` int(11) NOT NULL,
+  `doctor_id` varchar(300) NOT NULL,
+  `image_name` varchar(300) NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE `mpmidwife_gallery` (
+  `id` int(11) NOT NULL,
+  `midwife_id` varchar(300) NOT NULL,
+  `image_name` varchar(300) NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `mpmedical_gallery` (
+  `id` int(11) NOT NULL,
+  `medical_id` varchar(300) NOT NULL,
+  `image_name` varchar(300) NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `mppharmacy_gallery` (
+  `id` int(11) NOT NULL,
+  `pharmacy_id` varchar(300) NOT NULL,
+  `image_name` varchar(300) NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `mpsaloon_gallery` (
+  `id` int(11) NOT NULL,
+  `saloon_id` varchar(300) NOT NULL,
+  `image_name` varchar(300) NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `mpstudio_gallery` (
+  `id` int(11) NOT NULL,
+  `studio_id` varchar(300) NOT NULL,
+  `image_name` varchar(300) NOT NULL,
+  `date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+DROP TABLE IF EXISTS `mp_comments`;
+
+CREATE TABLE `mp_comments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mp_id` varchar(300) NOT NULL,
+  `userid` varchar(300) NOT NULL,
+  `comment` mediumtext NOT NULL,
+  `rating` int(11) NOT NULL,
+  `follow_status` int(11) NOT NULL,
+  `datetime` datetime NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+INSERT INTO `mp_comments` (`mp_id`, `userid`, `comment`, `rating`, `follow_status`, `datetime`) VALUES
+('Hospital-8330399', 'hrithiksuthan@gmail.com', 'Good services!', '3', '1', '2021-10-18 13:39:12'),
+('Hospital-8330399', 'raprasadh@ymail.com', 'Nice hospital', '2', '1', '2021-10-21 18:09:24'),
+('Hospital-8330399', 'ranjandiroshan@yahoo.com', 'very friendly service', '3', '0', '2021-10-24 17:40:51'),
+('Hospital-3271136', 'hrithiksuthan@gmail.com', 'Very friendly service', '3', '1', '2021-10-25 15:53:43'),
+('Hospital-3271136', 'konduru.nataraju@gmail.com', '', '0', '1', '2021-11-05 11:58:16'),
+('Hospital-2894449', 'hrithiksuthan@gmail.com', '', '0', '1', '2022-01-26 15:06:42'),
+('Hospital-2020955', 'hrithiksuthan@gmail.com', '', '0', '1', '2022-01-26 15:07:12'),
+('Hospital-1278081', 'hrithiksuthan@gmail.com', '', '0', '1', '2022-01-26 15:07:34'),
+('Hospital-4654725', 'hrithiksuthan@gmail.com', '', '0', '1', '2022-01-26 15:07:54'),
+('Hospital-3073536', 'hrithiksuthan@gmail.com', '', '0', '1', '2022-01-26 15:08:31'),
+('Doctor-7283924', 'admin', '123456', '1', '0', '2022-06-21 17:43:34'),
+('Hospital-4005242', 'hrithiksuthan@gmail.com', '', '0', '1', '2023-03-03 00:02:34'),
+('Hospital-6825390', 'hrithiksuthan@gmail.com', '', '0', '1', '2023-03-03 00:03:06'),
+('Hospital-2954853', 'hrithiksuthan@gmail.com', '', '0', '1', '2023-03-03 00:03:28'),
+('DOC001', 'ranjandiroshan@yahoo.com', 'very friendly', '3', '1', '2021-10-24 17:40:51'),
+('Hospital-8330399', 'konduru.nataraju@gmail.com', '', '0', '1', '2024-07-01 23:30:30'),
+('DOC001', 'konduru.nataraju@gmail.com', '', '0', '1', '2024-07-01 23:40:52'),
+('7', 'konduru.nataraju@gmail.com', '', '0', '1', '2024-07-02 00:01:13');
+
+-- akila is here

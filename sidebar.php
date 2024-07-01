@@ -1,4 +1,3 @@
-
 <h3>MP Directory</h3>
 <ul style="list-style-type:none; padding-left:0">
 <li><a role="button" href="hospital"><i class="icofont-hospital"></i> HOSPITALS</a></li>
@@ -12,6 +11,8 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var path = window.location.pathname.split("/").pop();
+        var queryParams = new URLSearchParams(window.location.search);
+        var type = queryParams.get('type') ? queryParams.get('type').toLowerCase() : null;
         var menuLinks = document.querySelectorAll(".left-menu-part a");
 
         menuLinks.forEach(function(link) {
@@ -20,5 +21,19 @@
                 link.classList.add("active");
             }
         });
+
+        if (path === 'mpdoctor_details' && queryParams.get('type') === 'doctor') {
+            document.querySelector('a[href="doctors"]').classList.add("active");
+        } else if (path === 'mpdetails' && queryParams.get('type') === 'hospital') {
+            document.querySelector('a[href="hospital"]').classList.add("active");
+        } else if (path === 'mpmidwife_details' && queryParams.get('type') === 'midwife') {
+            document.querySelector('a[href="midwifes"]').classList.add("active");
+        } else if (path === 'mpmedical_details' && queryParams.get('type') === 'medical') {
+                document.querySelector('a[href="medical"]').classList.add("active");
+        } else if (path === 'mppharmacy_details' && queryParams.get('type') === 'pharmacy') {
+                document.querySelector('a[href="pharmacies"]').classList.add("active");
+        } else if (path === 'mpsaloon_details' && queryParams.get('type') === 'saloon') {
+            document.querySelector('a[href="beauty"]').classList.add("active");
+        }
     });
 </script>
