@@ -2,16 +2,16 @@
 	$userid= isset($_SESSION['userid'])?$_SESSION['userid']:"";
 	?>
 <style>
-	.hosname{
+	.docname{
 	font-size:16px;
 	font-weight:700;
 	}
-	.hospitaltype{
+	.doctortype{
 	border-left: 4px solid #68CF68;
 	margin-bottom: 0;
 	color:#666666;
 	}
-	.hospitaltype span{
+	.doctortype span{
 	/* background-color: #000;
 	color: #fff; */
 	padding: 2px 1px;
@@ -266,7 +266,7 @@
 		.followbtn{
 		position: absolute;
 		right: 4%;
-		top: -40%;
+		top: -60%;
 		}
         .l-main-logo{
             position: absolute;
@@ -312,7 +312,7 @@
 										<div class="row fillbg l-border-radius-bottom l-title-card">
 										    <div class="col-4 col-sm-3"><img src="directory/doctor/'.$row["logo"].'" class="img-fluid l-main-logo"></div>
 										    <div class="col-8 col-sm-6 p-0">
-										        <p class="hosname mb-0">'.$row['name'].'</p>
+										        <p class="docname mb-0">'.$row['name'].'</p>
 										        <p class="mb-0">'.$speciality.'</p>';
                                                 $ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$typeid'");
                                                 $ratingrow = mysqli_fetch_assoc($ratingquery);
@@ -350,21 +350,21 @@
                                                 }
                                             echo '</div>
 										    <div class="col-12 col-sm-3 position-relative">
-										        <p class="hospitaltype position-absolute" style="right:10px"><span>'.$row['type'].'</span></p><br>
+										        <p class="doctortype position-absolute" style="right:10px"><span>'.$row['type'].'</span></p><br>
 										        <div class="text-right">';
                                                     echo !empty($row['facebook']) ?  '<a href="'.$row["facebook"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-facebook p-1"></i></a>&nbsp;':"";
                                                     echo !empty($row['instagram']) ?  '<a href="'.$row["instagram"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-instagram p-1"></i></a>&nbsp;':"";
                                                     echo !empty($row['linkedin']) ?  '<a href="'.$row["linkedin"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-linkedin p-1"></i></a>&nbsp;':"";
 						 							echo '<i class="bi bi-share p-1"></i>&nbsp;';
 
-                                                $followstatus = mysqli_query($conn, "SELECT * FROM mp_comments WHERE userid='$userid' AND mp_id='$row[doctor_id]' and follow_status=1");
-                                                $followstatusrow = mysqli_fetch_array($followstatus);
-                                
-                                                if ($followstatusrow && $followstatusrow['follow_status'] == 0) {
-                                                    echo '<button class="btn btn-success followbtn ml-2" value="'.$row["doctor_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
-                                                } else {
-                                                    echo '<button class="btn btn-secondary followbtn ml-2" value="'.$row["doctor_id"].'" style="font-size: 13px; padding: 0 5px;">Following</button>';
-                                                } 
+													$followstatus = mysqli_query($conn, "SELECT * FROM mp_comments WHERE userid='$userid' AND mp_id='$row[doctor_id]' and follow_status=1");
+													$followstatusrow = mysqli_fetch_array($followstatus);
+									
+													if ($followstatusrow && $followstatusrow['follow_status'] == 0) {
+														echo '<button class="btn btn-success followbtn ml-2" value="'.$row["doctor_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
+													} else {
+														echo '<button class="btn btn-secondary followbtn ml-2" value="'.$row["doctor_id"].'" style="font-size: 13px; padding: 0 5px;">Following</button>';
+													} 
 										     echo '</div>
 										</div>
 										</div>';
@@ -379,7 +379,7 @@
 												echo '<br><h5 style="font-weight:bold">Gallery</h5>
 													<div class="col">';
 											while($row1= mysqli_fetch_array($images)){
-												echo '<img src="directory/hospitals/'.$row1["image_name"].'" class="img-fluid">';
+												echo '<img src="directory/doctors/'.$row1["image_name"].'" class="img-fluid">';
 											}
 								 			echo '</div>';
 											}*/
@@ -411,7 +411,7 @@
 									?>
 							</div>
 							<div class="" style="width:88%">
-								<form method="POST" action="ajax/mp_review" id="reviewform">
+								<form method="POST" action="ajax/mpdoctor_review" id="reviewform">
 									<input type="hidden" name="doctorid" value="<?php echo $typeid;?>">
 									<input type="hidden" name="email" value="<?php echo $userid;?>">
 									<textarea name="reviewdata" style="width:100%; height:4rem; resize:none; border:1px solid #C7C7C7"></textarea>
@@ -454,7 +454,7 @@
 									?>
 							</div>
 							<div class="" style="width:88%">
-								<form method="POST" action="ajax/mp_review" id="reviewform">
+								<form method="POST" action="ajax/mpdoctor_review" id="reviewform">
 									<input type="hidden" name="review_type" value="doctor">
 									<input type="hidden" name="mp_id" value="<?php echo $typeid; ?>">
 									<input type="hidden" name="email" value="<?php echo $userid; ?>">
@@ -515,7 +515,7 @@
 										echo '<div class="d-flex" style="font-size:0.8rem; margin-bottom:0.1rem"><input type="button" id="edit'.$i.'" class="edit" style="border:none; background:transparent;" value="Edit">
 										<p style="margin-bottom:0.1rem">&nbsp;|&nbsp;</p><input type="button" id="delete'.$i.'" class="delete" style="border:none; background:transparent; float:right;" value="Delete"></div>';
 									}
-								echo '</div><form method="POST" action="ajax/mp_review" id="reviewform'.$i.'">
+								echo '</div><form method="POST" action="ajax/mpdoctor_review" id="reviewform'.$i.'">
 											<input type="hidden" name="mp_id" value="'.$reviewrow["mp_id"].'">
 											<input type="hidden" name="email" value="'.$reviewrow["email"].'">
 											<input type="hidden" name="id" id="id'.$i.'" value="'.$reviewrow["id"].'">
@@ -762,7 +762,7 @@
 		  if (result.isConfirmed) {
 			$.ajax({
 				type:'post',
-				url: 'ajax/mp_review',
+				url: 'ajax/mpdoctor_review',
 				mimeType: "multipart/form-data",
 				data:{id : id, deleteid:"delete"},
 				
@@ -924,17 +924,17 @@
 	    readMore();
 	  });
 	  $(document).on('click', '.expand', function(){
-		if($('#abouthospital').hasClass('abouthospital')){
-			$('#abouthospital').removeClass('abouthospital');
-			$('#abouthospital').css({'height':'auto', 'overflow':'none'});
+		if($('#aboutdoctor').hasClass('aboutdoctor')){
+			$('#aboutdoctor').removeClass('aboutdoctor');
+			$('#aboutdoctor').css({'height':'auto', 'overflow':'none'});
 			$('.expand').text('Read Less');
 		}
 		else{
-			$('#abouthospital').addClass('abouthospital');
+			$('#aboutdoctor').addClass('aboutdoctor');
 			$('.expand').text('Read More');
 		}
 	  });
-	  if ($('#abouthospital')[0].scrollHeight >  $('#abouthospital').innerHeight()) {
+	  if ($('#aboutdoctor')[0].scrollHeight >  $('#aboutdoctor').innerHeight()) {
 	    $('.expand').css({'display':'block'});
 	}
 	

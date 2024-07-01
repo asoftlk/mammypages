@@ -220,7 +220,7 @@
 		.followbtn{
 		position: absolute;
 		right: 4%;
-		top: -40%;
+		top: -60%;
 		}
 	}
 </style>
@@ -676,6 +676,8 @@
 		</div>
 	</section>
 </div>
+<?php include "footer.php";?>
+
 <div class="modal fade" id="gallery" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
@@ -1201,4 +1203,3 @@
 	  }
 	});
 </script>
-<?php include "footer.php";?>

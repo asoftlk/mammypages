@@ -85,15 +85,57 @@ include "mp.php";
    </div>
    <div class="col-md-6">
       <div class="article-sec">
-          <div class="d-flex justify-content-end">
-    		<div class="position-relative">
-    		<form class="form-inline" action="" method="POST">
-    			<input class="form-control" type="search" name="searchdoctor" id="searchdoctor" placeholder="Search doctor" aria-label="Search">
-    			<!--button class="btn btn-success form-control p-2" type="submit" ><i class="bi bi-search"></i></button-->
-    		</form>
-    		<div id="suggesstion-box" class="position-absolute" style="z-index:1000" ></div>
-    		</div>
-    	  </div>  
+        <form action="" method="POST">
+            <div class="d-flex justify-content-end">
+                    <div class="position-relative">
+                        <select name="speciality" class="form-control form-control-sm"  id="speciality">
+                            <option value="">Select Speciality</option>
+                            <?php
+                            $specialityQuery = mysqli_query($conn, "SELECT DISTINCT speciality FROM doctor");
+                            while ($specialityRow = mysqli_fetch_array($specialityQuery)) {
+                                $specialityArray = explode(" ///", $specialityRow['speciality']);
+                                foreach ($specialityArray as $spec) {
+                                    echo '<option value="' . $spec . '">' . $spec . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="position-relative">
+                        <select name="type" class="form-control form-control-sm"  id="type">
+                            <option value="">Select type</option>
+                            <?php
+                            $typeQuery = mysqli_query($conn, "SELECT DISTINCT type FROM doctor");
+                            while ($typeRow = mysqli_fetch_array($typeQuery)) {
+                                $typeArray = explode(" ///", $typeRow['type']);
+                                foreach ($typeArray as $type) {
+                                    echo '<option value="' . $type . '">' . $type . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="position-relative">
+                        <select name="city" class="form-control form-control-sm"  id="city">
+                            <option value="">Select Speciality</option>
+                            <?php
+                            $cityQuery = mysqli_query($conn, "SELECT DISTINCT city FROM doctor");
+                            while ($cityRow = mysqli_fetch_array($cityQuery)) {
+                                $cityArray = explode(" ///", $cityRow['city']);
+                                foreach ($cityArray as $city) {
+                                    echo '<option value="' . $city . '">' . $city . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="position-relative">     
+                        <input class="form-control form-control-sm"  type="search" name="searchdoctor" id="searchdoctor" placeholder="Search doctor" aria-label="Search">
+                        <!--button class="btn btn-success form-control p-2" type="submit" ><i class="bi bi-search"></i></button-->
+                        <div id="suggesstion-box" class="position-absolute" style="z-index:1000" ></div>
+                    </div>
+                </div>  
+        </form>
          <div class="top-menu">
             
 			<?php $doctor =mysqli_query($conn, "SELECT * FROM doctor WHERE priority > 0 ORDER BY priority LIMIT 5");
