@@ -3,7 +3,9 @@ include '../connect.php';
 
 if (isset($_POST["search"])) {
     $value = mysqli_real_escape_string($conn, $_POST["value"]);
-    $query = mysqli_query($conn, "SELECT * FROM hospital WHERE (name LIKE '%".str_replace(" ", "%", $value)."%' OR speciality LIKE '%".str_replace(" ", "%", $value)."%' OR city LIKE '%".str_replace(" ", "%", $value)."%') OR type LIKE '%".str_replace(" ", "%", $value)."%' LIMIT 6");
+
+    $query = mysqli_query($conn, "SELECT * FROM hospital WHERE (name LIKE '%".str_replace(" ", "%", $value)."%' OR speciality LIKE '%".str_replace(" ", "%", $value)."%' OR city LIKE '%".str_replace(" ", "%", $value)."%' OR type LIKE '%".str_replace(" ", "%", $value)."%') ORDER BY CASE 
+            WHEN priority > 0 THEN 0 ELSE 1 END, priority DESC LIMIT 6");
 
     $list = array();
     $html = '<ul id="title-list" class="pl-0 mb-0" style="list-style-type:none;">';
