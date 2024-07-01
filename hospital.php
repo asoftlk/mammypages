@@ -111,7 +111,7 @@ include "mp.php";
 								$speciality .= $specialityarray[$i].", ";
 							}
 						}
-					echo '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4 ;">
+					echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
 							<div class="col-md-3" style="margin:auto">
 							<div>
 								<a href="mpdetails.php?type=Hospital&id='.$row["hospital_id"].'"><img src="directory/hospital/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>
@@ -264,10 +264,12 @@ include "mp.php";
         var query = $('#searchHospital').val();
         if (query.length >= 1) {
             load_data(($('#searchHospital').val()));
+            $('.priority-list').hide();
         }
         if (query.length == 0) {
             $("#suggesstion-box").hide();
             $('#load_data').html(initialData);
+            $('.priority-list').show();
         }
 
         function load_data(value) {
