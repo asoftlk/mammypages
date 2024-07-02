@@ -85,15 +85,57 @@ include "mp.php";
    </div>
    <div class="col-md-6">
       <div class="article-sec">
-          <div class="d-flex justify-content-end">
-    		<div class="position-relative">
-    		<form class="form-inline" action="" method="POST">
-    			<input class="form-control" type="search" name="searchsaloon" id="searchsaloon" placeholder="Search saloon" aria-label="Search">
-    			<!--button class="btn btn-success form-control p-2" type="submit" ><i class="bi bi-search"></i></button-->
-    		</form>
-    		<div id="suggesstion-box" class="position-absolute" style="z-index:1000" ></div>
-    		</div>
-    	  </div>  
+      <form action="" method="POST">
+            <div class="d-flex justify-content-end">
+                    <div class="position-relative">
+                        <select name="speciality" class="form-control form-control-sm"  id="speciality">
+                            <option value="">Select Speciality</option>
+                            <?php
+                            $specialityQuery = mysqli_query($conn, "SELECT DISTINCT speciality FROM saloon");
+                            while ($specialityRow = mysqli_fetch_array($specialityQuery)) {
+                                $specialityArray = explode(" ///", $specialityRow['speciality']);
+                                foreach ($specialityArray as $spec) {
+                                    echo '<option value="' . $spec . '">' . $spec . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="position-relative">
+                        <select name="type" class="form-control form-control-sm"  id="type">
+                            <option value="">Select type</option>
+                            <?php
+                            $typeQuery = mysqli_query($conn, "SELECT DISTINCT type FROM saloon");
+                            while ($typeRow = mysqli_fetch_array($typeQuery)) {
+                                $typeArray = explode(" ///", $typeRow['type']);
+                                foreach ($typeArray as $type) {
+                                    echo '<option value="' . $type . '">' . $type . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="position-relative">
+                        <select name="city" class="form-control form-control-sm"  id="city">
+                            <option value="">Select City</option>
+                            <?php
+                            $cityQuery = mysqli_query($conn, "SELECT DISTINCT city FROM saloon");
+                            while ($cityRow = mysqli_fetch_array($cityQuery)) {
+                                $cityArray = explode(" ///", $cityRow['city']);
+                                foreach ($cityArray as $city) {
+                                    echo '<option value="' . $city . '">' . $city . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div><a type="button" id="clearFilters">Clear Filters</a></div>
+                    <div class="position-relative">     
+                        <input class="form-control form-control-sm"  type="search" name="searchsaloon" id="searchsaloon" placeholder="Search Saloon" aria-label="Search">
+                        <div id="suggesstion-box" class="position-absolute" style="z-index:1000" ></div>
+                    </div>
+                </div>  
+            </form> 
          <div class="top-menu">
             
 			<?php $saloon =mysqli_query($conn, "SELECT * FROM saloon WHERE priority > 0 ORDER BY priority LIMIT 5");
@@ -111,7 +153,7 @@ include "mp.php";
 								$speciality .= $specialityarray[$i].", ";
 							}
 						}
-					echo '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4 ;">
+					echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
 							<div class="col-md-3" style="margin:auto">
 							<div>
 								<a href="mpsaloon_details.php?type=saloon&id='.$row["saloon_id"].'"><img src="directory/saloon/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>
@@ -239,49 +281,53 @@ include "mp.php";
                 $('#load_data').append(initialData);
             }
         });
-    });
-    var height = $("#h2").height() + 20;
-    $(".left-menu-part, .right-cont-part").css({
-        'position': 'sticky',
-        'top': height
-    });
-    $(window).on('resize', function() {
-        var height = $("#h2").height() + 20;
-        $(".left-menu-part, .right-cont-part").css({
-            'top': height,
-            'position': 'sticky'
-        });
-    });
-    var count = 0;
-    $(document).ajaxComplete(function() {
-        if (count == 0) {
-            $('#btn_more').click();
-            count++;
-        }
-    });
 
-    $('#searchsaloon').keyup(function() {
-        var query = $('#searchsaloon').val();
-        if (query.length >= 1) {
-            load_data(($('#searchsaloon').val()));
-        }
-        if (query.length == 0) {
+        $('#searchsaloon, #speciality, #type, #city').on('input change keyup', function() {
+            var query = $('#searchsaloon').val();
+            var speciality = $('#speciality').val();
+            var type = $('#type').val();
+            var city = $('#city').val();
+
+            if (query.length >= 1 || speciality || type || city) {
+                load_data(query, speciality, type, city);
+                $('.priority-list').hide();
+            } else {
+                $("#suggesstion-box").hide();
+                $('#load_data').html(initialData);
+                $('.priority-list').show();
+            }
+        });
+
+        $('#clearFilters').click(function() {
+            $('#searchsaloon').val('');
+            $('#speciality').val('');
+            $('#type').val('');
+            $('#city').val('');
+
             $("#suggesstion-box").hide();
             $('#load_data').html(initialData);
-        }
+            $('.priority-list').show();
+        });
 
-        function load_data(value) {
+        function load_data(value,speciality, type, city) {
             $.ajax({
-                url: "ajax/searchsaloon",
+                url: "ajax/searchSaloon",
                 method: "POST",
                 data: {
                     search: "search",
-                    value: value
+                    value: value,
+                    speciality: speciality,
+                    type: type,
+                    city: city
                 },
                 success: function(data) {
                     var result = JSON.parse(data);
-                    $("#suggesstion-box").show();
-                    $("#suggesstion-box").html(result.html);
+                    if (value.length >= 1) {
+                        $("#suggesstion-box").show();
+                        $("#suggesstion-box").html(result.html);
+                    } else {
+                        $("#suggesstion-box").hide();
+                    }
                     if (result.data.length > 0) {
                         var html = '';
                         result.data.forEach(function(saloon) {
@@ -331,8 +377,28 @@ include "mp.php";
                 }
             });
         }
-
+        
     });
+    var height = $("#h2").height() + 20;
+    $(".left-menu-part, .right-cont-part").css({
+        'position': 'sticky',
+        'top': height
+    });
+    $(window).on('resize', function() {
+        var height = $("#h2").height() + 20;
+        $(".left-menu-part, .right-cont-part").css({
+            'top': height,
+            'position': 'sticky'
+        });
+    });
+    var count = 0;
+    $(document).ajaxComplete(function() {
+        if (count == 0) {
+            $('#btn_more').click();
+            count++;
+        }
+    });
+
     $('#searchsaloon').on('search', function() {
         $('#suggesstion-box').hide()
     });

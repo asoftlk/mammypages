@@ -85,12 +85,61 @@ include "mp.php";
    </div>
    <div class="col-md-6">
       <div class="article-sec">
+        <form action="" method="POST">
+            <div class="d-flex justify-content-end">
+                    <div class="position-relative">
+                        <select name="speciality" class="form-control form-control-sm"  id="speciality">
+                            <option value="">Select Speciality</option>
+                            <?php
+                            $specialityQuery = mysqli_query($conn, "SELECT DISTINCT speciality FROM hospital");
+                            while ($specialityRow = mysqli_fetch_array($specialityQuery)) {
+                                $specialityArray = explode(" ///", $specialityRow['speciality']);
+                                foreach ($specialityArray as $spec) {
+                                    echo '<option value="' . $spec . '">' . $spec . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="position-relative">
+                        <select name="type" class="form-control form-control-sm"  id="type">
+                            <option value="">Select type</option>
+                            <?php
+                            $typeQuery = mysqli_query($conn, "SELECT DISTINCT type FROM hospital");
+                            while ($typeRow = mysqli_fetch_array($typeQuery)) {
+                                $typeArray = explode(" ///", $typeRow['type']);
+                                foreach ($typeArray as $type) {
+                                    echo '<option value="' . $type . '">' . $type . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="position-relative">
+                        <select name="city" class="form-control form-control-sm"  id="city">
+                            <option value="">Select City</option>
+                            <?php
+                            $cityQuery = mysqli_query($conn, "SELECT DISTINCT city FROM hospital");
+                            while ($cityRow = mysqli_fetch_array($cityQuery)) {
+                                $cityArray = explode(" ///", $cityRow['city']);
+                                foreach ($cityArray as $city) {
+                                    echo '<option value="' . $city . '">' . $city . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div><a type="button" id="clearFilters">Clear Filters</a></div>
+                    <div class="position-relative">     
+                        <input class="form-control" type="search" name="searchHospital" id="searchHospital" placeholder="Search Hospital" aria-label="Search">
+                        <!--button class="btn btn-success form-control p-2" type="submit" ><i class="bi bi-search"></i></button-->
+                        <div id="suggesstion-box" class="position-absolute" style="z-index:1000" ></div>
+                    </div>
+                </div>  
+        </form>
           <div class="d-flex justify-content-end">
     		<div class="position-relative">
-    		<form class="form-inline" action="" method="POST">
-    			<input class="form-control" type="search" name="searchHospital" id="searchHospital" placeholder="Search Hospital" aria-label="Search">
-    			<!--button class="btn btn-success form-control p-2" type="submit" ><i class="bi bi-search"></i></button-->
-    		</form>
+
     		<div id="suggesstion-box" class="position-absolute" style="z-index:1000" ></div>
     		</div>
     	  </div>  
@@ -235,55 +284,56 @@ include "mp.php";
 
         $(document).on('search', 'input[type="search"]', function(e) {
             if ($(this).val().trim().length === 0) {
-                console.log("ff");
                 $('#load_data').append(initialData);
             }
         });
-    });
-    var height = $("#h2").height() + 20;
-    $(".left-menu-part, .right-cont-part").css({
-        'position': 'sticky',
-        'top': height
-    });
-    $(window).on('resize', function() {
-        var height = $("#h2").height() + 20;
-        $(".left-menu-part, .right-cont-part").css({
-            'top': height,
-            'position': 'sticky'
-        });
-    });
-    var count = 0;
-    $(document).ajaxComplete(function() {
-        if (count == 0) {
-            $('#btn_more').click();
-            count++;
-        }
-    });
 
-    $('#searchHospital').keyup(function() {
-        var query = $('#searchHospital').val();
-        if (query.length >= 1) {
-            load_data(($('#searchHospital').val()));
-            $('.priority-list').hide();
-        }
-        if (query.length == 0) {
+        $('#searchHospital, #speciality, #type, #city').on('input change keyup', function() {
+            var query = $('#searchHospital').val();
+            var speciality = $('#speciality').val();
+            var type = $('#type').val();
+            var city = $('#city').val();
+
+            if (query.length >= 1 || speciality || type || city) {
+                load_data(query, speciality, type, city);
+                $('.priority-list').hide();
+            } else {
+                $("#suggesstion-box").hide();
+                $('#load_data').html(initialData);
+                $('.priority-list').show();
+            }
+        });
+
+        $('#clearFilters').click(function() {
+            $('#searchHospital').val('');
+            $('#speciality').val('');
+            $('#type').val('');
+            $('#city').val('');
+
             $("#suggesstion-box").hide();
             $('#load_data').html(initialData);
             $('.priority-list').show();
-        }
+        });
 
-        function load_data(value) {
+        function load_data(value, speciality, type, city) {
             $.ajax({
                 url: "ajax/searchhospital",
                 method: "POST",
                 data: {
                     search: "search",
-                    value: value
+                    value: value,
+                    speciality: speciality,
+                    type: type,
+                    city: city
                 },
                 success: function(data) {
                     var result = JSON.parse(data);
-                    $("#suggesstion-box").show();
-                    $("#suggesstion-box").html(result.html);
+                    if (value.length >= 1) {
+                        $("#suggesstion-box").show();
+                        $("#suggesstion-box").html(result.html);
+                    } else {
+                        $("#suggesstion-box").hide();
+                    }
                     if (result.data.length > 0) {
                         var html = '';
                         result.data.forEach(function(hospital) {
@@ -302,7 +352,6 @@ include "mp.php";
                             html += '<p class="text-heading">&nbsp;' + hospital.name + '</p></a>';
                             if (hospital.priority > 0) {
                                 html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
-                                
                             }
                             html += '</div>';
                             html += '<div class="d-flex">';
@@ -333,8 +382,27 @@ include "mp.php";
                 }
             });
         }
-
     });
+    var height = $("#h2").height() + 20;
+    $(".left-menu-part, .right-cont-part").css({
+        'position': 'sticky',
+        'top': height
+    });
+    $(window).on('resize', function() {
+        var height = $("#h2").height() + 20;
+        $(".left-menu-part, .right-cont-part").css({
+            'top': height,
+            'position': 'sticky'
+        });
+    });
+    var count = 0;
+    $(document).ajaxComplete(function() {
+        if (count == 0) {
+            $('#btn_more').click();
+            count++;
+        }
+    });
+
     $('#searchHospital').on('search', function() {
         $('#suggesstion-box').hide()
     });
