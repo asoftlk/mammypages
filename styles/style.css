@@ -180,3 +180,129 @@
   scrollbar-width: thin;
   scrollbar-color: #5f45c9 #d25988;
 } */
+
+:root {
+  --background: linear-gradient(30deg, #f39c12 30%, #f1c40f);
+  --background-select: linear-gradient(to left, #34495e 3rem, #2c3e50 3rem);
+}
+.hospitaltype {
+border-left: 4px solid #68CF68;
+margin-bottom: 0;
+}
+.hospitaltype span {
+background-color: #000;
+color: #fff;
+padding: 2px 1px;
+margin-left: 2px;
+text-transform: uppercase;
+font-size: 12px;
+font-weight: 100;
+}
+.namehref {
+text-decoration: none;
+color: #212529;
+}
+.namehref:hover {
+text-decoration: none;
+color: #212529;
+}
+#title-list li {
+padding: 10px;
+background: #fff;
+border-bottom: #bbb9b9 1px solid;
+}
+#suggesstion-box {
+display: none;
+z-index: 4;
+width: 100%;
+max-height: 250px;
+overflow-y: scroll;
+border: 2px solid #28a745;
+border-radius: 3px;
+}
+#suggesstion-box::-webkit-scrollbar {
+width: 10px;
+}
+#suggesstion-box::-webkit-scrollbar-track {
+background: #f1f1f1;
+border-radius: 10px;
+}
+#suggesstion-box::-webkit-scrollbar-thumb {
+border-radius: 10px;
+background: #c1c1c1;
+}
+select {
+appearance: none;
+border: 0;
+outline: 0;
+background: none;
+color: inherit;
+box-shadow: none;
+}
+select::-ms-expand {
+display: none;
+}
+.select {
+  position: relative;
+  display: flex;
+  width: min(11rem, 94vw);
+  border-radius: 0.25rem;
+  background-color: #fff;
+  border: 1px solid #f1e8e8;
+  overflow: hidden;
+  height: 31px;
+  line-height: 15px;
+  margin-right: 0.5rem;
+
+  select {
+      flex: 1;
+      cursor: pointer;
+      padding-left: 4px;
+  }
+  &::after {
+      content: "\25BC";
+      position: absolute;
+      right: 0.5rem;
+      top: 0.5rem;
+      transition: 0.25s all ease;
+      pointer-events: none; 
+  }
+  &:hover::after {
+      color: #f39c12;
+      animation: bounce 0.5s infinite;
+  }
+}
+@keyframes bounce {
+25% {
+  transform: translatey(5px);
+}
+75% {
+  transform: translatey(-5px);
+}
+}
+.filter-btn{
+  color: #fff !important;
+  background-color: #5f45c9 !important;
+  border-color: #5f45c9 !important;
+  height: 30px !important;
+  font-size: .875rem;
+}
+.filter-box {
+  width: 11rem;
+  border: none;
+  padding: 0 28px;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: .875rem;
+}
+
+.filter-box::-ms-expand {
+  display: none;
+}
+.bi-star-fill, .bi-star-half, .bi-star{
+	color: #eb9c05 !important;
+	}

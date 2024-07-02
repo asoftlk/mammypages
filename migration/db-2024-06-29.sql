@@ -273,5 +273,8 @@ VALUES
 ('studio002', 'studio toona', 'studio', 'photography', '123 Main St, Colombo', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.966444201284!2d79.87721501477283!3d6.896473795013687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25bd20b72f64f%3A0xd69700aef7de28ff!2sSalon%20One!5e0!3m2!1sen!2slk!4v1631597962934!5m2!1sen!2slk\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>', 'Colombo', '0112345678', 'info@salonone.com', '', 'https://www.salonone.com/', '', '10-7', 'https://www.facebook.com/salonone/', '', '', 'salon_logo.png', 'salon_image.jpg', '', 'Verified', '<div>Salon One is your premier destination for hair and beauty services in Colombo. We offer a wide range of services including haircuts, styling, coloring, and more.</div>', 0, '2024-06-29 10:00:00'),
 ('studio003', 'studio pi', 'studio', 'photography', '123 Main St, Colombo', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.966444201284!2d79.87721501477283!3d6.896473795013687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25bd20b72f64f%3A0xd69700aef7de28ff!2sSalon%20One!5e0!3m2!1sen!2slk!4v1631597962934!5m2!1sen!2slk\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>', 'Colombo', '0112345678', 'info@salonone.com', '', 'https://www.salonone.com/', '', '10-7', 'https://www.facebook.com/salonone/', '', '', 'salon_logo.png', 'salon_image.jpg', '', 'Verified', '<div>Salon One is your premier destination for hair and beauty services in Colombo. We offer a wide range of services including haircuts, styling, coloring, and more.</div>', 1, '2024-06-29 10:00:00');
 
--- akila is here
 -- thushitha is here
+
+ALTER TABLE doctor ADD COLUMN video VARCHAR(255) AFTER image;
+ALTER TABLE doctor ADD COLUMN map TEXT AFTER address;
+-- akila is here

@@ -86,11 +86,15 @@ include "mp.php";
    <div class="col-md-6">
       <div class="article-sec">
         <form action="" method="POST">
-            <div class="d-flex justify-content-end">
-                    <div class="position-relative">
-                        <select name="speciality" class="form-control form-control-sm"  id="speciality">
-                            <option value="">Select Speciality</option>
-                            <?php
+            <input class="form-control form-control-sm" type="search" name="searchpharmacy" id="searchpharmacy" placeholder="Search pharmacy" aria-label="Search">
+            <!--button class="btn btn-success form-control p-2" type="submit" ><i class="bi bi-search"></i></button-->
+            <div id="suggesstion-box" class="position-absolute" style="z-index:1000" ></div>
+                
+            <div class="d-flex justify-content-start">
+                <label class="select">
+                    <select name="speciality" class="filter-box"  id="speciality">
+                        <option value="">Select Speciality</option>
+                        <?php
                             $specialityQuery = mysqli_query($conn, "SELECT DISTINCT speciality FROM pharmacy");
                             while ($specialityRow = mysqli_fetch_array($specialityQuery)) {
                                 $specialityArray = explode(" ///", $specialityRow['speciality']);
@@ -99,12 +103,12 @@ include "mp.php";
                                 }
                             }
                             ?>
-                        </select>
-                    </div>
-                    <div class="position-relative">
-                        <select name="type" class="form-control form-control-sm"  id="type">
-                            <option value="">Select type</option>
-                            <?php
+                    </select>
+                </label>
+                <label class="select">
+                    <select name="type" class="filter-box" id="type">
+                        <option value="">Select type</option>
+                        <?php
                             $typeQuery = mysqli_query($conn, "SELECT DISTINCT type FROM pharmacy");
                             while ($typeRow = mysqli_fetch_array($typeQuery)) {
                                 $typeArray = explode(" ///", $typeRow['type']);
@@ -113,12 +117,12 @@ include "mp.php";
                                 }
                             }
                             ?>
-                        </select>
-                    </div>
-                    <div class="position-relative">
-                        <select name="city" class="form-control form-control-sm"  id="city">
-                            <option value="">Select City</option>
-                            <?php
+                    </select>
+                </label>
+                <label class="select">
+                    <select name="city"  class="filter-box" id="city">
+                        <option value="">Select City</option>
+                        <?php
                             $cityQuery = mysqli_query($conn, "SELECT DISTINCT city FROM pharmacy");
                             while ($cityRow = mysqli_fetch_array($cityQuery)) {
                                 $cityArray = explode(" ///", $cityRow['city']);
@@ -127,15 +131,11 @@ include "mp.php";
                                 }
                             }
                             ?>
-                        </select>
-                    </div>
-                    <div><a type="button" id="clearFilters">Clear Filters</a></div>
-                    <div class="position-relative">     
-                        <input class="form-control form-control-sm"  type="search" name="searchpharmacy" id="searchpharmacy" placeholder="Search Pharmacy" aria-label="Search">
-                        <div id="suggesstion-box" class="position-absolute" style="z-index:1000" ></div>
-                    </div>
-                </div>  
-            </form>  
+                    </select>
+                </label>
+                <a class="btn btn-sm filter-btn" type="button" id="clearFilters">Clear Filters</a>
+            </div>
+        </form>
          <div class="top-menu">
             
 			<?php $pharmacy =mysqli_query($conn, "SELECT * FROM pharmacy WHERE priority > 0 ORDER BY priority LIMIT 5");
@@ -156,12 +156,12 @@ include "mp.php";
 					echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
 							<div class="col-md-3" style="margin:auto">
 							<div>
-								<a href="mppharmacy_details.php?type=pharmacy&id='.$row["pharmacy_id"].'"><img src="directory/pharmacy/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>
+								<a href="mpdetails.php?type=pharmacy&id='.$row["pharmacy_id"].'"><img src="directory/pharmacy/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>
 							</div>
 							</div>
 							<div class="col-md-9 pl-0" style="margin:1rem 0">
 							<div class="d-flex">
-                            <p class="text"><a href="mppharmacy_details.php?type=pharmacy&id='.$row["pharmacy_id"].'" class="namehref"><p class="text-heading">&nbsp;'.$row["name"].'</p></a>
+                            <p class="text"><a href="mpdetails.php?type=pharmacy&id='.$row["pharmacy_id"].'" class="namehref"><p class="text-heading">&nbsp;'.$row["name"].'</p></a>
                                 <img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
                             </div>
 							<div class="d-flex">
@@ -193,7 +193,7 @@ include "mp.php";
 							<div class="d-flex">
                             <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           
                             
-                                <a href="mppharmacy_details.php?type=pharmacy&id='.$row["pharmacy_id"].'" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;pharmacy</a>
+                                <a href="mpdetails.php?type=pharmacy&id='.$row["pharmacy_id"].'" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;pharmacy</a>
                             </div>
                          </div>   
 						</div>';
@@ -253,7 +253,7 @@ include "mp.php";
             var count = $(this).data("vid");
             $('#btn_more').html("Loading...");
             $.ajax({
-                url: "ajax/mppharmacydatafetch",
+                url: "ajax/mpdatafetch",
                 method: "POST",
                 data: {
                     count: count,
@@ -338,12 +338,12 @@ include "mp.php";
                             
                             html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
                             html += '<div class="col-md-3" style="margin:auto">';
-                            html += '<a href="mppharmacy_details.php?type=pharmacy&id=' + pharmacy.pharmacy_id + '">';
+                            html += '<a href="mpdetails.php?type=pharmacy&id=' + pharmacy.pharmacy_id + '">';
                             html += '<img src="directory/pharmacy/' + pharmacy.logo + '" class="img-fluid" style="max-height:5rem"></a>';
                             html += '</div>';
                             html += '<div class="col-md-9 pl-0" style="margin:1rem 0">';
                             html += '<div class="d-flex">';
-                            html += '<p class="text"><a href="mppharmacy_details.php?type=pharmacy&id=' + pharmacy.pharmacy_id + '" class="namehref">';
+                            html += '<p class="text"><a href="mpdetails.php?type=pharmacy&id=' + pharmacy.pharmacy_id + '" class="namehref">';
                             html += '<p class="text-heading">&nbsp;' + pharmacy.name + '</p></a>';
                             if (pharmacy.priority > 0) {
                                 html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
@@ -368,7 +368,7 @@ include "mp.php";
                             html += '</div></div>';
                             html += '<div class="d-flex">';
                             html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + pharmacy.address + '</P>';                          
-                            html += '<a href="mppharmacy_details.php?type=pharmacy&id=' + pharmacy.pharmacy_id + '" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;pharmacy</a>';
+                            html += '<a href="mpdetails.php?type=pharmacy&id=' + pharmacy.pharmacy_id + '" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;pharmacy</a>';
                             html += '</div></div></div>';
                         });
                         $("#load_data").html(html);

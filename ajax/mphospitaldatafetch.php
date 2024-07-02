@@ -3,9 +3,7 @@ include "../connect.php";
 $output = '';  
 $count = ''; 
 $type = $_POST['type']; 
-//sleep(1);  
-//$sql = "SELECT * FROM pharmacys WHERE id > '.$_POST[last_video_id].' LIMIT 2"; 
-$sql = "SELECT * FROM pharmacy WHERE priority = 0 LIMIT 10 OFFSET ".$_POST['count']; 
+$sql = "SELECT * FROM hospital WHERE priority = 0 LIMIT 10 OFFSET ".$_POST['count']; 
 $result = mysqli_query($conn, $sql);  
 if(mysqli_num_rows($result) > 0)  
 {  
@@ -27,12 +25,12 @@ if(mysqli_num_rows($result) > 0)
                <div class="row m-0" style="border-bottom: 1px solid #f4f4f4 ;">
 							<div class="col-md-3" style="margin:auto">
 							<div>
-								<a href="mppharmacy_details.php?type=pharmacy&id='.$row["pharmacy_id"].'"><img src="directory/pharmacy/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>
+								<a href="mphospital_details.php?type=Hospital&id='.$row["hospital_id"].'"><img src="directory/hospital/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>
 							</div>
 							</div>
 							<div class="col-md-9 pl-0" style="margin:1rem 0">
 							    <div style="float:right">';
-							    	$ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$row[pharmacy_id]'");
+							    	$ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$row[hospital_id]'");
         							$ratingrow = mysqli_fetch_assoc($ratingquery);
         							if($ratingrow['count'] != 0){
         								$rating= $ratingrow['total']/$ratingrow['count'];
@@ -52,12 +50,12 @@ if(mysqli_num_rows($result) > 0)
     								}
     								$rating=$rating-1;									
     							}
-							$output .= '</div><a href="mppharmacy_details.php?type=pharmacy&id='.$row["pharmacy_id"].'" class="namehref"><p class="text-heading">&nbsp;'.$row["name"].'</p></a>
+							$output .= '</div><a href="mphospital_details.php?type=Hospital&id='.$row["hospital_id"].'" class="namehref"><p class="text-heading">&nbsp;'.$row["name"].'</p></a>
 							<p class="text">&nbsp;'.$speciality.'</P>
 							<div class="d-flex justify-content-between">
                             <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           
                             
-                                <a href="mppharmacy_details.php?type=pharmacy&id='.$row["pharmacy_id"].'" type="button" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;pharmacy</a>
+                                <a href="mphospital_details.php?type=Hospital&id='.$row["hospital_id"].'" type="button" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Hospital</a>
                             </div>
                          </div>   
 						</div>';  
