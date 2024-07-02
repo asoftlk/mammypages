@@ -7,12 +7,12 @@
 	font-size:16px;
 	font-weight:700;
 	}
-	.studiotype{
+	.hospitaltype{
 	border-left: 4px solid #68CF68;
 	margin-bottom: 0;
 	color:#666666;
 	}
-	.studiotype span{
+	.hospitaltype span{
 	/* background-color: #000;
 	color: #fff; */
 	padding: 2px 1px;
@@ -119,7 +119,7 @@
 	.checked {
 	color: orange;
 	}
-	.aboutstudio{
+	.abouthospital{
 	max-height:290px;
 	overflow:hidden;
 	}
@@ -343,7 +343,15 @@
 				<div class="col-md-3">
 					<div class="left-menu-part" style="background:transparent;">
 						<div class="unscroll" style="background-color:#fff; margin:10px 0; padding:10px 0">
-							<?php include "sidebar.php"; ?>
+							<h3>MP Directory</h3>
+							<ul style="list-style-type:none; padding-left:0">
+								<li><a role="button" href="hospital"><i class="icofont-hospital"></i> HOSPITALS</a></li>
+								<li><a role="button" href="doctors"><i class="icofont-doctor"></i> DOCTORS</a></li>
+								<li><a role="button" href="midwifes"><i class="icofont-nurse"></i> MIDWIFE CLINICS</a></li>
+								<li><a role="button" href="medical"><i class="icofont-nurse-alt"></i> MEDICAL CLINICS</a></li>
+								<li><a role="button" href="pharmacies"><i class="icofont-medical-sign"></i> PHARMACIES</a></li>
+								<li><a role="button" href="beauty"><i class="icofont-girl-alt"></i> BEAUTY SALON</a></li>
+							</ul>
 							<div class="client-sec mb"><a class="client-btn">Sponsors</a></div>
 						</div>
 						<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -362,8 +370,8 @@
 				<div class="col-md-6">
 					<?php $type = $_GET['type'];
 						$typeid = $_GET['id'];
-						$studio =mysqli_query($conn, "SELECT * FROM studio WHERE studio_id= '$typeid'");
-						$row= mysqli_fetch_array($studio);
+						$hospital =mysqli_query($conn, "SELECT * FROM hospital WHERE hospital_id= '$typeid'");
+						$row= mysqli_fetch_array($hospital);
 						$specialityarray = explode(" ///", $row['speciality']);
 						$speciality = "";
 						$videourl = $row['video'];
@@ -376,20 +384,20 @@
 								$speciality .= $specialityarray[$i].", ";
 							}
 						}
-						if(($type == 'studio') && (mysqli_num_rows($studio)>0)){
-							$url=urlencode('https://www.mammypages.com/mpstudio_details?type=studio&id='.$row["studio_id"]);
-							$urltelegram=urlencode('https://www.mammypages.com/mpstudio_details?type=studio&id='.$row["studio_id"].'&text='.$row["name"]);
+						if(($type == 'Hospital') && (mysqli_num_rows($hospital)>0)){
+							$url=urlencode('https://www.mammypages.com/mpdetails?type=Hospital&id='.$row["hospital_id"]);
+							$urltelegram=urlencode('https://www.mammypages.com/mpdetails?type=Hospital&id='.$row["hospital_id"].'&text='.$row["name"]);
 						echo '<div class="row fillbg l-border-radius-top">
 								<div class="text-center p-0">
-								<img src="directory/studio/'.$row["image"].'" class="img-fluid mb-2" style="width:100%; max-height:250px; border-radius: 15px;">
-								<a href="studio"><i class="bi bi-caret-left backbutton" data-toggle="tooltip" title="Back" data-placement="left" area-hidden="true"></i></a>
+								<img src="directory/hospital/'.$row["image"].'" class="img-fluid mb-2" style="width:100%; max-height:250px; border-radius: 15px;">
+								<a href="hospital"><i class="bi bi-caret-left backbutton" data-toggle="tooltip" title="Back" data-placement="left" area-hidden="true"></i></a>
 								</div>
 							 </div>
 								<div class="row fillbg l-border-radius-bottom l-title-card">
-								    <div class="col-4 col-md-3"><img src="directory/studio/'.$row["logo"].'" class="img-fluid l-main-logo"></div>
+								    <div class="col-4 col-md-3"><img src="directory/hospital/'.$row["logo"].'" class="img-fluid l-main-logo"></div>
 								    <div class="col-5 col-md-6">
 								        <p class="hosname mb-0">'.$row['name'].'</p>';
-										 if(!empty($speciality)){
+								          if(!empty($speciality)){
 											echo '<p class="mb-0">'.$speciality.'</p>';
 										} else {
 											echo '<p class="mb-0" style="height:24px;"></p>';
@@ -419,11 +427,11 @@
 											}
 											echo '</span>';
 										}
-										$followquery= mysqli_query($conn, "SELECT count(*) as totalfollow FROM mp_comments WHERE mp_id='$row[studio_id]' and follow_status=1");
+										$followquery= mysqli_query($conn, "SELECT count(*) as totalfollow FROM mp_comments WHERE mp_id='$row[hospital_id]' and follow_status=1");
 										$followrow=mysqli_fetch_array($followquery);
 										$totalfollowers = countFormat($followrow["totalfollow"]);
 										if($followrow["totalfollow"]>0){
-										echo '<p class="mt-1" style="font-size:13px; font-weight:bold">'.$totalfollowers.' Followers</p>';
+											echo '<p class="mt-1" style="font-size:13px; font-weight:bold">'.$totalfollowers.' Followers</p>';
 										}
 										else{
 											echo '<p class="mt-1" style="font-size:13px; font-weight:bold; height: 19.5px;"></p>';
@@ -431,7 +439,7 @@
 									echo '</div>';
 										
 								    echo '<div class="col-3 col-md-3 position-relative">
-								        <p class="studiotype position-absolute" style="right:10px"><span>'.$row['type'].'</span></p><br>
+								        <p class="hospitaltype position-absolute" style="right:10px"><span>'.$row['type'].'</span></p><br>
 								        <div class="d-flex float-right">';
 										echo !empty($row['facebook']) ?  '<a href="'.$row["facebook"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-facebook p-1"></i></a>&nbsp;':"";
 										echo !empty($row['instagram']) ?  '<a href="'.$row["instagram"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-instagram p-1"></i></a>&nbsp;':"";
@@ -449,25 +457,25 @@
 											</div>
 										</div>
 										</div>';
-											$followstatus = mysqli_query($conn, "SELECT * FROM mp_comments WHERE userid='$userid' AND mp_id='{$row['studio_id']}' AND follow_status=1");
+											$followstatus = mysqli_query($conn, "SELECT * FROM mp_comments WHERE userid='$userid' AND mp_id='{$row['hospital_id']}' AND follow_status=1");
 											$followstatusrow = mysqli_fetch_array($followstatus);
 
 											if ($followstatusrow && isset($followstatusrow['follow_status'])) {
 												if ($followstatusrow['follow_status'] == 0) {
-													echo '<button class="btn btn-success followbtn" value="'.$row["studio_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
+													echo '<button class="btn btn-success followbtn" value="'.$row["hospital_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
 												} else {
-													echo '<button class="btn btn-secondary followbtn" value="'.$row["studio_id"].'" style="font-size: 13px; padding: 0 5px;">Following</button>';
+													echo '<button class="btn btn-secondary followbtn" value="'.$row["hospital_id"].'" style="font-size: 13px; padding: 0 5px;">Following</button>';
 												}
 											} else {
-												echo '<button class="btn btn-success followbtn" value="'.$row["studio_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
+												echo '<button class="btn btn-success followbtn" value="'.$row["hospital_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
 											}
 									echo '</div>
 								</div>
 								</div>';
 									echo '<div class="row fillbg mt-1 l-border-radius py-2">
-									        <h5 class="heading mt-1" style="font-weight:bold; font-size:12px">ABOUT STUDIO';
+									        <h5 class="heading mt-1" style="font-weight:bold; font-size:12px">ABOUT HOSPITAL';
 									        
-									        $galquery= mysqli_query($conn, "SELECT image_name FROM mpstudio_gallery WHERE studio_id= '$typeid' and image_name!=''");
+									        $galquery= mysqli_query($conn, "SELECT image_name FROM mpgallery WHERE hospitalid= '$typeid' and image_name!=''");
 											if(mysqli_num_rows($galquery)>0){
 											echo	'<span class="galimage">GALLERY</span>';	
 											}
@@ -477,15 +485,15 @@
 						       						    echo '</h5>';
 									        
 									    echo '
-									<div class="aboutstudio" id="aboutstudio">'.$row["about"].'</div>
+									<div class="abouthospital" id="abouthospital">'.$row["about"].'</div>
 									<p class="expand text-right" style="display:none">Read More</p>';
-									/*$images = mysqli_query($conn, "SELECT * FROM mpstudio_gallery WHERE studio_id = '$row[studioid]'");
+									/*$images = mysqli_query($conn, "SELECT * FROM mpgallery WHERE hospitalid = '$row[hospitalid]'");
 									$count= mysqli_num_rows($images);
 									if($count>0){
 										echo '<br><h5 style="font-weight:bold">Gallery</h5>
 											<div class="col">';
 									while($row1= mysqli_fetch_array($images)){
-										echo '<img src="directory/studio/'.$row1["image_name"].'" class="img-fluid">';
+										echo '<img src="directory/hospital/'.$row1["image_name"].'" class="img-fluid">';
 									}
 						 			echo '</div>';
 									}*/
@@ -495,7 +503,7 @@
 						}
 						?>
 					<?php 
-						$reviewquery = mysqli_query($conn, "SELECT comment from mp_comments WHERE mp_id ='$row[studio_id]' AND userid='$userid'");
+						$reviewquery = mysqli_query($conn, "SELECT comment from mp_comments WHERE mp_id ='$row[hospital_id]' AND userid='$userid'");
 						$reviewrow = mysqli_fetch_assoc($reviewquery);
 						if(mysqli_num_rows($reviewquery)>0){
 						    if(strlen($reviewrow["comment"])<=0){
@@ -592,7 +600,7 @@
 							$numrows=mysqli_num_rows($fetch);
 							$count =$numrows;
 							if($count>0){
-								echo '<div class="row fillbg "><p class="heading mt-1" style="font-weight:bold; font-size:12px">studio REVIEW</p></div>';
+								echo '<div class="row fillbg "><p class="heading mt-1" style="font-weight:bold; font-size:12px">HOSPITAL REVIEW</p></div>';
 							
 							while($reviewrow= mysqli_fetch_array($fetch)){
 								echo '
@@ -684,7 +692,6 @@
 		</div>
 	</section>
 </div>
-<?php include "footer.php";?>
 <div class="modal fade" id="gallery" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
@@ -702,18 +709,14 @@
 					</div>
 					<div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:980px;height:380px;overflow:hidden; text-align:center">
 						<?php
-							$galquery = mysqli_query($conn, "SELECT * FROM mpstudio_gallery WHERE studio_id= '$typeid'");
-							if (mysqli_num_rows($galquery) > 0) {
-								while ($galrow = mysqli_fetch_array($galquery)) {
-									echo '
+							$galquery = mysqli_query($conn, "SELECT * FROM mpgallery WHERE hospitalid= '$typeid'");
+							while($galrow=mysqli_fetch_array($galquery)){
+								echo ' 
 										<div>
-											<img data-u="image" src="directory/doctor/' . $galrow["image_name"] . '">
-											<img data-u="thumb" src="directory/doctor/' . $galrow["image_name"] . '" height="90">
+										<img data-u="image" src="directory/hospital/'.$galrow["image_name"].'">
+										<img data-u="thumb" src="directory/hospital/'.$galrow["image_name"].'"   height="90">
 										</div>
 									';
-								}
-							} else {
-								echo '<div>No images found for this doctor.</div>';
 							}
 							?>     
 					</div>
@@ -768,7 +771,7 @@
 					} 
 					else{
 						echo '<video controls>
-								  <source src="directory/studio/video/'.$videourl.'" type="video/mp4">
+								  <source src="directory/hospital/video/'.$videourl.'" type="video/mp4">
 								  Your browser does not support the video tag.
 							   </video>';
 					}
@@ -833,7 +836,7 @@
 	                            required: "Review text cannot be empty",
 	                        },
 							rate:{
-								required: "Give Rating to the studio",
+								required: "Give Rating to the Hospital",
 							},
 							
 						},
@@ -958,7 +961,7 @@
 	                            required: "Review text cannot be empty",
 	                        },
 							rate:{
-								required: "Give Rating to the studio",
+								required: "Give Rating to the Hospital",
 							},
 							
 						},
@@ -1049,17 +1052,17 @@
 	    readMore();
 	  });
 	  $(document).on('click', '.expand', function(){
-		if($('#aboutstudio').hasClass('aboutstudio')){
-			$('#aboutstudio').removeClass('aboutstudio');
-			$('#aboutstudio').css({'height':'auto', 'overflow':'none'});
+		if($('#abouthospital').hasClass('abouthospital')){
+			$('#abouthospital').removeClass('abouthospital');
+			$('#abouthospital').css({'height':'auto', 'overflow':'none'});
 			$('.expand').text('Read Less');
 		}
 		else{
-			$('#aboutstudio').addClass('aboutstudio');
+			$('#abouthospital').addClass('abouthospital');
 			$('.expand').text('Read More');
 		}
 	  });
-	  if ($('#aboutstudio')[0].scrollHeight >  $('#aboutstudio').innerHeight()) {
+	  if ($('#abouthospital')[0].scrollHeight >  $('#abouthospital').innerHeight()) {
 	    $('.expand').css({'display':'block'});
 	}
 	
@@ -1147,10 +1150,10 @@
 </script>
 <script>
 	var follow="";
-	async function update_follow(email, studio_id, value){
+	async function update_follow(email, hospital_id, value){
 	   let result = await $.ajax({
 	        url: "ajax/followupdate",
-	        data: {email : email, type_id:studio_id, follow:'follow', value:value},
+	        data: {email : email, type_id:hospital_id, follow:'follow', value:value},
 			type: "POST",
 	        success: function(data) {
 				//debugger;
@@ -1214,3 +1217,4 @@
 	  }
 	});
 </script>
+<?php include "footer.php";?>
