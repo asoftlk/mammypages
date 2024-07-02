@@ -41,7 +41,6 @@ INSERT INTO `midwife` (`id`, `midwife_id`, `name`, `speciality`, `address`, `map
 (10, 'midwife-7243022', 'Ayurveda midwife', 'Ayurveda', 'No 36/9,New Hospital Rd, Colombo', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.966444201284!2d79.87721501477283!3d6.896473795013687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25bd20b72f64f%3A0xd69700aef7de28ff!2sAyurveda%20midwife!5e0!3m2!1sen!2slk!4v1631597962934!5m2!1sen!2slk\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>', 'Colombo', '0112565305', 'info@ayurvedamidwife.com', '', 'https://www.ayurvedamidwife.com/', 'Private midwife', '', '24', 'https://www.facebook.com/ayurvedamidwife/', '', '', 'logo14-09-2021-1631599120.png', 'fea14-09-2021-1631599142.jpg', '', 'Verified', '<div>Ayurveda is considered to be the oldest healing science in existence, forming the foundation of all others. In Sanskrit, “Ayurveda” means “Science of Life.” Western (Allopathic) medicine tends to focus on the management of disease, while Ayurveda provides the knowledge of how to prevent disease and eliminate its root cause.</div><div><br></div><div>Ayurveda was originally an oral tradition. In India, the ancient wisdom was comprehensively organized and written down over 5,000 years ago in the Vedas (sacred texts of India) and in the Ayurvedic texts known as Samhitas. Today, the ancient knowledge of Ayurveda is combined with modern medicine to offer a complete system of care focused on preventive health, health maintenance, and the treatment of disease.</div>', 0, '2021-09-01 20:07:06');
 
 
--- Table structure for table `medicalclinic`
 CREATE TABLE `medicalclinic` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `clinic_id` VARCHAR(300) NOT NULL,
@@ -155,7 +154,6 @@ VALUES
 (2, 'Salon toona', 'unisex', 'Salon', '123 Main St, Colombo', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.966444201284!2d79.87721501477283!3d6.896473795013687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25bd20b72f64f%3A0xd69700aef7de28ff!2sSalon%20One!5e0!3m2!1sen!2slk!4v1631597962934!5m2!1sen!2slk\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>', 'Colombo', '0112345678', 'info@salonone.com', '', 'https://www.salonone.com/', '', '10-7', 'https://www.facebook.com/salonone/', '', '', 'salon_logo.png', 'salon_image.jpg', '', 'Verified', '<div>Salon One is your premier destination for hair and beauty services in Colombo. We offer a wide range of services including haircuts, styling, coloring, and more.</div>', 0, '2024-06-29 10:00:00'),
 (3, 'Salon malli', 'male', 'Salon', '123 Main St, Colombo', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.966444201284!2d79.87721501477283!3d6.896473795013687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25bd20b72f64f%3A0xd69700aef7de28ff!2sSalon%20One!5e0!3m2!1sen!2slk!4v1631597962934!5m2!1sen!2slk\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>', 'Colombo', '0112345678', 'info@salonone.com', '', 'https://www.salonone.com/', '', '10-7', 'https://www.facebook.com/salonone/', '', '', 'salon_logo.png', 'salon_image.jpg', '', 'Verified', '<div>Salon One is your premier destination for hair and beauty services in Colombo. We offer a wide range of services including haircuts, styling, coloring, and more.</div>', 1, '2024-06-29 10:00:00');
 
--- akila is here
 -- thushitha is here
 
 DROP TABLE IF EXISTS `mpdoctor_gallery`;
@@ -240,5 +238,41 @@ INSERT INTO `mp_comments` (`mp_id`, `userid`, `comment`, `rating`, `follow_statu
 ('Hospital-8330399', 'konduru.nataraju@gmail.com', '', '0', '1', '2024-07-01 23:30:30'),
 ('DOC001', 'konduru.nataraju@gmail.com', '', '0', '1', '2024-07-01 23:40:52'),
 ('7', 'konduru.nataraju@gmail.com', '', '0', '1', '2024-07-02 00:01:13');
+
+
+CREATE TABLE `studio` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `studio_id` TEXT NOT NULL,
+  `name` TEXT NOT NULL,
+  `speciality` VARCHAR(200) DEFAULT NULL,
+  `type` TEXT NOT NULL,
+  `address` TEXT NOT NULL,
+  `map` TEXT NOT NULL,
+  `city` TEXT NOT NULL,
+  `mobile` VARCHAR(15) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `whatsapp` VARCHAR(15),
+  `website` VARCHAR(200) NOT NULL,
+  `subtype` VARCHAR(300),
+  `working_hours` VARCHAR(300) NOT NULL,
+  `facebook` TEXT,
+  `instagram` TEXT,
+  `linkedin` TEXT,
+  `logo` VARCHAR(300) NOT NULL,
+  `image` VARCHAR(300) NOT NULL,
+  `video` TEXT,
+  `status` TEXT NOT NULL,
+  `about` LONGTEXT NOT NULL,
+  `priority` INT(11) NOT NULL,
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
+INSERT INTO `studio` (`studio_id`,`name`,`speciality`,  `type`, `address`, `map`, `city`, `mobile`, `email`, `whatsapp`, `website`, `subtype`, `working_hours`, `facebook`, `instagram`, `linkedin`, `logo`, `image`, `video`, `status`, `about`, `priority`, `created_at`)
+VALUES
+('studio001', 'studio One', 'wedding', 'video', '123 Main St, Colombo', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.966444201284!2d79.87721501477283!3d6.896473795013687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25bd20b72f64f%3A0xd69700aef7de28ff!2sSalon%20One!5e0!3m2!1sen!2slk!4v1631597962934!5m2!1sen!2slk\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>', 'Colombo', '0112345678', 'info@salonone.com', '', 'https://www.salonone.com/', '', '10-7', 'https://www.facebook.com/salonone/', '', '', 'salon_logo.png', 'salon_image.jpg', '', 'Verified', '<div>Salon One is your premier destination for hair and beauty services in Colombo. We offer a wide range of services including haircuts, styling, coloring, and more.</div>', 0, '2024-06-29 10:00:00'),
+('studio002', 'studio toona', 'studio', 'photography', '123 Main St, Colombo', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.966444201284!2d79.87721501477283!3d6.896473795013687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25bd20b72f64f%3A0xd69700aef7de28ff!2sSalon%20One!5e0!3m2!1sen!2slk!4v1631597962934!5m2!1sen!2slk\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>', 'Colombo', '0112345678', 'info@salonone.com', '', 'https://www.salonone.com/', '', '10-7', 'https://www.facebook.com/salonone/', '', '', 'salon_logo.png', 'salon_image.jpg', '', 'Verified', '<div>Salon One is your premier destination for hair and beauty services in Colombo. We offer a wide range of services including haircuts, styling, coloring, and more.</div>', 0, '2024-06-29 10:00:00'),
+('studio003', 'studio pi', 'studio', 'photography', '123 Main St, Colombo', '<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.966444201284!2d79.87721501477283!3d6.896473795013687!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25bd20b72f64f%3A0xd69700aef7de28ff!2sSalon%20One!5e0!3m2!1sen!2slk!4v1631597962934!5m2!1sen!2slk\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\"></iframe>', 'Colombo', '0112345678', 'info@salonone.com', '', 'https://www.salonone.com/', '', '10-7', 'https://www.facebook.com/salonone/', '', '', 'salon_logo.png', 'salon_image.jpg', '', 'Verified', '<div>Salon One is your premier destination for hair and beauty services in Colombo. We offer a wide range of services including haircuts, styling, coloring, and more.</div>', 1, '2024-06-29 10:00:00');
 
 -- akila is here

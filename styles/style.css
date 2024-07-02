@@ -172,3 +172,11 @@
   line-height: 1.428571429;
   border-radius: 15px;
 }
+
+/* .top-menu{
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 123vh;
+  scrollbar-width: thin;
+  scrollbar-color: #5f45c9 #d25988;
+} */

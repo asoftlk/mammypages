@@ -467,15 +467,7 @@ bi-heart:hover{
    <div class="col-md-3 left-menu">
       <div class="left-menu-part">
         <div class="unscroll" style="background-color:#fff;padding:10px 0">  
-         <h3>MP Directory</h3>
-         <ul style="list-style-type:none; padding-left:0">
-            <li><a role="button" href="hospital"><i class="icofont-hospital"></i> HOSPITALS</a></li>
-            <li><a role="button" href="doctors"><i class="icofont-doctor"></i> DOCTORS</a></li>
-            <li><a role="button" href="midwifes"><i class="icofont-nurse"></i> MEDICAL CLINICS</a></li>
-            <li><a role="button" href="medical"><i class="icofont-medical-sign"></i> PHARMACIES</a></li>
-            <li><a role="button" href="pharmacies"><i class="icofont-girl-alt"></i> BEAUTY SALON</a></li>
-            <li><a role="button" href="beauty"><i class="icofont-camera"></i> STUDIOS</a></li>
-         </ul>
+         <?php include "sidebar.php"; ?>
          <div class="client-sec" style="padding-top: 1px; margin: 0 20px;"><a class="client-btn">Sponsors</a></div>
          </div>
          <div class="msg-part" style="margin-top:10px;text-align:center">

@@ -33,30 +33,30 @@ if(isset($_POST['submitreview'])){
 		}
 	}
 	else{
-	$mp_id = mysqli_real_escape_string($conn, $_POST['typeid']);
-	$userid =mysqli_real_escape_string($conn, $_POST['email']);
-	$comment = mysqli_real_escape_string($conn, $_POST['reviewdata']);
-   $rating= mysqli_real_escape_string($conn, $_POST['rate']);
-            
-	if($userid != null){
-	if(strlen($comment)>=2){
-		$insert= mysqli_query($conn, "INSERT INTO mp_comments (mp_id, userid, comment,rating) VALUES('$mp_id', '$userid', '$comment','$rating')");
-	//INSERT INTO `mp_comments`(`id`, `mp_id`, `comment`, `rating`, `follow_status`, `datetime`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]')
-        if($insert){
-			echo "Posted Successfully";
+		$mp_id = mysqli_real_escape_string($conn, $_POST['typeid']);
+		$userid =mysqli_real_escape_string($conn, $_POST['email']);
+		$comment = mysqli_real_escape_string($conn, $_POST['reviewdata']);
+		$rating= mysqli_real_escape_string($conn, $_POST['rate']);
+				
+		if($userid != null){
+			if(strlen($comment)>=2){
+				$insert= mysqli_query($conn, "INSERT INTO mp_comments (mp_id, userid, comment,rating) VALUES('$mp_id', '$userid', '$comment','$rating')");
+			//INSERT INTO `mp_comments`(`id`, `mp_id`, `comment`, `rating`, `follow_status`, `datetime`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]')
+				if($insert){
+					echo "Posted Successfully";
+				}
+				else{
+					echo "Post failed, Please try again";
+				}
+				
+			}
+			else{
+				echo "Comment should be atleast to 2 characters";
+			}
 		}
 		else{
-			echo "Post failed, Please try again";
+			echo "Please login to review";
 		}
-		
-	}
-	else{
-		echo "Comment should be atleast to 2 characters";
-	}
-	}
-	else{
-		echo "Please login to review hospital";
-	}
 	}
 }
 if(isset($_POST['deleteid'])){

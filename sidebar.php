@@ -1,11 +1,12 @@
 <h3>MP Directory</h3>
 <ul style="list-style-type:none; padding-left:0">
-<li><a role="button" href="hospital"><i class="icofont-hospital"></i> HOSPITALS</a></li>
-<li><a role="button" href="doctors"><i class="icofont-doctor"></i> DOCTORS</a></li>
-<li><a role="button" href="midwifes"><i class="icofont-nurse"></i> MIDWIFE CLINICS</a></li>
-<li><a role="button" href="medical"><i class="icofont-nurse-alt"></i> MEDICAL CLINICS</a></li>
-<li><a role="button" href="pharmacies"><i class="icofont-medical-sign"></i> PHARMACIES</a></li>
-<li><a role="button" href="beauty"><i class="icofont-girl-alt"></i> BEAUTY SALON</a></li>
+    <li><a role="button" href="hospital"><i class="icofont-hospital"></i> HOSPITALS</a></li>
+    <li><a role="button" href="doctors"><i class="icofont-doctor"></i> DOCTORS</a></li>
+    <li><a role="button" href="midwifes"><i class="icofont-nurse"></i> MIDWIFE CLINICS</a></li>
+    <li><a role="button" href="medical"><i class="icofont-nurse-alt"></i> MEDICAL CLINICS</a></li>
+    <li><a role="button" href="pharmacies"><i class="icofont-medical-sign"></i> PHARMACIES</a></li>
+    <li><a role="button" href="beauty"><i class="icofont-girl-alt"></i> BEAUTY SALON</a></li>
+    <li><a role="button" href="studio"><i class="icofont-camera"></i> STUDIOS</a></li>
 </ul>
 
 <script>
@@ -34,6 +35,8 @@
                 document.querySelector('a[href="pharmacies"]').classList.add("active");
         } else if (path === 'mpsaloon_details' && queryParams.get('type') === 'saloon') {
             document.querySelector('a[href="beauty"]').classList.add("active");
+        }else if (path === 'mpstudio_details' && queryParams.get('type') === 'studio') {
+            document.querySelector('a[href="studio"]').classList.add("active");
         }
     });
 </script>
