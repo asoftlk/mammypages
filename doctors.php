@@ -117,7 +117,7 @@ include "mp.php";
                     </div>
                     <div class="position-relative">
                         <select name="city" class="form-control form-control-sm"  id="city">
-                            <option value="">Select Speciality</option>
+                            <option value="">Select City</option>
                             <?php
                             $cityQuery = mysqli_query($conn, "SELECT DISTINCT city FROM doctor");
                             while ($cityRow = mysqli_fetch_array($cityQuery)) {
@@ -129,6 +129,7 @@ include "mp.php";
                             ?>
                         </select>
                     </div>
+                    <div><a type="button" id="clearFilters">Clear Filters</a></div>
                     <div class="position-relative">     
                         <input class="form-control form-control-sm"  type="search" name="searchdoctor" id="searchdoctor" placeholder="Search doctor" aria-label="Search">
                         <!--button class="btn btn-success form-control p-2" type="submit" ><i class="bi bi-search"></i></button-->
@@ -136,8 +137,7 @@ include "mp.php";
                     </div>
                 </div>  
         </form>
-         <div class="top-menu">
-            
+         <div class="top-menu">     
 			<?php $doctor =mysqli_query($conn, "SELECT * FROM doctor WHERE priority > 0 ORDER BY priority LIMIT 5");
 					$count = 0;
 					$numrows = mysqli_num_rows($doctor);
@@ -153,7 +153,7 @@ include "mp.php";
 								$speciality .= $specialityarray[$i].", ";
 							}
 						}
-					echo '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4 ;">
+					echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
 							<div class="col-md-3" style="margin:auto">
 							<div>
 								<a href="mpdoctor_details.php?type=doctor&id='.$row["doctor_id"].'"><img src="directory/doctor/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>
@@ -266,6 +266,8 @@ include "mp.php";
                         $('#remove_row').remove();
                         $('#load_data').append(data);
                         initialData = data;
+                        console.log("gg");
+                        console.log(initialData);
                     } else {
                         $('#btn_more').attr("class", "btn btn-secondary form-control");
                         $('#btn_more').attr("disabled", "true");
@@ -277,53 +279,57 @@ include "mp.php";
 
         $(document).on('search', 'input[type="search"]', function(e) {
             if ($(this).val().trim().length === 0) {
-                console.log("ff");
                 $('#load_data').append(initialData);
             }
         });
-    });
-    var height = $("#h2").height() + 20;
-    $(".left-menu-part, .right-cont-part").css({
-        'position': 'sticky',
-        'top': height
-    });
-    $(window).on('resize', function() {
-        var height = $("#h2").height() + 20;
-        $(".left-menu-part, .right-cont-part").css({
-            'top': height,
-            'position': 'sticky'
-        });
-    });
-    var count = 0;
-    $(document).ajaxComplete(function() {
-        if (count == 0) {
-            $('#btn_more').click();
-            count++;
-        }
-    });
 
-    $('#searchdoctor').keyup(function() {
-        var query = $('#searchdoctor').val();
-        if (query.length >= 1) {
-            load_data(($('#searchdoctor').val()));
-        }
-        if (query.length == 0) {
+        $('#searchdoctor, #speciality, #type, #city').on('input change keyup', function() {
+            var query = $('#searchdoctor').val();
+            var speciality = $('#speciality').val();
+            var type = $('#type').val();
+            var city = $('#city').val();
+
+            if (query.length >= 1 || speciality || type || city) {
+                load_data(query, speciality, type, city);
+                $('.priority-list').hide();
+            } else {
+                console.log("ff");
+                $("#suggesstion-box").hide();
+                $('#load_data').html(initialData);
+                $('.priority-list').show();
+            }
+        });
+
+        $('#clearFilters').click(function() {
+            $('#searchdoctor').val('');
+            $('#speciality').val('');
+            $('#type').val('');
+            $('#city').val('');
+
             $("#suggesstion-box").hide();
             $('#load_data').html(initialData);
-        }
+            $('.priority-list').show();
+        });
 
-        function load_data(value) {
+        function load_data(value,speciality, type, city) {
             $.ajax({
-                url: "ajax/searchdoctor",
+                url: "ajax/searchDoctor",
                 method: "POST",
                 data: {
                     search: "search",
-                    value: value
+                    value: value,
+                    speciality: speciality,
+                    type: type,
+                    city: city
                 },
                 success: function(data) {
                     var result = JSON.parse(data);
-                    $("#suggesstion-box").show();
-                    $("#suggesstion-box").html(result.html);
+                    if (value.length >= 1) {
+                        $("#suggesstion-box").show();
+                        $("#suggesstion-box").html(result.html);
+                    } else {
+                        $("#suggesstion-box").hide();
+                    }
                     if (result.data.length > 0) {
                         var html = '';
                         result.data.forEach(function(doctor) {
@@ -373,8 +379,27 @@ include "mp.php";
                 }
             });
         }
-
     });
+    var height = $("#h2").height() + 20;
+    $(".left-menu-part, .right-cont-part").css({
+        'position': 'sticky',
+        'top': height
+    });
+    $(window).on('resize', function() {
+        var height = $("#h2").height() + 20;
+        $(".left-menu-part, .right-cont-part").css({
+            'top': height,
+            'position': 'sticky'
+        });
+    });
+    var count = 0;
+    $(document).ajaxComplete(function() {
+        if (count == 0) {
+            $('#btn_more').click();
+            count++;
+        }
+    });
+
     $('#searchdoctor').on('search', function() {
         $('#suggesstion-box').hide()
     });
