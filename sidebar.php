@@ -23,19 +23,19 @@
             }
         });
 
-        if (path === 'mpdoctor_details' && queryParams.get('type') === 'doctor') {
+        if (path === 'mpdetails' && queryParams.get('type') === 'doctor') {
             document.querySelector('a[href="doctors"]').classList.add("active");
-        } else if (path === 'mpdetails' && queryParams.get('type') === 'hospital') {
+        } else if (path === 'mphospital_details' && queryParams.get('type') === 'hospital') {
             document.querySelector('a[href="hospital"]').classList.add("active");
-        } else if (path === 'mpmidwife_details' && queryParams.get('type') === 'midwife') {
+        } else if (path === 'mpdetails' && queryParams.get('type') === 'midwife') {
             document.querySelector('a[href="midwifes"]').classList.add("active");
-        } else if (path === 'mpmedical_details' && queryParams.get('type') === 'medical') {
+        } else if (path === 'mpdetails' && queryParams.get('type') === 'medical') {
                 document.querySelector('a[href="medical"]').classList.add("active");
-        } else if (path === 'mppharmacy_details' && queryParams.get('type') === 'pharmacy') {
+        } else if (path === 'mpdetails' && queryParams.get('type') === 'pharmacy') {
                 document.querySelector('a[href="pharmacies"]').classList.add("active");
-        } else if (path === 'mpsaloon_details' && queryParams.get('type') === 'saloon') {
+        } else if (path === 'mpdetails' && queryParams.get('type') === 'saloon') {
             document.querySelector('a[href="beauty"]').classList.add("active");
-        }else if (path === 'mpstudio_details' && queryParams.get('type') === 'studio') {
+        }else if (path === 'mpdetails' && queryParams.get('type') === 'studio') {
             document.querySelector('a[href="studio"]').classList.add("active");
         }
     });

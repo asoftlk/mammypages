@@ -277,4 +277,24 @@ VALUES
 
 ALTER TABLE doctor ADD COLUMN video VARCHAR(255) AFTER image;
 ALTER TABLE doctor ADD COLUMN map TEXT AFTER address;
+
+UPDATE doctor
+SET name = 'Dr. Joe Doe',
+    speciality = 'surgery',
+    email = 'joe@gmail.com',
+    logo = 'joe.jpg',
+    image = 'joebg.jpg',
+    about = 'Dr. Joe Doe is a dedicated surgeon with years of experience...',
+    qualification = 'MD Surgery'
+WHERE doctor_id = 'DOC001';
+
+UPDATE doctor
+SET name = 'Dr. Sanjeewa Wijesekara',
+    mobile = '+9474523658',
+    email = 'sanjeewa@gmail.com',
+    website = 'www.sanjeewa.com',
+    about = 'Dr. Sanjeewa Wijesekara is a dedicated cardiologist with years of experience...',
+    hospital_name = 'Asiri Hospital'
+WHERE doctor_id = 'DOC002';
+
 -- akila is here
