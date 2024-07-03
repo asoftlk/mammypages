@@ -155,12 +155,12 @@ include "mp.php";
 					echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
 							<div class="col-md-3" style="margin:auto">
 							<div>
-								<a href="mpdetails.php?type=doctor&id='.$row["doctor_id"].'"><img src="directory/doctor/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>
+								<a href="mpconnect/doctor/' .urlencode(str_replace(' ', '_', $row["name"])). '"><img src="directory/doctor/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>
 							</div>
 							</div>
 							<div class="col-md-9 pl-0" style="margin:1rem 0">
 							<div class="d-flex">
-                            <p class="text"><a href="mpdetails.php?type=doctor&id='.$row["doctor_id"].'" class="namehref"><p class="text-heading">&nbsp;'.$row["name"].'</p></a>
+                            <p class="text"><a href="mpconnect/doctor/' .urlencode(str_replace(' ', '_', $row["name"])). '" class="namehref"><p class="text-heading">&nbsp;'.$row["name"].'</p></a>
                                 <img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
                             </div>
 							<div class="d-flex">
@@ -192,7 +192,7 @@ include "mp.php";
 							<div class="d-flex">
                             <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           
                             
-                                <a href="mpdetails.php?type=doctor&id='.$row["doctor_id"].'" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;doctor</a>
+                                <a href="mpconnect/doctor/' .urlencode(str_replace(' ', '_', $row["name"])). '" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;doctor</a>
                             </div>
                          </div>   
 						</div>';
@@ -335,15 +335,16 @@ include "mp.php";
                             var specialityArray = doctor.speciality.split(" ///");
                             var speciality = specialityArray.join(", ");
                             var rating = doctor.rating ? parseFloat(doctor.rating) : 0;
+                            var encodedName = encodeURIComponent(doctor.name.replace(/\s+/g, '_'));
                             
                             html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
                             html += '<div class="col-md-3" style="margin:auto">';
-                            html += '<a href="mpdetails.php?type=doctor&id=' + doctor.doctor_id + '">';
+                            html += '<a href="mpconnect/doctor/' + encodedName + '">';
                             html += '<img src="directory/doctor/' + doctor.logo + '" class="img-fluid" style="max-height:5rem"></a>';
                             html += '</div>';
                             html += '<div class="col-md-9 pl-0" style="margin:1rem 0">';
                             html += '<div class="d-flex">';
-                            html += '<p class="text"><a href="mpdetails.php?type=doctor&id=' + doctor.doctor_id + '" class="namehref">';
+                            html += '<p class="text"><a href="mpconnect/doctor/' + encodedName + '" class="namehref">';
                             html += '<p class="text-heading">&nbsp;' + doctor.name + '</p></a>';
                             if (doctor.priority > 0) {
                                 html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
@@ -368,7 +369,7 @@ include "mp.php";
                             html += '</div></div>';
                             html += '<div class="d-flex">';
                             html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + doctor.address + '</P>';                          
-                            html += '<a href="mpdetails.php?type=doctor&id=' + doctor.doctor_id + '" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;doctor</a>';
+                            html += '<a href="mpconnect/doctor/' + encodedName + '" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;doctor</a>';
                             html += '</div></div></div>';
                         });
                         $("#load_data").html(html);

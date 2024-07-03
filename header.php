@@ -81,6 +81,8 @@ function countFormat($num) {
   <meta name="author" content="Mammypages Veramasa">
   <link rel="icon" type="image/icon type" href="assets/images/favicon.ico" />
   <!--base href="/"-->
+  <base href="/mammypages/">
+
   <meta name="viewport" content="width=device-width, minimum-scale=1">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -368,9 +368,9 @@
 					</div>
 				</div>
 				<div class="col-md-6">
-					<?php $type = $_GET['type'];
-						$typeid = $_GET['id'];
-						$hospital =mysqli_query($conn, "SELECT * FROM hospital WHERE hospital_id= '$typeid'");
+					<?php 
+                        $name = isset($_GET['name']) ? mysqli_real_escape_string($conn, str_replace('_', ' ', $_GET['name'])) : '';
+						$hospital =mysqli_query($conn, "SELECT * FROM hospital h WHERE h.name= '$name'");
 						$row= mysqli_fetch_array($hospital);
 						$specialityarray = explode(" ///", $row['speciality']);
 						$speciality = "";
@@ -384,7 +384,7 @@
 								$speciality .= $specialityarray[$i].", ";
 							}
 						}
-						if(($type == 'Hospital') && (mysqli_num_rows($hospital)>0)){
+						if((mysqli_num_rows($hospital)>0)){
 							$url=urlencode('https://www.mammypages.com/mpdetails?type=Hospital&id='.$row["hospital_id"]);
 							$urltelegram=urlencode('https://www.mammypages.com/mpdetails?type=Hospital&id='.$row["hospital_id"].'&text='.$row["name"]);
 						echo '<div class="row fillbg l-border-radius-top">
@@ -402,7 +402,7 @@
 										} else {
 											echo '<p class="mb-0" style="height:24px;"></p>';
 										}
-										$ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$typeid'");
+										$ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '".$row["hospital_id"]."'");
 										$ratingrow = mysqli_fetch_assoc($ratingquery);
 										if($ratingrow['count'] != 0){
 											$rating= $ratingrow['total']/$ratingrow['count'];
@@ -475,7 +475,7 @@
 									echo '<div class="row fillbg mt-1 l-border-radius py-2">
 									        <h5 class="heading mt-1" style="font-weight:bold; font-size:12px">ABOUT HOSPITAL';
 									        
-									        $galquery= mysqli_query($conn, "SELECT image_name FROM mpgallery WHERE hospitalid= '$typeid' and image_name!=''");
+									        $galquery= mysqli_query($conn, "SELECT image_name FROM mpgallery WHERE hospitalid= '".$row["hospital_id"]."' and image_name!=''");
 											if(mysqli_num_rows($galquery)>0){
 											echo	'<span class="galimage">GALLERY</span>';	
 											}
@@ -501,7 +501,8 @@
 								';
 							
 						}
-						?>
+                    ?>
+
 					<?php 
 						$reviewquery = mysqli_query($conn, "SELECT comment from mp_comments WHERE mp_id ='$row[hospital_id]' AND userid='$userid'");
 						$reviewrow = mysqli_fetch_assoc($reviewquery);
@@ -569,7 +570,7 @@
 							</div>
 							<div class="" style="width:88%">
 								<form method="POST" action="ajax/mp_review" id="reviewform">
-									<input type="hidden" name="typeid" value="<?php echo $typeid;?>">
+									<input type="hidden" name="typeid" value="<?php echo $row["hospital_id"]?>">
 									<input type="hidden" name="email" value="<?php echo $userid;?>">
 									<textarea name="reviewdata" style="width:100%; height:4rem; resize:none; border:1px solid #C7C7C7"></textarea>
 									<br style="clear:both">
@@ -595,7 +596,7 @@
 					<?php } ?>
 					<div id="reviewlist" style="margin:0rem;">
 						<?php 
-							$fetch =mysqli_query($conn, "SELECT users_reg.email, users_reg.profile_image, users_reg.first_name, users_reg.last_name, mp_comments.comment, mp_comments.datetime, mp_comments.mp_id, mp_comments.id, mp_comments.rating FROM users_reg INNER JOIN mp_comments ON users_reg.email=mp_comments.userid WHERE mp_comments.mp_id='$typeid' AND mp_comments.comment != '' ORDER BY mp_comments.datetime DESC LIMIT 5");
+							$fetch =mysqli_query($conn, "SELECT users_reg.email, users_reg.profile_image, users_reg.first_name, users_reg.last_name, mp_comments.comment, mp_comments.datetime, mp_comments.mp_id, mp_comments.id, mp_comments.rating FROM users_reg INNER JOIN mp_comments ON users_reg.email=mp_comments.userid WHERE mp_comments.mp_id='".$row["hospital_id"]."' AND mp_comments.comment != '' ORDER BY mp_comments.datetime DESC LIMIT 5");
 							$i=0;
 							$numrows=mysqli_num_rows($fetch);
 							$count =$numrows;

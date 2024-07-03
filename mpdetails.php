@@ -362,15 +362,17 @@
 				<div class="col-md-6">
 					<?php 
 						$type = isset($_GET['type']) ? mysqli_real_escape_string($conn, $_GET['type']) : '';
-						$typeid = isset($_GET['id']) ? mysqli_real_escape_string($conn, $_GET['id']) : '';
-						
-						if (!empty($type) && !empty($typeid)) {
+                        $name = isset($_GET['name']) ? mysqli_real_escape_string($conn, str_replace('_', ' ', $_GET['name'])) : '';
+
+						if (!empty($type) && !empty($name)) {
 							$tablegallery_name = "mp" . $type . "_gallery";
 							$id_column = $type . '_id';
-							$query = "SELECT * FROM `$type` WHERE `$id_column` = '$typeid'";
+							$query = "SELECT * FROM `$type` WHERE name = '$name'";
 							$typequery = mysqli_query($conn, $query);
 						}						
 						$row= mysqli_fetch_array($typequery);
+						$typeid = $row["$id_column"];
+
 						$type_name = $row['name'];
 						$specialityarray = explode(" ///", $row['speciality']);
 						$speciality = "";
