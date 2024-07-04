@@ -361,9 +361,9 @@
 				</div>
 				<div class="col-md-6">
 					<?php 
+                        $id = isset($_POST['hospital_id']) ? $_POST['hospital_id'] : '';
                         $name = isset($_GET['name']) ? mysqli_real_escape_string($conn, str_replace('_', ' ', $_GET['name'])) : '';
-						$hospital =mysqli_query($conn, "SELECT * FROM hospital h WHERE h.name= '$name'");
-						
+						$hospital =mysqli_query($conn, "SELECT * FROM hospital  WHERE hospital_id= '$id'");				
 						$row= mysqli_fetch_array($hospital);
 						$specialityarray = explode(" ///", $row['speciality']);
 						$speciality = "";

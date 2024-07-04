@@ -196,7 +196,10 @@ include "mp.php";
 							<div class="d-flex">
                             <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           
                             
-                                <a href="mpconnect/pharmacy/' .urlencode(str_replace(' ', '_', $row["name"])). '" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;pharmacy</a>
+                                <form action="mpconnect/pharmacy/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
+                                <input type="hidden" name="pharmacy_id" value="' . $row["pharmacy_id"] . '">
+                                <button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Pharmacy</button>
+                                </form>
                             </div>
                          </div>   
 						</div>';
@@ -283,7 +286,6 @@ include "mp.php";
 
         $(document).on('search', 'input[type="search"]', function(e) {
             if ($(this).val().trim().length === 0) {
-                console.log("ff");
                 $('#load_data').append(initialData);
             }
         });
@@ -328,7 +330,6 @@ include "mp.php";
                 },
                 success: function(data) {
                     var result = JSON.parse(data);
-                    console.log(result.data);
                     if (value.length >= 1) {
                         $("#suggesstion-box").show();
                         $("#suggesstion-box").html(result.html);
@@ -342,6 +343,7 @@ include "mp.php";
                             var speciality = specialityArray?.join(", ");
                             var rating = pharmacy.rating ? parseFloat(pharmacy.rating) : 0;
                             var encodedName = encodeURIComponent(pharmacy.name.replace(/\s+/g, '_'));
+                            var pharmacyId = pharmacy.pharmacy_id;
                             
                             html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
                             html += '<div class="col-md-3" style="margin:auto">';
@@ -375,7 +377,10 @@ include "mp.php";
                             html += '</div></div>';
                             html += '<div class="d-flex">';
                             html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + pharmacy.address + '</P>';                          
-                            html += '<a href="mpconnect/pharmacy/' + encodedName + '" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;pharmacy</a>';
+                            html += '<form action="mpconnect/pharmacy/'+ encodedName +'" method="post" style="display:inline;">';
+                            html += '<input type="hidden" name="pharmacy_id" value="'+pharmacyId+'">';
+                            html += '<button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Pharmacy</button>';
+                            html += '</form>';
                             html += '</div></div></div>';
                         });
                         $("#load_data").html(html);

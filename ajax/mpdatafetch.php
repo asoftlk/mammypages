@@ -56,7 +56,11 @@ if(mysqli_num_rows($result) > 0)
 							<p class="text">&nbsp;'.$speciality.'</P>
 							<div class="d-flex justify-content-between">
                             <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           
-                                <a href="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $row["name"])).'" type="button" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;'.$type.'</a>
+                                           <form action="mpconnect/'.$type.'/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
+                                <input type="hidden" name="' . $type . '_id" value="' . $row[$type . '_id'] . '">
+                                <button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;'.$type.'</button>
+                                </form>
+                                
                             </div>
                          </div>   
 						</div>';  

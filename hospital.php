@@ -142,11 +142,14 @@
 										echo '</div>
 										</div>
 										<div class="d-flex">
-								                       <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           
-								                       
-								                           <a href="mpconnect/hospital/' .urlencode(str_replace(' ', '_', $row["name"])). '" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;Hospital</a>
-								                       </div>
-								                    </div>   
+                                            <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           
+                                            
+                                            <form action="mpconnect/hospital/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
+                                            <input type="hidden" name="hospital_id" value="' . $row["hospital_id"] . '">
+                                            <button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Hospital</button>
+                                            </form>
+                                            </div>
+                                        </div>   
 									</div>';
 								}
 								if($numrows >0){
@@ -287,6 +290,7 @@
 	                        var speciality = specialityArray.join(", ");
 	                        var rating = hospital.rating ? parseFloat(hospital.rating) : 0;
                             var encodedName = encodeURIComponent(hospital.name.replace(/\s+/g, '_'));
+                            var hospitalId = hospital.hospital_id;
 	                        
 	                        html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
 	                        html += '<div class="col-md-3" style="margin:auto">';
@@ -319,7 +323,10 @@
 	                        html += '</div></div>';
 	                        html += '<div class="d-flex">';
 	                        html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + hospital.address + '</P>';                          
-	                        html += '<a href="mpconnect/hospital/' + encodedName + '" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;Hospital</a>';
+                            html += '<form action="mpconnect/hospital/'+ encodedName +'" method="post" style="display:inline;">';
+                            html += '<input type="hidden" name="hospital_id" value="'+hospitalId+'">';
+                            html += '<button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Hospital</button>';
+                            html += '</form>';
 	                        html += '</div></div></div>';
 	                    });
 	                    $("#load_data").html(html);
