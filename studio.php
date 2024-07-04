@@ -85,6 +85,9 @@ include "mp.php";
    </div>
    <div class="col-md-6">
       <div class="article-sec">
+        <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-x8q3gx">
+            <img src="https://s3.ap-southeast-1.amazonaws.com/dlg.dialog.lk/s3fs-public/2022-12/dialog-and-nonvoice.jpg" alt="Advertisement" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
       <form action="" method="POST">
             <input class="form-control form-control-sm" type="search" name="searchstudio" id="searchstudio" placeholder="Search studio" aria-label="Search">
             <!--button class="btn btn-success form-control p-2" type="submit" ><i class="bi bi-search"></i></button-->
@@ -213,6 +216,9 @@ include "mp.php";
    </div>
            <div class="col-md-3">
                <div class="right-cont-part">
+                    <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-vuzb25">
+                        <img src="https://www.shutterstock.com/image-vector/megafon-bharti-airtel-limited-safaricom-600nw-2409713703.jpg" alt="Advertisement" style="width: 100%; object-fit: cover;">
+                    </div>
                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                     <!-- Square -->
                     <ins class="adsbygoogle"
