@@ -14,29 +14,94 @@
         var path = window.location.pathname.split("/").pop();
         var queryParams = new URLSearchParams(window.location.search);
         var type = queryParams.get('type') ? queryParams.get('type').toLowerCase() : null;
-        var menuLinks = document.querySelectorAll(".left-menu-part a");
+        var menuLinks = document.querySelectorAll("ul li a");
 
-        menuLinks.forEach(function(link) {
-            var href = link.getAttribute("href");
-            if (href === path) {
-                link.classList.add("active");
+        function activateLink(href) {
+            menuLinks.forEach(function(link) {
+                if (link.getAttribute("href") === href) {
+                    link.classList.add("active");
+                }
+            });
+        }
+
+        switch (path) {
+            case 'hospital':
+                activateLink('hospital');
+                break;
+            case 'doctors':
+                activateLink('doctors');
+                break;
+            case 'midwifes':
+                activateLink('midwifes');
+                break;
+            case 'medical':
+                activateLink('medical');
+                break;
+            case 'pharmacies':
+                activateLink('pharmacies');
+                break;
+            case 'beauty':
+                activateLink('beauty');
+                break;
+            case 'studio':
+                activateLink('studio');
+                break;
+        }
+
+        if (path === 'mpdetails' && type) {
+            switch (type) {
+                case 'doctor':
+                    activateLink('doctors');
+                    break;
+                case 'hospital':
+                    activateLink('hospital');
+                    break;
+                case 'midwife':
+                    activateLink('midwifes');
+                    break;
+                case 'medical':
+                    activateLink('medical');
+                    break;
+                case 'pharmacy':
+                    activateLink('pharmacies');
+                    break;
+                case 'saloon':
+                    activateLink('beauty');
+                    break;
+                case 'studio':
+                    activateLink('studio');
+                    break;
             }
-        });
+        }
 
-        if (path === 'mpdetails' && queryParams.get('type') === 'doctor') {
-            document.querySelector('a[href="doctors"]').classList.add("active");
-        } else if (path === 'mphospital_details' && queryParams.get('type') === 'hospital') {
-            document.querySelector('a[href="hospital"]').classList.add("active");
-        } else if (path === 'mpdetails' && queryParams.get('type') === 'midwife') {
-            document.querySelector('a[href="midwifes"]').classList.add("active");
-        } else if (path === 'mpdetails' && queryParams.get('type') === 'medical') {
-                document.querySelector('a[href="medical"]').classList.add("active");
-        } else if (path === 'mpdetails' && queryParams.get('type') === 'pharmacy') {
-                document.querySelector('a[href="pharmacies"]').classList.add("active");
-        } else if (path === 'mpdetails' && queryParams.get('type') === 'saloon') {
-            document.querySelector('a[href="beauty"]').classList.add("active");
-        }else if (path === 'mpdetails' && queryParams.get('type') === 'studio') {
-            document.querySelector('a[href="studio"]').classList.add("active");
+        var pathSegments = window.location.pathname.split("/");
+        if (pathSegments.includes("mpconnect") && pathSegments.length > 2) {
+            var detailType = pathSegments[pathSegments.length - 2];
+            if (detailType) {
+                switch (detailType.toLowerCase()) {
+                    case 'doctor':
+                        activateLink('doctors');
+                        break;
+                    case 'hospital':
+                        activateLink('hospital');
+                        break;
+                    case 'midwife':
+                        activateLink('midwifes');
+                        break;
+                    case 'medical':
+                        activateLink('medical');
+                        break;
+                    case 'pharmacy':
+                        activateLink('pharmacies');
+                        break;
+                    case 'beauty':
+                        activateLink('beauty');
+                        break;
+                    case 'studio':
+                        activateLink('studio');
+                        break;
+                }
+            }
         }
     });
 </script>

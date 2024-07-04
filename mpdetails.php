@@ -763,26 +763,26 @@
 <div class="modal fade" id="video" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
-			<div class="modal-header" style="padding:0.2rem 1rem">
-				<h5 class="modal-title" id="videoModalLabel">
-					<?php echo $row['name'] . " Video"; ?>
-				</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-				</button>
+			<div class="ratio ratio-16x9">
+				<div class="modal-body p-0">
+					<?php
+						if (strpos($videourl, 'iframe') !== false) {
+							echo $videourl;
+						} 
+						else{
+							echo '<video controls>
+									  <source src="directory/'. $type .'/video/'.$videourl.'" type="video/mp4">
+									  Your browser does not support the video tag.
+								   </video>';
+						}
+						?>
+				</div>
 			</div>
-			<div class="modal-body m-auto mb-1 p-0">
-				<?php
-					if (strpos($videourl, 'iframe') !== false) {
-						echo $videourl;
-					} 
-					else{
-						echo '<video controls>
-								  <source src="directory/'. $type .'/video/'.$videourl.'" type="video/mp4">
-								  Your browser does not support the video tag.
-							   </video>';
-					}
-					?>
+
+			<div class="text-center py-1 bg-dark">
+				<button  type="button" data-dismiss="modal" aria-label="Close" class="btn btn-sm btn-light" data-mdb-dismiss="modal">
+				Close
+				</button>
 			</div>
 		</div>
 	</div>
@@ -817,123 +817,123 @@
 	}
 	$(document).ready(function () { 
 		var typeName = "<?php echo $type_name; ?>";
-	$("#submitreview").click(function () { 
-			var form = $("#reviewform");
-	                form.validate({
-	                    errorElement: 'span',
-	                    errorClass: 'help-block',
-	                    highlight: function(element, errorClass, validClass) {
-	                        $(element).closest('.form-group').addClass("has-error");
-	                    },
-	                    unhighlight: function(element, errorClass, validClass) {
-	                        $(element).closest('.form-group').removeClass("has-error");
-	                    },
-						ignore: "",
-	                    rules: {
-	                        reviewdata: {
-	                            required: true,
-	                        },
-							rate: {
-								required: true,
+		$("#submitreview").click(function () { 
+				var form = $("#reviewform");
+						form.validate({
+							errorElement: 'span',
+							errorClass: 'help-block',
+							highlight: function(element, errorClass, validClass) {
+								$(element).closest('.form-group').addClass("has-error");
 							},
-							
-						},
-	                    messages: {
-	                        reviewdata: {
-	                            required: "Review text cannot be empty",
-	                        },
-							rate:{
-								required: "Give Rating to the " + typeName,
+							unhighlight: function(element, errorClass, validClass) {
+								$(element).closest('.form-group').removeClass("has-error");
 							},
-							
-						},
-						errorPlacement: function (error, element) {
-	                        if (element.attr("name") == "rate") {
-								var errortext=$("#reviewform").validate().submitted.rate;
-	                             $("#rating_error").text(errortext);
-	                        } else {
-	                            error.insertAfter($(element));
-	                        }
-	                    },
-						submitHandler: function(form) {
-							$.ajax({
-								type:form.method,
-								url: form.action,
-								mimeType: "multipart/form-data",
-								data:$(form).serialize(),
+							ignore: "",
+							rules: {
+								reviewdata: {
+									required: true,
+								},
+								rate: {
+									required: true,
+								},
 								
-								success:function(data){
-									//debugger
-									console.log(data);
-									if(data=='Posted Successfully'){
-									removeReg(data, 'success');
-									}
-									else{
+							},
+							messages: {
+								reviewdata: {
+									required: "Review text cannot be empty",
+								},
+								rate:{
+									required: "Give Rating to the " + typeName,
+								},
+								
+							},
+							errorPlacement: function (error, element) {
+								if (element.attr("name") == "rate") {
+									var errortext=$("#reviewform").validate().submitted.rate;
+									$("#rating_error").text(errortext);
+								} else {
+									error.insertAfter($(element));
+								}
+							},
+							submitHandler: function(form) {
+								$.ajax({
+									type:form.method,
+									url: form.action,
+									mimeType: "multipart/form-data",
+									data:$(form).serialize(),
+									
+									success:function(data){
+										//debugger
+										console.log(data);
+										if(data=='Posted Successfully'){
+										removeReg(data, 'success');
+										}
+										else{
+											removeReg(data, 'error');
+										}
+									},
+									error: function(data){
+										//console.log("error");
+										console.log(data);
 										removeReg(data, 'error');
 									}
-								},
-								error: function(data){
-									//console.log("error");
-									console.log(data);
-									removeReg(data, 'error');
-								}
-							});
-						}
-							});
-					});
-		$(document).on('click', '.delete', function () { 
-			var attrid=$(this).attr('id');
-			var attrid1 = attrid.charAt(attrid.length - 1);
-			var id= $("#id"+attrid1).attr('value');
-		Swal.fire({
-		  title: 'Are you sure?',
-		  text: "You want to Delete review",
-		  icon: 'warning',
-		  showCancelButton: true,
-		  confirmButtonColor: '#3085d6',
-		  cancelButtonColor: '#d33',
-		  confirmButtonText: 'Yes, delete it!'
-		}).then((result) => {
-		  if (result.isConfirmed) {
-			$.ajax({
-				type:'post',
-				url: 'ajax/mp_review',
-				mimeType: "multipart/form-data",
-				data:{id : id, deleteid:"delete"},
-				
-				success:function(data){
-					//debugger
-					console.log(data);
-					if(data=='Deleted Successfully'){
-					Swal.fire(
-					  'Deleted!',
-					  'Your Review has been deleted.',
-					  'success'
-					).then((result) => {
-				  /* Read more about isConfirmed, isDenied below */
-				  if (result.isConfirmed) {
-					window.location.reload();
-				  }
-				  else{
-					  window.location.reload();
-				  }
-					});
+								});
+							}
+								});
+						});
+			$(document).on('click', '.delete', function () { 
+				var attrid=$(this).attr('id');
+				var attrid1 = attrid.charAt(attrid.length - 1);
+				var id= $("#id"+attrid1).attr('value');
+			Swal.fire({
+			title: 'Are you sure?',
+			text: "You want to Delete review",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+			}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					type:'post',
+					url: 'ajax/mp_review',
+					mimeType: "multipart/form-data",
+					data:{id : id, deleteid:"delete"},
 					
+					success:function(data){
+						//debugger
+						console.log(data);
+						if(data=='Deleted Successfully'){
+						Swal.fire(
+						'Deleted!',
+						'Your Review has been deleted.',
+						'success'
+						).then((result) => {
+					/* Read more about isConfirmed, isDenied below */
+					if (result.isConfirmed) {
+						window.location.reload();
 					}
 					else{
+						window.location.reload();
+					}
+						});
+						
+						}
+						else{
+							removeReg(data, 'error');
+						}
+					},
+					error: function(data){
+						//console.log("error");
+						console.log(data);
 						removeReg(data, 'error');
 					}
-				},
-				error: function(data){
-					//console.log("error");
-					console.log(data);
-					removeReg(data, 'error');
-				}
+				});
+			}
 			});
-		  }
+		
 		});
-	
-	});
 		$(document).on('click', '.edit', function () { 	var id=$(this).attr('id');
 		var id1 = id.charAt(id.length - 1);
 		var textdata= $('#reviewdata'+id1).text();

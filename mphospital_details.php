@@ -343,15 +343,7 @@
 				<div class="col-md-3">
 					<div class="left-menu-part" style="background:transparent;">
 						<div class="unscroll" style="background-color:#fff; margin:10px 0; padding:10px 0">
-							<h3>MP Directory</h3>
-							<ul style="list-style-type:none; padding-left:0">
-								<li><a role="button" href="hospital"><i class="icofont-hospital"></i> HOSPITALS</a></li>
-								<li><a role="button" href="doctors"><i class="icofont-doctor"></i> DOCTORS</a></li>
-								<li><a role="button" href="midwifes"><i class="icofont-nurse"></i> MIDWIFE CLINICS</a></li>
-								<li><a role="button" href="medical"><i class="icofont-nurse-alt"></i> MEDICAL CLINICS</a></li>
-								<li><a role="button" href="pharmacies"><i class="icofont-medical-sign"></i> PHARMACIES</a></li>
-								<li><a role="button" href="beauty"><i class="icofont-girl-alt"></i> BEAUTY SALON</a></li>
-							</ul>
+							<?php include "sidebar.php"; ?>
 							<div class="client-sec mb"><a class="client-btn">Sponsors</a></div>
 						</div>
 						<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -371,10 +363,12 @@
 					<?php 
                         $name = isset($_GET['name']) ? mysqli_real_escape_string($conn, str_replace('_', ' ', $_GET['name'])) : '';
 						$hospital =mysqli_query($conn, "SELECT * FROM hospital h WHERE h.name= '$name'");
+						
 						$row= mysqli_fetch_array($hospital);
 						$specialityarray = explode(" ///", $row['speciality']);
 						$speciality = "";
 						$videourl = $row['video'];
+						$typeid = $row['hospital_id'];
 						for($i=0; $i< count($specialityarray); $i++){
 							if($i == count($specialityarray)-1){
 								
@@ -693,6 +687,8 @@
 		</div>
 	</section>
 </div>
+<?php include "footer.php";?>
+
 <div class="modal fade" id="gallery" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
@@ -754,29 +750,30 @@
 		</div>
 	</div>
 </div>
+
 <div class="modal fade" id="video" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-		<div class="modal-content">
-			<div class="modal-header" style="padding:0.2rem 1rem">
-				<h5 class="modal-title" id="videoModalLabel">
-					<?php echo $row['name'] . " Video"; ?>
-				</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-				</button>
+	<div class="modal-content">
+			<div class="ratio ratio-16x9">
+				<div class="modal-body p-0">
+					<?php
+						if (strpos($videourl, 'iframe') !== false) {
+							echo $videourl;
+						} 
+						else{
+							echo '<video controls>
+									  <source src="directory/'. $type .'/video/'.$videourl.'" type="video/mp4">
+									  Your browser does not support the video tag.
+								   </video>';
+						}
+						?>
+				</div>
 			</div>
-			<div class="modal-body m-auto mb-1 p-0">
-				<?php
-					if (strpos($videourl, 'iframe') !== false) {
-						echo $videourl;
-					} 
-					else{
-						echo '<video controls>
-								  <source src="directory/hospital/video/'.$videourl.'" type="video/mp4">
-								  Your browser does not support the video tag.
-							   </video>';
-					}
-					?>
+
+			<div class="text-center py-1 bg-dark">
+				<button  type="button" data-dismiss="modal" aria-label="Close" class="btn btn-sm btn-light" data-mdb-dismiss="modal">
+				Close
+				</button>
 			</div>
 		</div>
 	</div>
@@ -1218,4 +1215,3 @@
 	  }
 	});
 </script>
-<?php include "footer.php";?>
