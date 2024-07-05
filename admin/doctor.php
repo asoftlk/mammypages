@@ -155,8 +155,53 @@ ul.ui-autocomplete {
 					</div>
 					
 					<div class="form-group">
-					  <label class="required" for="doctorworking">Hours of Operation</label>
-					  <input type="text" name="doctorworking" class="form-control" id="doctorworking" placeholder="Working Hours">
+						<label class="required" for="doctorworking">Hours of Operation</label>
+						<table class="table table-sm table-bordered">
+							<thead>
+								<tr>
+									<th>Day</th>
+									<th>Open time</th>
+									<th>End time</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Monday</td>
+									<td><input type="time" name="monopentime" class="form-control form-control-sm border-0" id="monopentime" placeholder="Monday Open Time"></td>
+									<td><input type="time" name="monendtime" class="form-control form-control-sm border-0" id="monendtime" placeholder="Monday End Time"></td>
+								</tr>
+								<tr>
+									<td>Tuesday</td>
+									<td><input type="time" name="tueopentime" class="form-control form-control-sm border-0" id="tueopentime" placeholder="Tuesday Open Time"></td>
+									<td><input type="time" name="tueendtime" class="form-control form-control-sm border-0" id="tueendtime" placeholder="Tuesday End Time"></td>
+								</tr>
+								<tr>
+									<td>Wednesday</td>
+									<td><input type="time" name="wedopentime" class="form-control form-control-sm border-0" id="wedopentime" placeholder="Wednesday Open Time"></td>
+									<td><input type="time" name="wedendtime" class="form-control form-control-sm border-0" id="wedendtime" placeholder="Wednesday End Time"></td>
+								</tr>
+								<tr>
+									<td>Thursday</td>
+									<td><input type="time" name="thuopentime" class="form-control form-control-sm border-0" id="thuopentime" placeholder="Thursday Open Time"></td>
+									<td><input type="time" name="thuendtime" class="form-control form-control-sm border-0" id="thuendtime" placeholder="Thursday End Time"></td>
+								</tr>
+								<tr>
+									<td>Friday</td>
+									<td><input type="time" name="friopentime" class="form-control form-control-sm border-0" id="friopentime" placeholder="Friday Open Time"></td>
+									<td><input type="time" name="friendtime" class="form-control form-control-sm border-0" id="friendtime" placeholder="Friday End Time"></td>
+								</tr>
+								<tr>
+									<td>Saturday</td>
+									<td><input type="time" name="satopentime" class="form-control form-control-sm border-0" id="satopentime" placeholder="Saturday Open Time"></td>
+									<td><input type="time" name="satendtime" class="form-control form-control-sm border-0" id="satendtime" placeholder="Saturday End Time"></td>
+								</tr>
+								<tr>
+									<td>Sunday</td>
+									<td><input type="time" name="sunopentime" class="form-control form-control-sm border-0" id="sunopentime" placeholder="Sunday Open Time"></td>
+									<td><input type="time" name="sunendtime" class="form-control form-control-sm border-0" id="sunendtime" placeholder="Sunday End Time"></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 					
 					<div class="form-group row">

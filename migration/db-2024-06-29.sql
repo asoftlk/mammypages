@@ -319,29 +319,26 @@ CREATE TABLE hospital_working_times (
     PRIMARY KEY (htime_id)
 );
 CREATE TABLE hospital_branch (
-    hospitalbranchid VARCHAR(100) NOT NULL,
-    hospitalid VARCHAR(300) NOT NULL,
-    branchname TEXT NOT NULL,
-    branchaddr TEXT NOT NULL,
-    branchmap TEXT NOT NULL,
-    branchcity TEXT NOT NULL,
-    branchcont TEXT NOT NULL,
-    branchwhatsapp TEXT NOT NULL,
-    branchemail TEXT NOT NULL,
-    branchweb TEXT NOT NULL,
-    branchtype VARCHAR(300) NOT NULL,
-    branchfb TEXT NOT NULL,
-    branchinsta TEXT NOT NULL,
-    branchln TEXT NOT NULL,
-    status TEXT NOT NULL,
-    about LONGTEXT NOT NULL,
+    hospitalbranchid VARCHAR(50) PRIMARY KEY,
+    htime_id VARCHAR(50),
+    hospitalid VARCHAR(50),
+    branchname VARCHAR(255),
+    branchaddr TEXT,
+    branchmap TEXT,
+    branchcity VARCHAR(100),
+    branchcont VARCHAR(15),
+    branchwhatsapp VARCHAR(15),
+    branchemail VARCHAR(255),
+    branchweb VARCHAR(255),
+    branchfb VARCHAR(255),
+    branchinsta VARCHAR(255),
+    branchln VARCHAR(255),
+    status VARCHAR(50),
+    about TEXT,
     videoembed TEXT,
-    priority INT NOT NULL,
-    logoimage VARCHAR(300) NOT NULL,
-    galimages VARCHAR(300),
-    featuredimage VARCHAR(300) NOT NULL,
-    galvideo VARCHAR(255),
-    PRIMARY KEY (hospitalbranchid)
+    logoimage VARCHAR(255),
+    featuredimage VARCHAR(255),
+    galvideo VARCHAR(255)
 );
 
 ALTER TABLE hospital
@@ -350,14 +347,284 @@ MODIFY COLUMN video VARCHAR(255) NULL;
 ALTER TABLE hospital
 MODIFY COLUMN id INT AUTO_INCREMENT PRIMARY KEY;
 
-ALTER TABLE `hospital` 
-DROP PRIMARY KEY,
-ADD PRIMARY KEY (`id`, `hospital_id`);
-;
 
 ALTER TABLE hospital_working_times
 ADD COLUMN hospital_branch VARCHAR(255) AFTER hospital_type;
 
 ALTER TABLE hospital_branch
 ADD COLUMN hospital_name VARCHAR(255) AFTER hospitalid;
+
+ALTER TABLE `hospital` 
+ADD COLUMN `is_main` VARCHAR(45) NOT NULL AFTER `address`;
+
+ALTER TABLE doctor
+MODIFY COLUMN id INT AUTO_INCREMENT PRIMARY KEY;
+
+CREATE TABLE doctor_working_times (
+	dtime_id VARCHAR(300) NOT NULL,
+    doctor_id VARCHAR(300) NOT NULL,
+    doctor_type VARCHAR(300) NOT NULL,
+    monday_open TIME,
+    monday_close TIME,
+    tuesday_open TIME,
+    tuesday_close TIME,
+    wednesday_open TIME,
+    wednesday_close TIME,
+    thursday_open TIME,
+    thursday_close TIME,
+    friday_open TIME,
+    friday_close TIME,
+    saturday_open TIME,
+    saturday_close TIME,
+    sunday_open TIME,
+    sunday_close TIME,
+    PRIMARY KEY (dtime_id)
+);
+CREATE TABLE midwife_speciality (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	speciality TEXT
+);
+CREATE TABLE studio_speciality (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	speciality TEXT
+);
+CREATE TABLE medical_speciality (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	speciality TEXT
+);
+CREATE TABLE pharmacy_speciality (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	speciality TEXT
+);
+CREATE TABLE saloon_speciality (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	speciality TEXT
+);
+
+CREATE TABLE midwife_working_times (
+	mwtime_id VARCHAR(300) NOT NULL,
+    midwife_id VARCHAR(300) NOT NULL,
+    midwife_type VARCHAR(300) NOT NULL,
+    monday_open TIME,
+    monday_close TIME,
+    tuesday_open TIME,
+    tuesday_close TIME,
+    wednesday_open TIME,
+    wednesday_close TIME,
+    thursday_open TIME,
+    thursday_close TIME,
+    friday_open TIME,
+    friday_close TIME,
+    saturday_open TIME,
+    saturday_close TIME,
+    sunday_open TIME,
+    sunday_close TIME,
+    PRIMARY KEY (mwtime_id)
+);
+CREATE TABLE medical_working_times (
+	metime_id VARCHAR(300) NOT NULL,
+    medical_id VARCHAR(300) NOT NULL,
+    medical_type VARCHAR(300) NOT NULL,
+    monday_open TIME,
+    monday_close TIME,
+    tuesday_open TIME,
+    tuesday_close TIME,
+    wednesday_open TIME,
+    wednesday_close TIME,
+    thursday_open TIME,
+    thursday_close TIME,
+    friday_open TIME,
+    friday_close TIME,
+    saturday_open TIME,
+    saturday_close TIME,
+    sunday_open TIME,
+    sunday_close TIME,
+    PRIMARY KEY (metime_id)
+);
+CREATE TABLE saloon_working_times (
+	sltime_id VARCHAR(300) NOT NULL,
+    saloon_id VARCHAR(300) NOT NULL,
+    saloon_type VARCHAR(300) NOT NULL,
+    monday_open TIME,
+    monday_close TIME,
+    tuesday_open TIME,
+    tuesday_close TIME,
+    wednesday_open TIME,
+    wednesday_close TIME,
+    thursday_open TIME,
+    thursday_close TIME,
+    friday_open TIME,
+    friday_close TIME,
+    saturday_open TIME,
+    saturday_close TIME,
+    sunday_open TIME,
+    sunday_close TIME,
+    PRIMARY KEY (sltime_id)
+);
+CREATE TABLE studio_working_times (
+	sttime_id VARCHAR(300) NOT NULL,
+    studio_id VARCHAR(300) NOT NULL,
+    studio_type VARCHAR(300) NOT NULL,
+    monday_open TIME,
+    monday_close TIME,
+    tuesday_open TIME,
+    tuesday_close TIME,
+    wednesday_open TIME,
+    wednesday_close TIME,
+    thursday_open TIME,
+    thursday_close TIME,
+    friday_open TIME,
+    friday_close TIME,
+    saturday_open TIME,
+    saturday_close TIME,
+    sunday_open TIME,
+    sunday_close TIME,
+    PRIMARY KEY (sttime_id)
+);
+CREATE TABLE pharmacy_working_times (
+	ptime_id VARCHAR(300) NOT NULL,
+    pharmacy_id VARCHAR(300) NOT NULL,
+    pharmacy_type VARCHAR(300) NOT NULL,
+    monday_open TIME,
+    monday_close TIME,
+    tuesday_open TIME,
+    tuesday_close TIME,
+    wednesday_open TIME,
+    wednesday_close TIME,
+    thursday_open TIME,
+    thursday_close TIME,
+    friday_open TIME,
+    friday_close TIME,
+    saturday_open TIME,
+    saturday_close TIME,
+    sunday_open TIME,
+    sunday_close TIME,
+    PRIMARY KEY (ptime_id)
+);
+ALTER TABLE `midwife` 
+ADD COLUMN `is_main` VARCHAR(45) NOT NULL AFTER `address`;
+
+ALTER TABLE `studio` 
+ADD COLUMN `is_main` VARCHAR(45) NOT NULL AFTER `address`;
+
+ALTER TABLE `medical` 
+ADD COLUMN `is_main` VARCHAR(45) NOT NULL AFTER `address`;
+
+ALTER TABLE `pharmacy` 
+ADD COLUMN `is_main` VARCHAR(45) NOT NULL AFTER `address`;
+
+ALTER TABLE `saloon` 
+ADD COLUMN `is_main` VARCHAR(45) NOT NULL AFTER `address`;
+
+CREATE TABLE midwife_branch (
+	midwifebranchid VARCHAR(50) PRIMARY KEY,
+    mwtime_id VARCHAR(50),
+    midwife_id VARCHAR(50),
+    branchname VARCHAR(255),
+    branchaddr TEXT,
+    branchmap TEXT,
+    branchcity VARCHAR(100),
+    branchcont VARCHAR(15),
+    branchwhatsapp VARCHAR(15),
+    branchemail VARCHAR(255),
+    branchweb VARCHAR(255),
+    branchfb VARCHAR(255),
+    branchinsta VARCHAR(255),
+    branchln VARCHAR(255),
+    status VARCHAR(50),
+    about TEXT,
+    videoembed TEXT,
+    logoimage VARCHAR(255),
+    featuredimage VARCHAR(255),
+    galvideo VARCHAR(255)
+);
+CREATE TABLE medical_branch (
+	medicalbranchid VARCHAR(50) PRIMARY KEY,
+    metime_id VARCHAR(50),
+    medical_id VARCHAR(50),
+    branchname VARCHAR(255),
+    branchaddr TEXT,
+    branchmap TEXT,
+    branchcity VARCHAR(100),
+    branchcont VARCHAR(15),
+    branchwhatsapp VARCHAR(15),
+    branchemail VARCHAR(255),
+    branchweb VARCHAR(255),
+    branchfb VARCHAR(255),
+    branchinsta VARCHAR(255),
+    branchln VARCHAR(255),
+    status VARCHAR(50),
+    about TEXT,
+    videoembed TEXT,
+    logoimage VARCHAR(255),
+    featuredimage VARCHAR(255),
+    galvideo VARCHAR(255)
+);
+CREATE TABLE saloon_branch (
+	saloonbranchid VARCHAR(50) PRIMARY KEY,
+    sltime_id VARCHAR(50),
+    saloon_id VARCHAR(50),
+    branchname VARCHAR(255),
+    branchaddr TEXT,
+    branchmap TEXT,
+    branchcity VARCHAR(100),
+    branchcont VARCHAR(15),
+    branchwhatsapp VARCHAR(15),
+    branchemail VARCHAR(255),
+    branchweb VARCHAR(255),
+    branchfb VARCHAR(255),
+    branchinsta VARCHAR(255),
+    branchln VARCHAR(255),
+    status VARCHAR(50),
+    about TEXT,
+    videoembed TEXT,
+    logoimage VARCHAR(255),
+    featuredimage VARCHAR(255),
+    galvideo VARCHAR(255)
+);
+CREATE TABLE studio_branch (
+	studiobranchid VARCHAR(50) PRIMARY KEY,
+    sttime_id VARCHAR(50),
+    studio_id VARCHAR(50),
+    branchname VARCHAR(255),
+    branchaddr TEXT,
+    branchmap TEXT,
+    branchcity VARCHAR(100),
+    branchcont VARCHAR(15),
+    branchwhatsapp VARCHAR(15),
+    branchemail VARCHAR(255),
+    branchweb VARCHAR(255),
+    branchfb VARCHAR(255),
+    branchinsta VARCHAR(255),
+    branchln VARCHAR(255),
+    status VARCHAR(50),
+    about TEXT,
+    videoembed TEXT,
+    logoimage VARCHAR(255),
+    featuredimage VARCHAR(255),
+    galvideo VARCHAR(255)
+);
+CREATE TABLE pharmacy_branch (
+	pharmacybranchid VARCHAR(50) PRIMARY KEY,
+    ptime_id VARCHAR(50),
+    pharmacy_id VARCHAR(50),
+    branchname VARCHAR(255),
+    branchaddr TEXT,
+    branchmap TEXT,
+    branchcity VARCHAR(100),
+    branchcont VARCHAR(15),
+    branchwhatsapp VARCHAR(15),
+    branchemail VARCHAR(255),
+    branchweb VARCHAR(255),
+    branchfb VARCHAR(255),
+    branchinsta VARCHAR(255),
+    branchln VARCHAR(255),
+    status VARCHAR(50),
+    about TEXT,
+    videoembed TEXT,
+    logoimage VARCHAR(255),
+    featuredimage VARCHAR(255),
+    galvideo VARCHAR(255)
+);
+
 -- akila is here

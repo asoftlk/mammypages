@@ -4,6 +4,7 @@ date_default_timezone_set('Asia/Kolkata');
 $time = date("d-m-Y")."-".time();
 if(isset($_POST['sub-hos'])){
 	$doctorid = "Doctor-".mt_rand(1000000,9999999);
+	$dtime_id = "doctime-".mt_rand(1000000,9999999);
 	  $doctorname = filter_input(INPUT_POST, 'doctorname');
 	 $doctorspecialist1 = $_POST['doctorspecialist'];
 	 $doctorspecialist ="";
@@ -28,6 +29,21 @@ if(isset($_POST['sub-hos'])){
 	$status = filter_input(INPUT_POST, 'status');
 	$about = mysqli_real_escape_string($conn, $_POST['about']);
 	
+	$mon_open = filter_input(INPUT_POST, 'monopentime');
+	$mon_close = filter_input(INPUT_POST, 'monendtime');
+	$tue_open = filter_input(INPUT_POST, 'tueopentime');
+	$tue_close = filter_input(INPUT_POST, 'tueendtime');
+	$wed_open = filter_input(INPUT_POST, 'wedopentime');
+	$wed_close = filter_input(INPUT_POST, 'wedendtime');
+	$thu_open = filter_input(INPUT_POST, 'thuopentime');
+	$thu_close = filter_input(INPUT_POST, 'thuendtime');
+	$fri_open = filter_input(INPUT_POST, 'friopentime');
+	$fri_close = filter_input(INPUT_POST, 'friendtime');
+	$sat_open = filter_input(INPUT_POST, 'satopentime');
+	$sat_close = filter_input(INPUT_POST, 'satendtime');
+	$sun_open = filter_input(INPUT_POST, 'sunopentime');
+	$sun_close = filter_input(INPUT_POST, 'sunendtime');
+
 	$priority = 0;
 	
 	$logoimage = $_FILES['logoimage']['name'];
@@ -53,7 +69,7 @@ if(isset($_POST['sub-hos'])){
 					$galimages = $_FILES['galimages']['name'][$x];	// Get image name
 					if($galimages != NULL){
 					$ext = pathinfo($_FILES["galimages"]["name"][$x], PATHINFO_EXTENSION);
-					$target = $hospitalid.$x.$time.".".$ext;
+					$target = $doctorid.$x.$time.".".$ext;
 					//$image_link = "https://veramasa.com/udyogsadhna/images/".$target;
 						if (in_array($galimages, ['jpg', 'png', 'jpeg'])) {
 								echo 'Gallery image extension must be .jpg, .png or .jpeg';
@@ -92,6 +108,10 @@ if(isset($_POST['sub-hos'])){
 		 $query= "INSERT INTO doctor (doctor_id, name, speciality,qualification, address, mobile, email, website, type, working_hours,  facebook, instagram, linkedin,logo, status, about,priority, image) 
 		 	        values ('$doctorid', '$doctorname', '$doctorspecialist', '$doctorqualification','$doctoraddr',  '$doctorcont',  '$doctoremail', '$doctorweb', '$doctortype', '$doctorworking', '$doctorfb',  '$doctorinsta', '$doctorln', '$logotarget', '$status', '$about','$priority','$featuretarget')";
 			$result = mysqli_query($conn, $query);
+
+			$workingTimesQuery = "INSERT INTO doctor_working_times (dtime_id, doctor_id, doctor_type, monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
+								VALUES ('$dtime_id','$doctorid', '$doctortype', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
+			$resultWorkingTimes = mysqli_query($conn, $workingTimesQuery);
 			 if($result){
 				echo "Posted Successfully";
 			 }
