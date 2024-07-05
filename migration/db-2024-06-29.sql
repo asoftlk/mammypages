@@ -298,8 +298,10 @@ WHERE doctor_id = 'DOC002';
 -- thushitha is here
 
 CREATE TABLE hospital_working_times (
+	  htime_id VARCHAR(300) NOT NULL,
     hospital_id VARCHAR(300) NOT NULL,
     hospital_type VARCHAR(300) NOT NULL,
+    branch_id VARCHAR(300),
     monday_open TIME,
     monday_close TIME,
     tuesday_open TIME,
@@ -314,7 +316,32 @@ CREATE TABLE hospital_working_times (
     saturday_close TIME,
     sunday_open TIME,
     sunday_close TIME,
-    PRIMARY KEY (hospital_id, hospital_type)
+    PRIMARY KEY (htime_id)
+);
+CREATE TABLE hospital_branch (
+    hospitalbranchid VARCHAR(100) NOT NULL,
+    hospitalid VARCHAR(300) NOT NULL,
+    branchname TEXT NOT NULL,
+    branchaddr TEXT NOT NULL,
+    branchmap TEXT NOT NULL,
+    branchcity TEXT NOT NULL,
+    branchcont TEXT NOT NULL,
+    branchwhatsapp TEXT NOT NULL,
+    branchemail TEXT NOT NULL,
+    branchweb TEXT NOT NULL,
+    branchtype VARCHAR(300) NOT NULL,
+    branchfb TEXT NOT NULL,
+    branchinsta TEXT NOT NULL,
+    branchln TEXT NOT NULL,
+    status TEXT NOT NULL,
+    about LONGTEXT NOT NULL,
+    videoembed TEXT,
+    priority INT NOT NULL,
+    logoimage VARCHAR(300) NOT NULL,
+    galimages VARCHAR(300),
+    featuredimage VARCHAR(300) NOT NULL,
+    galvideo VARCHAR(255),
+    PRIMARY KEY (hospitalbranchid)
 );
 
 ALTER TABLE hospital
@@ -328,5 +355,9 @@ DROP PRIMARY KEY,
 ADD PRIMARY KEY (`id`, `hospital_id`);
 ;
 
+ALTER TABLE hospital_working_times
+ADD COLUMN hospital_branch VARCHAR(255) AFTER hospital_type;
 
+ALTER TABLE hospital_branch
+ADD COLUMN hospital_name VARCHAR(255) AFTER hospitalid;
 -- akila is here

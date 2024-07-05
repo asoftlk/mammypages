@@ -4,6 +4,7 @@ date_default_timezone_set('Asia/Kolkata');
 $time = date("d-m-Y")."-".time();
 if(isset($_POST['sub-hos'])){
 	$hospitalid = "Hospital-".mt_rand(1000000,9999999);
+	$htime_id = "hosttime-".mt_rand(1000000,9999999);
 	  $hospitalname = filter_input(INPUT_POST, 'hospitalname');
 	 $hospitalspecialist1 = $_POST['hospitalspecialist'];
 	 $hospitalspecialist ="";
@@ -130,8 +131,8 @@ if(isset($_POST['sub-hos'])){
 		 	        values ('$hospitalid', '$hospitalname', '$hospitalspecialist', '$hospitaladdr', '$hospitalmap', '$hospitalcity', '$hospitalcont',  '$hospitalemail','$hospitalwhatsapp',  '$hospitalweb', '$hospitaltype', '$hospitalsubtype', '$hospitalworking', '$hospitalfb',  '$hospitalinsta', '$hospitalln', '$logotarget', '$status', '$about','$priority','$featuretarget', '$videotarget')";
 			$result = mysqli_query($conn, $query);
 
-			$workingTimesQuery = "INSERT INTO hospital_working_times (hospital_id, hospital_type, monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
-                          VALUES ('$hospitalid', '$hospitaltype', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
+			$workingTimesQuery = "INSERT INTO hospital_working_times (htime_id, hospital_id, hospital_type, monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
+                          VALUES ('$htime_id','$hospitalid', '$hospitaltype', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
     		$resultWorkingTimes = mysqli_query($conn, $workingTimesQuery);
 			 if($result && $resultWorkingTimes){
 				$conn->commit();

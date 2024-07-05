@@ -333,7 +333,7 @@
 									</div>
 									<div class="tab-pane" id="addbranch" role="tabpanel">
 										<div id="branch">
-											<form id="quickForm" method="POST" action="postbranch" enctype="multipart/form-data">
+											<form id="quickForm" method="POST" action="posthospitalbranch" enctype="multipart/form-data">
 												<?php
 													$hospitalQuery = mysqli_query($conn, "SELECT DISTINCT * FROM hospital");
 												?>
