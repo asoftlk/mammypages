@@ -295,5 +295,38 @@ SET name = 'Dr. Sanjeewa Wijesekara',
     hospital_name = 'Asiri Hospital'
 WHERE doctor_id = 'DOC002';
 
--- akila is here
 -- thushitha is here
+
+CREATE TABLE hospital_working_times (
+    hospital_id VARCHAR(300) NOT NULL,
+    hospital_type VARCHAR(300) NOT NULL,
+    monday_open TIME,
+    monday_close TIME,
+    tuesday_open TIME,
+    tuesday_close TIME,
+    wednesday_open TIME,
+    wednesday_close TIME,
+    thursday_open TIME,
+    thursday_close TIME,
+    friday_open TIME,
+    friday_close TIME,
+    saturday_open TIME,
+    saturday_close TIME,
+    sunday_open TIME,
+    sunday_close TIME,
+    PRIMARY KEY (hospital_id, hospital_type)
+);
+
+ALTER TABLE hospital
+MODIFY COLUMN video VARCHAR(255) NULL;
+
+ALTER TABLE hospital
+MODIFY COLUMN id INT AUTO_INCREMENT PRIMARY KEY;
+
+ALTER TABLE `hospital` 
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`id`, `hospital_id`);
+;
+
+
+-- akila is here

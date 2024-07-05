@@ -31,6 +31,22 @@ if(isset($_POST['sub-hos'])){
 	$status = filter_input(INPUT_POST, 'status');
 	$about = mysqli_real_escape_string($conn, $_POST['about']);
 	$videoembed = mysqli_real_escape_string($conn, $_POST['videoembed']);
+
+	$mon_open = filter_input(INPUT_POST, 'monopentime');
+	$mon_close = filter_input(INPUT_POST, 'monendtime');
+	$tue_open = filter_input(INPUT_POST, 'tueopentime');
+	$tue_close = filter_input(INPUT_POST, 'tueendtime');
+	$wed_open = filter_input(INPUT_POST, 'wedopentime');
+	$wed_close = filter_input(INPUT_POST, 'wedendtime');
+	$thu_open = filter_input(INPUT_POST, 'thuopentime');
+	$thu_close = filter_input(INPUT_POST, 'thuendtime');
+	$fri_open = filter_input(INPUT_POST, 'friopentime');
+	$fri_close = filter_input(INPUT_POST, 'friendtime');
+	$sat_open = filter_input(INPUT_POST, 'satopentime');
+	$sat_close = filter_input(INPUT_POST, 'satendtime');
+	$sun_open = filter_input(INPUT_POST, 'sunopentime');
+	$sun_close = filter_input(INPUT_POST, 'sunendtime');
+
 	$priority = 0;
 	
 	$logoimage = $_FILES['logoimage']['name'];
@@ -57,6 +73,7 @@ if(isset($_POST['sub-hos'])){
 			$videoupload = move_uploaded_file($_FILES['galvideo']['tmp_name'], "../directory/hospital/video/".$videotarget);
 		}
 		}
+		$videotarget = isset($videotarget) ? $videotarget : '';
 		if($featuredimage != NULL){
 		$ext1 = pathinfo($_FILES["featuredimage"]["name"], PATHINFO_EXTENSION);
 		$featuretarget = "fea".$time.".".$ext1;
@@ -109,13 +126,19 @@ if(isset($_POST['sub-hos'])){
 			$logoupload = move_uploaded_file($_FILES['logoimage']['tmp_name'], "../directory/hospital/".$logotarget);
 			
 		if($featureupload){
-		 $query= "INSERT INTO hospital (hospital_id, name, speciality, address, map, city, mobile, email, whatsapp, website, type, subtype, working_hours,  facebook, instagram, linkedin,logo, status, about,priority, image, video) 
+		 	$query= "INSERT INTO hospital (hospital_id, name, speciality, address, map, city, mobile, email, whatsapp, website, type, subtype, working_hours,  facebook, instagram, linkedin,logo, status, about,priority, image, video) 
 		 	        values ('$hospitalid', '$hospitalname', '$hospitalspecialist', '$hospitaladdr', '$hospitalmap', '$hospitalcity', '$hospitalcont',  '$hospitalemail','$hospitalwhatsapp',  '$hospitalweb', '$hospitaltype', '$hospitalsubtype', '$hospitalworking', '$hospitalfb',  '$hospitalinsta', '$hospitalln', '$logotarget', '$status', '$about','$priority','$featuretarget', '$videotarget')";
 			$result = mysqli_query($conn, $query);
-			 if($result){
+
+			$workingTimesQuery = "INSERT INTO hospital_working_times (hospital_id, hospital_type, monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
+                          VALUES ('$hospitalid', '$hospitaltype', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
+    		$resultWorkingTimes = mysqli_query($conn, $workingTimesQuery);
+			 if($result && $resultWorkingTimes){
+				$conn->commit();
 				echo "Posted Successfully";
 			 }
 			else{
+				$conn->rollback();
 				echo "Failed to Post";
 			}
 		}	
