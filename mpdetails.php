@@ -362,12 +362,13 @@
 				<div class="col-md-6">
 					<?php 
 						$type = isset($_GET['type']) ? mysqli_real_escape_string($conn, $_GET['type']) : '';
+                        $id = isset($_POST[$type . '_id']) ? $_POST[$type . '_id'] : '';
                         $name = isset($_GET['name']) ? mysqli_real_escape_string($conn, str_replace('_', ' ', $_GET['name'])) : '';
 
 						if (!empty($type) && !empty($name)) {
 							$tablegallery_name = "mp" . $type . "_gallery";
 							$id_column = $type . '_id';
-							$query = "SELECT * FROM `$type` WHERE name = '$name'";
+                            $query = "SELECT * FROM `$type` WHERE `" . $type . "_id` = '$id'";
 							$typequery = mysqli_query($conn, $query);
 						}						
 						$row= mysqli_fetch_array($typequery);

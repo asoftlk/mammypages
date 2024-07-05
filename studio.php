@@ -195,7 +195,11 @@ include "mp.php";
 							<div class="d-flex">
                             <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           
                             
-                                <a href="mpconnect/studio/' .urlencode(str_replace(' ', '_', $row["name"])). '" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;studio</a>
+                                <form action="mpconnect/studio/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
+                                <input type="hidden" name="studio_id" value="' . $row["studio_id"] . '">
+                                <button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Studio</button>
+                                </form>
+
                             </div>
                          </div>   
 						</div>';
@@ -339,6 +343,7 @@ include "mp.php";
                             var speciality = specialityArray.join(", ");
                             var rating = studio.rating ? parseFloat(studio.rating) : 0;
                             var encodedName = encodeURIComponent(studio.name.replace(/\s+/g, '_'));
+                            var studioId = studio.studio_id;
                             
                             html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
                             html += '<div class="col-md-3" style="margin:auto">';
@@ -372,7 +377,10 @@ include "mp.php";
                             html += '</div></div>';
                             html += '<div class="d-flex">';
                             html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + studio.address + '</P>';                          
-                            html += '<a href="mpconnect/studio/' + encodedName + '" type="button" class="btn btn-success p-1 ml-auto" style="font-size:12px; height:28px">View&nbsp;studio</a>';
+                            html += '<form action="mpconnect/studio/'+ encodedName +'" method="post" style="display:inline;">';
+                            html += '<input type="hidden" name="studio_id" value="'+studioId+'">';
+                            html += '<button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Studio</button>';
+                            html += '</form>';
                             html += '</div></div></div>';
                         });
                         $("#load_data").html(html);
