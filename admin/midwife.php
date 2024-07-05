@@ -326,7 +326,7 @@
 											<br>
 											<br>
 											<div class="card-footer">
-												<button type="submit" name="sub-hos" class="btn btn-sm btn-primary">Submit</button>
+												<button type="submit" name="sub-mid" class="btn btn-sm btn-primary">Submit</button>
 											</div>
 										</form>
 										</div>
@@ -510,7 +510,7 @@
 													</div>
 												</div>
 												<div class="card-footer">
-													<button type="submit" name="sub-hos-branch" class="btn btn-sm btn-primary">Submit</button>
+													<button type="submit" name="sub-mid-branch" class="btn btn-sm btn-primary">Submit</button>
 												</div>
 											</form>
 										</div>
