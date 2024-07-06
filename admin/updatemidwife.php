@@ -5,9 +5,9 @@
 	date_default_timezone_set('Asia/Kolkata');
 	 $time = date("d-m-Y")."-".time();
 	 $id = mysqli_real_escape_string($conn, $_POST['id']);
-	 $hospitalid = mysqli_real_escape_string($conn, $_POST['hospitalid']);
-	 $name = mysqli_real_escape_string($conn, $_POST['hospitalname']);
-	 $speciality1 = $_POST['hospitalspecialist'];
+	 $midwifeid = mysqli_real_escape_string($conn, $_POST['midwifeid']);
+	 $name = mysqli_real_escape_string($conn, $_POST['midwifename']);
+	 $speciality1 = $_POST['midwifespecialist'];
 	 $speciality ="";
 		 for($i=0; $i<count($speciality1);$i++){
 			 if($i==(count($speciality1)-1)){
@@ -17,24 +17,24 @@
 			 $speciality .= $speciality1[$i]." ///";
 			 }
 		 }
-	 $address = mysqli_real_escape_string($conn, $_POST['hospitaladdr']);
-	 $map = mysqli_real_escape_string($conn, $_POST['hospitalmap']);
-	 $city = mysqli_real_escape_string($conn, $_POST['hospitalcity']);
-	 $mobile = mysqli_real_escape_string($conn, $_POST['hospitalcont']);
-	 $email = mysqli_real_escape_string($conn, $_POST['hospitalemail']);
-	 $whatsapp = mysqli_real_escape_string($conn, $_POST['hospitalwhatsapp']);
-	$website = mysqli_real_escape_string($conn, $_POST['hospitalweb']);
-	 $type = mysqli_real_escape_string($conn, $_POST['hospitaltype']);
-	 if($type == "Private Hospital"){
+	 $address = mysqli_real_escape_string($conn, $_POST['midwifeaddr']);
+	 $map = mysqli_real_escape_string($conn, $_POST['midwifemap']);
+	 $city = mysqli_real_escape_string($conn, $_POST['midwifecity']);
+	 $mobile = mysqli_real_escape_string($conn, $_POST['midwifecont']);
+	 $email = mysqli_real_escape_string($conn, $_POST['midwifeemail']);
+	 $whatsapp = mysqli_real_escape_string($conn, $_POST['midwifewhatsapp']);
+	$website = mysqli_real_escape_string($conn, $_POST['midwifeweb']);
+	 $type = mysqli_real_escape_string($conn, $_POST['midwifetype']);
+	 if($type == "Private midwife"){
 		$subtype="";
 	 }
 	 else{
-		$subtype = mysqli_real_escape_string($conn, $_POST['hospitalsubtype']);
+		$subtype = mysqli_real_escape_string($conn, $_POST['midwifesubtype']);
 	 }
-	 $working_hours = mysqli_real_escape_string($conn, $_POST['hospitalworking']);
-	 $facebook = mysqli_real_escape_string($conn, $_POST['hospitalfb']);
-	 $instagram = mysqli_real_escape_string($conn, $_POST['hospitalinsta']);
-	 $linkedin = mysqli_real_escape_string($conn, $_POST['hospitalln']);
+	 $working_hours = mysqli_real_escape_string($conn, $_POST['midwifeworking']);
+	 $facebook = mysqli_real_escape_string($conn, $_POST['midwifefb']);
+	 $instagram = mysqli_real_escape_string($conn, $_POST['midwifeinsta']);
+	 $linkedin = mysqli_real_escape_string($conn, $_POST['midwifeln']);
 	 $status = mysqli_real_escape_string($conn, $_POST['status']);
 	 $about = mysqli_real_escape_string($conn, $_POST['about']);
 	 $videoembed = mysqli_real_escape_string($conn, $_POST['videoembed']);
@@ -60,7 +60,7 @@
 	else{
 		 $galleryid = array( '0' => 'a');
 	}
-	$galupdate = mysqli_query($conn, "SELECT * FROM mpgallery WHERE hospitalid='$hospitalid'");
+	$galupdate = mysqli_query($conn, "SELECT * FROM mpmidwife_gallery WHERE midwife_id='$midwifeid'");
 	if(mysqli_num_rows($galupdate)>0){
 				While($galrow= mysqli_fetch_array($galupdate)){
 					$id1 = $galrow['id'];
@@ -69,23 +69,23 @@
 						$key = array_search($id1, $galleryid);
 						if($key === false)
 						{
-						if(file_exists("../directory/hospital/".$galrow['image_name'])){
-							unlink("../directory/hospital/".$galrow['image_name']);
-							$artdelete = mysqli_query($conn, "DELETE FROM mpgallery  WHERE id = '$id1'");
+						if(file_exists("../directory/midwife/".$galrow['image_name'])){
+							unlink("../directory/midwife/".$galrow['image_name']);
+							$artdelete = mysqli_query($conn, "DELETE FROM mpmidwife_gallery  WHERE id = '$id1'");
 						}
 						else{
-							$artdelete = mysqli_query($conn, "DELETE FROM mpgallery  WHERE id = '$id1'");
+							$artdelete = mysqli_query($conn, "DELETE FROM mpmidwife_gallery  WHERE id = '$id1'");
 						}
 						}
 						else
 						{
-							$updategallery = "UPDATE mpgallery SET date=now() ";
+							$updategallery = "UPDATE mpmidwife_gallery SET date=now() ";
 							if($galleryimage!=null  and $galleryimage[$key]!=null){
-								if(file_exists('../directory/hospital/'.$galrow["image_name"])){
-								unlink('../directory/hospital/'.$galrow["image_name"]);
+								if(file_exists('../directory/midwife/'.$galrow["image_name"])){
+								unlink('../directory/midwife/'.$galrow["image_name"]);
 								}
 							$ext = pathinfo($_FILES["galleryimage"]["name"][$key], PATHINFO_EXTENSION);
-							$target = $hospitalid.$key.$time.".".$ext;
+							$target = $midwifeid.$key.$time.".".$ext;
 									if (in_array($galleryimage, ['jpg', 'png', 'jpeg'])) {
 											echo 'You Gallery file extension must be .jpg, .png or .jpeg';
 											exit();
@@ -95,7 +95,7 @@
 											exit();
 										}
 									else{
-										move_uploaded_file($_FILES['galleryimage']['tmp_name'][$key], "../directory/hospital/".$target);
+										move_uploaded_file($_FILES['galleryimage']['tmp_name'][$key], "../directory/midwife/".$target);
 										}
 										$updategallery .= ", image_name= '$target' "; 
 							}
@@ -111,7 +111,7 @@
 	           $galleryimages = $_FILES['galleryimages']['name'][$x];	// Get image name
 	           if($galleryimages != NULL){
 	           $ext = pathinfo($_FILES["galleryimages"]["name"][$x], PATHINFO_EXTENSION);
-	           $target = $hospitalid.$x.$time.".".$ext;
+	           $target = $midwifeid.$x.$time.".".$ext;
 	           //$image_link = "https://veramasa.com/udyogsadhna/images/".$target;
 	               if (in_array($galleryimages, ['jpg', 'png', 'jpeg'])) {
 	                       echo ' You Gallery image extension must be .jpg, .png or .jpeg';
@@ -120,25 +120,25 @@
 	                       echo 'Gallery image too large upload less than 10MB size !';
 	                   }
 						else{
-	                   move_uploaded_file($_FILES['galleryimages']['tmp_name'][$x], "../directory/hospital/".$target);
+	                   move_uploaded_file($_FILES['galleryimages']['tmp_name'][$x], "../directory/midwife/".$target);
 	                   }
 	           }
 	           else{
 	               $galleryimage="";
 	               $target="";
 	           }
-	           $articleinsert= mysqli_query($conn, "INSERT INTO mpgallery ( hospitalid, image_name) VALUES ('$hospitalid', '$target')");
+	           $articleinsert= mysqli_query($conn, "INSERT INTO mpmidwife_gallery ( midwife_id, image_name) VALUES ('$midwifeid', '$target')");
 	       }
 	}	   
-	$updatequery = "Update hospital SET name='$name',speciality='$speciality',address='$address', map='$map', city='$city', mobile='$mobile',email='$email',whatsapp='$whatsapp',website='$website',type='$type', subtype='$subtype', working_hours='$working_hours', facebook='$facebook', instagram='$instagram', linkedin='$linkedin', status='$status',about='$about' ";		
+	$updatequery = "Update midwife SET name='$name',speciality='$speciality',address='$address', map='$map', city='$city', mobile='$mobile',email='$email',whatsapp='$whatsapp',website='$website',type='$type', subtype='$subtype', working_hours='$working_hours', facebook='$facebook', instagram='$instagram', linkedin='$linkedin', status='$status',about='$about' ";		
 		$featuredimage = $_FILES['featuredimage']['name'];
 			
 			
 	            if($featuredimage != ""){
-					$removeimg= mysqli_query($conn, "SELECT image from hospital WHERE id= '$id'");
+					$removeimg= mysqli_query($conn, "SELECT image from midwife WHERE id= '$id'");
 					$imagename = mysqli_fetch_assoc($removeimg);
-					if($imagename['image'] && file_exists("../directory/hospital/".$imagename['image'])){
-						unlink("../directory/hospital/".$imagename['image']);
+					if($imagename['image'] && file_exists("../directory/midwife/".$imagename['image'])){
+						unlink("../directory/midwife/".$imagename['image']);
 					}
 	                $ext1 = pathinfo($_FILES["featuredimage"]["name"], PATHINFO_EXTENSION);
 	                $featuretarget = "fea".$time.".".$ext1;
@@ -152,7 +152,7 @@
 								exit();
 	                        }
 	                    else{
-	                        move_uploaded_file($_FILES['featuredimage']['tmp_name'], "../directory/hospital/".$featuretarget);
+	                        move_uploaded_file($_FILES['featuredimage']['tmp_name'], "../directory/midwife/".$featuretarget);
 	                        }
 							$updatequery .= ", image= '$featuretarget' "; 
 	            }
@@ -161,10 +161,10 @@
 	            }
 				$logoimage = $_FILES['logoimage']['name'];
 	            if($logoimage != ""){
-					$removefile= mysqli_query($conn, "SELECT logo from hospital WHERE id= '$id'");
+					$removefile= mysqli_query($conn, "SELECT logo from midwife WHERE id= '$id'");
 					$filename = mysqli_fetch_array($removefile);
-					if($filename['logo'] && file_exists("../directory/hospital/".$filename['logo'])){
-						unlink("../directory/hospital/".$filename['logo']);
+					if($filename['logo'] && file_exists("../directory/midwife/".$filename['logo'])){
+						unlink("../directory/midwife/".$filename['logo']);
 					}
 	                $ext1 = pathinfo($_FILES["logoimage"]["name"], PATHINFO_EXTENSION);
 	                $filetarget = "logo".$time.".".$ext1;
@@ -178,7 +178,7 @@
 								exit();
 	                        }
 	                    else{
-	                        move_uploaded_file($_FILES['logoimage']['tmp_name'], "../directory/hospital/".$filetarget);
+	                        move_uploaded_file($_FILES['logoimage']['tmp_name'], "../directory/midwife/".$filetarget);
 	                        }
 							$updatequery .= ", logo= '$filetarget' "; 
 	            }
@@ -193,10 +193,10 @@
 				else{
 				$galvideo = $_FILES['galvideo']['name'];
 				if($galvideo != ""){
-					$removevideo= mysqli_query($conn, "SELECT video from hospital WHERE id= '$id'");
+					$removevideo= mysqli_query($conn, "SELECT video from midwife WHERE id= '$id'");
 					$videoname = mysqli_fetch_array($removevideo);
-					if($videoname['video'] && file_exists("../directory/hospital/video/".$videoname['video'])){
-						unlink("../directory/hospital/video/".$videoname['video']);
+					if($videoname['video'] && file_exists("../directory/midwife/video/".$videoname['video'])){
+						unlink("../directory/midwife/video/".$videoname['video']);
 					}
 	                $extvid = pathinfo($_FILES["galvideo"]["name"], PATHINFO_EXTENSION);
 	                $videotarget = "Vid".$time.".".$extvid;
@@ -210,7 +210,7 @@
 								exit();
 	                        }
 	                    else{
-	                        move_uploaded_file($_FILES['galvideo']['tmp_name'], "../directory/hospital/video/".$videotarget);
+	                        move_uploaded_file($_FILES['galvideo']['tmp_name'], "../directory/midwife/video/".$videotarget);
 	                        }
 							$updatequery .= ", video= '$videotarget' "; 
 	            }
@@ -222,7 +222,7 @@
 				$updatequery .= " WHERE id='$id'";
 				$update =mysqli_query($conn, $updatequery);
 		if($update){
-			echo 'Hospital Updated';
+			echo 'midwife Updated';
 		}
 		else{
 			echo 'Update Failed, Please try again!';

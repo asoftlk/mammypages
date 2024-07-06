@@ -682,7 +682,7 @@ body{
 					<br>
 						<a id="resendotp" href="#"	onclick="resendotp()"  style="cursor:pointer; text-decoration:none"> Resend OTP </a><br><br>
 						<input type="button" name="otp" id="otpemail" class="next-step1" Value="Verify Email">
-						<a id="resendotp" href="login"	class="btn btn-secondary" style="cursor:pointer; text-decoration:none"> SKIP </a>
+						<a id="resendotp" href="login"	class="btn btn-sm btn-secondary" style="cursor:pointer; text-decoration:none"> SKIP </a>
 
 					</div>					
 					</div>

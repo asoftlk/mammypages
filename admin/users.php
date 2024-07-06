@@ -276,8 +276,8 @@ if(isset($_GET['id']))
         
       </div>
       <div class="modal-footer">
-<!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-          <button type="button" class="btn btn-secondary">Update</button>
+<!--<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>-->
+          <button type="button" class="btn btn-sm btn-secondary">Update</button>
       </div>
     </div>
   </div>

@@ -90,7 +90,7 @@
 								<input type="submit" name="specialityedit" id="specialityedit" class="btn btn-primary mr-4" value="Edit">
 								<input type="hidden" name="specialityupdate" id="specialityupdate" class="btn btn-primary mr-4" value="Update">
 								<input type="hidden" name="specialitydelete" id="specialitydelete" class="btn btn-secondary mr-4" value="Delete">
-								<input type="hidden" name="specialitycancel" id="specialitycancel" class="btn btn-secondary" value="Cancel">
+								<input type="hidden" name="specialitycancel" id="specialitycancel" class="btn btn-sm btn-secondary" value="Cancel">
 							</form>
 						</div>
 					</div>
