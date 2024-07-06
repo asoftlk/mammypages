@@ -31,7 +31,8 @@
 	 else{
 		$subtype = mysqli_real_escape_string($conn, $_POST['hospitalsubtype']);
 	 }
-	 $working_hours = mysqli_real_escape_string($conn, $_POST['hospitalworking']);
+	//  $working_hours = mysqli_real_escape_string($conn, $_POST['hospitalworking']);
+	 $working_hours = null;
 	 $facebook = mysqli_real_escape_string($conn, $_POST['hospitalfb']);
 	 $instagram = mysqli_real_escape_string($conn, $_POST['hospitalinsta']);
 	 $linkedin = mysqli_real_escape_string($conn, $_POST['hospitalln']);
@@ -222,6 +223,25 @@
 				$updatequery .= " WHERE id='$id'";
 				$update =mysqli_query($conn, $updatequery);
 		if($update){
+            $days = [
+                'mon' => ['open' => 'monday_open', 'close' => 'monday_close'],
+                'tue' => ['open' => 'tuesday_open', 'close' => 'tuesday_close'],
+                'wed' => ['open' => 'wednesday_open', 'close' => 'wednesday_close'],
+                'thu' => ['open' => 'thursday_open', 'close' => 'thursday_close'],
+                'fri' => ['open' => 'friday_open', 'close' => 'friday_close'],
+                'sat' => ['open' => 'saturday_open', 'close' => 'saturday_close'],
+                'sun' => ['open' => 'sunday_open', 'close' => 'sunday_close']
+            ];
+    
+            foreach ($days as $day => $times) {
+                $open = mysqli_real_escape_string($conn, $_POST[$day . 'opentime']);
+                $close = mysqli_real_escape_string($conn, $_POST[$day . 'endtime']);
+                $updateWorkingTime = "UPDATE hospital_working_times 
+                                      SET {$times['open']} = '$open', {$times['close']} = '$close'
+                                      WHERE hospital_id = '$hospitalid'";
+                mysqli_query($conn, $updateWorkingTime);
+            }
+            
 			echo 'Hospital Updated';
 		}
 		else{

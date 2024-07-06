@@ -2,20 +2,22 @@
 	include "../connect.php";
 	date_default_timezone_set('Asia/Kolkata');
 	$time = date("d-m-Y")."-".time();
-	if(isset($_POST['sub-hos'])){
-		$hospitalid = "Hospital-".mt_rand(1000000,9999999);
+	if(isset($_POST['sub-hos']) || isset($_POST['sub-hos-branch'])){
+        $hospitalid = "Hospital-".mt_rand(1000000,9999999);
 		$htime_id = "hosttime-".mt_rand(1000000,9999999);
 		$hospitalname = filter_input(INPUT_POST, 'hospitalname');
-		$hospitalspecialist1 = $_POST['hospitalspecialist'];
+		$hospitalspecialist1 = isset($_POST['hospitalspecialist']) ? $_POST['hospitalspecialist'] : $_POST['bhospitalspecialist'];
 		$hospitalspecialist ="";
 		for($i=0; $i<count($hospitalspecialist1);$i++){
-			if($i==(count($hospitalspecialist1)-1)){
-				$hospitalspecialist .= $hospitalspecialist1[$i];
+            if($i==(count($hospitalspecialist1)-1)){
+                $hospitalspecialist .= $hospitalspecialist1[$i];
 			}
 			else{
-			$hospitalspecialist .= $hospitalspecialist1[$i]." ///";
+                $hospitalspecialist .= $hospitalspecialist1[$i]." ///";
 			}
-		}
+		}      
+		$isMain = filter_input(INPUT_POST, 'isMain');
+		$mainId = filter_input(INPUT_POST, 'mainId');
 		$hospitaladdr = filter_input(INPUT_POST, 'hospitaladdr');
 		$hospitalmap = filter_input(INPUT_POST, 'hospitalmap');
 		$hospitalcity = filter_input(INPUT_POST, 'hospitalcity');
@@ -30,7 +32,7 @@
 		$hospitalinsta = filter_input(INPUT_POST, 'hospitalinsta');
 		$hospitalln = filter_input(INPUT_POST, 'hospitalln');
 		$status = filter_input(INPUT_POST, 'status');
-		$about = mysqli_real_escape_string($conn, $_POST['about']);
+        $about = isset($_POST['about']) ? $_POST['about'] : $_POST['branchabout'];
 		$videoembed = mysqli_real_escape_string($conn, $_POST['videoembed']);
 
 		$mon_open = filter_input(INPUT_POST, 'monopentime');
@@ -127,12 +129,12 @@
 				$logoupload = move_uploaded_file($_FILES['logoimage']['tmp_name'], "../directory/hospital/".$logotarget);
 				
 			if($featureupload){
-				$query= "INSERT INTO hospital (hospital_id, name, speciality, address, is_main , map, city, mobile, email, whatsapp, website, type, subtype, working_hours,  facebook, instagram, linkedin,logo, status, about,priority, image, video) 
-						values ('$hospitalid', '$hospitalname', '$hospitalspecialist', '$hospitaladdr', 'main', '$hospitalmap', '$hospitalcity', '$hospitalcont',  '$hospitalemail','$hospitalwhatsapp',  '$hospitalweb', '$hospitaltype', '$hospitalsubtype', '$hospitalworking', '$hospitalfb',  '$hospitalinsta', '$hospitalln', '$logotarget', '$status', '$about','$priority','$featuretarget', '$videotarget')";
-				$result = mysqli_query($conn, $query);
+				$query= "INSERT INTO hospital (hospital_id, name, speciality, address, is_main ,main_id, map, city, mobile, email, whatsapp, website, type, subtype, working_hours,  facebook, instagram, linkedin,logo, status, about,priority, image, video) 
+						values ('$hospitalid', '$hospitalname', '$hospitalspecialist', '$hospitaladdr', '$isMain','$mainId', '$hospitalmap', '$hospitalcity', '$hospitalcont',  '$hospitalemail','$hospitalwhatsapp',  '$hospitalweb', '$hospitaltype', '$hospitalsubtype', '$hospitalworking', '$hospitalfb',  '$hospitalinsta', '$hospitalln', '$logotarget', '$status', '$about','$priority','$featuretarget', '$videotarget')";
+                $result = mysqli_query($conn, $query);
 
-				$workingTimesQuery = "INSERT INTO hospital_working_times (htime_id, hospital_id, hospital_type, hospital_branch, monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
-							VALUES ('$htime_id','$hospitalid', '$hospitaltype', 'main', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
+				$workingTimesQuery = "INSERT INTO hospital_working_times (htime_id, hospital_id, hospital_type,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
+							VALUES ('$htime_id','$hospitalid', '$hospitaltype', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
 				$resultWorkingTimes = mysqli_query($conn, $workingTimesQuery);
 				if($result && $resultWorkingTimes){
 					$conn->commit();

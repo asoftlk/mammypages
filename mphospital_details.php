@@ -680,6 +680,22 @@
 								
 								
 								?>
+                                <?php $query1=mysqli_query($conn, "SELECT * FROM hospital WHERE main_id = (SELECT id FROM hospital WHERE hospital_id = '$id')");
+                                    while($branches1=mysqli_fetch_array($query1)){
+                                    echo '<form action="mpconnect/hospital/'. urlencode(str_replace(' ', '_', $branches1["name"])) .'" method="post" style="display:inline;">
+                                    <input type="hidden" name="hospital_id" value="'.$branches1["hospital_id"].'">
+                                    <button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Hospital</button>
+                                    </form>';
+                                }?>
+                                <?php $query2=mysqli_query($conn, "SELECT * FROM hospital WHERE main_id =(SELECT main_id FROM hospital WHERE hospital_id = '$id') AND hospital_id != '$id' UNION
+                                    SELECT * FROM hospital WHERE id =(SELECT main_id FROM hospital WHERE hospital_id = '$id')");
+                                    while($branches2=mysqli_fetch_array($query2)){
+                                    echo '<form action="mpconnect/hospital/'. urlencode(str_replace(' ', '_', $branches2["name"])) .'" method="post" style="display:inline;">
+                                    <input type="hidden" name="hospital_id" value="'.$branches2["hospital_id"].'">
+                                    <button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Hospital</button>
+                                    </form>';
+                                }?>
+                                
 						</div>
 					</div>
 				</div>
