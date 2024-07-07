@@ -295,7 +295,6 @@ SET name = 'Dr. Sanjeewa Wijesekara',
     hospital_name = 'Asiri Hospital'
 WHERE doctor_id = 'DOC002';
 
--- thushitha is here
 
 CREATE TABLE hospital_working_times (
 	  htime_id VARCHAR(300) NOT NULL,
@@ -633,3 +632,13 @@ CREATE TABLE pharmacy_branch (
 );
 
 -- akila is here
+
+ALTER TABLE `hospital` 
+ADD COLUMN `main_id` INT NULL AFTER `is_main`,
+CHANGE COLUMN `is_main` `is_main` CHAR(1) NOT NULL ;
+
+ALTER TABLE `mammy`.`hospital_working_times` 
+DROP COLUMN `branch_id`,
+DROP COLUMN `hospital_branch`;
+
+-- thushitha is here

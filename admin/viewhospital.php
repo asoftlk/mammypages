@@ -15,7 +15,7 @@
 	if(isset($_GET['del_id'])) 
 	{
 	$id = $_GET['del_id'];
-	$data1 = mysqli_query($conn,"select * from hospital where id = '$id'");
+	$data1 = mysqli_query($conn,"select * from hospital id = '$id'");
 	if(mysqli_num_rows($data1)>0){
 		$row = mysqli_fetch_array($data1);
 		if(file_exists("../directory/hospital/".$row['logo'])){
@@ -271,38 +271,38 @@
 										<tbody>
 											<tr>
 												<td>Monday</td>
-												<td><input type="time" name="monopentime" class="form-control form-control-sm border-0" id="monopentime" placeholder="Monday Open Time"></td>
-												<td><input type="time" name="monendtime" class="form-control form-control-sm border-0" id="monendtime" placeholder="Monday End Time"></td>
+												<td><input type="time" name="monday_open" class="form-control form-control-sm border-0" id="monday_open" placeholder="Monday Open Time"></td>
+												<td><input type="time" name="monday_close" class="form-control form-control-sm border-0" id="monday_close" placeholder="Monday End Time"></td>
 											</tr>
 											<tr>
 												<td>Tuesday</td>
-												<td><input type="time" name="tueopentime" class="form-control form-control-sm border-0" id="tueopentime" placeholder="Tuesday Open Time"></td>
-												<td><input type="time" name="tueendtime" class="form-control form-control-sm border-0" id="tueendtime" placeholder="Tuesday End Time"></td>
+												<td><input type="time" name="tuesday_open" class="form-control form-control-sm border-0" id="tuesday_open" placeholder="Tuesday Open Time"></td>
+												<td><input type="time" name="tuesday_close" class="form-control form-control-sm border-0" id="tuesday_close" placeholder="Tuesday End Time"></td>
 											</tr>
 											<tr>
 												<td>Wednesday</td>
-												<td><input type="time" name="wedopentime" class="form-control form-control-sm border-0" id="wedopentime" placeholder="Wednesday Open Time"></td>
-												<td><input type="time" name="wedendtime" class="form-control form-control-sm border-0" id="wedendtime" placeholder="Wednesday End Time"></td>
+												<td><input type="time" name="wednesday_open" class="form-control form-control-sm border-0" id="wednesday_open" placeholder="Wednesday Open Time"></td>
+												<td><input type="time" name="wednesday_close" class="form-control form-control-sm border-0" id="wednesday_close" placeholder="Wednesday End Time"></td>
 											</tr>
 											<tr>
 												<td>Thursday</td>
-												<td><input type="time" name="thuopentime" class="form-control form-control-sm border-0" id="thuopentime" placeholder="Thursday Open Time"></td>
-												<td><input type="time" name="thuendtime" class="form-control form-control-sm border-0" id="thuendtime" placeholder="Thursday End Time"></td>
+												<td><input type="time" name="thursday_open" class="form-control form-control-sm border-0" id="thursday_open" placeholder="Thursday Open Time"></td>
+												<td><input type="time" name="thursday_close" class="form-control form-control-sm border-0" id="thursday_close" placeholder="Thursday End Time"></td>
 											</tr>
 											<tr>
 												<td>Friday</td>
-												<td><input type="time" name="friopentime" class="form-control form-control-sm border-0" id="friopentime" placeholder="Friday Open Time"></td>
-												<td><input type="time" name="friendtime" class="form-control form-control-sm border-0" id="friendtime" placeholder="Friday End Time"></td>
+												<td><input type="time" name="friday_open" class="form-control form-control-sm border-0" id="friday_open" placeholder="Friday Open Time"></td>
+												<td><input type="time" name="friday_close" class="form-control form-control-sm border-0" id="friday_close" placeholder="Friday End Time"></td>
 											</tr>
 											<tr>
 												<td>Saturday</td>
-												<td><input type="time" name="satopentime" class="form-control form-control-sm border-0" id="satopentime" placeholder="Saturday Open Time"></td>
-												<td><input type="time" name="satendtime" class="form-control form-control-sm border-0" id="satendtime" placeholder="Saturday End Time"></td>
+												<td><input type="time" name="saturday_open" class="form-control form-control-sm border-0" id="saturday_open" placeholder="Saturday Open Time"></td>
+												<td><input type="time" name="saturday_close" class="form-control form-control-sm border-0" id="saturday_close" placeholder="Saturday End Time"></td>
 											</tr>
 											<tr>
 												<td>Sunday</td>
-												<td><input type="time" name="sunopentime" class="form-control form-control-sm border-0" id="sunopentime" placeholder="Sunday Open Time"></td>
-												<td><input type="time" name="sunendtime" class="form-control form-control-sm border-0" id="sunendtime" placeholder="Sunday End Time"></td>
+												<td><input type="time" name="sunday_open" class="form-control form-control-sm border-0" id="sunday_open" placeholder="Sunday Open Time"></td>
+												<td><input type="time" name="sunday_close" class="form-control form-control-sm border-0" id="sunday_close" placeholder="Sunday End Time"></td>
 											</tr>
 										</tbody>
 									</table>
@@ -380,7 +380,8 @@
 	       success:function(data)
 	       {
 		//	debugger
-	           var data1= JSON.parse(data);
+            var data1= JSON.parse(data);
+            console.log(data1);
 	           for(var key in data1){
 	               if($("#" + key).length != 0){
 	                   if(key == 'logo')
@@ -406,7 +407,7 @@
 	                       }
 	                       }
 	                   else{
-	                   $('#'+key).val(data1[key]); 
+                        data1[key] === '00:00:00' ? '':$('#'+key).val(data1[key]); 
 	                   $('#'+key).attr('disabled', value);
 	                   }
 	               }
