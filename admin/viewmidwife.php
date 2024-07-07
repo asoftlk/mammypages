@@ -22,13 +22,13 @@
 		unlink("../directory/midwife/".$row['logo']);}
 		if(file_exists("../directory/midwife/".$row['image'])){
 		unlink("../directory/midwife/".$row['image']);}
-		$galleryquery= mysqli_query($conn, "SELECT * FROM mpgallery WHERE midwife_id = '$row[midwife_id]'");
+		$galleryquery= mysqli_query($conn, "SELECT * FROM mpmidwife_gallery WHERE midwife_id = '$row[midwife_id]'");
 		while($galleryrow = mysqli_fetch_array($galleryquery)){
 			if(file_exists("../directory/midwife/".$galleryrow['image_name'])){
 			unlink("../directory/midwife/".$galleryrow['image_name']);
 			}
 		}
-		mysqli_query($conn, "DELETE FROM mpgallery WHERE midwife_id='$row[midwife_id]'");
+		mysqli_query($conn, "DELETE FROM mpmidwife_gallery WHERE midwife_id='$row[midwife_id]'");
 		mysqli_query($conn, "DELETE FROM midwife WHERE id=$id");
 		echo '<script>alert("Deleted Successfully");window.location.href="viewmidwife";</script>';  
 		//header( "refresh:0.01;url=magazinelist" );
@@ -85,6 +85,26 @@
 	#prioritystatus{
 	width:50px;
 	}
+	
+	.l-select-form-control{
+		width: 4rem;
+		height: 28px;
+		height: calc(1.8125rem + 2px);
+		padding: .25rem .5rem;
+		font-size: .875rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #495057;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #ced4da;
+		border-radius: .2rem;
+		box-shadow: inset 0 0 0 transparent;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	}
+	.l-select-form-control:focus-visible {
+		outline: -webkit-focus-ring-color auto 1px;
+	}
 </style>
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -92,12 +112,12 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1>midwife</h1>
+					<h1>Midwife Clinic</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active">midwife</li>
+						<li class="breadcrumb-item active">Midwife Clinic</li>
 					</ol>
 				</div>
 			</div>
@@ -108,14 +128,14 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
-					<a href="midwife.php" class="btn btn-mammy float-right">+ Add midwife</a>
+					<a href="midwife.php" class="btn btn-mammy float-right">+ Add Midwife Clinic</a>
 				</div>
 				<br><br>
 				<div class="col-12">
 					<div class="card" >
 						<div class="card-header" style="display:inline-block">
 							<label style="padding-left:30px;">Show &nbsp </label>
-							<select onchange="val()" id="select_id">
+							<select onchange="val()" id="select_id"  class="l-select-form-control">
 								<option value="10">10</option>
 								<option value="20">20</option>
 								<option value="50">50</option>
@@ -123,7 +143,7 @@
 								<option value="250">250</option>
 							</select>
 							<label> &nbsp Entries</label>
-							<input style=" width:30%; float:right" type="text" name="search_box" id="search_box" placeholder="Search..." >
+							<input style=" width:30%; height: 31px; float:right" class="form-control form-control-sm" type="text" name="search_box" id="search_box" placeholder="Search..." >
 							<div class="card-body">
 								<div class="table-responsive" id="dynamic_content">
 								</div>
@@ -160,34 +180,34 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>midwife Id:</label><input type="text" class="form-control" id="midwife_id">
+									<label>Midwife Clinic Id:</label><input type="text" class="form-control" id="midwife_id">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Name:</label><input type="text" class="form-control" id="name">
+									<label>Midwife Clinic Name:</label><input type="text" class="form-control" id="name">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>midwife Specialist In</label><input type="text" class="form-control" id="speciality">
+									<label>Midwife Clinic Specialist In</label><input type="text" class="form-control" id="speciality">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>midwife Address:</label>
+									<label>Midwife Clinic Address:</label>
 									<input type="text" class="form-control" id="address">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>midwife Map location:</label>
+									<label>Midwife Clinic Map location:</label>
 									<input type="text" class="form-control" id="map">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>midwife city(Required to show for branches):</label>
+									<label>Midwife Clinic city(Required to show for branches):</label>
 									<input type="text" class="form-control" id="city">
 								</div>
 							</div>
@@ -217,7 +237,7 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>midwife type:</label>
+									<label>Midwife Clinic type:</label>
 									<input type="text" class="form-control" id="type">
 								</div>
 							</div>

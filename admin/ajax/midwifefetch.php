@@ -20,7 +20,7 @@
   margin-left: 10px;
   position: absolute;
   left: 26px;
-  margin-top: 1rem;
+  margin-top: 0.85rem;
 }
 
 .up-arrow::after {
@@ -29,7 +29,29 @@
   margin-left: 10px;
   position: absolute;
   left: 28px;
-  margin-top: 1rem;
+  margin-top: 0.85rem;
+}
+.table th{
+  text-wrap: nowrap;
+}
+.bg-tbl{
+  background-color: #b7ccdd !important;
+  color: #000 !important;
+}
+.color-box {
+    width: 15px;
+    height: 15px;
+    background-color: #b7ccdd;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.color-label {
+    font-size: 16px;
+    vertical-align: middle;
+    font-weight: 700;
+    color: #5f46c6;
 }
 </style>
 
@@ -80,18 +102,20 @@ if($total_filter_data==0){
 }
 
 $output = '
-<label>Total midwifes - '.$total_data.'</label>
+<label>Total Midwife Clinics - '.$total_data.'</label>  
+  <div class="color-box ml-5"></div>
+    <span class="color-label">branches</span>
 <table class="table table-striped table-bordered">
   <tr>
-    <th>midwife Id</th>
+    <th>Midwife Clinic Id</th>
 	<th>Name</th>
-	<th>midwife Specialist In</th>
-   	<th>midwife Address</th>
+	<th>Midwife Clinic Specialist In</th>
+   	<th>Midwife Clinic Address</th>
     <th>Contact Number</th>
 	<th>Email</th>
     <th>Whatsapp Number</th>
      <th>Website</th>
-    <th>midwife type</th>
+    <th>Midwife Clinic type</th>
     <th>Hours of Operation</th>
     <th>Facebook Link</th>
     <th>Instagram Link</th>
@@ -169,7 +193,7 @@ if($total_data > 0)
         </tr>';
         if($hasBranches) {
             foreach($branches[$main['id']] as $branch) {
-            $output .=    '<tr class="bg-success branch" data-main-id="'.$main['id'].'">
+            $output .=    '<tr class="bg-tbl branch" data-main-id="'.$main['id'].'">
             <td>'.$branch['midwife_id'].'</td>
             <td>'.$branch['name'].'</td>
             <td>'.$branch['speciality'].'</td>

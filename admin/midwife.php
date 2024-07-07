@@ -44,12 +44,13 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1>Midwifes</h1>
+					<h1>Midwife Clinics</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active">Midwifes</li>
+						<li class="breadcrumb-item active"><a href="viewmidwife">Midwife Clinics</a></li>
+						<li class="breadcrumb-item active">Add Midwife Clinics</li>
 					</ol>
 				</div>
 			</div>
@@ -61,7 +62,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
-					<a href="viewmidwife.php" class="btn btn-mammy float-right">View Midwifes</a>
+					<a href="viewmidwife.php" class="btn btn-mammy float-right">View Midwife Clinics</a>
 					<button type="button" class="btn btn-mammy" id="btnspeciality">+ Add Speciality</button>
 				</div>
 				<br><br>
@@ -503,7 +504,7 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#new" role="tab">New Midwife</a>
+                                    <a class="nav-link active" data-toggle="tab" href="#new" role="tab">New Midwife Clinic</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#addbranch" role="tab">Add Branch</a>
@@ -517,9 +518,9 @@
                                                 $midwifeQuery = mysqli_query($conn, "SELECT DISTINCT * FROM midwife WHERE is_main = 'Y'");
                                             ?>
                                             <div class="form-group branch">
-                                                <label class="required" for="mainId">Midwife Name</label>
+                                                <label class="required" for="mainId">Midwife Clinic Name</label>
                                                 <select name="mainId" class="form-control" id="mainId" required>
-                                                    <option value="">Select midwife</option>
+                                                    <option value="">Select Midwife Clinic</option>
                                                     <?php
                                                     while ($midwifeRow = mysqli_fetch_array($midwifeQuery)) {
                                                         $midwifeArray = explode(" ///", $midwifeRow['name']);
@@ -535,7 +536,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-												<label class="required" for="midwifename">Name</label>
+												<label class="required" for="midwifename">Midwife Clinic Name</label>
 												<input type="text" name="midwifename" class="form-control" id="midwifename" placeholder="Midwife Name">
 											</div>
 											<div class="form-group">
@@ -548,15 +549,15 @@
 												</select>
 											</div>
 											<div class="form-group">
-												<label class="required" for="midwifeaddr">Midwife Address</label>
+												<label class="required" for="midwifeaddr">Midwife Clinic Address</label>
 												<input type="text" name="midwifeaddr" class="form-control" id="midwifeaddr" placeholder="Address">
 											</div>
 											<div class="form-group">
-												<label for="midwifemap" class="required">Midwife Map location</label>
+												<label for="midwifemap" class="required">Midwife Clinic Map location</label>
 												<input type="text" name="midwifemap" class="form-control" id="midwifemap" placeholder="Copy form Google Map by poining the location">
 											</div>
 											<div class="form-group">
-												<label class="required" for="midwifecity">Midwife city(required to show for branches)</label>
+												<label class="required" for="midwifecity">Midwife Clinic city(required to show for branches)</label>
 												<input type="text" name="midwifecity" class="form-control" id="midwifecity" placeholder="City">
 											</div>
 											<div class="form-group">
@@ -576,27 +577,27 @@
 												<input type="url" name="midwifeweb" class="form-control" id="midwifeweb" placeholder="Website">
 											</div>
 											<div class="form-group">
-												<label class="required" for="midwifetype">Midwife type</label>
+												<label class="required" for="midwifetype">Midwife Clinic type</label>
 												<select class="form-control" name="midwifetype" id="midwifetype">
-													<option selected="" disabled="" value="null" class="hidden">--Select Midwife Type</option>
-													<option value="Government midwife">Government Midwife</option>
-													<option value="Private midwife">Private Midwife</option>
+													<option selected="" disabled="" value="null" class="hidden">--Select Midwife Clinic Type</option>
+													<option value="Government midwife">Government Midwife Clinic</option>
+													<option value="Private midwife">Private Midwife Clinic</option>
 												</select>
 											</div>
 											<div class="form-group midwifesubtype">
-												<label for="midwifesubtype" class="required">Midwife Subtype</label>
+												<label for="midwifesubtype" class="required">Midwife Clinic Subtype</label>
 												<select class="form-control" name="midwifesubtype" id="midwifesubtype">
-													<option selected="" disabled="" value="null" class="hidden">--Select Midwife Subype</option>
-													<option value="National Midwife">National Midwife</option>
-													<option value="Teaching Midwife">Teaching Midwife</option>
-													<option value="Specialized Teaching Midwife">Specialized Teaching Midwife</option>
-													<option value="Other Specialized Midwife">Other Specialized Midwife</option>
-													<option value="Provincial General Midwife">Provincial General Midwife</option>
-													<option value="Base Midwife Type - A">Base Midwife Type - A</option>
-													<option value="Base Midwife Type - B">Base Midwife Type - B</option>
-													<option value="Divisional Midwife Type - A">Divisional Midwife Type - A</option>
-													<option value="Divisional Midwife Type - B">Divisional Midwife Type - B</option>
-													<option value="Divisional Midwife Type - C">Divisional Midwife Type - C</option>
+													<option selected="" disabled="" value="null" class="hidden">--Select Midwife Clinic Subype</option>
+													<option value="National Midwife">National Midwife Clinic</option>
+													<option value="Teaching Midwife">Teaching Midwife Clinic</option>
+													<option value="Specialized Teaching Midwife">Specialized Teaching Midwife Clinic</option>
+													<option value="Other Specialized Midwife">Other Specialized Midwife Clinic</option>
+													<option value="Provincial General Midwife">Provincial General Midwife Clinic</option>
+													<option value="Base Midwife Type - A">Base Midwife Clinic Type - A</option>
+													<option value="Base Midwife Type - B">Base Midwife Clinic Type - B</option>
+													<option value="Divisional Midwife Type - A">Divisional Midwife Clinic Type - A</option>
+													<option value="Divisional Midwife Type - B">Divisional Midwife Clinic Type - B</option>
+													<option value="Divisional Midwife Type - C">Divisional Midwife Clinic Type - C</option>
 													<option value="Primary Medical Care Unit">Primary Medical Care Unit</option>
 													<option value="Others">Others</option>
 												</select>
@@ -718,7 +719,7 @@
 											<br>
 											<br>
 											<div class="card-footer">
-                                                <input class="isMain"  name="isMain" type="hidde"/>
+                                                <input class="isMain"  name="isMain" type="hidde" hidden/>
                                          
 												<button type="submit" name="sub-mid" class="btn btn-sm btn-primary">Submit</button>
 											</div>
