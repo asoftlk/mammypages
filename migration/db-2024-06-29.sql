@@ -650,6 +650,21 @@ DROP COLUMN `branch_id`;
 ALTER TABLE `midwife_working_times` 
 DROP COLUMN `branch_id`;
 
+-- akila is here
+
+ALTER TABLE `medical` 
+ADD COLUMN `main_id` INT NULL AFTER `is_main`,
+CHANGE COLUMN `is_main` `is_main` CHAR(1) NOT NULL ;
+
+ALTER TABLE `mammy`.`medical` 
+CHANGE COLUMN `medical_id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE `mammy`.`medical` 
+CHANGE COLUMN `clinic_id` `medical_id` VARCHAR(300) NOT NULL ;
+
+INSERT INTO `mammy`.`medical_speciality` (`id`, `speciality`) VALUES ('1', 'Women and Childcare');
+INSERT INTO `mammy`.`medical_speciality` (`id`, `speciality`) VALUES ('2', 'Multi Speciality');
+INSERT INTO `mammy`.`medical_speciality` (`id`, `speciality`) VALUES ('3', 'Eye care');
+INSERT INTO `mammy`.`medical_speciality` (`id`, `speciality`) VALUES ('4', 'Ayurveda');
 
 -- thushitha is here
--- akila is here
