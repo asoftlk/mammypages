@@ -69,14 +69,13 @@ else
   $start = 0;
 }
 
-$query = "
-SELECT * FROM medical ";
+$query = " SELECT * FROM pharmacy";
 
-if($_POST['query'] != '')
-{
-  $query .= '
- WHERE (email LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR mobile LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR medical_id LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR name LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR speciality LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR address LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR city LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR status LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR website LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR about LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR priority LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" ) ';
+if($_POST['query'] != '') {
+    $query .= '
+    WHERE (email LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR mobile LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR pharmacy_id LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR name LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR speciality LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR address LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR city LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR status LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR website LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR about LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR priority LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" ) ';
 }
+
 
 $query .= " ORDER BY is_main DESC, main_id, id DESC ";
 $filter_query = $query . 'LIMIT '.$start.', '.$limit.'';
@@ -99,20 +98,20 @@ if($total_filter_data==0){
 }
 
 $output = '
-<label>Total Medical Clinics - '.$total_data.'</label>  
+<label>Total Pharmacy - '.$total_data.'</label>  
   <div class="color-box ml-5"></div>
     <span class="color-label">branches</span>
 <table class="table table-striped table-bordered">
   <tr>
-    <th>Medical Clinic Id</th>
+    <th>Pharmacy Id</th>
 	<th>Name</th>
-	<th>Medical Clinic Specialist In</th>
-   	<th>Medical Clinic Address</th>
+	<th>Pharmacy Specialist In</th>
+   	<th>Pharmacy Address</th>
     <th>Contact Number</th>
 	<th>Email</th>
     <th>Whatsapp Number</th>
      <th>Website</th>
-    <th>Medical Clinic type</th>
+    <th>Pharmacy type</th>
     <th>Hours of Operation</th>
     <th>Facebook Link</th>
     <th>Instagram Link</th>
@@ -122,7 +121,7 @@ $output = '
     <th>Priority</th>
     <th>logo Image</th>
     <th>Featured Image</th>
-	<th>datetime</th>
+	<th>Date Time</th>
     <th>View</th>
     <th>Edit</th>
 	<th>Delete</th>
@@ -147,7 +146,7 @@ if($total_data > 0)
         $arrowClass = $hasBranches ? 'down-arrow' : '';
         $output .= '
         <tr class="branch-header '.$arrowClass.'" data-main-id="'.$main['id'].'">
-            <td>'.$main['medical_id'].'</td>
+            <td>'.$main['pharmacy_id'].'</td>
             <td>'.$main['name'].'</td>
             <td>'.$main['speciality'].'</td>
             <td>'.$main['address']."  ".$main['city'].'</td>
@@ -166,23 +165,23 @@ if($total_data > 0)
             <td>'.$main['priority'].'</td-->
             <td><select name="dropdown" id="prioritystatus" onchange="javascript:chg_status(this);">
             <option value="" selected disabled>'.$main["priority"].'</option>
-            <option value="viewmedclinic.php?value=0&id='.$main["id"].'">0</option>
-            <option value="viewmedclinic.php?value=1&id='.$main["id"].'">1</option>
-            <option value="viewmedclinic.php?value=2&id='.$main["id"].'">2</option>
-            <option value="viewmedclinic.php?value=3&id='.$main["id"].'">3</option>
-            <option value="viewmedclinic.php?value=4&id='.$main["id"].'">4</option>
-            <option value="viewmedclinic.php?value=5&id='.$main["id"].'">5</option>
+            <option value="viewpharmacy.php?value=0&id='.$main["id"].'">0</option>
+            <option value="viewpharmacy.php?value=1&id='.$main["id"].'">1</option>
+            <option value="viewpharmacy.php?value=2&id='.$main["id"].'">2</option>
+            <option value="viewpharmacy.php?value=3&id='.$main["id"].'">3</option>
+            <option value="viewpharmacy.php?value=4&id='.$main["id"].'">4</option>
+            <option value="viewpharmacy.php?value=5&id='.$main["id"].'">5</option>
             </select>
             </td>
-            <td><div class="zoom"><img src="../directory/medical/'.$main["logo"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
-            <td><div class="zoom"><img src="../directory/medical/'.$main["image"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td><div class="zoom"><img src="../directory/pharmacy/'.$main["logo"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td><div class="zoom"><img src="../directory/pharmacy/'.$main["image"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
             <td>'.$main['datetime'].'</td>
             
         </select>
         </td>
         <td><a href="javascript:fetch_id('.$main[0].', true)"><button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-lg fa-eye" aria-hidden="true" style="color:green;"></i></button></a></td>
             
-            <td><a href="medclinicedit.php?id='.$main["id"].'"><i class="fa fa-lg fa-pencil" aria-hidden="true" style="color:black;"></i></a></td>
+            <td><a href="pharmacyedit.php?id='.$main["id"].'"><i class="fa fa-lg fa-pencil" aria-hidden="true" style="color:black;"></i></a></td>
             
             <td align="center"><a href="javascript:del_id('.$main[0].')"><i class="fa fa-trash" aria-hidden="true" style="color:red;"></i></a> </td>
             
@@ -191,7 +190,7 @@ if($total_data > 0)
         if($hasBranches) {
             foreach($branches[$main['id']] as $branch) {
             $output .=    '<tr class="bg-tbl branch" data-main-id="'.$main['id'].'">
-            <td>'.$branch['medical_id'].'</td>
+            <td>'.$branch['pharmacy_id'].'</td>
             <td>'.$branch['name'].'</td>
             <td>'.$branch['speciality'].'</td>
             <td>'.$branch['address']."  ".$branch['city'].'</td>
@@ -210,23 +209,23 @@ if($total_data > 0)
             <td>'.$branch['priority'].'</td-->
             <td><select name="dropdown" id="prioritystatus" onchange="javascript:chg_status(this);">
             <option value="" selected disabled>'.$branch["priority"].'</option>
-            <option value="viewmedclinic.php?value=0&id='.$branch["id"].'">0</option>
-            <option value="viewmedclinic.php?value=1&id='.$branch["id"].'">1</option>
-            <option value="viewmedclinic.php?value=2&id='.$branch["id"].'">2</option>
-            <option value="viewmedclinic.php?value=3&id='.$branch["id"].'">3</option>
-            <option value="viewmedclinic.php?value=4&id='.$branch["id"].'">4</option>
-            <option value="viewmedclinic.php?value=5&id='.$branch["id"].'">5</option>
+            <option value="viewpharmacy.php?value=0&id='.$branch["id"].'">0</option>
+            <option value="viewpharmacy.php?value=1&id='.$branch["id"].'">1</option>
+            <option value="viewpharmacy.php?value=2&id='.$branch["id"].'">2</option>
+            <option value="viewpharmacy.php?value=3&id='.$branch["id"].'">3</option>
+            <option value="viewpharmacy.php?value=4&id='.$branch["id"].'">4</option>
+            <option value="viewpharmacy.php?value=5&id='.$branch["id"].'">5</option>
             </select>
             </td>
-            <td><div class="zoom"><img src="../directory/medical/'.$branch["logo"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
-            <td><div class="zoom"><img src="../directory/medical/'.$branch["image"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td><div class="zoom"><img src="../directory/pharmacy/'.$branch["logo"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td><div class="zoom"><img src="../directory/pharmacy/'.$branch["image"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
             <td>'.$branch['datetime'].'</td>
             
         </select>
         </td>
         <td><a href="javascript:fetch_id('.$branch[0].', true)"><button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-lg fa-eye" aria-hidden="true" style="color:green;"></i></button></a></td>
             
-            <td><a href="medclinicedit.php?id='.$branch["id"].'"><i class="fa fa-lg fa-pencil" aria-hidden="true" style="color:black;"></i></a></td>
+            <td><a href="pharmacyedit.php?id='.$branch["id"].'"><i class="fa fa-lg fa-pencil" aria-hidden="true" style="color:black;"></i></a></td>
             
             <td align="center"><a href="javascript:del_id('.$branch[0].')"><i class="fa fa-trash" aria-hidden="true" style="color:red;"></i></a> </td>
             
@@ -375,7 +374,7 @@ echo $output;
 <script type="text/javascript">
   function del_id(id) {
     if(confirm('Sure To Remove This Record ?')) {
-      window.location.href='viewmedclinic.php?del_id='+id;
+      window.location.href='viewpharmacy.php?del_id='+id;
     }
   }
 

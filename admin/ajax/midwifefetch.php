@@ -70,8 +70,7 @@ else
 }
 
 $query = "
-SELECT * FROM midwife ORDER BY is_main DESC, main_id, id DESC
-";
+SELECT * FROM midwife ";
 
 
 
@@ -82,6 +81,7 @@ if($_POST['query'] != '')
 }
 
 
+$query .= " ORDER BY is_main DESC, main_id, id DESC ";
 $filter_query = $query . 'LIMIT '.$start.', '.$limit.'';
 
 $statement = $connect->prepare($query);

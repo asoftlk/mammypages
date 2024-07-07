@@ -304,7 +304,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#" class="nav-link">
+							<a href="viewpharmacy" class="nav-link">
 								&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-notes-medical nav-icon"></i>
 								<p>Pharmacies</p>
 							</a>

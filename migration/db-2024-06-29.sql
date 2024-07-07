@@ -667,4 +667,14 @@ INSERT INTO `medical_speciality` (`id`, `speciality`) VALUES ('2', 'Multi Specia
 INSERT INTO `medical_speciality` (`id`, `speciality`) VALUES ('3', 'Eye care');
 INSERT INTO `medical_speciality` (`id`, `speciality`) VALUES ('4', 'Ayurveda');
 
+ALTER TABLE `pharmacy` 
+ADD COLUMN `main_id` INT NULL AFTER `is_main`,
+CHANGE COLUMN `pharmacy_id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
+
+ALTER TABLE `pharmacy` 
+ADD COLUMN `pharmacy_id` VARCHAR(100) NULL AFTER `id`;
+
+ALTER TABLE `mammy`.`pharmacy` 
+CHANGE COLUMN `created_at` `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP() ;
+
 -- thushitha is here
