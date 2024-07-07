@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
 <style>
 .zoom:hover {
   -ms-transform: scale(2.5); /* IE 9 */
@@ -14,13 +15,21 @@
 }
 
 .down-arrow::after {
-  content: "\25BC";
+  content: "\F231";
+  font-family: bootstrap-icons !important;
   margin-left: 10px;
+  position: absolute;
+  left: 26px;
+  margin-top: 1rem;
 }
 
 .up-arrow::after {
-  content: "\25B2";
+  content: "\F229";
+  font-family: bootstrap-icons !important;
   margin-left: 10px;
+  position: absolute;
+  left: 28px;
+  margin-top: 1rem;
 }
 </style>
 
@@ -117,7 +126,7 @@ if($total_data > 0)
         $arrowClass = $hasBranches ? 'down-arrow' : '';
         $output .= '
         <tr class="branch-header '.$arrowClass.'" data-main-id="'.$main['id'].'">
-            <td>'.$main['midwife_id'].'<span class="arrow-icon '.$arrowClass.'"></span></td>
+            <td>'.$main['midwife_id'].'</td>
             <td>'.$main['name'].'</td>
             <td>'.$main['speciality'].'</td>
             <td>'.$main['address']."  ".$main['city'].'</td>
