@@ -318,7 +318,7 @@
 											<br>
 											<br>
 											<div class="card-footer">
-                                                <input name="isMain" value="Y" />
+                                                <input name="isMain" value="Y" hidden />
 												<button type="submit" name="sub-hos" class="btn btn-sm btn-primary">Submit</button>
 											</div>
 										</form>
@@ -509,7 +509,7 @@
 													</div>
 												</div>
 												<div class="card-footer">
-                                                    <input name="isMain" value="N" />
+                                                    <input name="isMain" value="N" hidden/>
 													<button type="submit" name="sub-hos-branch" class="btn btn-sm btn-primary">Submit</button>
 												</div>
 											</form>

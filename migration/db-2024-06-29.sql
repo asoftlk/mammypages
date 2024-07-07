@@ -631,7 +631,6 @@ CREATE TABLE pharmacy_branch (
     galvideo VARCHAR(255)
 );
 
--- akila is here
 
 ALTER TABLE `hospital` 
 ADD COLUMN `main_id` INT NULL AFTER `is_main`,
@@ -642,3 +641,4 @@ DROP COLUMN `branch_id`,
 DROP COLUMN `hospital_branch`;
 
 -- thushitha is here
+-- akila is here
