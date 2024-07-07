@@ -656,15 +656,15 @@ ALTER TABLE `medical`
 ADD COLUMN `main_id` INT NULL AFTER `is_main`,
 CHANGE COLUMN `is_main` `is_main` CHAR(1) NOT NULL ;
 
-ALTER TABLE `mammy`.`medical` 
+ALTER TABLE `medical` 
 CHANGE COLUMN `medical_id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
 
-ALTER TABLE `mammy`.`medical` 
+ALTER TABLE `medical` 
 CHANGE COLUMN `clinic_id` `medical_id` VARCHAR(300) NOT NULL ;
 
-INSERT INTO `mammy`.`medical_speciality` (`id`, `speciality`) VALUES ('1', 'Women and Childcare');
-INSERT INTO `mammy`.`medical_speciality` (`id`, `speciality`) VALUES ('2', 'Multi Speciality');
-INSERT INTO `mammy`.`medical_speciality` (`id`, `speciality`) VALUES ('3', 'Eye care');
-INSERT INTO `mammy`.`medical_speciality` (`id`, `speciality`) VALUES ('4', 'Ayurveda');
+INSERT INTO `medical_speciality` (`id`, `speciality`) VALUES ('1', 'Women and Childcare');
+INSERT INTO `medical_speciality` (`id`, `speciality`) VALUES ('2', 'Multi Speciality');
+INSERT INTO `medical_speciality` (`id`, `speciality`) VALUES ('3', 'Eye care');
+INSERT INTO `medical_speciality` (`id`, `speciality`) VALUES ('4', 'Ayurveda');
 
 -- thushitha is here
