@@ -28,7 +28,7 @@
 			unlink("../directory/doctor/".$galleryrow['image']);
 			}
 		}
-		mysqli_query($conn, "DELETE FROM mpgallery WHERE doctor_id='$row[doctor_id]'");
+		mysqli_query($conn, "DELETE FROM mpdoctor_gallery WHERE doctor_id='$row[doctor_id]'");
 		mysqli_query($conn, "DELETE FROM doctor WHERE id=$id");
 		echo '<script>alert("Deleted Successfully");window.location.href="viewdoctors";</script>';  
 		//header( "refresh:0.01;url=magazinelist" );
