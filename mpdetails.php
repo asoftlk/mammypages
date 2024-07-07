@@ -688,6 +688,25 @@
 								
 								
 								?>
+                                <?php
+                                $query1 = mysqli_query($conn, "SELECT * FROM $type WHERE main_id = (SELECT id FROM $type WHERE $id_column = '$typeid')");
+                                while ($branches1 = mysqli_fetch_array($query1)) {
+                                    echo '<form action="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $branches1["name"])).'" method="post" style="display:inline;">
+                                            <input type="hidden" name="'.$id_column.'" value="'.$branches1["$id_column"].'">
+                                            <button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View '.$type.'</button>
+                                        </form>';
+                                }
+
+                                $query2 = mysqli_query($conn, "SELECT * FROM $type WHERE main_id IN (SELECT main_id FROM hospital WHERE $id_column = '$typeid') AND $id_column != '$typeid' 
+                                                                UNION 
+                                                                SELECT * FROM $type WHERE id = (SELECT main_id FROM $type WHERE $id_column = '$typeid')");
+                                while ($branches2 = mysqli_fetch_array($query2)) {
+                                    echo '<form action="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $branches2["name"])).'" method="post" style="display:inline;">
+                                            <input type="hidden" name="'.$id_column.'" value="'.$branches2["$id_column"].'">
+                                            <button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View '.$type.'</button>
+                                        </form>';
+                                }
+                                ?>
 						</div>
 					</div>
 				</div>

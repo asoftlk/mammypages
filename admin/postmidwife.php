@@ -16,6 +16,8 @@
 			$midwifespecialist .= $midwifespecialist1[$i]." ///";
 			}
 		}
+        $isMain = filter_input(INPUT_POST, 'isMain');
+		$mainId = filter_input(INPUT_POST, 'mainId');
 		$midwifeaddr = filter_input(INPUT_POST, 'midwifeaddr');
 		$midwifemap = filter_input(INPUT_POST, 'midwifemap');
 		$midwifecity = filter_input(INPUT_POST, 'midwifecity');
@@ -127,12 +129,12 @@
 				$logoupload = move_uploaded_file($_FILES['logoimage']['tmp_name'], "../directory/midwife/".$logotarget);
 				
 			if($featureupload){
-				$query= "INSERT INTO midwife (midwife_id, name, speciality, address, is_main , map, city, mobile, email, whatsapp, website, type, subtype, working_hours,  facebook, instagram, linkedin,logo, status, about,priority, image, video) 
-						values ('$midwife_id', '$midwifename', '$midwifespecialist', '$midwifeaddr', 'main', '$midwifemap', '$midwifecity', '$midwifecont',  '$midwifeemail','$midwifewhatsapp',  '$midwifeweb', '$midwifetype', '$midwifesubtype', '$midwifeworking', '$midwifefb',  '$midwifeinsta', '$midwifeln', '$logotarget', '$status', '$about','$priority','$featuretarget', '$videotarget')";
+				$query= "INSERT INTO midwife (midwife_id, name, speciality, address, is_main,main_id , map, city, mobile, email, whatsapp, website, type, subtype, working_hours,  facebook, instagram, linkedin,logo, status, about,priority, image, video) 
+						values ('$midwife_id', '$midwifename', '$midwifespecialist', '$midwifeaddr', '$isMain','$mainId', '$midwifemap', '$midwifecity', '$midwifecont',  '$midwifeemail','$midwifewhatsapp',  '$midwifeweb', '$midwifetype', '$midwifesubtype', '$midwifeworking', '$midwifefb',  '$midwifeinsta', '$midwifeln', '$logotarget', '$status', '$about','$priority','$featuretarget', '$videotarget')";
 				$result = mysqli_query($conn, $query);
 
-				$workingTimesQuery = "INSERT INTO midwife_working_times (mwtime_id, midwife_id, midwife_type, branch_id, monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
-							VALUES ('$midtime_id','$midwife_id', '$midwifetype', 'main', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
+				$workingTimesQuery = "INSERT INTO midwife_working_times (mwtime_id, midwife_id, midwife_type,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
+							VALUES ('$midtime_id','$midwife_id', '$midwifetype', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
 				$resultWorkingTimes = mysqli_query($conn, $workingTimesQuery);
 				if($result && $resultWorkingTimes){
 					$conn->commit();

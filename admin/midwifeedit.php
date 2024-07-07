@@ -27,9 +27,20 @@ label:not(.form-check-label):not(.custom-file-label) {
   }
 </style>
 <?php
-$id=$_GET['id'];
-$result = mysqli_query($conn,"SELECT * from midwife Where id='$id'");
-$row= mysqli_fetch_array($result);
+    $id=$_GET['id'];
+    $result = mysqli_query($conn,"SELECT * from midwife m LEFT JOIN midwife_working_times mwt ON mwt.midwife_id = m.midwife_id Where m.id='$id'");
+    $row= mysqli_fetch_array($result);
+
+    $days = ['mon' => 'monday', 'tue' => 'tuesday', 'wed' => 'wednesday', 'thu' => 'thursday', 'fri' => 'friday', 'sat' => 'saturday', 'sun' => 'sunday'];
+    $times = [];
+
+    foreach ($days as $abbr => $day) {
+        $openKey = $day . '_open';
+        $closeKey = $day . '_close';
+        $times[$abbr . 'open'] = $row[$openKey] == '00:00:00' ? '' : $row[$openKey];
+        $times[$abbr . 'close'] = $row[$closeKey] == '00:00:00' ? '' : $row[$closeKey];
+    }
+
 ?>
  
 <script>
@@ -72,8 +83,34 @@ $(document).ready(function() {
 			  <input type="hidden" name="midwifeid" value="<?php echo $row['midwife_id'];?>">
                 <div class="card-body">
 					<div class="row">
+                        <?php
+                            if ($row["is_main"] === 'N') {
+                                $mainSelectQuery = mysqli_query($conn, "SELECT * FROM midwife WHERE is_main = 'Y'");
+                                if (!$mainSelectQuery) {
+                                    echo "Error: " . mysqli_error($conn);
+                                    exit;
+                                }
+                                ?>
+                                <div class="form-group">
+                                    <label class="required" for="mainId">Midwife Name</label>
+                                    <select name="mainId" class="form-control" id="mainId" value="<?php echo $row["main_id"] ?>" required>
+                                        <option value="">Select Midwife</option>
+                                        <?php
+                                        while ($hospitalRow = mysqli_fetch_array($mainSelectQuery)) {
+                                            $name = $hospitalRow['name'];
+                                            $id = $hospitalRow['id'];
+                                            $selected = ($id == $row["main_id"]) ? 'selected' : '';
+                                            echo '<option value="' . $id . '" ' . $selected . '>' . $name . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <?php
+                            }
+                            ?>
 						<div class="col-md-6 form-group">
-						<label class="required" for="midwifename">Name</label>
+                        <label class="required" for="hospitalname"><?php echo ($row["is_main"] === 'N') ? "Midwife Clinic Branch Name" : "Midwife Clinic Name" ?>
+                                    </label>
 					  <input type="text" name="midwifename" class="form-control" id="midwifename"
 					value="<?php echo $row["name"]; ?>" placeholder="midwife Name">
 						</div>
@@ -147,6 +184,7 @@ $(document).ready(function() {
 						</div>
 						<div class="col-md-6 form-group">
 						<label class="required" for="midwifetype">midwife type</label>
+                        <?php echo $row['type']?>
 						  <select class="form-control" name="midwifetype" id="midwifetype">
 								<option selected="" disabled="" value="null" class="hidden">--Select midwife Type</option>
 								<option value="Government midwife" <?php if($row['type']=="Government midwife") echo  'selected="selected"';?>>Government midwife</option>
@@ -183,41 +221,30 @@ $(document).ready(function() {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Monday</td>
-                                    <td><input type="time" name="monopentime" class="form-control form-control-sm border-0" id="monopentime" placeholder="Monday Open Time"></td>
-                                    <td><input type="time" name="monendtime" class="form-control form-control-sm border-0" id="monendtime" placeholder="Monday End Time"></td>
-                                </tr>
-                                <tr>
-                                    <td>Tuesday</td>
-                                    <td><input type="time" name="tueopentime" class="form-control form-control-sm border-0" id="tueopentime" placeholder="Tuesday Open Time"></td>
-                                    <td><input type="time" name="tueendtime" class="form-control form-control-sm border-0" id="tueendtime" placeholder="Tuesday End Time"></td>
-                                </tr>
-                                <tr>
-                                    <td>Wednesday</td>
-                                    <td><input type="time" name="wedopentime" class="form-control form-control-sm border-0" id="wedopentime" placeholder="Wednesday Open Time"></td>
-                                    <td><input type="time" name="wedendtime" class="form-control form-control-sm border-0" id="wedendtime" placeholder="Wednesday End Time"></td>
-                                </tr>
-                                <tr>
-                                    <td>Thursday</td>
-                                    <td><input type="time" name="thuopentime" class="form-control form-control-sm border-0" id="thuopentime" placeholder="Thursday Open Time"></td>
-                                    <td><input type="time" name="thuendtime" class="form-control form-control-sm border-0" id="thuendtime" placeholder="Thursday End Time"></td>
-                                </tr>
-                                <tr>
-                                    <td>Friday</td>
-                                    <td><input type="time" name="friopentime" class="form-control form-control-sm border-0" id="friopentime" placeholder="Friday Open Time"></td>
-                                    <td><input type="time" name="friendtime" class="form-control form-control-sm border-0" id="friendtime" placeholder="Friday End Time"></td>
-                                </tr>
-                                <tr>
-                                    <td>Saturday</td>
-                                    <td><input type="time" name="satopentime" class="form-control form-control-sm border-0" id="satopentime" placeholder="Saturday Open Time"></td>
-                                    <td><input type="time" name="satendtime" class="form-control form-control-sm border-0" id="satendtime" placeholder="Saturday End Time"></td>
-                                </tr>
-                                <tr>
-                                    <td>Sunday</td>
-                                    <td><input type="time" name="sunopentime" class="form-control form-control-sm border-0" id="sunopentime" placeholder="Sunday Open Time"></td>
-                                    <td><input type="time" name="sunendtime" class="form-control form-control-sm border-0" id="sunendtime" placeholder="Sunday End Time"></td>
-                                </tr>
+                            <?php foreach ($days as $abbr => $day): ?>
+                            <tr>
+                                <td><?php echo ucfirst($day); ?></td>
+                                <td>
+                                    <input type="time" 
+                                        name="<?php echo $abbr; ?>opentime" 
+                                        class="form-control form-control-sm border-0" 
+                                        id="<?php echo $abbr; ?>opentime" 
+                                        placeholder="<?php echo ucfirst($day); ?> Open Time" 
+                                        value="<?php echo $times[$abbr . 'open']; ?>">
+                                </td>
+                                <td>
+                                    <input type="time" 
+                                        name="<?php echo $abbr; ?>endtime" 
+                                        class="form-control form-control-sm border-0" 
+                                        id="<?php echo $abbr; ?>endtime" 
+                                        placeholder="<?php echo ucfirst($day); ?> End Time" 
+                                        value="<?php echo $times[$abbr . 'close']; ?>">
+                                </td>
+                                <td>
+                                    <button type="button" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
@@ -639,4 +666,13 @@ $(document).on('change', '#midwifetype', function(){
 		$('.midwifesubtype').hide();
 	}
 });
+</script>
+<script>
+    function clearTimeInputs(day) {
+        var openInput = document.getElementById(day + 'opentime');
+        var closeInput = document.getElementById(day + 'endtime');
+        
+        openInput.value = '';
+        closeInput.value = '';
+    }
 </script>
