@@ -636,9 +636,20 @@ ALTER TABLE `hospital`
 ADD COLUMN `main_id` INT NULL AFTER `is_main`,
 CHANGE COLUMN `is_main` `is_main` CHAR(1) NOT NULL ;
 
-ALTER TABLE `mammy`.`hospital_working_times` 
+ALTER TABLE `hospital_working_times` 
 DROP COLUMN `branch_id`,
 DROP COLUMN `hospital_branch`;
+
+ALTER TABLE `midwife` 
+ADD COLUMN `main_id` INT NULL AFTER `is_main`,
+CHANGE COLUMN `is_main` `is_main` CHAR(1) NOT NULL ;
+
+ALTER TABLE `medical_working_times` 
+DROP COLUMN `branch_id`;
+
+ALTER TABLE `midwife_working_times` 
+DROP COLUMN `branch_id`;
+
 
 -- thushitha is here
 -- akila is here

@@ -4,7 +4,26 @@
   -webkit-transform: scale(2.5); /* Safari 3-8 */
   transform: scale(2.5); 
 }
+
+.branch {
+  display: none;
+}
+
+.branch-header {
+  cursor: pointer;
+}
+
+.down-arrow::after {
+  content: "\25BC";
+  margin-left: 10px;
+}
+
+.up-arrow::after {
+  content: "\25B2";
+  margin-left: 10px;
+}
 </style>
+
 <?php
 include "connect.php";
 $limit = $_POST['value'];
@@ -20,7 +39,7 @@ else
 }
 
 $query = "
-SELECT * FROM midwife
+SELECT * FROM midwife ORDER BY is_main DESC, main_id, id DESC
 ";
 
 
@@ -31,7 +50,7 @@ if($_POST['query'] != '')
  WHERE (email LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR mobile LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR midwife_id LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR name LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR speciality LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR address LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR city LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR status LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR website LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR about LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR priority LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" ) ';
 }
 
-$query .= 'ORDER BY status, id DESC ';
+
 $filter_query = $query . 'LIMIT '.$start.', '.$limit.'';
 
 $statement = $connect->prepare($query);
@@ -79,54 +98,113 @@ $output = '
 	<th>Delete</th>
   </tr>
 ';
+
+$mainData = [];
+$branches = [];
+
+foreach($result as $row) {
+  if($row['is_main'] === 'Y' || empty($row['is_main'])) {
+    $mainData[] = $row;
+  } else {
+    $branches[$row['main_id']][] = $row;
+  }
+}
+
 if($total_data > 0)
 {
-  foreach($result as $row)
-  {
-    $output .= '
-    <tr>
-		<td>'.$row['midwife_id'].'</td>
-		<td>'.$row['name'].'</td>
-        <td>'.$row['speciality'].'</td>
-        <td>'.$row['address']."  ".$row['city'].'</td>
-        <td>'.$row['mobile'].'</td>
-        <td>'.$row['email'].'</td>
-		<td>'.$row['whatsapp'].'</td>
-		<td>'.$row['website'].'</td>
-		<td>'.$row['type'].'</td>
-		<td>'.$row['working_hours'].'</td>
-		
-		<td>'.$row['facebook'].'</td>
-		<td>'.$row['instagram'].'</td>
-		<td>'.$row['linkedin'].'</td>
-	    <td>'.$row['status'].'</td>
-		<!--td>'.$row['about'].'</td>
-		<td>'.$row['priority'].'</td-->
-		<td><select name="dropdown" id="prioritystatus" onchange="javascript:chg_status(this);">
-        <option value="" selected disabled>'.$row["priority"].'</option>
-        <option value="viewmidwife.php?value=0&id='.$row["id"].'">0</option>
-        <option value="viewmidwife.php?value=1&id='.$row["id"].'">1</option>
-        <option value="viewmidwife.php?value=2&id='.$row["id"].'">2</option>
-        <option value="viewmidwife.php?value=3&id='.$row["id"].'">3</option>
-        <option value="viewmidwife.php?value=4&id='.$row["id"].'">4</option>
-        <option value="viewmidwife.php?value=5&id='.$row["id"].'">5</option>
-		</select>
-		</td>
-		<td><div class="zoom"><img src="../directory/midwife/'.$row["logo"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
-		<td><div class="zoom"><img src="../directory/midwife/'.$row["image"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
-		<td>'.$row['datetime'].'</td>
+    foreach($mainData as $main) {
+        $hasBranches = isset($branches[$main['id']]);
+        $arrowClass = $hasBranches ? 'down-arrow' : '';
+        $output .= '
+        <tr class="branch-header '.$arrowClass.'" data-main-id="'.$main['id'].'">
+            <td>'.$main['midwife_id'].'<span class="arrow-icon '.$arrowClass.'"></span></td>
+            <td>'.$main['name'].'</td>
+            <td>'.$main['speciality'].'</td>
+            <td>'.$main['address']."  ".$main['city'].'</td>
+            <td>'.$main['mobile'].'</td>
+            <td>'.$main['email'].'</td>
+            <td>'.$main['whatsapp'].'</td>
+            <td>'.$main['website'].'</td>
+            <td>'.$main['type'].'</td>
+            <td>'.$main['working_hours'].'</td>
+            
+            <td>'.$main['facebook'].'</td>
+            <td>'.$main['instagram'].'</td>
+            <td>'.$main['linkedin'].'</td>
+            <td>'.$main['status'].'</td>
+            <!--td>'.$main['about'].'</td>
+            <td>'.$main['priority'].'</td-->
+            <td><select name="dropdown" id="prioritystatus" onchange="javascript:chg_status(this);">
+            <option value="" selected disabled>'.$main["priority"].'</option>
+            <option value="viewmidwife.php?value=0&id='.$main["id"].'">0</option>
+            <option value="viewmidwife.php?value=1&id='.$main["id"].'">1</option>
+            <option value="viewmidwife.php?value=2&id='.$main["id"].'">2</option>
+            <option value="viewmidwife.php?value=3&id='.$main["id"].'">3</option>
+            <option value="viewmidwife.php?value=4&id='.$main["id"].'">4</option>
+            <option value="viewmidwife.php?value=5&id='.$main["id"].'">5</option>
+            </select>
+            </td>
+            <td><div class="zoom"><img src="../directory/midwife/'.$main["logo"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td><div class="zoom"><img src="../directory/midwife/'.$main["image"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td>'.$main['datetime'].'</td>
+            
+        </select>
+        </td>
+        <td><a href="javascript:fetch_id('.$main[0].', true)"><button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-lg fa-eye" aria-hidden="true" style="color:green;"></i></button></a></td>
+            
+            <td><a href="midwifeedit.php?id='.$main["id"].'"><i class="fa fa-lg fa-pencil" aria-hidden="true" style="color:black;"></i></a></td>
+            
+            <td align="center"><a href="javascript:del_id('.$main[0].')"><i class="fa fa-trash" aria-hidden="true" style="color:red;"></i></a> </td>
+            
         
-      </select>
-      </td>
-      <td><a href="javascript:fetch_id('.$row[0].', true)"><button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-lg fa-eye" aria-hidden="true" style="color:green;"></i></button></a></td>
+        </tr>';
+        if($hasBranches) {
+            foreach($branches[$main['id']] as $branch) {
+            $output .=    '<tr class="bg-success branch" data-main-id="'.$main['id'].'">
+            <td>'.$branch['midwife_id'].'</td>
+            <td>'.$branch['name'].'</td>
+            <td>'.$branch['speciality'].'</td>
+            <td>'.$branch['address']."  ".$branch['city'].'</td>
+            <td>'.$branch['mobile'].'</td>
+            <td>'.$branch['email'].'</td>
+            <td>'.$branch['whatsapp'].'</td>
+            <td>'.$branch['website'].'</td>
+            <td>'.$branch['type'].'</td>
+            <td>'.$branch['working_hours'].'</td>
+            
+            <td>'.$branch['facebook'].'</td>
+            <td>'.$branch['instagram'].'</td>
+            <td>'.$branch['linkedin'].'</td>
+            <td>'.$branch['status'].'</td>
+            <!--td>'.$branch['about'].'</td>
+            <td>'.$branch['priority'].'</td-->
+            <td><select name="dropdown" id="prioritystatus" onchange="javascript:chg_status(this);">
+            <option value="" selected disabled>'.$branch["priority"].'</option>
+            <option value="viewmidwife.php?value=0&id='.$branch["id"].'">0</option>
+            <option value="viewmidwife.php?value=1&id='.$branch["id"].'">1</option>
+            <option value="viewmidwife.php?value=2&id='.$branch["id"].'">2</option>
+            <option value="viewmidwife.php?value=3&id='.$branch["id"].'">3</option>
+            <option value="viewmidwife.php?value=4&id='.$branch["id"].'">4</option>
+            <option value="viewmidwife.php?value=5&id='.$branch["id"].'">5</option>
+            </select>
+            </td>
+            <td><div class="zoom"><img src="../directory/midwife/'.$branch["logo"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td><div class="zoom"><img src="../directory/midwife/'.$branch["image"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td>'.$branch['datetime'].'</td>
+            
+        </select>
+        </td>
+        <td><a href="javascript:fetch_id('.$branch[0].', true)"><button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-lg fa-eye" aria-hidden="true" style="color:green;"></i></button></a></td>
+            
+            <td><a href="midwifeedit.php?id='.$branch["id"].'"><i class="fa fa-lg fa-pencil" aria-hidden="true" style="color:black;"></i></a></td>
+            
+            <td align="center"><a href="javascript:del_id('.$branch[0].')"><i class="fa fa-trash" aria-hidden="true" style="color:red;"></i></a> </td>
+            
         
-        <td><a href="midwifeedit.php?id='.$row["id"].'"><i class="fa fa-lg fa-pencil" aria-hidden="true" style="color:black;"></i></a></td>
-        
-		 <td align="center"><a href="javascript:del_id('.$row[0].')"><i class="fa fa-trash" aria-hidden="true" style="color:red;"></i></a> </td>
-        
-	
-    </tr>
-    ';
+        </tr>';
+
+            }
+        }
   }
   $output .= '</table>';
 }
@@ -263,17 +341,30 @@ $output .= '
 echo $output;
 
 ?>
-<script type="text/javascript">
-		function del_id(id)
-		{
-		 if(confirm('Sure To Remove This Record ?'))
-		 {
-		  window.location.href='viewmidwife.php?del_id='+id;
-		 }
-		}
-function chg_status(id)
-		{
-		  window.location=id.value;
-		}
 
+<script type="text/javascript">
+  function del_id(id) {
+    if(confirm('Sure To Remove This Record ?')) {
+      window.location.href='viewhospital.php?del_id='+id;
+    }
+  }
+
+  function chg_status(id) {
+    window.location = id.value;
+  }
+
+  document.querySelectorAll('.branch-header.down-arrow').forEach(header => {
+        header.addEventListener('click', function() {
+            const mainId = this.getAttribute('data-main-id');
+            const branches = document.querySelectorAll('.branch[data-main-id="'+mainId+'"]');
+            const isHidden = branches[0].style.display === 'none';
+
+            branches.forEach(branch => {
+                branch.style.display = isHidden ? 'table-row' : 'none';
+            });
+
+            this.classList.toggle('down-arrow', !isHidden);
+            this.classList.toggle('up-arrow', isHidden);
+        });
+  });
 </script>

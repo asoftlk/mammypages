@@ -34,6 +34,9 @@
 	width:50%;
 	}
 </style>
+<?php 
+    $days = ['mon' => 'monday', 'tue' => 'tuesday', 'wed' => 'wednesday', 'thu' => 'thursday', 'fri' => 'friday', 'sat' => 'saturday', 'sun' => 'sunday'];
+?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -97,14 +100,8 @@
 				</div>
 				<!-- left column -->
 				<div class="col-md-12">
-					<!-- jquery validation -->
 					<div class="card card-primary">
-						<!--div class="card-header">
-							<h3 class="card-title">Quick Example <small>jQuery Validation</small></h3>
-							</div-->
-						<!-- /.card-header -->
-						<!-- form start -->
-						<div class="card-body">
+						<!-- <div class="card-body">
 							<ul class="nav nav-tabs" role="tablist">
 								<li class="nav-item">
 									<a class="nav-link active" data-toggle="tab" href="#new" role="tab">New midwife</a>
@@ -260,23 +257,7 @@
 												<label class="required" for="about">About</label>
 												<textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required></textarea>
 											</div>
-											<!--div class="form-group">
-												<label >Priority</label>
-																<select class="form-control" name="priority" id="priority">
-													<option selected="" disabled="" value="null" class="hidden">--Select Priority</option>
-													<option value="0" selected>None</option>
-													<option value="1">1</option>
-													<option value="2">2</option>
-													<option value="3">3</option>
-													<option value="4">4</option>
-													<option value="5">5</option>
-													<option value="6">6</option>
-													<option value="7">7</option>
-													<option value="8">8</option>
-													<option value="9">9</option>
-													<option value="10">10</option>	
-												</select>
-												</div-->
+									
 											<div class="form-group">
 												<label class="required" for="logoimage">logo Image</label>
 												<div class="input-group">
@@ -517,7 +498,235 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> -->
+
+                        <div class="card-body">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#new" role="tab">New Midwife</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#addbranch" role="tab">Add Branch</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="new" role="tabpanel">
+                                    <div id="Hospital">
+                                        <form id="quickForm" method="POST" action="postmidwife" enctype="multipart/form-data">
+                                            <?php
+                                                $midwifeQuery = mysqli_query($conn, "SELECT DISTINCT * FROM midwife WHERE is_main = 'Y'");
+                                            ?>
+                                            <div class="form-group branch">
+                                                <label class="required" for="mainId">Midwife Name</label>
+                                                <select name="mainId" class="form-control" id="mainId" required>
+                                                    <option value="">Select midwife</option>
+                                                    <?php
+                                                    while ($midwifeRow = mysqli_fetch_array($midwifeQuery)) {
+                                                        $midwifeArray = explode(" ///", $midwifeRow['name']);
+                                                        $midwifeidArray = explode(" ///", $midwifeRow['id']);
+                                                        
+                                                        for ($i = 0; $i < count($midwifeArray); $i++) {
+                                                            $name = $midwifeArray[$i];
+                                                            $id = $midwifeidArray[$i];
+                                                            echo '<option value="' . $id . '">' . $name . '</option>';
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+												<label class="required" for="midwifename">Name</label>
+												<input type="text" name="midwifename" class="form-control" id="midwifename" placeholder="Midwife Name">
+											</div>
+											<div class="form-group">
+												<label class="required">Speciality</label>
+												<select class="form-control select2" name="midwifespecialist[]" id="midwifespecialist" multiple data-placeholder='--Select Speciality--'>
+												<?php $query=mysqli_query($conn, "SELECT * FROM midwife_speciality");
+													while($row=mysqli_fetch_array($query)){
+													echo   '<option value="'.$row["speciality"].'">'.$row["speciality"].'</option>';
+													}?>
+												</select>
+											</div>
+											<div class="form-group">
+												<label class="required" for="midwifeaddr">Midwife Address</label>
+												<input type="text" name="midwifeaddr" class="form-control" id="midwifeaddr" placeholder="Address">
+											</div>
+											<div class="form-group">
+												<label for="midwifemap" class="required">Midwife Map location</label>
+												<input type="text" name="midwifemap" class="form-control" id="midwifemap" placeholder="Copy form Google Map by poining the location">
+											</div>
+											<div class="form-group">
+												<label class="required" for="midwifecity">Midwife city(required to show for branches)</label>
+												<input type="text" name="midwifecity" class="form-control" id="midwifecity" placeholder="City">
+											</div>
+											<div class="form-group">
+												<label class="required" for="midwifecont">Contact Number</label>
+												<input type="tel" name="midwifecont" class="form-control" id="midwifecont" placeholder="Contact Number">
+											</div>
+											<div class="form-group">
+												<label for="midwifewhatsapp">Whatsapp Number</label>
+												<input type="tel" name="midwifewhatsapp" class="form-control" id="midwifewhatsapp" placeholder="Contact Number">
+											</div>
+											<div class="form-group">
+												<label class="required" for="midwifeemail">Email</label>
+												<input type="email" name="midwifeemail" class="form-control" id="midwifeemail" placeholder="Email ID">
+											</div>
+											<div class="form-group">
+												<label for="midwifeweb">Website</label>
+												<input type="url" name="midwifeweb" class="form-control" id="midwifeweb" placeholder="Website">
+											</div>
+											<div class="form-group">
+												<label class="required" for="midwifetype">Midwife type</label>
+												<select class="form-control" name="midwifetype" id="midwifetype">
+													<option selected="" disabled="" value="null" class="hidden">--Select Midwife Type</option>
+													<option value="Government midwife">Government Midwife</option>
+													<option value="Private midwife">Private Midwife</option>
+												</select>
+											</div>
+											<div class="form-group midwifesubtype">
+												<label for="midwifesubtype" class="required">Midwife Subtype</label>
+												<select class="form-control" name="midwifesubtype" id="midwifesubtype">
+													<option selected="" disabled="" value="null" class="hidden">--Select Midwife Subype</option>
+													<option value="National Midwife">National Midwife</option>
+													<option value="Teaching Midwife">Teaching Midwife</option>
+													<option value="Specialized Teaching Midwife">Specialized Teaching Midwife</option>
+													<option value="Other Specialized Midwife">Other Specialized Midwife</option>
+													<option value="Provincial General Midwife">Provincial General Midwife</option>
+													<option value="Base Midwife Type - A">Base Midwife Type - A</option>
+													<option value="Base Midwife Type - B">Base Midwife Type - B</option>
+													<option value="Divisional Midwife Type - A">Divisional Midwife Type - A</option>
+													<option value="Divisional Midwife Type - B">Divisional Midwife Type - B</option>
+													<option value="Divisional Midwife Type - C">Divisional Midwife Type - C</option>
+													<option value="Primary Medical Care Unit">Primary Medical Care Unit</option>
+													<option value="Others">Others</option>
+												</select>
+											</div>
+                                            <!-- Conditional Fields for New Hospital -->
+                                            <!-- <div id="newHospitalFields" style="display: none;"> -->
+                                            <div class="form-group">
+                                                <label class="required" for="branchworking">Hours of Operation</label>
+                                                <table class="table table-sm table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Day</th>
+                                                            <th>Open time</th>
+                                                            <th>End time</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <!-- PHP to generate days and time inputs -->
+                                                        <?php foreach ($days as $abbr => $day): ?>
+                                                            <tr>
+                                                                <td><?php echo ucfirst($day); ?></td>
+                                                                <td>
+                                                                    <input type="time" 
+                                                                        name="<?php echo $abbr; ?>opentime" 
+                                                                        class="form-control form-control-sm border-0" 
+                                                                        id="<?php echo $abbr; ?>opentime" 
+                                                                        placeholder="<?php echo ucfirst($day); ?> Open Time" 
+                                                                    >
+                                                                </td>
+                                                                <td>
+                                                                    <input type="time" 
+                                                                        name="<?php echo $abbr; ?>endtime" 
+                                                                        class="form-control form-control-sm border-0" 
+                                                                        id="<?php echo $abbr; ?>endtime" 
+                                                                        placeholder="<?php echo ucfirst($day); ?> End Time" 
+                                                                    >
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
+                                                                </td>
+                                                            </tr>
+                                                        <?php endforeach; ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="form-group row">
+												<div class="col-md-4">
+													<label for="midwifefb">Facebook Link</label>
+													<input type="url" name="midwifefb" class="form-control" id="midwifefb" placeholder="Facebook Link">
+												</div>
+												<div class="col-md-4">
+													<label for="midwifeinsta">Instagram Link</label>
+													<input type="url" name="midwifeinsta" class="form-control" id="midwifeinsta" placeholder="Instagram Link">
+												</div>
+												<div class="col-md-4">
+													<label for="midwifeln">Linkedin Link</label>
+													<input type="url" name="midwifeln" class="form-control" id="midwifeln" placeholder="Linkedin Link">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="required">Status</label>
+												<select class="form-control" name="status" id="status">
+													<option selected="" disabled="" value="null" class="hidden">--Select Status</option>
+													<option value="Verified">Verified</option>
+													<option value="Not Verified">Not Verified</option>
+												</select>
+											</div>
+											<div class="row">
+												<label class="required" for="about">About</label>
+												<textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required></textarea>
+											</div>
+									
+											<div class="form-group">
+												<label class="required" for="logoimage">logo Image</label>
+												<div class="input-group">
+													<div class="custom-file">
+														<input type="file" name="logoimage" class="custom-file-input" id="logoimage" accept="image/*">
+														<label class="custom-file-label" for="logoimage">Choose file</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="required" for="featuredimage">Featured Image</label>
+												<div class="input-group">
+													<div class="custom-file">
+														<input type="file" name="featuredimage" class="custom-file-input" id="featuredimage"  accept="image/*">
+														<label class="custom-file-label" for="featuredimage">Choose file</label>
+													</div>
+												</div>
+											</div>
+											<div id="galleryimages">
+												<div class="form-group">
+													<label class="required" for="galimages">Gallery Images</label>
+													<div class="input-group">
+														<div class="custom-file">
+															<input type="file" name="galimages[]" class="custom-file-input galimages" accept="image/*">
+															<label class="custom-file-label" for="galimages">Choose file</label>
+														</div>
+													</div>
+												</div>
+											</div>
+											<button class="btn btn-sm btn-primary add-image" style="float:left">Add More</button>
+											<br>
+											<br>
+											<div class="form-group">
+												<label  for="videoembed">Embed Video</label>
+												<input type="text" name="videoembed" class="form-control" placeholder="Embed Video Code">
+											</div>
+											<p class="text-center  font-weight-bold">Or</p>
+											<div class="form-group">
+												<label for="galvideo">Gallery Video</label>
+												<div class="input-group">
+													<div class="custom-file">
+														<input type="file" name="galvideo" class="custom-file-input" id="galvideo" accept="video/*">
+														<label class="custom-file-label" for="galvideo">Choose file</label>
+													</div>
+												</div>
+											</div>
+											<br>
+											<br>
+											<div class="card-footer">
+                                                <input class="isMain"  name="isMain" type="hidde"/>
+                                         
+												<button type="submit" name="sub-mid" class="btn btn-sm btn-primary">Submit</button>
+											</div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 					</div>
 				</div>
 			</div>
@@ -857,6 +1066,25 @@
 	      source: availableTags
 	    });
 	  } );
+</script>
+<script>
+    $(document).ready(function () {
+        $('a[href="#new"]').tab('show');
+        $(".branch").hide();
+        $(".isMain").val('Y');
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            var target = $(e.target).attr("href");
+            if (target === "#new") {
+                $(".branch").hide();
+                $(".new").show();
+                $(".isMain").val('Y');
+            } else if (target === "#addbranch") {
+                $(".branch").show();
+                $(".new").hide();
+                $(".isMain").val('N');
+            }
+        });
+    });
 </script>
 </body>
 </html>
