@@ -7,7 +7,7 @@
 		  icon: status,
 		})
 		.then(function(value) {
-			window.location.href="viewhospital";  
+			window.location.href="viewmedclinic";  
 		});
 	}
 </script>
@@ -15,23 +15,23 @@
 	if(isset($_GET['del_id'])) 
 	{
 	$id = $_GET['del_id'];
-	$data1 = mysqli_query($conn,"select * from hospital id = '$id'");
+	$data1 = mysqli_query($conn,"select * from medical where id = '$id'");
 	if(mysqli_num_rows($data1)>0){
 		$row = mysqli_fetch_array($data1);
-		if(file_exists("../directory/hospital/".$row['logo'])){
-		unlink("../directory/hospital/".$row['logo']);}
-		if(file_exists("../directory/hospital/".$row['image'])){
-		unlink("../directory/hospital/".$row['image']);}
-		$galleryquery= mysqli_query($conn, "SELECT * FROM mpgallery WHERE hospitalid = '$row[hospital_id]'");
+		if(file_exists("../directory/medical/".$row['logo'])){
+		unlink("../directory/medical/".$row['logo']);}
+		if(file_exists("../directory/medical/".$row['image'])){
+		unlink("../directory/medical/".$row['image']);}
+		$galleryquery= mysqli_query($conn, "SELECT * FROM mpmedical_gallery WHERE medical_id = '$row[medical_id]'");
 		while($galleryrow = mysqli_fetch_array($galleryquery)){
-			if(file_exists("../directory/hospital/".$galleryrow['image_name'])){
-			unlink("../directory/hospital/".$galleryrow['image_name']);
+			if(file_exists("../directory/medical/".$galleryrow['image_name'])){
+			unlink("../directory/medical/".$galleryrow['image_name']);
 			}
 		}
-		mysqli_query($conn, "DELETE FROM mpgallery WHERE hospitalid='$row[hospital_id]'");
-		mysqli_query($conn, "DELETE FROM hospital WHERE id=$id");
-        mysqli_query($conn, "DELETE FROM hospital_working_times WHERE hospital_id='$row[hospital_id]'");
-		echo '<script>alert("Deleted Successfully");window.location.href="viewhospital";</script>';  
+		mysqli_query($conn, "DELETE FROM mpmedical_gallery WHERE medical_id='$row[medical_id]'");
+		mysqli_query($conn, "DELETE FROM medical WHERE id=$id");
+		mysqli_query($conn, "DELETE FROM medical_working_times WHERE medical_id='$row[medical_id]'");
+		echo '<script>alert("Deleted Successfully");window.location.href="viewmedclinic";</script>';  
 		//header( "refresh:0.01;url=magazinelist" );
 	}
 	else{
@@ -44,14 +44,14 @@
 		$uid = $_GET['id'];
 		 $value = $_GET['value'];
 		 if($value>0){
-			$data =mysqli_query($conn, "SELECT * FROM `hospital` WHERE `priority` = '$value'");
+			$data =mysqli_query($conn, "SELECT * FROM `medical` WHERE `priority` = '$value'");
 			echo mysqli_num_rows($data);
 			if(mysqli_num_rows($data)>0){
-				$hospitalidrow = mysqli_fetch_array($data);
-				echo '<script>removeReg("This priority is already assigned to '.$hospitalidrow["name"].'('.$hospitalidrow["hospital_id"].')", "error");</script>';
+				$idrow = mysqli_fetch_array($data);
+				echo '<script>removeReg("This priority is already assigned to '.$idrow["name"].'('.$idrow["medical_id"].')", "error");</script>';
 			}
 			else{
-				$updatedata =mysqli_query($conn, "UPDATE hospital SET priority = '$value' WHERE id='$uid'");
+				$updatedata =mysqli_query($conn, "UPDATE medical SET priority = '$value' WHERE id='$uid'");
 				if($updatedata){
 				echo '';
 				echo '<script>removeReg("Updated Successfully", "success");</script>';  
@@ -64,7 +64,7 @@
 			}
 		 }
 		 else{
-			$updatedata =mysqli_query($conn, "UPDATE hospital SET priority = '$value' WHERE id='$uid'");
+			$updatedata =mysqli_query($conn, "UPDATE medical SET priority = '$value' WHERE id='$uid'");
 				if($updatedata){
 				echo '';
 				echo '<script>removeReg("Updated Successfully", "success");</script>';  
@@ -86,6 +86,26 @@
 	#prioritystatus{
 	width:50px;
 	}
+	
+	.l-select-form-control{
+		width: 4rem;
+		height: 28px;
+		height: calc(1.8125rem + 2px);
+		padding: .25rem .5rem;
+		font-size: .875rem;
+		font-weight: 400;
+		line-height: 1.5;
+		color: #495057;
+		background-color: #fff;
+		background-clip: padding-box;
+		border: 1px solid #ced4da;
+		border-radius: .2rem;
+		box-shadow: inset 0 0 0 transparent;
+		transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	}
+	.l-select-form-control:focus-visible {
+		outline: -webkit-focus-ring-color auto 1px;
+	}
 </style>
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
@@ -93,12 +113,12 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1>Hospital</h1>
+					<h1>Medical Clinic</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active">Hospital</li>
+						<li class="breadcrumb-item active">Medical Clinic</li>
 					</ol>
 				</div>
 			</div>
@@ -109,14 +129,14 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
-					<a href="hospital.php" class="btn btn-mammy float-right">+ Add Hospital</a>
+					<a href="medical.php" class="btn btn-mammy float-right">+ Add Medical Clinic</a>
 				</div>
 				<br><br>
 				<div class="col-12">
 					<div class="card" >
 						<div class="card-header" style="display:inline-block">
 							<label style="padding-left:30px;">Show &nbsp </label>
-							<select onchange="val()" id="select_id">
+							<select onchange="val()" id="select_id"  class="l-select-form-control">
 								<option value="10">10</option>
 								<option value="20">20</option>
 								<option value="50">50</option>
@@ -124,7 +144,7 @@
 								<option value="250">250</option>
 							</select>
 							<label> &nbsp Entries</label>
-							<input style=" width:30%; float:right" type="text" name="search_box" id="search_box" placeholder="Search..." >
+							<input style=" width:30%; height: 31px; float:right" class="form-control form-control-sm" type="text" name="search_box" id="search_box" placeholder="Search..." >
 							<div class="card-body">
 								<div class="table-responsive" id="dynamic_content">
 								</div>
@@ -161,34 +181,34 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Hospital Id:</label><input type="text" class="form-control" id="hospital_id">
+									<label>Medical Clinic Id:</label><input type="text" class="form-control" id="medical_id">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Name:</label><input type="text" class="form-control" id="name">
+									<label>Medical Clinic Name:</label><input type="text" class="form-control" id="name">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Hospital Specialist In</label><input type="text" class="form-control" id="speciality">
+									<label>Medical Clinic Specialist In</label><input type="text" class="form-control" id="speciality">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Hospital Address:</label>
+									<label>Medical Clinic Address:</label>
 									<input type="text" class="form-control" id="address">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Hospital Map location:</label>
+									<label>Medical Clinic Map location:</label>
 									<input type="text" class="form-control" id="map">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Hospital city(Required to show for branches):</label>
+									<label>Medical Clinic city(Required to show for branches):</label>
 									<input type="text" class="form-control" id="city">
 								</div>
 							</div>
@@ -218,26 +238,8 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Hospital type:</label>
+									<label>Medical Clinic type:</label>
 									<input type="text" class="form-control" id="type">
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>Facebook Link:</label>
-									<input type="text" class="form-control" id="facebook">
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>Instagram Link:</label>
-									<input type="text" class="form-control" id="instagram">
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>Linkedin Link :</label>
-									<input type="text" class="form-control" id="linkedin">
 								</div>
 							</div>
 							<div class="col-md-4">
@@ -248,29 +250,24 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>About:</label>
-									<input type="text" class="form-control" id="about">
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
 									<label>Priority:</label>
 									<input type="text" class="form-control" id="priority">
 								</div>
 							</div>
-							<div class="col-12">
+							<div class="col-md-12">
 								<div class="form-group">
-									<label class="required" for="branchworking">Hours of Operation</label>
-									<table class="table table-sm table-bordered">
-										<thead>
-											<tr>
-												<th>Day</th>
-												<th>Open time</th>
-												<th>End time</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
+									<div class="form-group">
+										<label class="required" for="branchworking">Hours of Operation</label>
+										<table class="table table-sm table-bordered">
+											<thead>
+												<tr>
+													<th>Day</th>
+													<th>Open time</th>
+													<th>End time</th>
+												</tr>
+											</thead>
+											<tbody>
+                                            <tr>
 												<td>Monday</td>
 												<td><input type="time" name="monday_open" class="form-control form-control-sm border-0" id="monday_open" placeholder="Monday Open Time"></td>
 												<td><input type="time" name="monday_close" class="form-control form-control-sm border-0" id="monday_close" placeholder="Monday End Time"></td>
@@ -305,22 +302,44 @@
 												<td><input type="time" name="sunday_open" class="form-control form-control-sm border-0" id="sunday_open" placeholder="Sunday Open Time"></td>
 												<td><input type="time" name="sunday_close" class="form-control form-control-sm border-0" id="sunday_close" placeholder="Sunday End Time"></td>
 											</tr>
-										</tbody>
-									</table>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Facebook Link:</label>
+									<input type="text" class="form-control" id="facebook">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Instagram Link:</label>
+									<input type="text" class="form-control" id="instagram">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Linkedin Link :</label>
+									<input type="text" class="form-control" id="linkedin">
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>About:</label>
+									<input type="text" class="form-control" id="about">
 								</div>
 							</div>
 						</div>
-					</div>
-					<!--a href="viewhospital.php?update_id=26"><button type="button" class="btn btn-sm btn-secondary">Update</button></a-->
-				</form>
-			</div>
-			<div class="modal-footer">
-				<!--<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>-->
-				<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+				    </form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 <?php include "footer.php";?>
 <script>
@@ -328,96 +347,80 @@
 		var element = document.getElementById("sidebar");
 		element.classList.toggle("active");
 	}
-	 $(document).ready(function(){
-	$('#select_id').change(function(){
-	   var num=($(this).val());
-	localStorage.setItem("num", num);
-	load_data(1,num);
-	});
-	   var myval = localStorage.getItem("num");
-	   if(myval){
-	      // console.log(myval);
-	   load_data(1, myval);
-	   $('#select_id').val(myval);
-	   }
-	   else{
+
+	$(document).ready(function(){
+	    $('#select_id').change(function(){
+            var num=($(this).val());
+            localStorage.setItem("num", num);
+            load_data(1,num);
+        });
+        var myval = localStorage.getItem("num");
+        if(myval){
+            load_data(1, myval);
+            $('#select_id').val(myval);
+	    }
+	    else{
 	       load_data(1, 10);
-	   }
+	    }
 	
-	   function load_data(page, value, query = '')
-	   {
-	     $.ajax({
-	       url:"ajax/hospitalfetch",
-	       method:"POST",
-	       data:{page:page, value:value, query:query},
-	       success:function(data)
-	       {
-			//debugger
-	         $('#dynamic_content').html(data);
-	       }
-	     });
-	   }
+	    function load_data(page, value, query = '') {
+            $.ajax({
+            url:"ajax/medclinicfetch",
+            method:"POST",
+            data:{page:page, value:value, query:query},
+            success:function(data) {
+                $('#dynamic_content').html(data);
+            }
+            });
+	    }
 	
 	   $(document).on('click', '.page-link', function(){
-	     var page = $(this).data('page_number');
-	     var query = $('#search_box').val();
-	     load_data(page, ($('#select_id').val()), query);
-	  //debugger
-	   });
+            var page = $(this).data('page_number');
+            var query = $('#search_box').val();
+            load_data(page, ($('#select_id').val()), query);
+        });
 	
-	   $('#search_box').keyup(function(){
-	     var query = $('#search_box').val();
-	     load_data(1, ($('#select_id').val()), query);
-	 // debugger
-	   });
+        $('#search_box').keyup(function(){
+            var query = $('#search_box').val();
+            load_data(1, ($('#select_id').val()), query);
+        });
 	
-	 });
-	function fetch_id(id, value)
-		{
-		 $.ajax({
-	       url:"ajax/hospitalfetchview",
-	       method:"POST",
-	       data:{id:id},
-	       success:function(data)
-	       {
-		//	debugger
-            var data1= JSON.parse(data);
-            console.log(data1);
-	           for(var key in data1){
-	               if($("#" + key).length != 0){
-	                   if(key == 'logo')
-	                       {
-	                       if(data1[key]){
-	                         $('#'+key).attr('src', '../directory/hospital/'+data1[key]);  
-	                           $('#'+key).attr('disabled', value);
-							$('#'+key).show();
-	                       }
-	                       else{
-	                             $('#'+key).remove();  
-	                       }
-	                       }
-					if(key == 'image')
-	                       {
-	                       if(data1[key]){
-	                         $('#'+key).attr('src', '../directory/hospital/'+data1[key]);  
-	                           $('#'+key).attr('disabled', value);
-							$('#'+key).show();
-	                       }
-	                       else{
-	                             $('#'+key).remove();  
-	                       }
-	                       }
-	                   else{
-                        data1[key] === '00:00:00' ? '':$('#'+key).val(data1[key]); 
-	                   $('#'+key).attr('disabled', value);
-	                   }
-	               }
-	               //console.log(key +  " -> " + data1[key]);
-	             // $('#').val(data1.first_name); 
-	           }
-	           
-	         //$('.modal-body').html(data);
-	       }
-	     });
-		}
+    });
+
+    function fetch_id(id, value) {
+        $.ajax({
+            url:"ajax/medclinicfetchview",
+            method:"POST",
+            data:{id:id},
+            success:function(data) {
+                var data1= JSON.parse(data);
+                console.log(data1);
+                for(var key in data1){
+                    if($("#" + key).length != 0){
+                        if(key == 'logo'){
+                            if(data1[key]) {
+                                $('#'+key).attr('src', '../directory/medical/'+data1[key]);  
+                                $('#'+key).attr('disabled', value);
+                                $('#'+key).show();
+                            } else {
+                                $('#'+key).remove();  
+                            }
+                        }
+                        if(key == 'image') {
+                            if(data1[key]){
+                                $('#'+key).attr('src', '../directory/medical/'+data1[key]);  
+                                $('#'+key).attr('disabled', value);
+                                $('#'+key).show();
+                            } else{
+                                $('#'+key).remove();  
+                            }
+                        } else{
+                            data1[key] === '00:00:00' ? '':$('#'+key).val(data1[key]); 
+                            $('#'+key).attr('disabled', value);
+                        }
+                    }
+                }
+            }
+        });
+    }
 </script>

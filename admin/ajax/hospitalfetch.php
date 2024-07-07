@@ -40,9 +40,7 @@ else
 }
 
 $query = "
-SELECT * FROM hospital
-ORDER BY is_main DESC, main_id, id DESC
-";
+SELECT * FROM hospital ";
 
 if($_POST['query'] != '')
 {
@@ -50,7 +48,8 @@ if($_POST['query'] != '')
  WHERE (email LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR mobile LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR hospital_id LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR name LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR speciality LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR address LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR city LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR status LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR website LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR about LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" OR priority LIKE "%'.str_replace(' ', '%', $_POST['query']).'%" ) ';
 }
 
-$query .= 'LIMIT '.$start.', '.$limit.'';
+$query .= " ORDER BY is_main DESC, main_id, id DESC ";
+$filter_query = $query . 'LIMIT '.$start.', '.$limit.'';
 
 $statement = $connect->prepare($query);
 $statement->execute();

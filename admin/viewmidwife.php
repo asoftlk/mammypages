@@ -30,6 +30,7 @@
 		}
 		mysqli_query($conn, "DELETE FROM mpmidwife_gallery WHERE midwife_id='$row[midwife_id]'");
 		mysqli_query($conn, "DELETE FROM midwife WHERE id=$id");
+        mysqli_query($conn, "DELETE FROM midwife_working_times WHERE midwife_id='$row[midwife_id]'");
 		echo '<script>alert("Deleted Successfully");window.location.href="viewmidwife";</script>';  
 		//header( "refresh:0.01;url=magazinelist" );
 	}
