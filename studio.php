@@ -192,7 +192,7 @@ include "mp.php";
 							}
 							echo '</div>
 							</div>
-							<div class="d-flex">
+							<div class="d-flex justify-content-between">
                             <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           
                             
                                 <form action="mpconnect/studio/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
@@ -375,7 +375,7 @@ include "mp.php";
                             }
                             
                             html += '</div></div>';
-                            html += '<div class="d-flex">';
+                            html += '<div class="d-flex justify-content-between">';
                             html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + studio.address + '</P>';                          
                             html += '<form action="mpconnect/studio/'+ encodedName +'" method="post" style="display:inline;">';
                             html += '<input type="hidden" name="studio_id" value="'+studioId+'">';

@@ -386,6 +386,16 @@
 							else{
 								$speciality .= $specialityarray[$i].", ";
 							}
+						};
+						if (isset($row['main_id']) && !empty($row['main_id'])) {
+							$mainid = $row['main_id'];
+			
+							$name_query = "SELECT * FROM `$type` WHERE `id` = '$mainid'";
+							$namequery = mysqli_query($conn, $name_query);
+							
+							if ($namequery) {
+								$row1 = mysqli_fetch_array($namequery);
+							}			
 						}
 						if(($type == $type) && (mysqli_num_rows($typequery)>0)){
 							$url=urlencode('https://www.mammypages.com/mpstudio_details?type=studio&id='.$row["$id_column"]);
@@ -398,8 +408,13 @@
 							 </div>
 								<div class="row fillbg l-border-radius-bottom l-title-card">
 								    <div class="col-4 col-md-3"><img src="directory/'. $type .'/'.$row["logo"].'" class="img-fluid l-main-logo"></div>
-								    <div class="col-5 col-md-6">
-								        <p class="typename mb-0">'.$row['name'].'</p>';
+								    <div class="col-5 col-md-6">';
+								         if (!empty($row1['name']) && $row1['name'] != 0) {
+											echo '<p class="typename mb-0">' . $row1['name'] . ' - ' . $row['name'] . '</p>';
+										} else {
+											echo '<p class="typename mb-0">' . $row['name'] . '</p>';
+										}
+										
 										 if(!empty($speciality)){
 											echo '<p class="mb-0">'.$speciality.'</p>';
 										} else {
@@ -683,7 +698,8 @@
 								echo 	($row["mobile"]!==null)?'<p><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
 								echo	($row["email"]!==null)?'<p><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
 								echo	($row["website"]!==null)?'<p><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
-								echo 	'<a href="#" class="btn btn-success mb-4">Branches</a>
+								echo 	'<label class="border-bottom pb-2 w-100">Branches</label>
+								<div>
 								';
 								
 								
@@ -693,19 +709,20 @@
                                 while ($branches1 = mysqli_fetch_array($query1)) {
                                     echo '<form action="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $branches1["name"])).'" method="post" style="display:inline;">
                                             <input type="hidden" name="'.$id_column.'" value="'.$branches1["$id_column"].'">
-                                            <button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View '.$type.'</button>
+                                            <button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">View '.$branches1["name"].' <i class="bi bi-box-arrow-up-right"></i></button>
                                         </form>';
                                 }
 
-                                $query2 = mysqli_query($conn, "SELECT * FROM $type WHERE main_id IN (SELECT main_id FROM hospital WHERE $id_column = '$typeid') AND $id_column != '$typeid' 
+                                $query2 = mysqli_query($conn, "SELECT * FROM $type WHERE main_id IN (SELECT main_id FROM $type WHERE $id_column = '$typeid') AND $id_column != '$typeid' 
                                                                 UNION 
                                                                 SELECT * FROM $type WHERE id = (SELECT main_id FROM $type WHERE $id_column = '$typeid')");
                                 while ($branches2 = mysqli_fetch_array($query2)) {
                                     echo '<form action="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $branches2["name"])).'" method="post" style="display:inline;">
                                             <input type="hidden" name="'.$id_column.'" value="'.$branches2["$id_column"].'">
-                                            <button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View '.$type.'</button>
+                                            <button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">View '.$branches2["name"].' <i class="bi bi-box-arrow-up-right"></i></button>
                                         </form>';
                                 }
+								echo '</div>'
                                 ?>
 						</div>
 					</div>
