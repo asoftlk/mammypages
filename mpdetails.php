@@ -708,15 +708,15 @@
                                         'sunday' => 'Sunday'
                                     ];
                                 
-                                    $output = '<div class="type-timings">';
+                                    $output = '<div class="type-timings mt-4">';
                                     foreach ($daysOfWeek as $dayKey => $dayName) {
                                         $openTimeKey = $dayKey . '_open';
                                         $closeTimeKey = $dayKey . '_close';
                                 
                                         if ($typequery[$openTimeKey] === "00:00:00" && $typequery[$closeTimeKey] === "00:00:00") {
-                                            $output .= '<p>' . $dayName . ': Closed</p>';
+                                            $output .= '<p class="text-danger mb-0 small">' . $dayName . ': Closed</p>';
                                         } else {
-                                            $output .= '<p>' . $dayName . ': ' . $typequery[$openTimeKey] . ' - ' . $typequery[$closeTimeKey] . '</p>';
+                                            $output .= '<p class="text-success mb-0 small">' . $dayName . ': ' . $typequery[$openTimeKey] . ' - ' . $typequery[$closeTimeKey] . '</p>';
                                         }
                                     }
                                     $output .= '</div>';
@@ -733,13 +733,13 @@
 								echo 	'<label class="border-bottom pb-2 w-100">Branches</label>
 								';
 
-								echo	($row["address"]!==null)?'<p class="mt-4"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
-								echo 	($row["mobile"]!==null)?'<p><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
-								echo	($row["email"]!==null)?'<p><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
-								echo	($row["website"]!==null)?'<p><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
-								echo 	'<label class="border-bottom pb-2 w-100">Branches</label>
-								<div>
-								';
+								// echo	($row["address"]!==null)?'<p class="mt-4"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
+								// echo 	($row["mobile"]!==null)?'<p><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
+								// echo	($row["email"]!==null)?'<p><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
+								// echo	($row["website"]!==null)?'<p><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
+								// echo 	'<label class="border-bottom pb-2 w-100">Branches</label>
+								// <div>
+								// ';
 								
 								
 								?>
@@ -774,13 +774,13 @@
 <div class="modal fade" id="gallery" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
-			<div class="modal-header" style="padding:0.2rem 1rem">
+			<!-- <div class="modal-header" style="padding:0.2rem 1rem">
 				<h5 class="modal-title" id="galleryModalLabel"><?php echo $row['name'] . " Gallery"; ?></h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button>
-			</div>
-			<div class="modal-body mb-1 p-0">
+			</div> -->
+			<div class="modal-body p-0">
 				<div id="jssor_1" style="position:relative;margin:0 auto;top:0px;left:0px;width:980px;height:480px;overflow:hidden;visibility:hidden;">
 					<!-- Loading Screen -->
 					<div data-u="loading" class="jssorl-009-spin" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgba(0,0,0,0.7);">
@@ -793,8 +793,8 @@
 								while ($galrow = mysqli_fetch_array($galquery)) {
 									echo '
 										<div>
-											<img data-u="image" src="directory/'.$galrow.'/' . $galrow["image_name"] . '">
-											<img data-u="thumb" src="directory/'.$galrow.'/' . $galrow["image_name"] . '" height="90">
+											<img data-u="image" src="directory/'.$type.'/' . $galrow["image_name"] . '">
+											<img data-u="thumb" src="directory/'.$type.'/' . $galrow["image_name"] . '" height="90">
 										</div>
 									';
 								}
@@ -832,6 +832,11 @@
 						</svg>
 					</div>
 				</div>
+			</div>
+			<div class="text-center py-1 bg-dark">
+				<button  type="button" data-dismiss="modal" aria-label="Close" class="btn btn-sm btn-light" data-mdb-dismiss="modal">
+				Close
+				</button>
 			</div>
 		</div>
 	</div>

@@ -704,9 +704,9 @@
                                         $closeTimeKey = $dayKey . '_close';
                                 
                                         if ($hospital[$openTimeKey] === "00:00:00" && $hospital[$closeTimeKey] === "00:00:00") {
-                                            $output .= '<p>' . $dayName . ': Closed</p>';
+                                            $output .= '<p class="text-danger mb-0 small">' . $dayName . ': Closed</p>';
                                         } else {
-                                            $output .= '<p>' . $dayName . ': ' . $hospital[$openTimeKey] . ' - ' . $hospital[$closeTimeKey] . '</p>';
+                                            $output .= '<p class="text-success mb-0 small">' . $dayName . ': ' . $hospital[$openTimeKey] . ' - ' . $hospital[$closeTimeKey] . '</p>';
                                         }
                                     }
                                     $output .= '</div>';
@@ -752,13 +752,13 @@
 <div class="modal fade" id="gallery" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
-			<div class="modal-header" style="padding:0.2rem 1rem">
+			<!-- <div class="modal-header" style="padding:0.2rem 1rem">
 				<h5 class="modal-title" id="galleryModalLabel"><?php echo $row['name'] . " Gallery"; ?></h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 				</button>
-			</div>
-			<div class="modal-body mb-1 p-0">
+			</div> -->
+			<div class="modal-body p-0">
 				<div id="jssor_1" style="position:relative;margin:0 auto;top:0px;left:0px;width:980px;height:480px;overflow:hidden;visibility:hidden;">
 					<!-- Loading Screen -->
 					<div data-u="loading" class="jssorl-009-spin" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;background-color:rgba(0,0,0,0.7);">
@@ -806,6 +806,11 @@
 						</svg>
 					</div>
 				</div>
+			</div>
+			<div class="text-center py-1 bg-dark">
+				<button  type="button" data-dismiss="modal" aria-label="Close" class="btn btn-sm btn-light" data-mdb-dismiss="modal">
+				Close
+				</button>
 			</div>
 		</div>
 	</div>

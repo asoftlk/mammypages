@@ -145,7 +145,8 @@ if(mysqli_num_rows($result) > 0)
         $currentTime = date('H:i:s');   
         $openTime = $row[$currentDay . '_open'];
         $closeTime = $row[$currentDay . '_close'];
-        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? 'Open' : 'Closed';
+        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success">Open</span>' : '<span class="text-danger">Closed</span>'
+        ;
 
         $output .= '  
         <div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">

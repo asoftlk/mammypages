@@ -691,7 +691,6 @@ ADD COLUMN `main_id` INT(11) NULL AFTER `is_main`;
 ALTER TABLE `studio` 
 CHANGE COLUMN `created_at` `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP() ;
 
--- akila is here
 
 ALTER TABLE `saloon` 
 CHANGE COLUMN `id` `id` INT(11) NOT NULL ,
@@ -702,3 +701,4 @@ ADD COLUMN `main_id` INT NULL AFTER `doctor_id`;
 
 
 -- thushitha is here
+-- akila is here

@@ -161,7 +161,7 @@ include "mp.php";
 						}
                         $openTime = $row[$currentDay . '_open'];
                         $closeTime = $row[$currentDay . '_close'];
-                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? 'Open' : 'Closed';
+                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success">Open</span>' : '<span class="text-danger">Closed</span>';
 
 					echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
 							<div class="col-md-3" style="margin:auto">
@@ -359,7 +359,7 @@ include "mp.php";
                             var openTime = pharmacy[currentDay + '_open'];
                             var closeTime = pharmacy[currentDay + '_close'];
 
-                            var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? 'Open' : 'Closed';
+                            var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success">Open</span>' : '<span class="text-danger">Closed</span>';
                             
                             html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
                             html += '<div class="col-md-3" style="margin:auto">';
