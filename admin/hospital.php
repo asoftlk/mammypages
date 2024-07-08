@@ -44,12 +44,13 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1>Hospitals</h1>
+					<h1>Hospital Clinics</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active">Hospitals</li>
+						<li class="breadcrumb-item active"><a href="viewhospital">Hospital Clinics</a></li>
+						<li class="breadcrumb-item active">Add Hospital Clinics</li>
 					</ol>
 				</div>
 			</div>
@@ -61,7 +62,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
-					<a href="viewhospital.php" class="btn btn-mammy float-right">View Hospitals</a>
+					<a href="viewhospital.php" class="btn btn-mammy float-right">View Hospital Clinics</a>
 					<button type="button" class="btn btn-mammy" id="btnspeciality">+ Add Speciality</button>
 				</div>
 				<br><br>
@@ -100,14 +101,8 @@
 				</div>
 				<!-- left column -->
 				<div class="col-md-12">
-					<!-- jquery validation -->
 					<div class="card card-primary">
-						<!--div class="card-header">
-							<h3 class="card-title">Quick Example <small>jQuery Validation</small></h3>
-							</div-->
-						<!-- /.card-header -->
-						<!-- form start -->
-						<div class="card-body">
+						<!-- <div class="card-body">
 							<ul class="nav nav-tabs" role="tablist">
 								<li class="nav-item">
 									<a class="nav-link active" data-toggle="tab" href="#new" role="tab">New hospital</a>
@@ -199,30 +194,41 @@
 														</tr>
 													</thead>
 													<tbody>
-                                                    <?php foreach ($days as $abbr => $day): ?>
-                                                        <tr>
-                                                            <td><?php echo ucfirst($day); ?></td>
-                                                            <td>
-                                                                <input type="time" 
-                                                                    name="<?php echo $abbr; ?>opentime" 
-                                                                    class="form-control form-control-sm border-0" 
-                                                                    id="<?php echo $abbr; ?>opentime" 
-                                                                    placeholder="<?php echo ucfirst($day); ?> Open Time" 
-                                                                >
-                                                            </td>
-                                                            <td>
-                                                                <input type="time" 
-                                                                    name="<?php echo $abbr; ?>endtime" 
-                                                                    class="form-control form-control-sm border-0" 
-                                                                    id="<?php echo $abbr; ?>endtime" 
-                                                                    placeholder="<?php echo ucfirst($day); ?> End Time" 
-                                                                >
-                                                            </td>
-                                                            <td>
-                                                                <button type="button" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
-                                                            </td>
-                                                        </tr>
-                                                    <?php endforeach; ?>
+														<tr>
+															<td>Monday</td>
+															<td><input type="time" name="monopentime" class="form-control form-control-sm border-0" id="monopentime" placeholder="Monday Open Time"></td>
+															<td><input type="time" name="monendtime" class="form-control form-control-sm border-0" id="monendtime" placeholder="Monday End Time"></td>
+														</tr>
+														<tr>
+															<td>Tuesday</td>
+															<td><input type="time" name="tueopentime" class="form-control form-control-sm border-0" id="tueopentime" placeholder="Tuesday Open Time"></td>
+															<td><input type="time" name="tueendtime" class="form-control form-control-sm border-0" id="tueendtime" placeholder="Tuesday End Time"></td>
+														</tr>
+														<tr>
+															<td>Wednesday</td>
+															<td><input type="time" name="wedopentime" class="form-control form-control-sm border-0" id="wedopentime" placeholder="Wednesday Open Time"></td>
+															<td><input type="time" name="wedendtime" class="form-control form-control-sm border-0" id="wedendtime" placeholder="Wednesday End Time"></td>
+														</tr>
+														<tr>
+															<td>Thursday</td>
+															<td><input type="time" name="thuopentime" class="form-control form-control-sm border-0" id="thuopentime" placeholder="Thursday Open Time"></td>
+															<td><input type="time" name="thuendtime" class="form-control form-control-sm border-0" id="thuendtime" placeholder="Thursday End Time"></td>
+														</tr>
+														<tr>
+															<td>Friday</td>
+															<td><input type="time" name="friopentime" class="form-control form-control-sm border-0" id="friopentime" placeholder="Friday Open Time"></td>
+															<td><input type="time" name="friendtime" class="form-control form-control-sm border-0" id="friendtime" placeholder="Friday End Time"></td>
+														</tr>
+														<tr>
+															<td>Saturday</td>
+															<td><input type="time" name="satopentime" class="form-control form-control-sm border-0" id="satopentime" placeholder="Saturday Open Time"></td>
+															<td><input type="time" name="satendtime" class="form-control form-control-sm border-0" id="satendtime" placeholder="Saturday End Time"></td>
+														</tr>
+														<tr>
+															<td>Sunday</td>
+															<td><input type="time" name="sunopentime" class="form-control form-control-sm border-0" id="sunopentime" placeholder="Sunday Open Time"></td>
+															<td><input type="time" name="sunendtime" class="form-control form-control-sm border-0" id="sunendtime" placeholder="Sunday End Time"></td>
+														</tr>
 													</tbody>
 												</table>
 											</div>
@@ -252,23 +258,7 @@
 												<label class="required" for="about">About</label>
 												<textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required></textarea>
 											</div>
-											<!--div class="form-group">
-												<label >Priority</label>
-																<select class="form-control" name="priority" id="priority">
-													<option selected="" disabled="" value="null" class="hidden">--Select Priority</option>
-													<option value="0" selected>None</option>
-													<option value="1">1</option>
-													<option value="2">2</option>
-													<option value="3">3</option>
-													<option value="4">4</option>
-													<option value="5">5</option>
-													<option value="6">6</option>
-													<option value="7">7</option>
-													<option value="8">8</option>
-													<option value="9">9</option>
-													<option value="10">10</option>	
-												</select>
-												</div-->
+									
 											<div class="form-group">
 												<label class="required" for="logoimage">logo Image</label>
 												<div class="input-group">
@@ -318,7 +308,6 @@
 											<br>
 											<br>
 											<div class="card-footer">
-                                                <input name="isMain" value="Y" hidden />
 												<button type="submit" name="sub-hos" class="btn btn-sm btn-primary">Submit</button>
 											</div>
 										</form>
@@ -326,18 +315,18 @@
 									</div>
 									<div class="tab-pane" id="addbranch" role="tabpanel">
 										<div id="branch">
-											<form id="branchForm" method="POST" action="posthospital" enctype="multipart/form-data">
+											<form id="quickForm" method="POST" action="posthospitalbranch" enctype="multipart/form-data">
 												<?php
-													$hospitalQuery = mysqli_query($conn, "SELECT * FROM hospital WHERE is_main = 'Y'");
+													$hospitalQuery = mysqli_query($conn, "SELECT DISTINCT * FROM hospital");
 												?>
 												<div class="form-group">
-													<label class="required" for="mainId">Hospital Name</label>
-													<select name="mainId" class="form-control" id="mainId" required>
+													<label class="required" for="bhospitalname">Hospital Name</label>
+													<select name="bhospitalname" class="form-control" id="bhospitalname" required>
 														<option value="">Select hospital</option>
 														<?php
 														while ($hospitalRow = mysqli_fetch_array($hospitalQuery)) {
 															$hospitalArray = explode(" ///", $hospitalRow['name']);
-															$hospitalidArray = explode(" ///", $hospitalRow['id']);
+															$hospitalidArray = explode(" ///", $hospitalRow['hospital_id']);
 															
 															for ($i = 0; $i < count($hospitalArray); $i++) {
 																$name = $hospitalArray[$i];
@@ -350,53 +339,36 @@
 
 												</div>
 												<div class="form-group">
-													<label class="required" for="hospitalname">Branch Name</label>
-													<input type="text" name="hospitalname" class="form-control" id="hospitalname" placeholder="Branch Name" required>
-												</div>
-                                                <div class="form-group" style="display: grid;">
-												    <label class="required">Speciality</label>
-                                                    <select class="form-control select2" name="bhospitalspecialist[]" id="bhospitalspecialist" multiple data-placeholder='--Select Speciality--'>
-                                                    <?php $query=mysqli_query($conn, "SELECT * FROM hospital_speciality");
-                                                        while($row=mysqli_fetch_array($query)){
-                                                        echo   '<option value="'.$row["speciality"].'">'.$row["speciality"].'</option>';
-                                                        }?>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="required" for="hospitaltype">Hospital type</label>
-                                                    <select class="form-control" name="hospitaltype" id="hospitaltype">
-                                                        <option selected="" disabled="" value="null" class="hidden">--Select Hospital Type</option>
-                                                        <option value="Government Hospital">Government Hospital</option>
-                                                        <option value="Private Hospital">Private Hospital</option>
-                                                    </select>
-                                                </div>
-												<div class="form-group">
-													<label class="required" for="hospitaladdr">Branch Address</label>
-													<input type="text" name="hospitaladdr" class="form-control" id="hospitaladdr" placeholder="Address" required>
+													<label class="required" for="branchname">Branch Name</label>
+													<input type="text" name="branchname" class="form-control" id="branchname" placeholder="Branch Name" required>
 												</div>
 												<div class="form-group">
-													<label for="hospitalmap" class="required">Branch Map location</label>
-													<input type="text" name="hospitalmap" class="form-control" id="hospitalmap" placeholder="Copy form Google Map by poining the location" required>
+													<label class="required" for="branchaddr">Branch Address</label>
+													<input type="text" name="branchaddr" class="form-control" id="branchaddr" placeholder="Address" required>
 												</div>
 												<div class="form-group">
-													<label class="required" for="hospitalcity">Branch city(required to show for branches)</label>
-													<input type="text" name="hospitalcity" class="form-control" id="hospitalcity" placeholder="City" required>
+													<label for="branchmap" class="required">Branch Map location</label>
+													<input type="text" name="branchmap" class="form-control" id="branchmap" placeholder="Copy form Google Map by poining the location" required>
 												</div>
 												<div class="form-group">
-													<label class="required" for="hospitalcont">Contact Number</label>
-													<input type="tel" name="hospitalcont" class="form-control" id="hospitalcont" placeholder="Contact Number" required>
+													<label class="required" for="branchcity">Branch city(required to show for branches)</label>
+													<input type="text" name="branchcity" class="form-control" id="branchcity" placeholder="City" required>
 												</div>
 												<div class="form-group">
-													<label for="hospitalwhatsapp">Whatsapp Number</label>
-													<input type="tel" name="hospitalwhatsapp" class="form-control" id="hospitalwhatsapp" placeholder="Whatsapp Number">
+													<label class="required" for="branchcont">Contact Number</label>
+													<input type="tel" name="branchcont" class="form-control" id="branchcont" placeholder="Contact Number" required>
 												</div>
 												<div class="form-group">
-													<label class="required" for="hospitalemail">Email</label>
-													<input type="email" name="hospitalemail" class="form-control" id="hospitalemail" placeholder="Email ID" required>
+													<label for="branchwhatsapp">Whatsapp Number</label>
+													<input type="tel" name="branchwhatsapp" class="form-control" id="branchwhatsapp" placeholder="Whatsapp Number">
 												</div>
 												<div class="form-group">
-													<label for="hospitalweb">Website</label>
-													<input type="url" name="hospitalweb" class="form-control" id="hospitalweb" placeholder="Website">
+													<label class="required" for="branchemail">Email</label>
+													<input type="email" name="branchemail" class="form-control" id="branchemail" placeholder="Email ID" required>
+												</div>
+												<div class="form-group">
+													<label for="branchweb">Website</label>
+													<input type="url" name="branchweb" class="form-control" id="branchweb" placeholder="Website">
 												</div>
 												<div class="form-group">
 													<label class="required" for="branchworking">Hours of Operation</label>
@@ -409,45 +381,56 @@
 															</tr>
 														</thead>
 														<tbody>
-                                                        <?php foreach ($days as $abbr => $day): ?>
-                                                            <tr>
-                                                                <td><?php echo ucfirst($day); ?></td>
-                                                                <td>
-                                                                    <input type="time" 
-                                                                        name="<?php echo $abbr; ?>opentime" 
-                                                                        class="form-control form-control-sm border-0" 
-                                                                        id="<?php echo $abbr; ?>opentime" 
-                                                                        placeholder="<?php echo ucfirst($day); ?> Open Time" 
-                                                                    >
-                                                                </td>
-                                                                <td>
-                                                                    <input type="time" 
-                                                                        name="<?php echo $abbr; ?>endtime" 
-                                                                        class="form-control form-control-sm border-0" 
-                                                                        id="<?php echo $abbr; ?>endtime" 
-                                                                        placeholder="<?php echo ucfirst($day); ?> End Time" 
-                                                                    >
-                                                                </td>
-                                                                <td>
-                                                                    <button type="button" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
-                                                                </td>
-                                                            </tr>
-                                                        <?php endforeach; ?>
+															<tr>
+																<td>Monday</td>
+																<td><input type="time" name="monopentime" class="form-control form-control-sm border-0" id="monopentime" placeholder="Monday Open Time"></td>
+																<td><input type="time" name="monendtime" class="form-control form-control-sm border-0" id="monendtime" placeholder="Monday End Time"></td>
+															</tr>
+															<tr>
+																<td>Tuesday</td>
+																<td><input type="time" name="tueopentime" class="form-control form-control-sm border-0" id="tueopentime" placeholder="Tuesday Open Time"></td>
+																<td><input type="time" name="tueendtime" class="form-control form-control-sm border-0" id="tueendtime" placeholder="Tuesday End Time"></td>
+															</tr>
+															<tr>
+																<td>Wednesday</td>
+																<td><input type="time" name="wedopentime" class="form-control form-control-sm border-0" id="wedopentime" placeholder="Wednesday Open Time"></td>
+																<td><input type="time" name="wedendtime" class="form-control form-control-sm border-0" id="wedendtime" placeholder="Wednesday End Time"></td>
+															</tr>
+															<tr>
+																<td>Thursday</td>
+																<td><input type="time" name="thuopentime" class="form-control form-control-sm border-0" id="thuopentime" placeholder="Thursday Open Time"></td>
+																<td><input type="time" name="thuendtime" class="form-control form-control-sm border-0" id="thuendtime" placeholder="Thursday End Time"></td>
+															</tr>
+															<tr>
+																<td>Friday</td>
+																<td><input type="time" name="friopentime" class="form-control form-control-sm border-0" id="friopentime" placeholder="Friday Open Time"></td>
+																<td><input type="time" name="friendtime" class="form-control form-control-sm border-0" id="friendtime" placeholder="Friday End Time"></td>
+															</tr>
+															<tr>
+																<td>Saturday</td>
+																<td><input type="time" name="satopentime" class="form-control form-control-sm border-0" id="satopentime" placeholder="Saturday Open Time"></td>
+																<td><input type="time" name="satendtime" class="form-control form-control-sm border-0" id="satendtime" placeholder="Saturday End Time"></td>
+															</tr>
+															<tr>
+																<td>Sunday</td>
+																<td><input type="time" name="sunopentime" class="form-control form-control-sm border-0" id="sunopentime" placeholder="Sunday Open Time"></td>
+																<td><input type="time" name="sunendtime" class="form-control form-control-sm border-0" id="sunendtime" placeholder="Sunday End Time"></td>
+															</tr>
 														</tbody>
 													</table>
 												</div>
 												<div class="form-group row">
 													<div class="col-md-4">
-														<label for="hospitalfb">Facebook Link</label>
-														<input type="url" name="hospitalfb" class="form-control" id="hospitalfb" placeholder="Facebook Link">
+														<label for="branchfb">Facebook Link</label>
+														<input type="url" name="branchfb" class="form-control" id="branchfb" placeholder="Facebook Link">
 													</div>
 													<div class="col-md-4">
-														<label for="hospitalinsta">Instagram Link</label>
-														<input type="url" name="hospitalinsta" class="form-control" id="hospitalinsta" placeholder="Instagram Link">
+														<label for="branchinsta">Instagram Link</label>
+														<input type="url" name="branchinsta" class="form-control" id="branchinsta" placeholder="Instagram Link">
 													</div>
 													<div class="col-md-4">
-														<label for="hospitalln">Linkedin Link</label>
-														<input type="url" name="hospitalln" class="form-control" id="hospitalln" placeholder="Linkedin Link">
+														<label for="branchln">Linkedin Link</label>
+														<input type="url" name="branchln" class="form-control" id="branchln" placeholder="Linkedin Link">
 													</div>
 												</div>
 												<div class="form-group">
@@ -460,7 +443,7 @@
 												</div>
 												<div class="form-group row ml-2">
 													<label class="required" for="branchabout">About</label>
-													<textarea style="width:97%; height:180px; margin:auto" id="branchabout" name="branchabout" class="branchabout" required></textarea>
+													<textarea style="width:97%; height:180px; margin:auto" id="branchabout" name="branchabout" class="about" required></textarea>
 												</div>
 												<div class="form-group">
 													<label class="required" for="logoimage">logo Image</label>
@@ -509,7 +492,6 @@
 													</div>
 												</div>
 												<div class="card-footer">
-                                                    <input name="isMain" value="N" hidden/>
 													<button type="submit" name="sub-hos-branch" class="btn btn-sm btn-primary">Submit</button>
 												</div>
 											</form>
@@ -517,7 +499,235 @@
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> -->
+
+                        <div class="card-body">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#new" role="tab">New Hospital Clinic</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#addbranch" role="tab">Add Branch</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="new" role="tabpanel">
+                                    <div id="Hospital">
+                                        <form id="quickForm" method="POST" action="posthospital" enctype="multipart/form-data">
+                                            <?php
+                                                $hospitalQuery = mysqli_query($conn, "SELECT DISTINCT * FROM hospital WHERE is_main = 'Y'");
+                                            ?>
+                                            <div class="form-group branch">
+                                                <label class="required" for="mainId">Hospital Clinic Name</label>
+                                                <select name="mainId" class="form-control" id="mainId" required>
+                                                    <option value="">Select Hospital Clinic</option>
+                                                    <?php
+                                                    while ($hospitalRow = mysqli_fetch_array($hospitalQuery)) {
+                                                        $hospitalArray = explode(" ///", $hospitalRow['name']);
+                                                        $hospitalidArray = explode(" ///", $hospitalRow['id']);
+                                                        
+                                                        for ($i = 0; $i < count($hospitalArray); $i++) {
+                                                            $name = $hospitalArray[$i];
+                                                            $id = $hospitalidArray[$i];
+                                                            echo '<option value="' . $id . '">' . $name . '</option>';
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+												<label class="required" for="hospitalname">Hospital Clinic Name</label>
+												<input type="text" name="hospitalname" class="form-control" id="hospitalname" placeholder="Hospital Name">
+											</div>
+											<div class="form-group">
+												<label class="required">Speciality</label>
+												<select class="form-control select2" name="hospitalspecialist[]" id="hospitalspecialist" multiple data-placeholder='--Select Speciality--'>
+												<?php $query=mysqli_query($conn, "SELECT * FROM hospital_speciality");
+													while($row=mysqli_fetch_array($query)){
+													echo   '<option value="'.$row["speciality"].'">'.$row["speciality"].'</option>';
+													}?>
+												</select>
+											</div>
+											<div class="form-group">
+												<label class="required" for="hospitaladdr">Hospital Clinic Address</label>
+												<input type="text" name="hospitaladdr" class="form-control" id="hospitaladdr" placeholder="Address">
+											</div>
+											<div class="form-group">
+												<label for="hospitalmap" class="required">Hospital Clinic Map location</label>
+												<input type="text" name="hospitalmap" class="form-control" id="hospitalmap" placeholder="Copy form Google Map by poining the location">
+											</div>
+											<div class="form-group">
+												<label class="required" for="hospitalcity">Hospital Clinic city(required to show for branches)</label>
+												<input type="text" name="hospitalcity" class="form-control" id="hospitalcity" placeholder="City">
+											</div>
+											<div class="form-group">
+												<label class="required" for="hospitalcont">Contact Number</label>
+												<input type="tel" name="hospitalcont" class="form-control" id="hospitalcont" placeholder="Contact Number">
+											</div>
+											<div class="form-group">
+												<label for="hospitalwhatsapp">Whatsapp Number</label>
+												<input type="tel" name="hospitalwhatsapp" class="form-control" id="hospitalwhatsapp" placeholder="Contact Number">
+											</div>
+											<div class="form-group">
+												<label class="required" for="hospitalemail">Email</label>
+												<input type="email" name="hospitalemail" class="form-control" id="hospitalemail" placeholder="Email ID">
+											</div>
+											<div class="form-group">
+												<label for="hospitalweb">Website</label>
+												<input type="url" name="hospitalweb" class="form-control" id="hospitalweb" placeholder="Website">
+											</div>
+											<div class="form-group">
+												<label class="required" for="hospitaltype">Hospital Clinic type</label>
+												<select class="form-control" name="hospitaltype" id="hospitaltype">
+													<option selected="" disabled="" value="null" class="hidden">--Select Hospital Clinic Type</option>
+													<option value="Government hospital">Government Hospital Clinic</option>
+													<option value="Private hospital">Private Hospital Clinic</option>
+												</select>
+											</div>
+											<div class="form-group hospitalsubtype">
+												<label for="hospitalsubtype" class="required">Hospital Clinic Subtype</label>
+												<select class="form-control" name="hospitalsubtype" id="hospitalsubtype">
+													<option selected="" disabled="" value="null" class="hidden">--Select Hospital Clinic Subype</option>
+													<option value="National Hospital">National Hospital Clinic</option>
+													<option value="Teaching Hospital">Teaching Hospital Clinic</option>
+													<option value="Specialized Teaching Hospital">Specialized Teaching Hospital Clinic</option>
+													<option value="Other Specialized Hospital">Other Specialized Hospital Clinic</option>
+													<option value="Provincial General Hospital">Provincial General Hospital Clinic</option>
+													<option value="Base Hospital Type - A">Base Hospital Clinic Type - A</option>
+													<option value="Base Hospital Type - B">Base Hospital Clinic Type - B</option>
+													<option value="Divisional Hospital Type - A">Divisional Hospital Clinic Type - A</option>
+													<option value="Divisional Hospital Type - B">Divisional Hospital Clinic Type - B</option>
+													<option value="Divisional Hospital Type - C">Divisional Hospital Clinic Type - C</option>
+													<option value="Primary Medical Care Unit">Primary Medical Care Unit</option>
+													<option value="Others">Others</option>
+												</select>
+											</div>
+                                            <!-- Conditional Fields for New Hospital -->
+                                            <!-- <div id="newHospitalFields" style="display: none;"> -->
+                                            <div class="form-group">
+                                                <label class="required" for="branchworking">Hours of Operation</label>
+                                                <table class="table table-sm table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Day</th>
+                                                            <th>Open time</th>
+                                                            <th>End time</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <!-- PHP to generate days and time inputs -->
+                                                        <?php foreach ($days as $abbr => $day): ?>
+                                                            <tr>
+                                                                <td><?php echo ucfirst($day); ?></td>
+                                                                <td>
+                                                                    <input type="time" 
+                                                                        name="<?php echo $abbr; ?>opentime" 
+                                                                        class="form-control form-control-sm border-0" 
+                                                                        id="<?php echo $abbr; ?>opentime" 
+                                                                        placeholder="<?php echo ucfirst($day); ?> Open Time" 
+                                                                    >
+                                                                </td>
+                                                                <td>
+                                                                    <input type="time" 
+                                                                        name="<?php echo $abbr; ?>endtime" 
+                                                                        class="form-control form-control-sm border-0" 
+                                                                        id="<?php echo $abbr; ?>endtime" 
+                                                                        placeholder="<?php echo ucfirst($day); ?> End Time" 
+                                                                    >
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
+                                                                </td>
+                                                            </tr>
+                                                        <?php endforeach; ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="form-group row">
+												<div class="col-md-4">
+													<label for="hospitalfb">Facebook Link</label>
+													<input type="url" name="hospitalfb" class="form-control" id="hospitalfb" placeholder="Facebook Link">
+												</div>
+												<div class="col-md-4">
+													<label for="hospitalinsta">Instagram Link</label>
+													<input type="url" name="hospitalinsta" class="form-control" id="hospitalinsta" placeholder="Instagram Link">
+												</div>
+												<div class="col-md-4">
+													<label for="hospitalln">Linkedin Link</label>
+													<input type="url" name="hospitalln" class="form-control" id="hospitalln" placeholder="Linkedin Link">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="required">Status</label>
+												<select class="form-control" name="status" id="status">
+													<option selected="" disabled="" value="null" class="hidden">--Select Status</option>
+													<option value="Verified">Verified</option>
+													<option value="Not Verified">Not Verified</option>
+												</select>
+											</div>
+											<div class="row">
+												<label class="required" for="about">About</label>
+												<textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required></textarea>
+											</div>
+									
+											<div class="form-group">
+												<label class="required" for="logoimage">logo Image</label>
+												<div class="input-group">
+													<div class="custom-file">
+														<input type="file" name="logoimage" class="custom-file-input" id="logoimage" accept="image/*">
+														<label class="custom-file-label" for="logoimage">Choose file</label>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="required" for="featuredimage">Featured Image</label>
+												<div class="input-group">
+													<div class="custom-file">
+														<input type="file" name="featuredimage" class="custom-file-input" id="featuredimage"  accept="image/*">
+														<label class="custom-file-label" for="featuredimage">Choose file</label>
+													</div>
+												</div>
+											</div>
+											<div id="galleryimages">
+												<div class="form-group">
+													<label class="required" for="galimages">Gallery Images</label>
+													<div class="input-group">
+														<div class="custom-file">
+															<input type="file" name="galimages[]" class="custom-file-input galimages" accept="image/*">
+															<label class="custom-file-label" for="galimages">Choose file</label>
+														</div>
+													</div>
+												</div>
+											</div>
+											<button class="btn btn-sm btn-primary add-image" style="float:left">Add More</button>
+											<br>
+											<br>
+											<div class="form-group">
+												<label  for="videoembed">Embed Video</label>
+												<input type="text" name="videoembed" class="form-control" placeholder="Embed Video Code">
+											</div>
+											<p class="text-center  font-weight-bold">Or</p>
+											<div class="form-group">
+												<label for="galvideo">Gallery Video</label>
+												<div class="input-group">
+													<div class="custom-file">
+														<input type="file" name="galvideo" class="custom-file-input" id="galvideo" accept="video/*">
+														<label class="custom-file-label" for="galvideo">Choose file</label>
+													</div>
+												</div>
+											</div>
+											<br>
+											<br>
+											<div class="card-footer">
+                                                <input class="isMain"  name="isMain" type="hidde" hidden/>
+                                         
+												<button type="submit" name="sub-hos" class="btn btn-sm btn-primary">Submit</button>
+											</div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 					</div>
 				</div>
 			</div>
@@ -544,170 +754,104 @@
 	$('#branchabout').summernote({width:"100%", height:"250"});
 	
 	$(function () {
-        $('#quickForm').validate({
-            ignore: ":hidden, [contenteditable='true']:not([name])",
-            rules: {
-            
-            hospitalname: {
-                required: true,
-            },
-            'hospitalspecialist[]': {
-                required: true,
-            },
-            hospitalcont:{
-                required: true,
-                rangelength: [10, 12],
-            },
-            hospitalmap:{
-                required:true,
-            },
-            hospitaladdr: {
-                required: true,
-            },
-            hospitalcity:{
-                required: true,
-            },	  
-            hospitalemail: {
-                required: true,
-            },
-            hospitaltype: {
-                required: true,
-            },
-            hospitalsubtype: {
-                required: true,
-            },
-            hospitalworking: {
-                required: true,
-            },
-            
-            status: {
-                required: true,
-            },
-            about: {
-                required: true,
-            },
-                
-            featuredimage: {
-                    required: true,
-                    extension: "jpg|jpeg|png"
-            },
-            "galimages[]": {
-                    required: true,
-                    extension: "jpg|jpeg|png"
-            },
-            
-            logoimage: {
-                required: true,
-                extension: "jpg|jpeg|png"
-            }
-            },
-            messages: {
-            
-            },
-            submitHandler: function(form) {
-                    var form_data = new FormData(form);
-        
-                $.ajax({
-                    type:form.method,
-                    url: form.action,
-                    mimeType: "multipart/form-data",
-                    data:form_data,
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    success:function(data){
-                        if(data=='Posted Successfully'){
-                        removeReg(data, 'success');
-                        }
-                        else{
-                            removeReg(data, 'error');
-                        }
-                    },
-                    error: function(data){
-                        console.log(data);
-                        removeReg(data, 'error');
-                    }
-                });
-            },
-            errorElement: 'span',
-            errorPlacement: function (error, element) {
-            error.addClass('invalid-feedback');
-            element.closest('.form-group').append(error);
-            },
-            highlight: function (element, errorClass, validClass) {
-            $(element).addClass('is-invalid');
-            },
-            unhighlight: function (element, errorClass, validClass) {
-            $(element).removeClass('is-invalid');
-            }
-        });
-
-        $('#branchForm').validate({
-            ignore: ":hidden, [contenteditable='true']:not([name])",
-            rules: {
- 
-            'bhospitalspecialist[]': {
-                required: true,
-            },
-            hospitalcont:{
-                required: true,
-                rangelength: [10, 12],
-            },
-                            
-            featuredimage: {
-                    required: true,
-                    extension: "jpg|jpeg|png"
-            },
-            "galimages[]": {
-                    required: true,
-                    extension: "jpg|jpeg|png"
-            },
-            
-            logoimage: {
-                required: true,
-                extension: "jpg|jpeg|png"
-            }
-            },
-            messages: {
-            
-            },
-            submitHandler: function(form) {
-                    var form_data = new FormData(form);
-        
-                $.ajax({
-                    type:form.method,
-                    url: form.action,
-                    mimeType: "multipart/form-data",
-                    data:form_data,
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    success:function(data){
-                        if(data=='Posted Successfully'){
-                        removeReg(data, 'success');
-                        }
-                        else{
-                            removeReg(data, 'error');
-                        }
-                    },
-                    error: function(data){
-                        console.log(data);
-                        removeReg(data, 'error');
-                    }
-                });
-            },
-            errorElement: 'span',
-            errorPlacement: function (error, element) {
-            error.addClass('invalid-feedback');
-            element.closest('.form-group').append(error);
-            },
-            highlight: function (element, errorClass, validClass) {
-            $(element).addClass('is-invalid');
-            },
-            unhighlight: function (element, errorClass, validClass) {
-            $(element).removeClass('is-invalid');
-            }
-        });
+	
+	  $('#quickForm').validate({
+		  ignore: ":hidden, [contenteditable='true']:not([name])",
+		  rules: {
+	      
+	      hospitalname: {
+	        required: true,
+	      },
+		  'hospitalspecialist[]': {
+	        required: true,
+	      },
+		 hospitalcont:{
+			  required: true,
+			  rangelength: [10, 12],
+		  },
+		  hospitalmap:{
+			  required:true,
+		  },
+		  hospitaladdr: {
+	        required: true,
+	      },
+		  hospitalcity:{
+			  required: true,
+		  },	  
+		  hospitalemail: {
+			required: true,
+	      },
+		  hospitaltype: {
+			required: true,
+		  },
+		  hospitalsubtype: {
+			required: true,
+		  },
+		  hospitalworking: {
+			required: true,
+		  },
+		  
+		  status: {
+			required: true,
+		  },
+		  about: {
+			required: true,
+		  },
+		 	  
+		  featuredimage: {
+	            required: true,
+	            extension: "jpg|jpeg|png"
+		  },
+		  "galimages[]": {
+	            required: true,
+	            extension: "jpg|jpeg|png"
+	      },
+		  
+		  logoimage: {
+			  required: true,
+			  extension: "jpg|jpeg|png"
+		  }
+	    },
+	    messages: {
+	      
+		},
+		submitHandler: function(form) {
+				var form_data = new FormData(form);
+	
+			$.ajax({
+	            type:form.method,
+	            url: form.action,
+	            mimeType: "multipart/form-data",
+	            data:form_data,
+				contentType: false,
+				cache: false,
+				processData: false,
+	            success:function(data){
+					if(data=='Posted Successfully'){
+	                removeReg(data, 'success');
+					}
+					else{
+						removeReg(data, 'error');
+					}
+	            },
+	            error: function(data){
+	                console.log(data);
+	                removeReg(data, 'error');
+	            }
+	        });
+		},
+	    errorElement: 'span',
+	    errorPlacement: function (error, element) {
+	      error.addClass('invalid-feedback');
+	      element.closest('.form-group').append(error);
+	    },
+	    highlight: function (element, errorClass, validClass) {
+	      $(element).addClass('is-invalid');
+	    },
+	    unhighlight: function (element, errorClass, validClass) {
+	      $(element).removeClass('is-invalid');
+	    }
+	  });
 	});
 	$('#summernote').summernote({width:"100%", height:"250"});
 	$(document).on('change', '.custom-file-input', function (event) {
@@ -925,13 +1069,23 @@
 	  } );
 </script>
 <script>
-    function clearTimeInputs(day) {
-        var openInput = document.getElementById(day + 'opentime');
-        var closeInput = document.getElementById(day + 'endtime');
-        
-        openInput.value = '';
-        closeInput.value = '';
-    }
+    $(document).ready(function () {
+        $('a[href="#new"]').tab('show');
+        $(".branch").hide();
+        $(".isMain").val('Y');
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            var target = $(e.target).attr("href");
+            if (target === "#new") {
+                $(".branch").hide();
+                $(".new").show();
+                $(".isMain").val('Y');
+            } else if (target === "#addbranch") {
+                $(".branch").show();
+                $(".new").hide();
+                $(".isMain").val('N');
+            }
+        });
+    });
 </script>
 </body>
 </html>

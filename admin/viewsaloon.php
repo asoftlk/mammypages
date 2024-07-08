@@ -7,7 +7,7 @@
 		  icon: status,
 		})
 		.then(function(value) {
-			window.location.href="viewhospital";  
+			window.location.href="viewsaloon";  
 		});
 	}
 </script>
@@ -15,23 +15,23 @@
 	if(isset($_GET['del_id'])) 
 	{
 	$id = $_GET['del_id'];
-	$data1 = mysqli_query($conn,"select * from hospital where id = '$id'");
+	$data1 = mysqli_query($conn,"select * from saloon where id = '$id'");
 	if(mysqli_num_rows($data1)>0){
 		$row = mysqli_fetch_array($data1);
-		if(file_exists("../directory/hospital/".$row['logo'])){
-		unlink("../directory/hospital/".$row['logo']);}
-		if(file_exists("../directory/hospital/".$row['image'])){
-		unlink("../directory/hospital/".$row['image']);}
-		$galleryquery= mysqli_query($conn, "SELECT * FROM mphospital_gallery WHERE hospital_id = '$row[hospital_id]'");
+		if(file_exists("../directory/saloon/".$row['logo'])){
+		unlink("../directory/saloon/".$row['logo']);}
+		if(file_exists("../directory/saloon/".$row['image'])){
+		unlink("../directory/saloon/".$row['image']);}
+		$galleryquery= mysqli_query($conn, "SELECT * FROM mpsaloon_gallery WHERE saloon_id = '$row[saloon_id]'");
 		while($galleryrow = mysqli_fetch_array($galleryquery)){
-			if(file_exists("../directory/hospital/".$galleryrow['image_name'])){
-			unlink("../directory/hospital/".$galleryrow['image_name']);
+			if(file_exists("../directory/saloon/".$galleryrow['image_name'])){
+			unlink("../directory/saloon/".$galleryrow['image_name']);
 			}
 		}
-		mysqli_query($conn, "DELETE FROM mphospital_gallery WHERE hospital_id='$row[hospital_id]'");
-		mysqli_query($conn, "DELETE FROM hospital WHERE id=$id");
-        mysqli_query($conn, "DELETE FROM hospital_working_times WHERE hospital_id='$row[hospital_id]'");
-		echo '<script>alert("Deleted Successfully");window.location.href="viewhospital";</script>';  
+		mysqli_query($conn, "DELETE FROM mpsaloon_gallery WHERE saloon_id='$row[saloon_id]'");
+		mysqli_query($conn, "DELETE FROM saloon WHERE id=$id");
+		mysqli_query($conn, "DELETE FROM saloon_working_times WHERE saloon_id='$row[saloon_id]'");
+		echo '<script>alert("Deleted Successfully");window.location.href="viewsaloon";</script>';  
 		//header( "refresh:0.01;url=magazinelist" );
 	}
 	else{
@@ -44,14 +44,14 @@
 		$uid = $_GET['id'];
 		 $value = $_GET['value'];
 		 if($value>0){
-			$data =mysqli_query($conn, "SELECT * FROM `hospital` WHERE `priority` = '$value'");
+			$data =mysqli_query($conn, "SELECT * FROM `saloon` WHERE `priority` = '$value'");
 			echo mysqli_num_rows($data);
 			if(mysqli_num_rows($data)>0){
-				$hospitalidrow = mysqli_fetch_array($data);
-				echo '<script>removeReg("This priority is already assigned to '.$hospitalidrow["name"].'('.$hospitalidrow["hospital_id"].')", "error");</script>';
+				$idrow = mysqli_fetch_array($data);
+				echo '<script>removeReg("This priority is already assigned to '.$idrow["name"].'('.$idrow["saloon_id"].')", "error");</script>';
 			}
 			else{
-				$updatedata =mysqli_query($conn, "UPDATE hospital SET priority = '$value' WHERE id='$uid'");
+				$updatedata =mysqli_query($conn, "UPDATE saloon SET priority = '$value' WHERE id='$uid'");
 				if($updatedata){
 				echo '';
 				echo '<script>removeReg("Updated Successfully", "success");</script>';  
@@ -64,7 +64,7 @@
 			}
 		 }
 		 else{
-			$updatedata =mysqli_query($conn, "UPDATE hospital SET priority = '$value' WHERE id='$uid'");
+			$updatedata =mysqli_query($conn, "UPDATE saloon SET priority = '$value' WHERE id='$uid'");
 				if($updatedata){
 				echo '';
 				echo '<script>removeReg("Updated Successfully", "success");</script>';  
@@ -113,12 +113,12 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1>Hospital</h1>
+					<h1>Saloon</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active">Hospital</li>
+						<li class="breadcrumb-item active">Saloon</li>
 					</ol>
 				</div>
 			</div>
@@ -129,7 +129,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
-					<a href="hospital.php" class="btn btn-mammy float-right">+ Add Hospital</a>
+					<a href="saloon.php" class="btn btn-mammy float-right">+ Add Saloon</a>
 				</div>
 				<br><br>
 				<div class="col-12">
@@ -181,34 +181,34 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Hospital Id:</label><input type="text" class="form-control" id="hospital_id">
+									<label>Saloon Id:</label><input type="text" class="form-control" id="saloon_id">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Hospital Name:</label><input type="text" class="form-control" id="name">
+									<label>Saloon Name:</label><input type="text" class="form-control" id="name">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Hospital Specialist In</label><input type="text" class="form-control" id="speciality">
+									<label>Saloon Specialist In</label><input type="text" class="form-control" id="speciality">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Hospital Address:</label>
+									<label>Saloon Address:</label>
 									<input type="text" class="form-control" id="address">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Hospital Map location:</label>
+									<label>Saloon Map location:</label>
 									<input type="text" class="form-control" id="map">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Hospital city(Required to show for branches):</label>
+									<label>Saloon city(Required to show for branches):</label>
 									<input type="text" class="form-control" id="city">
 								</div>
 							</div>
@@ -238,7 +238,7 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Hospital type:</label>
+									<label>Saloon type:</label>
 									<input type="text" class="form-control" id="type">
 								</div>
 							</div>
@@ -332,11 +332,9 @@
 								</div>
 							</div>
 						</div>
-						<!--a href="viewhospital.php?update_id=26"><button type="button" class="btn btn-sm btn-secondary">Update</button></a-->
-				</form>
+				    </form>
 				</div>
 				<div class="modal-footer">
-					<!--<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>-->
 					<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
 				</div>
 			</div>
@@ -349,96 +347,80 @@
 		var element = document.getElementById("sidebar");
 		element.classList.toggle("active");
 	}
-	 $(document).ready(function(){
-	$('#select_id').change(function(){
-	   var num=($(this).val());
-	localStorage.setItem("num", num);
-	load_data(1,num);
-	});
-	   var myval = localStorage.getItem("num");
-	   if(myval){
-	      // console.log(myval);
-	   load_data(1, myval);
-	   $('#select_id').val(myval);
-	   }
-	   else{
+
+	$(document).ready(function(){
+	    $('#select_id').change(function(){
+            var num=($(this).val());
+            localStorage.setItem("num", num);
+            load_data(1,num);
+        });
+        var myval = localStorage.getItem("num");
+        if(myval){
+            load_data(1, myval);
+            $('#select_id').val(myval);
+	    }
+	    else{
 	       load_data(1, 10);
-	   }
+	    }
 	
-	   function load_data(page, value, query = '')
-	   {
-	     $.ajax({
-	       url:"ajax/hospitalfetch",
-	       method:"POST",
-	       data:{page:page, value:value, query:query},
-	       success:function(data)
-	       {
-			//debugger
-	         $('#dynamic_content').html(data);
-	       }
-	     });
-	   }
+	    function load_data(page, value, query = '') {
+            $.ajax({
+            url:"ajax/saloonfetch",
+            method:"POST",
+            data:{page:page, value:value, query:query},
+            success:function(data) {
+                $('#dynamic_content').html(data);
+            }
+            });
+	    }
 	
 	   $(document).on('click', '.page-link', function(){
-	     var page = $(this).data('page_number');
-	     var query = $('#search_box').val();
-	     load_data(page, ($('#select_id').val()), query);
-	  //debugger
-	   });
+            var page = $(this).data('page_number');
+            var query = $('#search_box').val();
+            load_data(page, ($('#select_id').val()), query);
+        });
 	
-	   $('#search_box').keyup(function(){
-	     var query = $('#search_box').val();
-	     load_data(1, ($('#select_id').val()), query);
-	 // debugger
-	   });
+        $('#search_box').keyup(function(){
+            var query = $('#search_box').val();
+            load_data(1, ($('#select_id').val()), query);
+        });
 	
-	 });
-	function fetch_id(id, value)
-		{
-		 $.ajax({
-	       url:"ajax/hospitalfetchview",
-	       method:"POST",
-	       data:{id:id},
-	       success:function(data)
-	       {
-		//	debugger
-	           var data1= JSON.parse(data);
-               console.log(data1);
-	           for(var key in data1){
-	               if($("#" + key).length != 0){
-	                   if(key == 'logo')
-	                       {
-	                       if(data1[key]){
-	                         $('#'+key).attr('src', '../directory/hospital/'+data1[key]);  
-	                           $('#'+key).attr('disabled', value);
-							$('#'+key).show();
-	                       }
-	                       else{
-	                             $('#'+key).remove();  
-	                       }
-	                       }
-					if(key == 'image')
-	                       {
-	                       if(data1[key]){
-	                         $('#'+key).attr('src', '../directory/hospital/'+data1[key]);  
-	                           $('#'+key).attr('disabled', value);
-							$('#'+key).show();
-	                       }
-	                       else{
-	                             $('#'+key).remove();  
-	                       }
-	                       }
-	                   else{
-                        data1[key] === '00:00:00' ? '':$('#'+key).val(data1[key]); 
-	                   $('#'+key).attr('disabled', value);
-	                   }
-	               }
-	               //console.log(key +  " -> " + data1[key]);
-	             // $('#').val(data1.first_name); 
-	           }
-	           
-	         //$('.modal-body').html(data);
-	       }
-	    });
-	}
+    });
+
+    function fetch_id(id, value) {
+        $.ajax({
+            url:"ajax/saloonfetchview",
+            method:"POST",
+            data:{id:id},
+            success:function(data) {
+                var data1= JSON.parse(data);
+                console.log(data1);
+                for(var key in data1){
+                    if($("#" + key).length != 0){
+                        if(key == 'logo'){
+                            if(data1[key]) {
+                                $('#'+key).attr('src', '../directory/saloon/'+data1[key]);  
+                                $('#'+key).attr('disabled', value);
+                                $('#'+key).show();
+                            } else {
+                                $('#'+key).remove();  
+                            }
+                        }
+                        if(key == 'image') {
+                            if(data1[key]){
+                                $('#'+key).attr('src', '../directory/saloon/'+data1[key]);  
+                                $('#'+key).attr('disabled', value);
+                                $('#'+key).show();
+                            } else{
+                                $('#'+key).remove();  
+                            }
+                        } else{
+                            data1[key] === '00:00:00' ? '':$('#'+key).val(data1[key]); 
+                            $('#'+key).attr('disabled', value);
+                        }
+                    }
+                }
+            }
+        });
+    }
 </script>

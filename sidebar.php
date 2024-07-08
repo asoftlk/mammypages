@@ -6,7 +6,8 @@
     <li><a role="button" href="medical"><i class="icofont-nurse-alt"></i> MEDICAL CLINICS</a></li>
     <li><a role="button" href="pharmacies"><i class="icofont-medical-sign"></i> PHARMACIES</a></li>
     <li><a role="button" href="beauty"><i class="icofont-girl-alt"></i> BEAUTY SALON</a></li>
-    <li><a role="button" href="studio"><i class="icofont-camera"></i> STUDIOS</a></li>
+    <!-- <li><a role="button" href="testmidwife/midwife"><i class="icofont-nurse"></i>TEST MIDWIFE</a></li> -->
+
 </ul>
 
 <script>

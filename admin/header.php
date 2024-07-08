@@ -310,7 +310,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#" class="nav-link">
+							<a href="viewsaloon" class="nav-link">
 								&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-female nav-icon"></i>
 								<p>Beauty Salons</p>
 							</a>

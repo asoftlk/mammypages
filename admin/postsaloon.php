@@ -2,35 +2,41 @@
 	include "../connect.php";
 	date_default_timezone_set('Asia/Kolkata');
 	$time = date("d-m-Y")."-".time();
-	if(isset($_POST['sub-hos'])){
-		$hospital_id = "hospital-".mt_rand(1000000,9999999);
-		$hosttime_id = "hosttime-".mt_rand(1000000,9999999);
-		$hospitalname = filter_input(INPUT_POST, 'hospitalname');
-		$hospitalspecialist1 = $_POST['hospitalspecialist'];
-		$hospitalspecialist ="";
-		for($i=0; $i<count($hospitalspecialist1);$i++){
-			if($i==(count($hospitalspecialist1)-1)){
-				$hospitalspecialist .= $hospitalspecialist1[$i];
-			}
-			else{
-			$hospitalspecialist .= $hospitalspecialist1[$i]." ///";
-			}
-		}
+	if(isset($_POST['sub-saloon'])){
+		$saloon_Id = "saloon-".mt_rand(1000000,9999999);
+		$sltime_id = "sltime-".mt_rand(1000000,9999999);
+
+		$name = filter_input(INPUT_POST, 'name');
+	
+
+        $name = mysqli_real_escape_string($conn, $_POST['mpname']);
+        $speciality1 = $_POST['specialist'];
+        $speciality ="";
+            for($i=0; $i<count($speciality1);$i++){
+                if($i==(count($speciality1)-1)){
+                    $speciality .= $speciality1[$i];
+                }
+                else{
+                $speciality .= $speciality1[$i]." ///";
+                }
+            }
+        
+            
         $isMain = filter_input(INPUT_POST, 'isMain');
 		$mainId = filter_input(INPUT_POST, 'mainId');
-		$hospitaladdr = filter_input(INPUT_POST, 'hospitaladdr');
-		$hospitalmap = filter_input(INPUT_POST, 'hospitalmap');
-		$hospitalcity = filter_input(INPUT_POST, 'hospitalcity');
-		$hospitalcont = filter_input(INPUT_POST, 'hospitalcont');
-		$hospitalwhatsapp = filter_input(INPUT_POST, 'hospitalwhatsapp');
-		$hospitalemail = filter_input(INPUT_POST, 'hospitalemail');
-		$hospitalweb = filter_input(INPUT_POST, 'hospitalweb');
-		$hospitaltype = filter_input(INPUT_POST, 'hospitaltype');
-		$hospitalsubtype = filter_input(INPUT_POST, 'hospitalsubtype');
-		$hospitalworking = filter_input(INPUT_POST, 'hospitalworking');
-		$hospitalfb = filter_input(INPUT_POST, 'hospitalfb');
-		$hospitalinsta = filter_input(INPUT_POST, 'hospitalinsta');
-		$hospitalln = filter_input(INPUT_POST, 'hospitalln');
+		$address = filter_input(INPUT_POST, 'address');
+		$mapLocation = filter_input(INPUT_POST, 'mapLocation');
+		$city = filter_input(INPUT_POST, 'city');
+		$contactNumber = filter_input(INPUT_POST, 'contactNumber');
+		$whatsapp = filter_input(INPUT_POST, 'whatsapp');
+		$email = filter_input(INPUT_POST, 'email');
+		$web = filter_input(INPUT_POST, 'web');
+		$type = filter_input(INPUT_POST, 'type');
+		$subtype = filter_input(INPUT_POST, 'subtype');
+		$working = null;
+		$facebook = filter_input(INPUT_POST, 'fb');
+		$instagram = filter_input(INPUT_POST, 'insta');
+		$linkedin = filter_input(INPUT_POST, 'linkedin');
 		$status = filter_input(INPUT_POST, 'status');
 		$about = mysqli_real_escape_string($conn, $_POST['about']);
 		$videoembed = mysqli_real_escape_string($conn, $_POST['videoembed']);
@@ -73,7 +79,7 @@
 						echo '"Gallery Video too large! Max size 300MB"';
 						exit();
 					}
-				$videoupload = move_uploaded_file($_FILES['galvideo']['tmp_name'], "../directory/hospital/video/".$videotarget);
+				$videoupload = move_uploaded_file($_FILES['galvideo']['tmp_name'], "../directory/saloon/video/".$videotarget);
 			}
 			}
 			$videotarget = isset($videotarget) ? $videotarget : '';
@@ -93,7 +99,7 @@
 						$galimages = $_FILES['galimages']['name'][$x];	// Get image name
 						if($galimages != NULL){
 						$ext = pathinfo($_FILES["galimages"]["name"][$x], PATHINFO_EXTENSION);
-						$target = $hospital_id.$x.$time.".".$ext;
+						$target = $saloon_Id.$x.$time.".".$ext;
 						//$image_link = "https://veramasa.com/udyogsadhna/images/".$target;
 							if (in_array($galimages, ['jpg', 'png', 'jpeg'])) {
 									echo 'Gallery image extension must be .jpg, .png or .jpeg';
@@ -104,16 +110,16 @@
 									exit();
 								}
 								else{
-								move_uploaded_file($_FILES['galimages']['tmp_name'][$x], "../directory/hospital/".$target);
+								move_uploaded_file($_FILES['galimages']['tmp_name'][$x], "../directory/saloon/".$target);
 								}
 						}
 						else{
 							$galimages="";
 							$target="";
 						}
-						$galinsert= mysqli_query($conn, "INSERT INTO mpgallery ( hospitalid, image_name) VALUES ('$hospital_id', '$target')");
+						$galinsert= mysqli_query($conn, "INSERT INTO mpsaloon_gallery ( saloon_Id, image_name) VALUES ('$saloon_Id', '$target')");
 					}  
-					$featureupload = move_uploaded_file($_FILES['featuredimage']['tmp_name'], "../directory/hospital/".$featuretarget);
+					$featureupload = move_uploaded_file($_FILES['featuredimage']['tmp_name'], "../directory/saloon/".$featuretarget);
 				}
 				
 			$ext2 = pathinfo($_FILES["logoimage"]["name"], PATHINFO_EXTENSION);
@@ -126,19 +132,19 @@
 						echo '"Logo image too large! Max size 30MB"';
 						exit();
 					}	
-				$logoupload = move_uploaded_file($_FILES['logoimage']['tmp_name'], "../directory/hospital/".$logotarget);
+				$logoupload = move_uploaded_file($_FILES['logoimage']['tmp_name'], "../directory/saloon/".$logotarget);
 				
 			if($featureupload){
-				$query= "INSERT INTO hospital (hospital_id, name, speciality, address, is_main,main_id , map, city, mobile, email, whatsapp, website, type, subtype, working_hours,  facebook, instagram, linkedin,logo, status, about,priority, image, video) 
-						values ('$hospital_id', '$hospitalname', '$hospitalspecialist', '$hospitaladdr', '$isMain','$mainId', '$hospitalmap', '$hospitalcity', '$hospitalcont',  '$hospitalemail','$hospitalwhatsapp',  '$hospitalweb', '$hospitaltype', '$hospitalsubtype', '$hospitalworking', '$hospitalfb',  '$hospitalinsta', '$hospitalln', '$logotarget', '$status', '$about','$priority','$featuretarget', '$videotarget')";
+				$query= "INSERT INTO saloon (saloon_Id, name, speciality, address, is_main,main_id , map, city, mobile, email, whatsapp, website, type, subtype, working_hours,  facebook, instagram, linkedin,logo, status, about,priority, image, video) 
+						values ('$saloon_Id', '$name', '$speciality', '$address', '$isMain','$mainId', '$mapLocation', '$city', '$contactNumber',  '$email','$whatsapp',  '$web', '$type', '$subtype', '$working', '$facebook',  '$instagram', '$linkedin', '$logotarget', '$status', '$about','$priority','$featuretarget', '$videotarget')";
 				$result = mysqli_query($conn, $query);
 
-				$workingTimesQuery = "INSERT INTO hospital_working_times (htime_id, hospital_id, hospital_type,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
-							VALUES ('$hosttime_id','$hospital_id', '$hospitaltype', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
+				$workingTimesQuery = "INSERT INTO saloon_working_times (sltime_id, saloon_Id, saloon_type,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
+							VALUES ('$sltime_id','$saloon_Id', '$type', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
 				$resultWorkingTimes = mysqli_query($conn, $workingTimesQuery);
 				if($result && $resultWorkingTimes){
 					$conn->commit();
-					echo "Posted Successfully";
+					echo "Saloon Posted Successfully";
 				}
 				else{
 					$conn->rollback();
@@ -151,12 +157,12 @@
 	if(isset($_POST['specialitysubmit'])){
 		$specialityname = trim(mysqli_real_escape_string($conn, $_POST['specialityname']));
 		if($specialityname!=null){
-		$checkquery = mysqli_query($conn, "SELECT * FROM hospital_speciality WHERE speciality = '$specialityname'");
+		$checkquery = mysqli_query($conn, "SELECT * FROM saloon_speciality WHERE speciality = '$specialityname'");
 		if(mysqli_num_rows($checkquery)>0){
 			echo "Speciality Already Exists";
-		}
+		} 
 		else{
-			$insertspeciality = mysqli_query($conn, "INSERT INTO hospital_speciality (speciality) VALUES ('$specialityname');");
+			$insertspeciality = mysqli_query($conn, "INSERT INTO saloon_speciality (speciality) VALUES ('$specialityname');");
 			if($insertspeciality){
 				echo "Speciality Added";
 			}
@@ -174,7 +180,7 @@
 		$specialityselect = mysqli_real_escape_string($conn, $_POST['specialityselect']);
 		$edited = trim(mysqli_real_escape_string($conn, $_POST['edited']));
 		if($edited!=null){
-			$updatequery = mysqli_query($conn, "UPDATE hospital_speciality SET speciality = '$edited' WHERE id='$specialityselect'");
+			$updatequery = mysqli_query($conn, "UPDATE saloon_speciality SET speciality = '$edited' WHERE id='$specialityselect'");
 			if($updatequery){
 				echo "Speciality Updated";
 			}
@@ -188,7 +194,7 @@
 	}
 	if(isset($_POST['specialitydelete'])){
 		$specialityselect = mysqli_real_escape_string($conn, $_POST['specialityselect']);
-			$deletequery = mysqli_query($conn, "DELETE FROM hospital_speciality WHERE id='$specialityselect'");
+			$deletequery = mysqli_query($conn, "DELETE FROM saloon_speciality WHERE id='$specialityselect'");
 			if($deletequery){
 				echo "Speciality Deleted";
 			}

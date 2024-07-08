@@ -1,18 +1,18 @@
-<?php include "mp.php"; 
+<?php include "../mp.php"; 
 	$userid= isset($_SESSION['userid'])?$_SESSION['userid']:"";
 	?>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.8/dist/sweetalert2.all.min.js"></script>
 <style>
-	.hosname{
+	.typename{
 	font-size:16px;
 	font-weight:700;
 	}
-	.hospitaltype{
+	.mptype{
 	border-left: 4px solid #68CF68;
 	margin-bottom: 0;
 	color:#666666;
 	}
-	.hospitaltype span{
+	.mptype span{
 	/* background-color: #000;
 	color: #fff; */
 	padding: 2px 1px;
@@ -119,7 +119,7 @@
 	.checked {
 	color: orange;
 	}
-	.abouthospital{
+	.abouttype{
 	max-height:290px;
 	overflow:hidden;
 	}
@@ -361,14 +361,23 @@
 				</div>
 				<div class="col-md-6">
 					<?php 
-                        $id = isset($_POST['hospital_id']) ? $_POST['hospital_id'] : '';
+						$type = isset($_GET['type']) ? mysqli_real_escape_string($conn, $_GET['type']) : '';
+                        $id = isset($_POST[$type . '_id']) ? $_POST[$type . '_id'] : '';
                         $name = isset($_GET['name']) ? mysqli_real_escape_string($conn, str_replace('_', ' ', $_GET['name'])) : '';
-						$hospital =mysqli_query($conn, "SELECT * FROM hospital  WHERE hospital_id= '$id'");				
-						$row= mysqli_fetch_array($hospital);
+
+						if (!empty($type) && !empty($name)) {
+							$tablegallery_name = "mp" . $type . "_gallery";
+							$id_column = $type . '_id';
+                            $query = "SELECT * FROM `$type` WHERE `" . $type . "_id` = '$id'";
+							$typequery = mysqli_query($conn, $query);
+						}						
+						$row= mysqli_fetch_array($typequery);
+						$typeid = $row["$id_column"];
+
+						$type_name = $row['name'];
 						$specialityarray = explode(" ///", $row['speciality']);
 						$speciality = "";
 						$videourl = $row['video'];
-						$typeid = $row['hospital_id'];
 						for($i=0; $i< count($specialityarray); $i++){
 							if($i == count($specialityarray)-1){
 								
@@ -377,41 +386,41 @@
 							else{
 								$speciality .= $specialityarray[$i].", ";
 							}
-						}
+						};
 						if (isset($row['main_id']) && !empty($row['main_id'])) {
 							$mainid = $row['main_id'];
 			
-							$name_query = "SELECT * FROM `hospital` WHERE `id` = '$mainid'";
+							$name_query = "SELECT * FROM `$type` WHERE `id` = '$mainid'";
 							$namequery = mysqli_query($conn, $name_query);
 							
 							if ($namequery) {
 								$row1 = mysqli_fetch_array($namequery);
 							}			
 						}
-						if((mysqli_num_rows($hospital)>0)){
-							$url=urlencode('https://www.mammypages.com/mpdetails?type=Hospital&id='.$row["hospital_id"]);
-							$urltelegram=urlencode('https://www.mammypages.com/mpdetails?type=Hospital&id='.$row["hospital_id"].'&text='.$row["name"]);
+						if(($type == $type) && (mysqli_num_rows($typequery)>0)){
+							$url=urlencode('https://www.mammypages.com/mpstudio_details?type=studio&id='.$row["$id_column"]);
+							$urltelegram=urlencode('https://www.mammypages.com/mpstudio_details?type=studio&id='.$row["$id_column"].'&text='.$row["name"]);
 						echo '<div class="row fillbg l-border-radius-top">
 								<div class="text-center p-0">
-								<img src="directory/hospital/'.$row["image"].'" class="img-fluid mb-2" style="width:100%; max-height:250px; border-radius: 15px;">
-								<a href="hospital"><i class="bi bi-caret-left backbutton" data-toggle="tooltip" title="Back" data-placement="left" area-hidden="true"></i></a>
+								<img src="directory/'. $type .'/'.$row["image"].'" class="img-fluid mb-2" style="width:100%; max-height:250px; border-radius: 15px;">
+								<a href="'. $type .'"><i class="bi bi-caret-left backbutton" data-toggle="tooltip" title="Back" data-placement="left" area-hidden="true"></i></a>
 								</div>
 							 </div>
 								<div class="row fillbg l-border-radius-bottom l-title-card">
-								    <div class="col-4 col-md-3"><img src="directory/hospital/'.$row["logo"].'" class="img-fluid l-main-logo"></div>
+								    <div class="col-4 col-md-3"><img src="directory/'. $type .'/'.$row["logo"].'" class="img-fluid l-main-logo"></div>
 								    <div class="col-5 col-md-6">';
-										if (!empty($row1['name']) && $row1['name'] != 0) {
+								         if (!empty($row1['name']) && $row1['name'] != 0) {
 											echo '<p class="typename mb-0">' . $row1['name'] . ' - ' . $row['name'] . '</p>';
 										} else {
 											echo '<p class="typename mb-0">' . $row['name'] . '</p>';
 										}
-								        echo '<p class="hosname mb-0">'.$row['name'].'</p>';
-								          if(!empty($speciality)){
+										
+										 if(!empty($speciality)){
 											echo '<p class="mb-0">'.$speciality.'</p>';
 										} else {
 											echo '<p class="mb-0" style="height:24px;"></p>';
 										}
-										$ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '".$row["hospital_id"]."'");
+										$ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$typeid'");
 										$ratingrow = mysqli_fetch_assoc($ratingquery);
 										if($ratingrow['count'] != 0){
 											$rating= $ratingrow['total']/$ratingrow['count'];
@@ -436,7 +445,7 @@
 											}
 											echo '</span>';
 										}
-										$followquery= mysqli_query($conn, "SELECT count(*) as totalfollow FROM mp_comments WHERE mp_id='$row[hospital_id]' and follow_status=1");
+										$followquery= mysqli_query($conn, "SELECT count(*) as totalfollow FROM mp_comments WHERE mp_id='$row[$id_column]' and follow_status=1");
 										$followrow=mysqli_fetch_array($followquery);
 										$totalfollowers = countFormat($followrow["totalfollow"]);
 										if($followrow["totalfollow"]>0){
@@ -448,7 +457,7 @@
 									echo '</div>';
 										
 								    echo '<div class="col-3 col-md-3 position-relative">
-								        <p class="hospitaltype position-absolute" style="right:10px"><span>'.$row['type'].'</span></p><br>
+								        <p class="mptype position-absolute" style="right:10px"><span>'.$row['type'].'</span></p><br>
 								        <div class="d-flex float-right">';
 										echo !empty($row['facebook']) ?  '<a href="'.$row["facebook"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-facebook p-1"></i></a>&nbsp;':"";
 										echo !empty($row['instagram']) ?  '<a href="'.$row["instagram"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-instagram p-1"></i></a>&nbsp;':"";
@@ -466,25 +475,25 @@
 											</div>
 										</div>
 										</div>';
-											$followstatus = mysqli_query($conn, "SELECT * FROM mp_comments WHERE userid='$userid' AND mp_id='{$row['hospital_id']}' AND follow_status=1");
+											$followstatus = mysqli_query($conn, "SELECT * FROM mp_comments WHERE userid='$userid' AND mp_id='{$row[$id_column]}' AND follow_status=1");
 											$followstatusrow = mysqli_fetch_array($followstatus);
 
 											if ($followstatusrow && isset($followstatusrow['follow_status'])) {
 												if ($followstatusrow['follow_status'] == 0) {
-													echo '<button class="btn btn-success followbtn" value="'.$row["hospital_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
+													echo '<button class="btn btn-success followbtn" value="'.$row["$id_column"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
 												} else {
-													echo '<button class="btn btn-secondary followbtn" value="'.$row["hospital_id"].'" style="font-size: 13px; padding: 0 5px;">Following</button>';
+													echo '<button class="btn btn-secondary followbtn" value="'.$row["$id_column"].'" style="font-size: 13px; padding: 0 5px;">Following</button>';
 												}
 											} else {
-												echo '<button class="btn btn-success followbtn" value="'.$row["hospital_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
+												echo '<button class="btn btn-success followbtn" value="'.$row["$id_column"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
 											}
 									echo '</div>
 								</div>
 								</div>';
 									echo '<div class="row fillbg mt-1 l-border-radius py-2">
-									        <h5 class="heading mt-1" style="font-weight:bold; font-size:12px">ABOUT HOSPITAL';
+									        <h5 class="heading mt-1" style="font-weight:bold; font-size:12px; text-transform:uppercase;">ABOUT '.$row['name'].'';
 									        
-									        $galquery= mysqli_query($conn, "SELECT image_name FROM mpgallery WHERE hospitalid= '".$row["hospital_id"]."' and image_name!=''");
+									        $galquery= mysqli_query($conn, "SELECT image_name FROM $tablegallery_name WHERE $id_column= '$typeid' and image_name!=''");
 											if(mysqli_num_rows($galquery)>0){
 											echo	'<span class="galimage">GALLERY</span>';	
 											}
@@ -494,15 +503,15 @@
 						       						    echo '</h5>';
 									        
 									    echo '
-									<div class="abouthospital" id="abouthospital">'.$row["about"].'</div>
+									<div class="abouttype" id="abouttype">'.$row["about"].'</div>
 									<p class="expand text-right" style="display:none">Read More</p>';
-									/*$images = mysqli_query($conn, "SELECT * FROM mpgallery WHERE hospitalid = '$row[hospitalid]'");
+									/*$images = mysqli_query($conn, "SELECT * FROM $tablegallery_name WHERE $id_column = '$row[$typeid]'");
 									$count= mysqli_num_rows($images);
 									if($count>0){
 										echo '<br><h5 style="font-weight:bold">Gallery</h5>
 											<div class="col">';
 									while($row1= mysqli_fetch_array($images)){
-										echo '<img src="directory/hospital/'.$row1["image_name"].'" class="img-fluid">';
+										echo '<img src="directory/'. $type .'/'.$row1["image_name"].'" class="img-fluid">';
 									}
 						 			echo '</div>';
 									}*/
@@ -510,10 +519,9 @@
 								';
 							
 						}
-                    ?>
-
+						?>
 					<?php 
-						$reviewquery = mysqli_query($conn, "SELECT comment from mp_comments WHERE mp_id ='$row[hospital_id]' AND userid='$userid'");
+						$reviewquery = mysqli_query($conn, "SELECT comment from mp_comments WHERE mp_id ='$row[$id_column]' AND userid='$userid'");
 						$reviewrow = mysqli_fetch_assoc($reviewquery);
 						if(mysqli_num_rows($reviewquery)>0){
 						    if(strlen($reviewrow["comment"])<=0){
@@ -579,7 +587,7 @@
 							</div>
 							<div class="" style="width:88%">
 								<form method="POST" action="ajax/mp_review" id="reviewform">
-									<input type="hidden" name="typeid" value="<?php echo $row["hospital_id"]?>">
+									<input type="hidden" name="typeid" value="<?php echo $typeid;?>">
 									<input type="hidden" name="email" value="<?php echo $userid;?>">
 									<textarea name="reviewdata" style="width:100%; height:4rem; resize:none; border:1px solid #C7C7C7"></textarea>
 									<br style="clear:both">
@@ -605,12 +613,12 @@
 					<?php } ?>
 					<div id="reviewlist" style="margin:0rem;">
 						<?php 
-							$fetch =mysqli_query($conn, "SELECT users_reg.email, users_reg.profile_image, users_reg.first_name, users_reg.last_name, mp_comments.comment, mp_comments.datetime, mp_comments.mp_id, mp_comments.id, mp_comments.rating FROM users_reg INNER JOIN mp_comments ON users_reg.email=mp_comments.userid WHERE mp_comments.mp_id='".$row["hospital_id"]."' AND mp_comments.comment != '' ORDER BY mp_comments.datetime DESC LIMIT 5");
+							$fetch =mysqli_query($conn, "SELECT users_reg.email, users_reg.profile_image, users_reg.first_name, users_reg.last_name, mp_comments.comment, mp_comments.datetime, mp_comments.mp_id, mp_comments.id, mp_comments.rating FROM users_reg INNER JOIN mp_comments ON users_reg.email=mp_comments.userid WHERE mp_comments.mp_id='$typeid' AND mp_comments.comment != '' ORDER BY mp_comments.datetime DESC LIMIT 5");
 							$i=0;
 							$numrows=mysqli_num_rows($fetch);
 							$count =$numrows;
 							if($count>0){
-								echo '<div class="row fillbg "><p class="heading mt-1" style="font-weight:bold; font-size:12px">HOSPITAL REVIEW</p></div>';
+								echo '<div class="row fillbg "><p class="heading mt-1" style="font-weight:bold; font-size:12px">'.$row['name'].' REVIEW</p></div>';
 							
 							while($reviewrow= mysqli_fetch_array($fetch)){
 								echo '
@@ -691,26 +699,31 @@
 								echo	($row["email"]!==null)?'<p><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
 								echo	($row["website"]!==null)?'<p><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
 								echo 	'<label class="border-bottom pb-2 w-100">Branches</label>
+								<div>
 								';
 								
 								
 								?>
-                                <?php $query1=mysqli_query($conn, "SELECT * FROM hospital WHERE main_id = (SELECT id FROM hospital WHERE hospital_id = '$id')");
-                                    while($branches1=mysqli_fetch_array($query1)){
-                                    echo '<form action="mpconnect/hospital/'. urlencode(str_replace(' ', '_', $branches1["name"])) .'" method="post" style="display:inline;">
-                                    <input type="hidden" name="hospital_id" value="'.$branches1["hospital_id"].'">
-                                    <button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">View '.$branches1["name"].' <i class="bi bi-box-arrow-up-right"></i></button>
-                                    </form>';
-                                }?>
-                                <?php $query2=mysqli_query($conn, "SELECT * FROM hospital WHERE main_id =(SELECT main_id FROM hospital WHERE hospital_id = '$id') AND hospital_id != '$id' UNION
-                                    SELECT * FROM hospital WHERE id =(SELECT main_id FROM hospital WHERE hospital_id = '$id')");
-                                    while($branches2=mysqli_fetch_array($query2)){
-                                    echo '<form action="mpconnect/hospital/'. urlencode(str_replace(' ', '_', $branches2["name"])) .'" method="post" style="display:inline;">
-                                    <input type="hidden" name="hospital_id" value="'.$branches2["hospital_id"].'">
-                                    <button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">View '.$branches2["name"].'<i class="bi bi-box-arrow-up-right"></i></button>
-                                    </form>';
-                                }?>
-                                
+                                <?php
+                                $query1 = mysqli_query($conn, "SELECT * FROM $type WHERE main_id = (SELECT id FROM $type WHERE $id_column = '$typeid')");
+                                while ($branches1 = mysqli_fetch_array($query1)) {
+                                    echo '<form action="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $branches1["name"])).'" method="post" style="display:inline;">
+                                            <input type="hidden" name="'.$id_column.'" value="'.$branches1["$id_column"].'">
+                                            <button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">View '.$branches1["name"].' <i class="bi bi-box-arrow-up-right"></i></button>
+                                        </form>';
+                                }
+
+                                $query2 = mysqli_query($conn, "SELECT * FROM $type WHERE main_id IN (SELECT main_id FROM $type WHERE $id_column = '$typeid') AND $id_column != '$typeid' 
+                                                                UNION 
+                                                                SELECT * FROM $type WHERE id = (SELECT main_id FROM $type WHERE $id_column = '$typeid')");
+                                while ($branches2 = mysqli_fetch_array($query2)) {
+                                    echo '<form action="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $branches2["name"])).'" method="post" style="display:inline;">
+                                            <input type="hidden" name="'.$id_column.'" value="'.$branches2["$id_column"].'">
+                                            <button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">View '.$branches2["name"].' <i class="bi bi-box-arrow-up-right"></i></button>
+                                        </form>';
+                                }
+								echo '</div>'
+                                ?>
 						</div>
 					</div>
 				</div>
@@ -719,7 +732,6 @@
 	</section>
 </div>
 <?php include "footer.php";?>
-
 <div class="modal fade" id="gallery" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
@@ -737,14 +749,18 @@
 					</div>
 					<div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:980px;height:380px;overflow:hidden; text-align:center">
 						<?php
-							$galquery = mysqli_query($conn, "SELECT * FROM mpgallery WHERE hospitalid= '$typeid'");
-							while($galrow=mysqli_fetch_array($galquery)){
-								echo ' 
+							$galquery = mysqli_query($conn, "SELECT * FROM $tablegallery_name WHERE $id_column= '$typeid'");
+							if (mysqli_num_rows($galquery) > 0) {
+								while ($galrow = mysqli_fetch_array($galquery)) {
+									echo '
 										<div>
-										<img data-u="image" src="directory/hospital/'.$galrow["image_name"].'">
-										<img data-u="thumb" src="directory/hospital/'.$galrow["image_name"].'"   height="90">
+											<img data-u="image" src="directory/doctor/' . $galrow["image_name"] . '">
+											<img data-u="thumb" src="directory/doctor/' . $galrow["image_name"] . '" height="90">
 										</div>
 									';
+								}
+							} else {
+								echo '<div>No images found for this doctor.</div>';
 							}
 							?>     
 					</div>
@@ -781,10 +797,9 @@
 		</div>
 	</div>
 </div>
-
 <div class="modal fade" id="video" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-	<div class="modal-content">
+		<div class="modal-content">
 			<div class="ratio ratio-16x9">
 				<div class="modal-body p-0">
 					<?php
@@ -838,124 +853,124 @@
 	    });
 	}
 	$(document).ready(function () { 
-	
-	$("#submitreview").click(function () { 
-			var form = $("#reviewform");
-	                form.validate({
-	                    errorElement: 'span',
-	                    errorClass: 'help-block',
-	                    highlight: function(element, errorClass, validClass) {
-	                        $(element).closest('.form-group').addClass("has-error");
-	                    },
-	                    unhighlight: function(element, errorClass, validClass) {
-	                        $(element).closest('.form-group').removeClass("has-error");
-	                    },
-						ignore: "",
-	                    rules: {
-	                        reviewdata: {
-	                            required: true,
-	                        },
-							rate: {
-								required: true,
+		var typeName = "<?php echo $type_name; ?>";
+		$("#submitreview").click(function () { 
+				var form = $("#reviewform");
+						form.validate({
+							errorElement: 'span',
+							errorClass: 'help-block',
+							highlight: function(element, errorClass, validClass) {
+								$(element).closest('.form-group').addClass("has-error");
 							},
-							
-						},
-	                    messages: {
-	                        reviewdata: {
-	                            required: "Review text cannot be empty",
-	                        },
-							rate:{
-								required: "Give Rating to the Hospital",
+							unhighlight: function(element, errorClass, validClass) {
+								$(element).closest('.form-group').removeClass("has-error");
 							},
-							
-						},
-						errorPlacement: function (error, element) {
-	                        if (element.attr("name") == "rate") {
-								var errortext=$("#reviewform").validate().submitted.rate;
-	                             $("#rating_error").text(errortext);
-	                        } else {
-	                            error.insertAfter($(element));
-	                        }
-	                    },
-						submitHandler: function(form) {
-							$.ajax({
-								type:form.method,
-								url: form.action,
-								mimeType: "multipart/form-data",
-								data:$(form).serialize(),
+							ignore: "",
+							rules: {
+								reviewdata: {
+									required: true,
+								},
+								rate: {
+									required: true,
+								},
 								
-								success:function(data){
-									//debugger
-									console.log(data);
-									if(data=='Posted Successfully'){
-									removeReg(data, 'success');
-									}
-									else{
+							},
+							messages: {
+								reviewdata: {
+									required: "Review text cannot be empty",
+								},
+								rate:{
+									required: "Give Rating to the " + typeName,
+								},
+								
+							},
+							errorPlacement: function (error, element) {
+								if (element.attr("name") == "rate") {
+									var errortext=$("#reviewform").validate().submitted.rate;
+									$("#rating_error").text(errortext);
+								} else {
+									error.insertAfter($(element));
+								}
+							},
+							submitHandler: function(form) {
+								$.ajax({
+									type:form.method,
+									url: form.action,
+									mimeType: "multipart/form-data",
+									data:$(form).serialize(),
+									
+									success:function(data){
+										//debugger
+										console.log(data);
+										if(data=='Posted Successfully'){
+										removeReg(data, 'success');
+										}
+										else{
+											removeReg(data, 'error');
+										}
+									},
+									error: function(data){
+										//console.log("error");
+										console.log(data);
 										removeReg(data, 'error');
 									}
-								},
-								error: function(data){
-									//console.log("error");
-									console.log(data);
-									removeReg(data, 'error');
-								}
-							});
-						}
-							});
-					});
-		$(document).on('click', '.delete', function () { 
-			var attrid=$(this).attr('id');
-			var attrid1 = attrid.charAt(attrid.length - 1);
-			var id= $("#id"+attrid1).attr('value');
-		Swal.fire({
-		  title: 'Are you sure?',
-		  text: "You want to Delete review",
-		  icon: 'warning',
-		  showCancelButton: true,
-		  confirmButtonColor: '#3085d6',
-		  cancelButtonColor: '#d33',
-		  confirmButtonText: 'Yes, delete it!'
-		}).then((result) => {
-		  if (result.isConfirmed) {
-			$.ajax({
-				type:'post',
-				url: 'ajax/mp_review',
-				mimeType: "multipart/form-data",
-				data:{id : id, deleteid:"delete"},
-				
-				success:function(data){
-					//debugger
-					console.log(data);
-					if(data=='Deleted Successfully'){
-					Swal.fire(
-					  'Deleted!',
-					  'Your Review has been deleted.',
-					  'success'
-					).then((result) => {
-				  /* Read more about isConfirmed, isDenied below */
-				  if (result.isConfirmed) {
-					window.location.reload();
-				  }
-				  else{
-					  window.location.reload();
-				  }
-					});
+								});
+							}
+								});
+						});
+			$(document).on('click', '.delete', function () { 
+				var attrid=$(this).attr('id');
+				var attrid1 = attrid.charAt(attrid.length - 1);
+				var id= $("#id"+attrid1).attr('value');
+			Swal.fire({
+			title: 'Are you sure?',
+			text: "You want to Delete review",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+			}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					type:'post',
+					url: 'ajax/mp_review',
+					mimeType: "multipart/form-data",
+					data:{id : id, deleteid:"delete"},
 					
+					success:function(data){
+						//debugger
+						console.log(data);
+						if(data=='Deleted Successfully'){
+						Swal.fire(
+						'Deleted!',
+						'Your Review has been deleted.',
+						'success'
+						).then((result) => {
+					/* Read more about isConfirmed, isDenied below */
+					if (result.isConfirmed) {
+						window.location.reload();
 					}
 					else{
+						window.location.reload();
+					}
+						});
+						
+						}
+						else{
+							removeReg(data, 'error');
+						}
+					},
+					error: function(data){
+						//console.log("error");
+						console.log(data);
 						removeReg(data, 'error');
 					}
-				},
-				error: function(data){
-					//console.log("error");
-					console.log(data);
-					removeReg(data, 'error');
-				}
+				});
+			}
 			});
-		  }
+		
 		});
-	
-	});
 		$(document).on('click', '.edit', function () { 	var id=$(this).attr('id');
 		var id1 = id.charAt(id.length - 1);
 		var textdata= $('#reviewdata'+id1).text();
@@ -990,7 +1005,7 @@
 	                            required: "Review text cannot be empty",
 	                        },
 							rate:{
-								required: "Give Rating to the Hospital",
+								required: "Give Rating to the " + typeName,
 							},
 							
 						},
@@ -1081,17 +1096,17 @@
 	    readMore();
 	  });
 	  $(document).on('click', '.expand', function(){
-		if($('#abouthospital').hasClass('abouthospital')){
-			$('#abouthospital').removeClass('abouthospital');
-			$('#abouthospital').css({'height':'auto', 'overflow':'none'});
+		if($('#abouttype').hasClass('abouttype')){
+			$('#abouttype').removeClass('abouttype');
+			$('#abouttype').css({'height':'auto', 'overflow':'none'});
 			$('.expand').text('Read Less');
 		}
 		else{
-			$('#abouthospital').addClass('abouthospital');
+			$('#abouttype').addClass('abouttype');
 			$('.expand').text('Read More');
 		}
 	  });
-	  if ($('#abouthospital')[0].scrollHeight >  $('#abouthospital').innerHeight()) {
+	  if ($('#abouttype')[0].scrollHeight >  $('#abouttype').innerHeight()) {
 	    $('.expand').css({'display':'block'});
 	}
 	
@@ -1179,10 +1194,10 @@
 </script>
 <script>
 	var follow="";
-	async function update_follow(email, hospital_id, value){
+	async function update_follow(email, $id_column, value){
 	   let result = await $.ajax({
 	        url: "ajax/followupdate",
-	        data: {email : email, type_id:hospital_id, follow:'follow', value:value},
+	        data: {email : email, type_id:$id_column, follow:'follow', value:value},
 			type: "POST",
 	        success: function(data) {
 				//debugger;
