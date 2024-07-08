@@ -368,9 +368,11 @@
 						if (!empty($type) && !empty($name)) {
 							$tablegallery_name = "mp" . $type . "_gallery";
 							$id_column = $type . '_id';
-                            $query = "SELECT * FROM `$type` WHERE `" . $type . "_id` = '$id'";
+                            $query = "SELECT * FROM `$type` AS h INNER JOIN `" . $type . "_working_times` AS hwt ON hwt.`" . $type . "_id` = h.`" . $type . "_id` WHERE h.`" . $type . "_id` = '$id'";
+
 							$typequery = mysqli_query($conn, $query);
-						}						
+						}		
+            				
 						$row= mysqli_fetch_array($typequery);
 						$typeid = $row["$id_column"];
 
@@ -694,6 +696,43 @@
 								else{
 								echo '<iframe width="100%" height="200" src="https://maps.google.com/maps?q='.$row["map"].'&output=embed"></iframe><br>';
 								}
+
+                                function displayTypeTimings($typequery) {
+                                    $daysOfWeek = [
+                                        'monday' => 'Monday',
+                                        'tuesday' => 'Tuesday',
+                                        'wednesday' => 'Wednesday',
+                                        'thursday' => 'Thursday',
+                                        'friday' => 'Friday',
+                                        'saturday' => 'Saturday',
+                                        'sunday' => 'Sunday'
+                                    ];
+                                
+                                    $output = '<div class="type-timings">';
+                                    foreach ($daysOfWeek as $dayKey => $dayName) {
+                                        $openTimeKey = $dayKey . '_open';
+                                        $closeTimeKey = $dayKey . '_close';
+                                
+                                        if ($typequery[$openTimeKey] === "00:00:00" && $typequery[$closeTimeKey] === "00:00:00") {
+                                            $output .= '<p>' . $dayName . ': Closed</p>';
+                                        } else {
+                                            $output .= '<p>' . $dayName . ': ' . $typequery[$openTimeKey] . ' - ' . $typequery[$closeTimeKey] . '</p>';
+                                        }
+                                    }
+                                    $output .= '</div>';
+                                
+                                    return $output;
+                                }
+                                echo displayTypeTimings($row);
+
+                                
+								echo	($row["address"]!==null)?'<p class="mt-4"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
+								echo 	($row["mobile"]!==null)?'<p><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
+								echo	($row["email"]!==null)?'<p><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
+								echo	($row["website"]!==null)?'<p><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
+								echo 	'<label class="border-bottom pb-2 w-100">Branches</label>
+								';
+
 								echo	($row["address"]!==null)?'<p class="mt-4"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
 								echo 	($row["mobile"]!==null)?'<p><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
 								echo	($row["email"]!==null)?'<p><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
@@ -754,8 +793,8 @@
 								while ($galrow = mysqli_fetch_array($galquery)) {
 									echo '
 										<div>
-											<img data-u="image" src="directory/doctor/' . $galrow["image_name"] . '">
-											<img data-u="thumb" src="directory/doctor/' . $galrow["image_name"] . '" height="90">
+											<img data-u="image" src="directory/'.$galrow.'/' . $galrow["image_name"] . '">
+											<img data-u="thumb" src="directory/'.$galrow.'/' . $galrow["image_name"] . '" height="90">
 										</div>
 									';
 								}

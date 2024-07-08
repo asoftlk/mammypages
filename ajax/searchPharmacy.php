@@ -23,6 +23,7 @@ if (isset($_POST["search"])) {
     }
 
     $sql = "SELECT * FROM pharmacy";
+    $sql.=" INNER JOIN pharmacy_working_times wt ON wt.pharmacy_id = pharmacy.pharmacy_id "; 
     if (count($conditions) > 0) {
         $sql .= " WHERE " . implode(" AND ", $conditions);
     }

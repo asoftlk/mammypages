@@ -676,8 +676,6 @@ ADD COLUMN `pharmacy_id` VARCHAR(100) NULL AFTER `id`;
 ALTER TABLE `pharmacy` 
 CHANGE COLUMN `created_at` `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP() ;
 
--- thushitha is here
-
 ALTER TABLE `saloon` 
 ADD COLUMN `id` INT(11) NOT NULL AUTO_INCREMENT FIRST,
 ADD COLUMN `main_id` INT(11) NULL AFTER `is_main`,
@@ -694,3 +692,13 @@ ALTER TABLE `studio`
 CHANGE COLUMN `created_at` `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP() ;
 
 -- akila is here
+
+ALTER TABLE `saloon` 
+CHANGE COLUMN `id` `id` INT(11) NOT NULL ,
+CHANGE COLUMN `saloon_id` `saloon_id` VARCHAR(100) NOT NULL ;
+
+ALTER TABLE `doctor` 
+ADD COLUMN `main_id` INT NULL AFTER `doctor_id`;
+
+
+-- thushitha is here
