@@ -89,9 +89,13 @@
 							</div>
 						</div>
 						<div class="top-menu">
-							<?php $hospital =mysqli_query($conn, "SELECT * FROM hospital WHERE priority > 0 ORDER BY priority LIMIT 5");
+							<?php $hospital =mysqli_query($conn, "SELECT * FROM hospital INNER JOIN hospital_working_times hwt ON hwt.hospital_id = hospital.hospital_id WHERE priority > 0 ORDER BY priority LIMIT 5");
 								$count = 0;
 								$numrows = mysqli_num_rows($hospital);
+                                date_default_timezone_set('Asia/Colombo');
+                                $currentDay = strtolower(date('l')); 
+                                $currentTime = date('H:i:s'); 
+                                                           
 								while($row=mysqli_fetch_array($hospital)){
 									$specialityarray = explode(" ///", $row['speciality']);
 									$speciality = "";
@@ -104,6 +108,10 @@
 											$speciality .= $specialityarray[$i].", ";
 										}
 									}
+                                    $openTime = $row[$currentDay . '_open'];
+                                    $closeTime = $row[$currentDay . '_close'];
+                                    $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? 'Open' : 'Closed';
+                                
 								echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
 										<div class="col-md-3" style="margin:auto">
 										<div>
@@ -142,7 +150,7 @@
 										echo '</div>
 										</div>
 										<div class="d-flex justify-content-between">
-                                            <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           
+                                            <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'- <strong>' . $isOpen . '</strong></p>                           
                                             
                                             <form action="mpconnect/hospital/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
                                             <input type="hidden" name="hospital_id" value="' . $row["hospital_id"] . '">
@@ -207,6 +215,7 @@
 	$(document).ready(function() {
 	    $(document).on('click', '#btn_more', function() {
 	        var count = $(this).data("vid");
+            console.log(count);
 	        $('#btn_more').html("Loading...");
 	        $.ajax({
 	            url: "ajax/mphospitaldatafetch",
@@ -264,78 +273,162 @@
 	        $('.priority-list').show();
 	    });
 	
-	    function load_data(value, speciality, type, city) {
-	        $.ajax({
-	            url: "ajax/searchhospital",
-	            method: "POST",
-	            data: {
-	                search: "search",
-	                value: value,
-	                speciality: speciality,
-	                type: type,
-	                city: city
-	            },
-	            success: function(data) {
-	                var result = JSON.parse(data);
-	                if (value.length >= 1) {
-	                    $("#suggesstion-box").show();
-	                    $("#suggesstion-box").html(result.html);
-	                } else {
-	                    $("#suggesstion-box").hide();
-	                }
-	                if (result.data.length > 0) {
-	                    var html = '';
-	                    result.data.forEach(function(hospital) {
-	                        var specialityArray = hospital.speciality.split(" ///");
-	                        var speciality = specialityArray.join(", ");
-	                        var rating = hospital.rating ? parseFloat(hospital.rating) : 0;
+	    // function load_data(value, speciality, type, city) {
+	    //     $.ajax({
+	    //         url: "ajax/searchhospital",
+	    //         method: "POST",
+	    //         data: {
+	    //             search: "search",
+	    //             value: value,
+	    //             speciality: speciality,
+	    //             type: type,
+	    //             city: city
+	    //         },
+	    //         success: function(data) {
+	    //             var result = JSON.parse(data);
+	    //             if (value.length >= 1) {
+	    //                 $("#suggesstion-box").show();
+	    //                 $("#suggesstion-box").html(result.html);
+	    //             } else {
+	    //                 $("#suggesstion-box").hide();
+	    //             }
+        //             console.log(result.data);
+	    //             if (result.data.length > 0) {
+	    //                 var html = '';
+	    //                 result.data.forEach(function(hospital) {
+	    //                     var specialityArray = hospital.speciality.split(" ///");
+	    //                     var speciality = specialityArray.join(", ");
+	    //                     var rating = hospital.rating ? parseFloat(hospital.rating) : 0;
+        //                     var encodedName = encodeURIComponent(hospital.name.replace(/\s+/g, '_'));
+        //                     var hospitalId = hospital.hospital_id;
+	                        
+	    //                     html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
+	    //                     html += '<div class="col-md-3" style="margin:auto">';
+	    //                     html += '<a href="mpconnect/hospital/' + encodedName + '">';  
+	    //                     html += '<img src="directory/hospital/' + hospital.logo + '" class="img-fluid" style="max-height:5rem"></a>';
+	    //                     html += '</div>';
+	    //                     html += '<div class="col-md-9 pl-0" style="margin:1rem 0">';
+	    //                     html += '<div class="d-flex">';
+	    //                     html += '<p class="text"><a href="mpconnect/hospital/' + encodedName + '" class="namehref">';
+	    //                     html += '<p class="text-heading">&nbsp;' + hospital.name + '</p></a>';
+	    //                     if (hospital.priority > 0) {
+	    //                         html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
+	    //                     }
+	    //                     html += '</div>';
+	    //                     html += '<div class="d-flex">';
+	    //                     html += '<p class="text">&nbsp;' + speciality + '</P>';
+	    //                     html += '<div class="ml-auto">';
+	                        
+	    //                     for (var i = 0; i < 5; i++) {
+	    //                         if (rating >= 1) {
+	    //                             html += '<i class="bi bi-star-fill"></i>&nbsp;';
+	    //                         } else if (rating > 0) {
+	    //                             html += '<i class="bi bi-star-half"></i>&nbsp;';
+	    //                         } else {
+	    //                             html += '<i class="bi bi-star"></i>&nbsp;';
+	    //                         }
+	    //                         rating--;
+	    //                     }
+	                        
+	    //                     html += '</div></div>';
+	    //                     html += '<div class="d-flex justify-content-between">';
+	    //                     html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + hospital.address + '</P>';                          
+        //                     html += '<form action="mpconnect/hospital/'+ encodedName +'" method="post" style="display:inline;">';
+        //                     html += '<input type="hidden" name="hospital_id" value="'+hospitalId+'">';
+        //                     html += '<button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Hospital</button>';
+        //                     html += '</form>';
+	    //                     html += '</div></div></div>';
+	    //                 });
+	    //                 $("#load_data").html(html);
+	    //             } else {
+	    //                 $("#load_data").html('<p>No results found</p>');
+	    //             }
+	    //         }
+	    //     });
+	    // }
+        function load_data(value, speciality, type, city) {
+            $.ajax({
+                url: "ajax/searchhospital",
+                method: "POST",
+                data: {
+                    search: "search",
+                    value: value,
+                    speciality: speciality,
+                    type: type,
+                    city: city
+                },
+                success: function(data) {
+                    var result = JSON.parse(data);
+                    if (value.length >= 1) {
+                        $("#suggesstion-box").show();
+                        $("#suggesstion-box").html(result.html);
+                    } else {
+                        $("#suggesstion-box").hide();
+                    }
+                    if (result.data.length > 0) {
+                        var html = '';
+                        result.data.forEach(function(hospital) {
+                            var specialityArray = hospital.speciality.split(" ///");
+                            var speciality = specialityArray.join(", ");
+                            var rating = hospital.rating ? parseFloat(hospital.rating) : 0;
                             var encodedName = encodeURIComponent(hospital.name.replace(/\s+/g, '_'));
                             var hospitalId = hospital.hospital_id;
-	                        
-	                        html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
-	                        html += '<div class="col-md-3" style="margin:auto">';
-	                        html += '<a href="mpconnect/hospital/' + encodedName + '">';  
-	                        html += '<img src="directory/hospital/' + hospital.logo + '" class="img-fluid" style="max-height:5rem"></a>';
-	                        html += '</div>';
-	                        html += '<div class="col-md-9 pl-0" style="margin:1rem 0">';
-	                        html += '<div class="d-flex">';
-	                        html += '<p class="text"><a href="mpconnect/hospital/' + encodedName + '" class="namehref">';
-	                        html += '<p class="text-heading">&nbsp;' + hospital.name + '</p></a>';
-	                        if (hospital.priority > 0) {
-	                            html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
-	                        }
-	                        html += '</div>';
-	                        html += '<div class="d-flex">';
-	                        html += '<p class="text">&nbsp;' + speciality + '</P>';
-	                        html += '<div class="ml-auto">';
-	                        
-	                        for (var i = 0; i < 5; i++) {
-	                            if (rating >= 1) {
-	                                html += '<i class="bi bi-star-fill"></i>&nbsp;';
-	                            } else if (rating > 0) {
-	                                html += '<i class="bi bi-star-half"></i>&nbsp;';
-	                            } else {
-	                                html += '<i class="bi bi-star"></i>&nbsp;';
-	                            }
-	                            rating--;
-	                        }
-	                        
-	                        html += '</div></div>';
-	                        html += '<div class="d-flex justify-content-between">';
-	                        html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + hospital.address + '</P>';                          
+
+                            var now = new Date().toLocaleString("en-US", {timeZone: "Asia/Colombo"});
+                            var currentDate = new Date(now);
+                            var currentDay = currentDate.toLocaleString("en-US", {weekday: "long"}).toLowerCase();
+                            var currentTime = currentDate.toTimeString().split(" ")[0];
+
+                            var openTime = hospital[currentDay + '_open'];
+                            var closeTime = hospital[currentDay + '_close'];
+
+                            var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? 'Open' : 'Closed';
+
+                            html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
+                            html += '<div class="col-md-3" style="margin:auto">';
+                            html += '<a href="mpconnect/hospital/' + encodedName + '">';  
+                            html += '<img src="directory/hospital/' + hospital.logo + '" class="img-fluid" style="max-height:5rem"></a>';
+                            html += '</div>';
+                            html += '<div class="col-md-9 pl-0" style="margin:1rem 0">';
+                            html += '<div class="d-flex">';
+                            html += '<p class="text"><a href="mpconnect/hospital/' + encodedName + '" class="namehref">';
+                            html += '<p class="text-heading">&nbsp;' + hospital.name + '</p></a>';
+                            if (hospital.priority > 0) {
+                                html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
+                            }
+                            html += '</div>';
+                            html += '<div class="d-flex">';
+                            html += '<p class="text">&nbsp;' + speciality + '</P>';
+                            html += '<div class="ml-auto">';
+                            
+                            for (var i = 0; i < 5; i++) {
+                                if (rating >= 1) {
+                                    html += '<i class="bi bi-star-fill"></i>&nbsp;';
+                                } else if (rating > 0) {
+                                    html += '<i class="bi bi-star-half"></i>&nbsp;';
+                                } else {
+                                    html += '<i class="bi bi-star"></i>&nbsp;';
+                                }
+                                rating--;
+                            }
+                            
+                            html += '</div></div>';
+                            html += '<div class="d-flex justify-content-between">';
+                            html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + hospital.address + ' - <strong>' + isOpen + '</strong></P>';                          
                             html += '<form action="mpconnect/hospital/'+ encodedName +'" method="post" style="display:inline;">';
                             html += '<input type="hidden" name="hospital_id" value="'+hospitalId+'">';
                             html += '<button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Hospital</button>';
                             html += '</form>';
-	                        html += '</div></div></div>';
-	                    });
-	                    $("#load_data").html(html);
-	                } else {
-	                    $("#load_data").html('<p>No results found</p>');
-	                }
-	            }
-	        });
-	    }
+                            html += '</div></div></div>';
+                        });
+                        $("#load_data").html(html);
+                    } else {
+                        $("#load_data").html('<p>No results found</p>');
+                    }
+                }
+            });
+        }
+
 	});
 	var height = $("#h2").height() + 20;
 	$(".left-menu-part, .right-cont-part").css({
@@ -353,6 +446,7 @@
 	$(document).ajaxComplete(function() {
 	    if (count == 0) {
 	        $('#btn_more').click();
+            console.log("yy");
 	        count++;
 	    }
 	});

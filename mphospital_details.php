@@ -363,7 +363,7 @@
 					<?php 
                         $id = isset($_POST['hospital_id']) ? $_POST['hospital_id'] : '';
                         $name = isset($_GET['name']) ? mysqli_real_escape_string($conn, str_replace('_', ' ', $_GET['name'])) : '';
-						$hospital =mysqli_query($conn, "SELECT * FROM hospital  WHERE hospital_id= '$id'");				
+						$hospital =mysqli_query($conn, "SELECT * FROM hospital h INNER JOIN hospital_working_times hwt ON hwt.hospital_id = h.hospital_id  WHERE h.hospital_id= '$id'");				
 						$row= mysqli_fetch_array($hospital);
 						$specialityarray = explode(" ///", $row['speciality']);
 						$speciality = "";
@@ -673,7 +673,7 @@
 								}
 							
 							//echo '</div>';
-							}
+							} 
 							?>
 					</div>
 				</div>
@@ -686,14 +686,43 @@
 								else{
 								echo '<iframe width="100%" height="200" src="https://maps.google.com/maps?q='.$row["map"].'&output=embed"></iframe><br>';
 								}
+
+                                function displayHospitalTimings($hospital) {
+                                    $daysOfWeek = [
+                                        'monday' => 'Monday',
+                                        'tuesday' => 'Tuesday',
+                                        'wednesday' => 'Wednesday',
+                                        'thursday' => 'Thursday',
+                                        'friday' => 'Friday',
+                                        'saturday' => 'Saturday',
+                                        'sunday' => 'Sunday'
+                                    ];
+                                
+                                    $output = '<div class="hospital-timings">';
+                                    foreach ($daysOfWeek as $dayKey => $dayName) {
+                                        $openTimeKey = $dayKey . '_open';
+                                        $closeTimeKey = $dayKey . '_close';
+                                
+                                        if ($hospital[$openTimeKey] === "00:00:00" && $hospital[$closeTimeKey] === "00:00:00") {
+                                            $output .= '<p>' . $dayName . ': Closed</p>';
+                                        } else {
+                                            $output .= '<p>' . $dayName . ': ' . $hospital[$openTimeKey] . ' - ' . $hospital[$closeTimeKey] . '</p>';
+                                        }
+                                    }
+                                    $output .= '</div>';
+                                
+                                    return $output;
+                                }
+                                
+                                echo displayHospitalTimings($row);
+                                
 								echo	($row["address"]!==null)?'<p class="mt-4"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
 								echo 	($row["mobile"]!==null)?'<p><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
 								echo	($row["email"]!==null)?'<p><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
 								echo	($row["website"]!==null)?'<p><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
 								echo 	'<label class="border-bottom pb-2 w-100">Branches</label>
 								';
-								
-								
+				
 								?>
                                 <?php $query1=mysqli_query($conn, "SELECT * FROM hospital WHERE main_id = (SELECT id FROM hospital WHERE hospital_id = '$id')");
                                     while($branches1=mysqli_fetch_array($query1)){

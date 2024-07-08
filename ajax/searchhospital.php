@@ -63,6 +63,7 @@ if (isset($_POST["search"])) {
     }
 
     $sql = "SELECT * FROM hospital";
+    $sql.=" INNER JOIN hospital_working_times hwt ON hwt.hospital_id = hospital.hospital_id "; 
     if (count($conditions) > 0) {
         $sql .= " WHERE " . implode(" AND ", $conditions);
     }
