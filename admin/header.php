@@ -315,6 +315,12 @@
 								<p>Beauty Salons</p>
 							</a>
 						</li>
+						<li class="nav-item">
+							<a href="viewstudio" class="nav-link">
+								&nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-female nav-icon"></i>
+								<p>Studio</p>
+							</a>
+						</li>
 					</ul>
 				</li>
 				<li class="nav-item">

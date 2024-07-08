@@ -687,4 +687,10 @@ ADD PRIMARY KEY (`id`);
 ;
 ALTER TABLE `saloon` 
 CHANGE COLUMN `created_at` `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP() ;
+
+ALTER TABLE `studio` 
+ADD COLUMN `main_id` INT(11) NULL AFTER `is_main`;
+ALTER TABLE `studio` 
+CHANGE COLUMN `created_at` `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP() ;
+
 -- akila is here
