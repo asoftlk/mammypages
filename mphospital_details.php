@@ -3,6 +3,7 @@
 	?>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.8/dist/sweetalert2.all.min.js"></script>
 <style>
+	.typename,
 	.hosname{
 	font-size:16px;
 	font-weight:700;
@@ -335,6 +336,10 @@
 	.jssort101 .pav .a, .jssort101 .p:hover .a {visibility:visible;}
 	.jssort101 .t {position:absolute;top:0;left:0;width:100%;height:100%;border:none;opacity:.6;}
 	.jssort101 .pav .t, .jssort101 .p:hover .t{opacity:1;}
+
+	.toggle-btn.collapsed .bi-chevron-up::before {
+		transform: rotate(180deg);
+	}
 </style>
 <div class="content">
 	<section class="main-content-sec">
@@ -378,6 +383,8 @@
 								$speciality .= $specialityarray[$i].", ";
 							}
 						}
+
+						
 						if (isset($row['main_id']) && !empty($row['main_id'])) {
 							$mainid = $row['main_id'];
 			
@@ -405,8 +412,7 @@
 										} else {
 											echo '<p class="typename mb-0">' . $row['name'] . '</p>';
 										}
-								        echo '<p class="hosname mb-0">'.$row['name'].'</p>';
-								          if(!empty($speciality)){
+								        if(!empty($speciality)){
 											echo '<p class="mb-0">'.$speciality.'</p>';
 										} else {
 											echo '<p class="mb-0" style="height:24px;"></p>';
@@ -704,23 +710,27 @@
                                         $closeTimeKey = $dayKey . '_close';
                                 
                                         if ($hospital[$openTimeKey] === "00:00:00" && $hospital[$closeTimeKey] === "00:00:00") {
-                                            $output .= '<p class="text-danger mb-0 small">' . $dayName . ': Closed</p>';
+                                            $output .= '<p class="mb-0 small">' . $dayName . ': Closed</p>';
                                         } else {
-                                            $output .= '<p class="text-success mb-0 small">' . $dayName . ': ' . $hospital[$openTimeKey] . ' - ' . $hospital[$closeTimeKey] . '</p>';
+                                            $output .= '<p class="mb-0 small">' . $dayName . ': ' . $hospital[$openTimeKey] . ' - ' . $hospital[$closeTimeKey] . '</p>';
                                         }
                                     }
                                     $output .= '</div>';
                                 
                                     return $output;
                                 }
+								echo '<br><i class="bi bi-clock-history small"></i> <a class="btn btn-sm btn-link text-decoration-none toggle-btn collapsed" type="button" data-toggle="collapse" data-target="#timecollapse" aria-expanded="false" aria-controls="timecollapse"><span class="text-success">Now open</span> <i class="bi bi-chevron-up"></i></a>
+									<div class="collapse width ml-4" id="timecollapse">
+										<div class="card card-body p-0 border-0" style="width: 220px;">';
+											echo displayHospitalTimings($row);
+							echo ' 		</div>
+									</div>';
                                 
-                                echo displayHospitalTimings($row);
-                                
-								echo	($row["address"]!==null)?'<p class="mt-4"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
-								echo 	($row["mobile"]!==null)?'<p><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
-								echo	($row["email"]!==null)?'<p><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
-								echo	($row["website"]!==null)?'<p><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
-								echo 	'<label class="border-bottom pb-2 w-100">Branches</label>
+								echo	($row["address"]!==null)?'<p class="mt-4 small"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
+								echo 	($row["mobile"]!==null)?'<p class="small"><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
+								echo	($row["email"]!==null)?'<p class="small"><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
+								echo	($row["website"]!==null)?'<p class="small"><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
+								echo 	'<label class="border-bottom pb-2 w-100 small">Branches</label>
 								';
 				
 								?>

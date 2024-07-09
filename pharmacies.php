@@ -161,7 +161,7 @@ include "mp.php";
 						}
                         $openTime = $row[$currentDay . '_open'];
                         $closeTime = $row[$currentDay . '_close'];
-                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success">Open</span>' : '<span class="text-danger">Closed</span>';
+                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success mt-2">Open</span>' : '<span class="text-danger mt-2">Closed</span>';
 
 					echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
 							<div class="col-md-3" style="margin:auto">
@@ -201,7 +201,7 @@ include "mp.php";
 							echo '</div>
 							</div>
 							<div class="d-flex justify-content-between">
-                            <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'- <strong>' . $isOpen . '</p>                           
+                            <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'<br> <strong>' . $isOpen . '</strong></p>                           
                             
                                 <form action="mpconnect/pharmacy/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
                                 <input type="hidden" name="pharmacy_id" value="' . $row["pharmacy_id"] . '">
@@ -359,7 +359,7 @@ include "mp.php";
                             var openTime = pharmacy[currentDay + '_open'];
                             var closeTime = pharmacy[currentDay + '_close'];
 
-                            var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success">Open</span>' : '<span class="text-danger">Closed</span>';
+                            var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success mt-2">Open</span>' : '<span class="text-danger mt-2">Closed</span>';
                             
                             html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
                             html += '<div class="col-md-3" style="margin:auto">';

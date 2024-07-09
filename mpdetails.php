@@ -223,6 +223,9 @@
 		top: -40%;
 		}
 	}
+	.toggle-btn.collapsed .bi-chevron-up::before {
+		transform: rotate(180deg);
+	}
 </style>
 <script type="text/javascript" src="assets/js/jssor.slider.min.js"></script>
 <script type="text/javascript">
@@ -707,30 +710,34 @@
                                         'saturday' => 'Saturday',
                                         'sunday' => 'Sunday'
                                     ];
-                                
-                                    $output = '<div class="type-timings mt-4">';
+                                    $output = '<div class="type-timings">';
                                     foreach ($daysOfWeek as $dayKey => $dayName) {
                                         $openTimeKey = $dayKey . '_open';
                                         $closeTimeKey = $dayKey . '_close';
                                 
                                         if ($typequery[$openTimeKey] === "00:00:00" && $typequery[$closeTimeKey] === "00:00:00") {
-                                            $output .= '<p class="text-danger mb-0 small">' . $dayName . ': Closed</p>';
+                                            $output .= '<p class="mb-0 small">' . $dayName . ': Closed</p>';
                                         } else {
-                                            $output .= '<p class="text-success mb-0 small">' . $dayName . ': ' . $typequery[$openTimeKey] . ' - ' . $typequery[$closeTimeKey] . '</p>';
+                                            $output .= '<p class="mb-0 small">' . $dayName . ': ' . $typequery[$openTimeKey] . ' - ' . $typequery[$closeTimeKey] . '</p>';
                                         }
                                     }
                                     $output .= '</div>';
                                 
                                     return $output;
                                 }
-                                echo displayTypeTimings($row);
+                                echo '<br><i class="bi bi-clock-history small"></i> <a class="btn btn-sm btn-link text-decoration-none toggle-btn collapsed" type="button" data-toggle="collapse" data-target="#timecollapse" aria-expanded="false" aria-controls="timecollapse"><span class="text-success">Now open</span> <i class="bi bi-chevron-up"></i></a>
+										<div class="collapse width ml-4" id="timecollapse">
+											<div class="card card-body p-0 border-0" style="width: 220px;">';
+												echo displayTypeTimings($row);
+								echo ' 		</div>
+										</div>';
 
                                 
-								echo	($row["address"]!==null)?'<p class="mt-4"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
-								echo 	($row["mobile"]!==null)?'<p><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
-								echo	($row["email"]!==null)?'<p><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
-								echo	($row["website"]!==null)?'<p><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
-								echo 	'<label class="border-bottom pb-2 w-100">Branches</label>
+								echo	($row["address"]!==null)?'<p class="mt-4 small"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
+								echo 	($row["mobile"]!==null)?'<p class="small"><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
+								echo	($row["email"]!==null)?'<p class="small"><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
+								echo	($row["website"]!==null)?'<p class="small"><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
+								echo 	'<label class="border-bottom pb-2 w-100 small">Branches</label>
 								';
 
 								// echo	($row["address"]!==null)?'<p class="mt-4"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;

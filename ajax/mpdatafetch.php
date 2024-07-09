@@ -30,7 +30,7 @@ if(mysqli_num_rows($result) > 0)
             $currentTime = date('H:i:s'); 
             $openTime = $row[$currentDay . '_open'];
             $closeTime = $row[$currentDay . '_close'];
-            $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success">Open</span>' : '<span class="text-danger">Closed</span>';
+            $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success mt-2">Open</span>' : '<span class="text-danger mt-2">Closed</span>';
 
           $output .= '  
                <div class="row m-0" style="border-bottom: 1px solid #f4f4f4 ;">
@@ -64,7 +64,7 @@ if(mysqli_num_rows($result) > 0)
 							$output .= '</div><a href="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $row["name"])).'" class="namehref"><p class="text-heading">&nbsp;'.$row["name"].'</p></a>
 							<p class="text">&nbsp;'.$speciality.'</P>
 							<div class="d-flex justify-content-between">
-                            <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].' - <strong>' . $isOpen . '</strong></P>                           
+                            <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].' <br> <strong>' . $isOpen . '</strong></P>                           
                                            <form action="mpconnect/'.$type.'/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
                                 <input type="hidden" name="' . $type . '_id" value="' . $row[$type . '_id'] . '">
                                 <button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;'.$type.'</button>

@@ -201,7 +201,7 @@ include "mp.php";
 							echo '</div>
 							</div>
 							<div class="d-flex justify-content-between">
-                            <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'- <strong>' . $isOpen . '</P>                           
+                            <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'<br> <strong>' . $isOpen . '</strong></P>                           
                                 <form action="mpconnect/saloon/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
                                 <input type="hidden" name="saloon_id" value="' . $row["saloon_id"] . '">
                                 <button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Saloon</button>
