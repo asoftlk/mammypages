@@ -22,13 +22,13 @@
 		unlink("../directory/hospital/".$row['logo']);}
 		if(file_exists("../directory/hospital/".$row['image'])){
 		unlink("../directory/hospital/".$row['image']);}
-		$galleryquery= mysqli_query($conn, "SELECT * FROM mphospital_gallery WHERE hospital_id = '$row[hospital_id]'");
+		$galleryquery= mysqli_query($conn, "SELECT * FROM mpgallery WHERE hospitalid = '$row[hospital_id]'");
 		while($galleryrow = mysqli_fetch_array($galleryquery)){
 			if(file_exists("../directory/hospital/".$galleryrow['image_name'])){
 			unlink("../directory/hospital/".$galleryrow['image_name']);
 			}
 		}
-		mysqli_query($conn, "DELETE FROM mphospital_gallery WHERE hospital_id='$row[hospital_id]'");
+		mysqli_query($conn, "DELETE FROM mpgallery WHERE hospitalid='$row[hospital_id]'");
 		mysqli_query($conn, "DELETE FROM hospital WHERE id=$id");
         mysqli_query($conn, "DELETE FROM hospital_working_times WHERE hospital_id='$row[hospital_id]'");
 		echo '<script>alert("Deleted Successfully");window.location.href="viewhospital";</script>';  

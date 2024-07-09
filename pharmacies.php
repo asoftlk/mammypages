@@ -161,7 +161,7 @@ include "mp.php";
 						}
                         $openTime = $row[$currentDay . '_open'];
                         $closeTime = $row[$currentDay . '_close'];
-                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success mt-2">Open</span>' : '<span class="text-danger mt-2">Closed</span>';
+                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1">Open</span>' : '<span class="text-danger text mr-1">Closed</span>';
                         
                         if (isset($row['main_id']) && !empty($row['main_id']) && $row['main_id'] != 0) {
                             $mainid = $row['main_id'];
@@ -187,7 +187,8 @@ include "mp.php";
 							<div class="col-md-9 pl-0" style="margin:1rem 0">
 							<div class="d-flex">
                             <p class="text"><a href="mpconnect/pharmacy/' .urlencode(str_replace(' ', '_', $row["name"])). '" class="namehref"><p class="text-heading">&nbsp;'.$type_name_head.'</p></a>
-                                <img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
+                                <img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-2" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
+                                <strong>' . $isOpen . '</strong>
                             </div>
 							<div class="d-flex">
 							<p class="text">&nbsp;'.$speciality.'</P>
@@ -216,7 +217,7 @@ include "mp.php";
 							echo '</div>
 							</div>
 							<div class="d-flex justify-content-between">
-                            <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'<br> <strong>' . $isOpen . '</strong></p>                           
+                            <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</p>                           
                             
                                 <form action="mpconnect/pharmacy/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
                                 <input type="hidden" name="pharmacy_id" value="' . $row["pharmacy_id"] . '">
@@ -374,7 +375,7 @@ include "mp.php";
                             var openTime = pharmacy[currentDay + '_open'];
                             var closeTime = pharmacy[currentDay + '_close'];
 
-                            var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success mt-2">Open</span>' : '<span class="text-danger mt-2">Closed</span>';
+                            var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success text mr-1">Open</span>' : '<span class="text-danger text mr-1">Closed</span>';
                             
                             html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
                             html += '<div class="col-md-3" style="margin:auto">';
@@ -385,10 +386,17 @@ include "mp.php";
                             html += '<div class="d-flex">';
                             html += '<p class="text"><a href="mpconnect/pharmacy/' + encodedName + '" class="namehref">';
                             html += '<p class="text-heading">&nbsp;' + pharmacy.name + '</p></a>';
+                           
                             if (pharmacy.priority > 0) {
-                                html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
-                                
+								html += '<p class="text-heading">&nbsp;' + pharmacy.name + '</p></a>';
+                                html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-2" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
+								html += '<strong>' + isOpen + '</strong>';
                             }
+							else{
+								html += '<p class="text-heading mr-auto">&nbsp;' + pharmacy.name + '</p></a>';
+								html += '<strong>' + isOpen + '</strong><br>';
+							}
+
                             html += '</div>';
                             html += '<div class="d-flex">';
                             if(speciality){ html+= '<p class="text">&nbsp;' + speciality + '</P>';}
@@ -407,7 +415,7 @@ include "mp.php";
                             
                             html += '</div></div>';
                             html += '<div class="d-flex justify-content-between">';
-                            html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + pharmacy.address +' - <strong>' + isOpen +  '</P>';                          
+                            html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + pharmacy.address +'</P>';                          
                             html += '<form action="mpconnect/pharmacy/'+ encodedName +'" method="post" style="display:inline;">';
                             html += '<input type="hidden" name="pharmacy_id" value="'+pharmacyId+'">';
                             html += '<button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Pharmacy</button>';
@@ -459,6 +467,11 @@ include "mp.php";
             $('#suggesstion-box').hide()
         }
     });
-
+    $(document).mouseup(function(e) {
+		var container = $("#suggesstion-box");
+		if (!container.is(e.target) && container.has(e.target).length === 0) {
+			container.hide();
+		}
+	});
 </script>
 </body>
