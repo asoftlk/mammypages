@@ -146,8 +146,22 @@ if(mysqli_num_rows($result) > 0)
         $openTime = $row[$currentDay . '_open'];
         $closeTime = $row[$currentDay . '_close'];
         $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success">Open</span>' : '<span class="text-danger">Closed</span>'
-        ;
-
+    ;
+        if (isset($row['main_id']) && !empty($row['main_id']) && $row['main_id'] != 0) {
+            $mainid = $row['main_id'];
+        
+            $name_query = "SELECT `name` FROM `hospital` WHERE `id` = '$mainid'";
+            $namequery = mysqli_query($conn, $name_query);
+        
+            if ($namequery) {
+                $row1 = mysqli_fetch_array($namequery);
+            }
+        }
+        if (!empty($row1['name']) && $row['main_id'] != 0) {
+            $hospital_name =  $row1['name'] . ' - ' . $row['name'];
+        } else {
+            $hospital_name =  $row['name'];;
+        };
         $output .= '  
         <div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">
             <div class="col-md-3" style="margin:auto">
@@ -178,13 +192,13 @@ if(mysqli_num_rows($result) > 0)
                     }
                 $output .= '</div>
                 <a href="mpconnect/hospital/' . urlencode(str_replace(' ', '_', $row["name"])). '" class="namehref">
-                    <p class="text-heading">&nbsp;' . $row["name"] . '</p>
+                    <p class="text-heading">&nbsp;' . $hospital_name . '</p>
                 </a>
                 <p class="text">&nbsp;' . $speciality . '</p>
                 <div class="d-flex justify-content-between">
                     <p class="text">
                         <img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">
-                        &nbsp;' . $row["address"] . ' <br> <strong>' . $isOpen . '</strong>/strong></p>                        
+                        &nbsp;' . $row["address"] . ' <br> <strong>' . $isOpen . '</strong></p>                        
                     <form action="mpconnect/hospital/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
                         <input type="hidden" name="hospital_id" value="' . $row["hospital_id"] . '">
                         <button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Hospital</button>

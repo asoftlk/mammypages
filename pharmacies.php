@@ -162,7 +162,22 @@ include "mp.php";
                         $openTime = $row[$currentDay . '_open'];
                         $closeTime = $row[$currentDay . '_close'];
                         $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success mt-2">Open</span>' : '<span class="text-danger mt-2">Closed</span>';
-
+                        
+                        if (isset($row['main_id']) && !empty($row['main_id']) && $row['main_id'] != 0) {
+                            $mainid = $row['main_id'];
+                        
+                            $name_query = "SELECT `name` FROM `hospital` WHERE `id` = '$mainid'";
+                            $namequery = mysqli_query($conn, $name_query);
+                        
+                            if ($namequery) {
+                                $row1 = mysqli_fetch_array($namequery);
+                            }
+                        }
+                        if (!empty($row1['name']) && $row['main_id'] != 0) {
+                            $type_name_head =  $row1['name'] . ' - ' . $row['name'];
+                        } else {
+                            $type_name_head =  $row['name'];;
+                        };
 					echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
 							<div class="col-md-3" style="margin:auto">
 							<div>
@@ -171,7 +186,7 @@ include "mp.php";
 							</div>
 							<div class="col-md-9 pl-0" style="margin:1rem 0">
 							<div class="d-flex">
-                            <p class="text"><a href="mpconnect/pharmacy/' .urlencode(str_replace(' ', '_', $row["name"])). '" class="namehref"><p class="text-heading">&nbsp;'.$row["name"].'</p></a>
+                            <p class="text"><a href="mpconnect/pharmacy/' .urlencode(str_replace(' ', '_', $row["name"])). '" class="namehref"><p class="text-heading">&nbsp;'.$type_name_head.'</p></a>
                                 <img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
                             </div>
 							<div class="d-flex">
