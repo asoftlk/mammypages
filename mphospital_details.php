@@ -703,29 +703,40 @@
                                         'saturday' => 'Saturday',
                                         'sunday' => 'Sunday'
                                     ];
+
+                                    date_default_timezone_set('Asia/Colombo');
+                                    $currentDay = strtolower(date('l')); 
+                                    $currentTime = date('H:i:s');
+                                    $curDayOpen =$hospital[$currentDay. '_open'];
+                                    $curDayClose =$hospital[$currentDay. '_close'];
+                                    $isOpen = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose) ? 
+                                    '<span class="text-success">Now open</span>' : 
+                                    '<span class="text-danger">Now closed</span>';
+
+                                    $output = '<br><i class="bi bi-clock-history small"></i> <a class="btn btn-sm btn-link text-decoration-none toggle-btn collapsed" type="button" data-toggle="collapse" data-target="#timecollapse" aria-expanded="false" aria-controls="timecollapse">'.$isOpen.'<i class="bi bi-chevron-up"></i></a>
+									<div class="collapse width ml-4" id="timecollapse">
+										<div class="card card-body p-0 border-0" style="width: 220px;">';
                                 
-                                    $output = '<div class="hospital-timings">';
+                                    $output .= '<div class="hospital-timings">';
                                     foreach ($daysOfWeek as $dayKey => $dayName) {
                                         $openTimeKey = $dayKey . '_open';
                                         $closeTimeKey = $dayKey . '_close';
+
+                                        $fmtOpenTime = date('H:i', strtotime($hospital[$openTimeKey]));
+                                        $fmtCloseTime = date('H:i', strtotime($hospital[$closeTimeKey]));
                                 
                                         if ($hospital[$openTimeKey] === "00:00:00" && $hospital[$closeTimeKey] === "00:00:00") {
                                             $output .= '<p class="mb-0 small">' . $dayName . ': Closed</p>';
                                         } else {
-                                            $output .= '<p class="mb-0 small">' . $dayName . ': ' . $hospital[$openTimeKey] . ' - ' . $hospital[$closeTimeKey] . '</p>';
+                                            $output .= '<p class="mb-0 small">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime. '</p>';
                                         }
                                     }
-                                    $output .= '</div>';
-                                
+                                    $output .= '</div></div></div>';                             
                                     return $output;
                                 }
-								echo '<br><i class="bi bi-clock-history small"></i> <a class="btn btn-sm btn-link text-decoration-none toggle-btn collapsed" type="button" data-toggle="collapse" data-target="#timecollapse" aria-expanded="false" aria-controls="timecollapse"><span class="text-success">Now open</span> <i class="bi bi-chevron-up"></i></a>
-									<div class="collapse width ml-4" id="timecollapse">
-										<div class="card card-body p-0 border-0" style="width: 220px;">';
-											echo displayHospitalTimings($row);
-							echo ' 		</div>
-									</div>';
-                                
+                            
+                                echo displayHospitalTimings($row);
+
 								echo	($row["address"]!==null)?'<p class="mt-4 small"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
 								echo 	($row["mobile"]!==null)?'<p class="small"><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
 								echo	($row["email"]!==null)?'<p class="small"><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;

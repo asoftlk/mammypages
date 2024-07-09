@@ -371,7 +371,11 @@
 						if (!empty($type) && !empty($name)) {
 							$tablegallery_name = "mp" . $type . "_gallery";
 							$id_column = $type . '_id';
-                            $query = "SELECT * FROM `$type` AS h INNER JOIN `" . $type . "_working_times` AS hwt ON hwt.`" . $type . "_id` = h.`" . $type . "_id` WHERE h.`" . $type . "_id` = '$id'";
+                            if($type !== 'doctor') {
+                                $query = "SELECT * FROM `$type` AS h INNER JOIN `" . $type . "_working_times` AS hwt ON hwt.`" . $type . "_id` = h.`" . $type . "_id` WHERE h.`" . $type . "_id` = '$id'";
+                            } else {
+                                $query = "SELECT * FROM `$type` AS h WHERE h.`" . $type . "_id` = '$id'";
+                            }
 
 							$typequery = mysqli_query($conn, $query);
 						}		
@@ -699,7 +703,6 @@
 								else{
 								echo '<iframe width="100%" height="200" src="https://maps.google.com/maps?q='.$row["map"].'&output=embed"></iframe><br>';
 								}
-
                                 function displayTypeTimings($typequery) {
                                     $daysOfWeek = [
                                         'monday' => 'Monday',
@@ -710,35 +713,46 @@
                                         'saturday' => 'Saturday',
                                         'sunday' => 'Sunday'
                                     ];
-                                    $output = '<div class="type-timings">';
+                                    date_default_timezone_set('Asia/Colombo');
+                                    $currentDay = strtolower(date('l')); 
+                                    $currentTime = date('H:i:s');
+                                    $curDayOpen =$typequery[$currentDay. '_open'];
+                                    $curDayClose =$typequery[$currentDay. '_close'];
+                                    $isOpen = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose) ? 
+                                    '<span class="text-success">Now open</span>' : 
+                                    '<span class="text-danger">Now closed</span>';
+
+                                    $output = '<br><i class="bi bi-clock-history small"></i> <a class="btn btn-sm btn-link text-decoration-none toggle-btn collapsed" type="button" data-toggle="collapse" data-target="#timecollapse" aria-expanded="false" aria-controls="timecollapse">'.$isOpen.'<i class="bi bi-chevron-up"></i></a>
+									<div class="collapse width ml-4" id="timecollapse">
+										<div class="card card-body p-0 border-0" style="width: 220px;">';
+
+                                    $output .= '<div class="type-timings">';
                                     foreach ($daysOfWeek as $dayKey => $dayName) {
                                         $openTimeKey = $dayKey . '_open';
                                         $closeTimeKey = $dayKey . '_close';
+
+                                        $fmtOpenTime = date('H:i', strtotime($typequery[$openTimeKey]));
+                                        $fmtCloseTime = date('H:i', strtotime($typequery[$closeTimeKey]));
                                 
                                         if ($typequery[$openTimeKey] === "00:00:00" && $typequery[$closeTimeKey] === "00:00:00") {
                                             $output .= '<p class="mb-0 small">' . $dayName . ': Closed</p>';
                                         } else {
-                                            $output .= '<p class="mb-0 small">' . $dayName . ': ' . $typequery[$openTimeKey] . ' - ' . $typequery[$closeTimeKey] . '</p>';
+                                            $output .= '<p class="mb-0 small">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime . '</p>';
                                         }
                                     }
-                                    $output .= '</div>';
+                                    $output .= '</div></div></div>';
                                 
                                     return $output;
                                 }
-                                echo '<br><i class="bi bi-clock-history small"></i> <a class="btn btn-sm btn-link text-decoration-none toggle-btn collapsed" type="button" data-toggle="collapse" data-target="#timecollapse" aria-expanded="false" aria-controls="timecollapse"><span class="text-success">Now open</span> <i class="bi bi-chevron-up"></i></a>
-										<div class="collapse width ml-4" id="timecollapse">
-											<div class="card card-body p-0 border-0" style="width: 220px;">';
-												echo displayTypeTimings($row);
-								echo ' 		</div>
-										</div>';
-
                                 
+                                if($type !=='doctor'){echo displayTypeTimings($row);}
+						                                
 								echo	($row["address"]!==null)?'<p class="mt-4 small"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
 								echo 	($row["mobile"]!==null)?'<p class="small"><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
 								echo	($row["email"]!==null)?'<p class="small"><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
 								echo	($row["website"]!==null)?'<p class="small"><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
-								echo 	'<label class="border-bottom pb-2 w-100 small">Branches</label>
-								';
+								if($type !=='doctor'){echo 	'<label class="border-bottom pb-2 w-100 small">Branches</label>
+								';}
 
 								// echo	($row["address"]!==null)?'<p class="mt-4"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
 								// echo 	($row["mobile"]!==null)?'<p><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
