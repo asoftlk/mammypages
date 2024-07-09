@@ -140,9 +140,12 @@ include "mp.php";
             </div>
         </form>
          <div class="top-menu">
-			<?php $studio =mysqli_query($conn, "SELECT * FROM studio WHERE priority > 0 ORDER BY priority LIMIT 5");
+			<?php $studio =mysqli_query($conn, "SELECT * FROM studio INNER JOIN studio_working_times wt ON wt.studio_id = studio.studio_id WHERE priority > 0 ORDER BY priority LIMIT 5");
 					$count = 0;
 					$numrows = mysqli_num_rows($studio);
+                    date_default_timezone_set('Asia/Colombo');
+                    $currentDay = strtolower(date('l')); 
+                    $currentTime = date('H:i:s'); 
 					while($row=mysqli_fetch_array($studio)){
 						$specialityarray = explode(" ///", $row['speciality']);
 						$speciality = "";
@@ -155,6 +158,10 @@ include "mp.php";
 								$speciality .= $specialityarray[$i].", ";
 							}
 						}
+                        $openTime = $row[$currentDay . '_open'];
+                        $closeTime = $row[$currentDay . '_close'];
+                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success">Open</span>' : '<span class="text-danger">Closed</span>';
+
 					echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
 							<div class="col-md-3" style="margin:auto">
 							<div>
@@ -193,7 +200,7 @@ include "mp.php";
 							echo '</div>
 							</div>
 							<div class="d-flex justify-content-between">
-                            <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           
+                            <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'- <strong>' . $isOpen . '</P>                           
                             
                                 <form action="mpconnect/studio/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
                                 <input type="hidden" name="studio_id" value="' . $row["studio_id"] . '">
@@ -344,6 +351,15 @@ include "mp.php";
                             var rating = studio.rating ? parseFloat(studio.rating) : 0;
                             var encodedName = encodeURIComponent(studio.name.replace(/\s+/g, '_'));
                             var studioId = studio.studio_id;
+                            var now = new Date().toLocaleString("en-US", {timeZone: "Asia/Colombo"});
+                            var currentDate = new Date(now);
+                            var currentDay = currentDate.toLocaleString("en-US", {weekday: "long"}).toLowerCase();
+                            var currentTime = currentDate.toTimeString().split(" ")[0];
+
+                            var openTime = studioId[currentDay + '_open'];
+                            var closeTime = studioId[currentDay + '_close'];
+
+                            var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success">Open</span>' : '<span class="text-danger">Closed</span>';
                             
                             html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
                             html += '<div class="col-md-3" style="margin:auto">';
@@ -376,7 +392,7 @@ include "mp.php";
                             
                             html += '</div></div>';
                             html += '<div class="d-flex justify-content-between">';
-                            html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + studio.address + '</P>';                          
+                            html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + studio.address +' - <strong>' + isOpen +  '</P>';                          
                             html += '<form action="mpconnect/studio/'+ encodedName +'" method="post" style="display:inline;">';
                             html += '<input type="hidden" name="studio_id" value="'+studioId+'">';
                             html += '<button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Studio</button>';

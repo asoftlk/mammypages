@@ -141,9 +141,12 @@ include "mp.php";
         </form>
          <div class="top-menu">
             
-			<?php $saloon =mysqli_query($conn, "SELECT * FROM saloon WHERE priority > 0 ORDER BY priority LIMIT 5");
+			<?php $saloon =mysqli_query($conn, "SELECT * FROM saloon INNER JOIN saloon_working_times wt ON wt.saloon_id = saloon.saloon_id WHERE priority > 0 ORDER BY priority LIMIT 5");
 					$count = 0;
 					$numrows = mysqli_num_rows($saloon);
+                    date_default_timezone_set('Asia/Colombo');
+                    $currentDay = strtolower(date('l')); 
+                    $currentTime = date('H:i:s'); 
 					while($row=mysqli_fetch_array($saloon)){
 						$specialityarray = explode(" ///", $row['speciality']);
 						$speciality = "";
@@ -156,6 +159,10 @@ include "mp.php";
 								$speciality .= $specialityarray[$i].", ";
 							}
 						}
+                        $openTime = $row[$currentDay . '_open'];
+                        $closeTime = $row[$currentDay . '_close'];
+                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success">Open</span>' : '<span class="text-danger">Closed</span>';
+
 					echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
 							<div class="col-md-3" style="margin:auto">
 							<div>
@@ -194,7 +201,7 @@ include "mp.php";
 							echo '</div>
 							</div>
 							<div class="d-flex justify-content-between">
-                            <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           
+                            <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'- <strong>' . $isOpen . '</P>                           
                                 <form action="mpconnect/saloon/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
                                 <input type="hidden" name="saloon_id" value="' . $row["saloon_id"] . '">
                                 <button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Saloon</button>
@@ -344,6 +351,15 @@ include "mp.php";
                             var rating = saloon.rating ? parseFloat(saloon.rating) : 0;
                             var encodedName = encodeURIComponent(saloon.name.replace(/\s+/g, '_'));
                             var saloonId = saloon.saloon_id;
+                            var now = new Date().toLocaleString("en-US", {timeZone: "Asia/Colombo"});
+                            var currentDate = new Date(now);
+                            var currentDay = currentDate.toLocaleString("en-US", {weekday: "long"}).toLowerCase();
+                            var currentTime = currentDate.toTimeString().split(" ")[0];
+
+                            var openTime = saloon[currentDay + '_open'];
+                            var closeTime = saloon[currentDay + '_close'];
+
+                            var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success">Open</span>' : '<span class="text-danger">Closed</span>';
                             
                             html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
                             html += '<div class="col-md-3" style="margin:auto">';
@@ -376,7 +392,7 @@ include "mp.php";
                             
                             html += '</div></div>';
                             html += '<div class="d-flex justify-content-between">';
-                            html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + saloon.address + '</P>';                          
+                            html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + saloon.address +' - <strong>' + isOpen +  '</P>';                          
                             html += '<form action="mpconnect/saloon/'+ encodedName +'" method="post" style="display:inline;">';
                             html += '<input type="hidden" name="saloon_id" value="'+saloonId+'">';
                             html += '<button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Saloon</button>';

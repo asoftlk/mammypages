@@ -22,7 +22,8 @@ if (isset($_POST["search"])) {
         $conditions[] = "city = '$city'";
     }
 
-    $sql = "SELECT * FROM studio";
+    $sql = "SELECT * FROM studio ";
+    $sql.=" INNER JOIN studio_working_times wt ON wt.studio_id = studio.studio_id "; 
     if (count($conditions) > 0) {
         $sql .= " WHERE " . implode(" AND ", $conditions);
     }
