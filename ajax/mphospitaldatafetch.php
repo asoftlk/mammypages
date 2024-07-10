@@ -166,9 +166,7 @@ if(mysqli_num_rows($result) > 0)
         <div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">
             <div class="col-md-3" style="margin:auto">
                 <div>
-                    <a href="mpconnect/hospital/' . urlencode(str_replace(' ', '_', $row["name"])). '">
-                        <img src="directory/hospital/' . $row['logo'] . '" class="img-fluid" style="max-height:5rem">
-                    </a>
+                    <img src="directory/hospital/' . $row['logo'] . '" class="img-fluid" style="max-height:5rem">
                 </div>
             </div>
             <div class="col-md-9 pl-0" style="margin:1rem 0">
@@ -193,9 +191,8 @@ if(mysqli_num_rows($result) > 0)
                         $rating = $rating - 1;									
                     }
                 $output .= '</div>
-                <a href="mpconnect/hospital/' . urlencode(str_replace(' ', '_', $row["name"])). '" class="namehref">
-                    <p class="text-heading">&nbsp;' . $hospital_name . '</p>
-                </a>
+                
+                <p class="text-heading">&nbsp;' . $hospital_name . '</p>
                 <p class="text">&nbsp;' . $speciality . '</p>
                 <div class="d-flex justify-content-between">
                     <p class="text">

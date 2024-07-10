@@ -130,13 +130,13 @@
 								echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
 										<div class="col-md-3" style="margin:auto">
 										<div>
-											<a href="mpconnect/hospital/' .urlencode(str_replace(' ', '_', $row["name"])). '"><img src="directory/hospital/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>
+											<img src="directory/hospital/'.$row['logo'].'" class="img-fluid" style="max-height:5rem">
 										</div>
 										</div>
 										<div class="col-md-9 pl-0" style="margin:1rem 0">
 										<div class="d-flex">
-											<p class="text"><a href="mpconnect/hospital/' .urlencode(str_replace(' ', '_', $row["name"])). '" class="namehref">
-												<p class="text-heading">&nbsp;'.$type_name_head.'</p></a>
+											<p class="text">
+												<p class="text-heading">&nbsp;'.$type_name_head.'</p>
 												<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-3" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
 												<strong>' . $isOpen . '</strong>
 										</div>
@@ -404,19 +404,18 @@
 
                             html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
                             html += '<div class="col-md-3" style="margin:auto">';
-                            html += '<a href="mpconnect/hospital/' + encodedName + '">';  
-                            html += '<img src="directory/hospital/' + hospital.logo + '" class="img-fluid" style="max-height:5rem"></a>';
+                            html += '<img src="directory/hospital/' + hospital.logo + '" class="img-fluid" style="max-height:5rem">';
                             html += '</div>';
                             html += '<div class="col-md-9 pl-0" style="margin:1rem 0">';
                             html += '<div class="d-flex">';
-                            html += '<p class="text"><a href="mpconnect/hospital/' + encodedName + '" class="namehref">';
+                            html += '<p class="text">';
                             if (hospital.priority > 0) {
-								html += '<p class="text-heading">&nbsp;' + hospital.typeName + '</p></a>';
-                                html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
+								html += '<p class="text-heading">&nbsp;' + hospital.typeName + '</p>';
+                                html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-2" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }
 							else{
-								html += '<p class="text-heading">&nbsp;' + hospital.typeName + '</p></a>';
+								html += '<p class="text-heading mr-auto">&nbsp;' + hospital.typeName + '</p>';
 								html += '<strong>' + isOpen + '</strong><br>';
 							}
                             html += '</div>';
