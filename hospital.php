@@ -385,6 +385,7 @@
                     if (result.data.length > 0) {
                         var html = '';
                         result.data.forEach(function(hospital) {
+                        console.log(hospital);
                             var specialityArray = hospital.speciality.split(" ///");
                             var speciality = specialityArray.join(", ");
                             var rating = hospital.rating ? parseFloat(hospital.rating) : 0;
@@ -410,12 +411,12 @@
                             html += '<div class="d-flex">';
                             html += '<p class="text"><a href="mpconnect/hospital/' + encodedName + '" class="namehref">';
                             if (hospital.priority > 0) {
-								html += '<p class="text-heading">&nbsp;' + hospital.name + '</p></a>';
+								html += '<p class="text-heading">&nbsp;' + hospital.typeName + '</p></a>';
                                 html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }
 							else{
-								html += '<p class="text-heading">&nbsp;' + hospital.name + '</p></a>';
+								html += '<p class="text-heading">&nbsp;' + hospital.typeName + '</p></a>';
 								html += '<strong>' + isOpen + '</strong><br>';
 							}
                             html += '</div>';
