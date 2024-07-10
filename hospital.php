@@ -411,11 +411,11 @@
                             html += '<p class="text"><a href="mpconnect/hospital/' + encodedName + '" class="namehref">';
                             if (hospital.priority > 0) {
 								html += '<p class="text-heading">&nbsp;' + hospital.name + '</p></a>';
-                                html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-2" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
+                                html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }
 							else{
-								html += '<p class="text-heading mr-auto">&nbsp;' + hospital.name + '</p></a>';
+								html += '<p class="text-heading">&nbsp;' + hospital.name + '</p></a>';
 								html += '<strong>' + isOpen + '</strong><br>';
 							}
                             html += '</div>';
