@@ -644,17 +644,21 @@
                                                 </table>
                                             </div>
                                             <div class="form-group row">
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<label for="hospitalfb">Facebook Link</label>
 													<input type="url" name="hospitalfb" class="form-control" id="hospitalfb" placeholder="Facebook Link">
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<label for="hospitalinsta">Instagram Link</label>
 													<input type="url" name="hospitalinsta" class="form-control" id="hospitalinsta" placeholder="Instagram Link">
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<label for="hospitalln">Linkedin Link</label>
 													<input type="url" name="hospitalln" class="form-control" id="hospitalln" placeholder="Linkedin Link">
+												</div>
+												<div class="col-md-3">
+													<label for="hospitalyt">Yotube Link</label>
+													<input type="url" name="hospitalyt" class="form-control" id="hospitalyt" placeholder="Youtube Link">
 												</div>
 											</div>
 											<div class="form-group">
@@ -665,11 +669,15 @@
 													<option value="Not Verified">Not Verified</option>
 												</select>
 											</div>
-											<div class="row">
+											<div class="form-group">
 												<label class="required" for="about">About</label>
-												<textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required></textarea>
+												<!-- <textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required></textarea> -->
+												 <textarea id="about" name="about" class="about form-control" required></textarea>
 											</div>
-									
+											<div class="form-group">
+												<label class="required" for="service">Services</label>
+												<input type="text" data-role="tagsinput" class="form-control" id="service" name="service">
+											</div>
 											<div class="form-group">
 												<label class="required" for="logoimage">logo Image</label>
 												<div class="input-group">
@@ -750,8 +758,6 @@
 <script src="plugins/select2/js/select2.full.min.js"></script>
 <script>
 	$('.select2').select2();
-	$('#about').summernote({width:"100%", height:"250"});
-	$('#branchabout').summernote({width:"100%", height:"250"});
 	
 	$(function () {
 	
@@ -797,7 +803,6 @@
 		  about: {
 			required: true,
 		  },
-		 	  
 		  featuredimage: {
 	            required: true,
 	            extension: "jpg|jpeg|png"

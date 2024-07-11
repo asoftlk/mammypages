@@ -31,10 +31,11 @@
 		$hospitalfb = filter_input(INPUT_POST, 'hospitalfb');
 		$hospitalinsta = filter_input(INPUT_POST, 'hospitalinsta');
 		$hospitalln = filter_input(INPUT_POST, 'hospitalln');
+		$hospitalyt = filter_input(INPUT_POST, 'hospitalyt');
 		$status = filter_input(INPUT_POST, 'status');
+		$service = filter_input(INPUT_POST, 'service');
 		$about = mysqli_real_escape_string($conn, $_POST['about']);
 		$videoembed = mysqli_real_escape_string($conn, $_POST['videoembed']);
-
 		$mon_open = filter_input(INPUT_POST, 'monopentime');
 		$mon_close = filter_input(INPUT_POST, 'monendtime');
 		$tue_open = filter_input(INPUT_POST, 'tueopentime');
@@ -129,8 +130,8 @@
 				$logoupload = move_uploaded_file($_FILES['logoimage']['tmp_name'], "../directory/hospital/".$logotarget);
 				
 			if($featureupload){
-				$query= "INSERT INTO hospital (hospital_id, name, speciality, address, is_main,main_id , map, city, mobile, email, whatsapp, website, type, subtype, working_hours,  facebook, instagram, linkedin,logo, status, about,priority, image, video) 
-						values ('$hospital_id', '$hospitalname', '$hospitalspecialist', '$hospitaladdr', '$isMain','$mainId', '$hospitalmap', '$hospitalcity', '$hospitalcont',  '$hospitalemail','$hospitalwhatsapp',  '$hospitalweb', '$hospitaltype', '$hospitalsubtype', '$hospitalworking', '$hospitalfb',  '$hospitalinsta', '$hospitalln', '$logotarget', '$status', '$about','$priority','$featuretarget', '$videotarget')";
+				$query= "INSERT INTO hospital (hospital_id, name, speciality, address, is_main,main_id , map, city, mobile, email, whatsapp, website, type, subtype, working_hours,  facebook, instagram, linkedin, youtube,logo, status, about, services,priority, image, video) 
+						values ('$hospital_id', '$hospitalname', '$hospitalspecialist', '$hospitaladdr', '$isMain','$mainId', '$hospitalmap', '$hospitalcity', '$hospitalcont',  '$hospitalemail','$hospitalwhatsapp',  '$hospitalweb', '$hospitaltype', '$hospitalsubtype', '$hospitalworking', '$hospitalfb',  '$hospitalinsta', '$hospitalln', '$hospitalyt', '$logotarget', '$status', '$about', '$service','$priority','$featuretarget', '$videotarget')";
 				$result = mysqli_query($conn, $query);
 
 				$workingTimesQuery = "INSERT INTO hospital_working_times (htime_id, hospital_id, hospital_type,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 

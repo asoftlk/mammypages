@@ -383,6 +383,7 @@
 						$row= mysqli_fetch_array($hospital);
 						$specialityarray = explode(" ///", $row['speciality']);
 						$speciality = "";
+						$services = $row['services'];
 						$videourl = $row['video'];
 						$typeid = $row['hospital_id'];
 						for($i=0; $i< count($specialityarray); $i++){
@@ -470,6 +471,7 @@
 										echo !empty($row['facebook']) ?  '<a href="'.$row["facebook"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-facebook p-1"></i></a>&nbsp;':"";
 										echo !empty($row['instagram']) ?  '<a href="'.$row["instagram"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-instagram p-1"></i></a>&nbsp;':"";
 										echo !empty($row['linkedin']) ?  '<a href="'.$row["linkedin"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-linkedin p-1"></i></a>&nbsp;':"";
+										echo !empty($row['youtube']) ?  '<a href="'.$row["youtube"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-youtube p-1"></i></a>&nbsp;':"";
 										echo '<div class="dropup d-flex header-settings"> 
 										<a href="#" class="nav-link p-1" data-toggle="dropdown" style="display:flex; text-decoration:none; color:black"><i class="bi bi-share"  style=""></i></a> 
 										<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" style="" > 
@@ -524,6 +526,10 @@
 						 			echo '</div>';
 									}*/
 							echo	'</div>
+								<div class="row fillbg mt-1 l-border-radius py-2">
+									<p class="heading text-left mt-1 text-uppercase font-weight-bold" style="margin:0.5rem 0 1rem; font-size:12px">Services</p>
+									<p>'.$services.'</p>
+								</div>
 								';
 							
 						}
@@ -696,82 +702,91 @@
 				</div>
 				<div class="col-md-3">
 					<div class="right-cont-part">
-						<div class="fillbg px-2 l-border-radius">
+						<div class="card l-border-radius">
 							<?php	if(strpos($row["map"], 'iframe')){
-								echo '<div class="map">'.$row["map"].'</div><br>';
-								}
-								else{
-								echo '<iframe width="100%" height="200" src="https://maps.google.com/maps?q='.$row["map"].'&output=embed"></iframe><br>';
-								}
+										echo '<div class="map card-img-top">'.$row["map"].'</div><br>';
+									}
+									else{
+										echo '<div class="card-img-top"><iframe width="100%" height="200" src="https://maps.google.com/maps?q='.$row["map"].'&output=embed"></iframe></div>';
+									}
+									?>
+							<div class="card-body">
+								<?php
+									echo	($row["address"]!==null)?'<p class="small"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
+									echo 	($row["mobile"]!==null)?'<p class="small"><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
+									echo 	($row["whatsapp"]!==null)?'<p class="small"><i class="bi bi-whatsapp"></i>&nbsp;<a href="https://wa.me/'.$row["whatsapp"].'" target="_blank" class="text-decoration-none text-dark">'.$row["whatsapp"].'</a></p>':null;
+									echo	($row["email"]!==null)?'<p class="small"><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
+									echo	($row["website"]!==null)?'<p class="small"><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
+									;
+					
+									?>
+							</div>
+						</div>
+						<div class="card mt-1 l-border-radius">
+							<div class="card-body">
+								<label class="border-bottom pb-2 w-100 small text-uppercase font-weight-bold">Branches</label>
+								<?php $query1=mysqli_query($conn, "SELECT * FROM hospital WHERE main_id = (SELECT id FROM hospital WHERE hospital_id = '$id')");
+									while($branches1=mysqli_fetch_array($query1)){
+									echo '<form action="mpconnect/hospital/'. urlencode(str_replace(' ', '_', $branches1["name"])) .'" method="post" style="display:inline;">
+									<input type="hidden" name="hospital_id" value="'.$branches1["hospital_id"].'">
+									<button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">View '.$branches1["name"].' <i class="bi bi-box-arrow-up-right"></i></button>
+									</form>';
+								}?>
+								<?php $query2=mysqli_query($conn, "SELECT * FROM hospital WHERE main_id =(SELECT main_id FROM hospital WHERE hospital_id = '$id') AND hospital_id != '$id' UNION
+									SELECT * FROM hospital WHERE id =(SELECT main_id FROM hospital WHERE hospital_id = '$id')");
+									while($branches2=mysqli_fetch_array($query2)){
+									echo '<form action="mpconnect/hospital/'. urlencode(str_replace(' ', '_', $branches2["name"])) .'" method="post" style="display:inline;">
+									<input type="hidden" name="hospital_id" value="'.$branches2["hospital_id"].'">
+									<button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">View '.$branches2["name"].'<i class="bi bi-box-arrow-up-right"></i></button>
+									</form>';
+								}?>
+							</div>
+						</div>
+						<div class="card mt-1 l-border-radius">
+							<div class="card-body">
+								<?php
+									function displayHospitalTimings($hospital) {
+										$daysOfWeek = [
+											'monday' => 'Monday',
+											'tuesday' => 'Tuesday',
+											'wednesday' => 'Wednesday',
+											'thursday' => 'Thursday',
+											'friday' => 'Friday',
+											'saturday' => 'Saturday',
+											'sunday' => 'Sunday'
+										];
 
-                                function displayHospitalTimings($hospital) {
-                                    $daysOfWeek = [
-                                        'monday' => 'Monday',
-                                        'tuesday' => 'Tuesday',
-                                        'wednesday' => 'Wednesday',
-                                        'thursday' => 'Thursday',
-                                        'friday' => 'Friday',
-                                        'saturday' => 'Saturday',
-                                        'sunday' => 'Sunday'
-                                    ];
+										date_default_timezone_set('Asia/Colombo');
+										$currentDay = strtolower(date('l')); 
+										$currentTime = date('H:i:s');
+										$curDayOpen =$hospital[$currentDay. '_open'];
+										$curDayClose =$hospital[$currentDay. '_close'];
+										$isOpen = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose) ? 
+										'<span class="text-success">Now open</span>' : 
+										'<span class="text-danger">Now closed</span>';
 
-                                    date_default_timezone_set('Asia/Colombo');
-                                    $currentDay = strtolower(date('l')); 
-                                    $currentTime = date('H:i:s');
-                                    $curDayOpen =$hospital[$currentDay. '_open'];
-                                    $curDayClose =$hospital[$currentDay. '_close'];
-                                    $isOpen = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose) ? 
-                                    '<span class="text-success">Now open</span>' : 
-                                    '<span class="text-danger">Now closed</span>';
+										$output = '<p class="small font-weight-bold">HOURS OF OPERATION</p>';
+									
+										$output .= '<div class="hospital-timings ml-4">';
+										foreach ($daysOfWeek as $dayKey => $dayName) {
+											$openTimeKey = $dayKey . '_open';
+											$closeTimeKey = $dayKey . '_close';
 
-                                    $output = '<br><i class="bi bi-clock-history small"></i> <a class="btn btn-sm btn-link text-decoration-none toggle-btn collapsed" type="button" data-toggle="collapse" data-target="#timecollapse" aria-expanded="false" aria-controls="timecollapse">'.$isOpen.'<i class="bi bi-chevron-up"></i></a>
-									<div class="collapse width ml-4" id="timecollapse">
-										<div class="card card-body p-0 border-0" style="width: 220px;">';
-                                
-                                    $output .= '<div class="hospital-timings">';
-                                    foreach ($daysOfWeek as $dayKey => $dayName) {
-                                        $openTimeKey = $dayKey . '_open';
-                                        $closeTimeKey = $dayKey . '_close';
-
-                                        $fmtOpenTime = date('H:i', strtotime($hospital[$openTimeKey]));
-                                        $fmtCloseTime = date('H:i', strtotime($hospital[$closeTimeKey]));
-                                
-                                        if ($hospital[$openTimeKey] === "00:00:00" && $hospital[$closeTimeKey] === "00:00:00") {
-                                            $output .= '<p class="mb-0 small">' . $dayName . ': Closed</p>';
-                                        } else {
-                                            $output .= '<p class="mb-0 small">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime. '</p>';
-                                        }
-                                    }
-                                    $output .= '</div></div></div>';                             
-                                    return $output;
-                                }
-                            
-                                echo displayHospitalTimings($row);
-
-								echo	($row["address"]!==null)?'<p class="mt-4 small"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
-								echo 	($row["mobile"]!==null)?'<p class="small"><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
-								echo	($row["email"]!==null)?'<p class="small"><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
-								echo	($row["website"]!==null)?'<p class="small"><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
-								echo 	'<label class="border-bottom pb-2 w-100 small">Branches</label>
-								';
-				
-								?>
-                                <?php $query1=mysqli_query($conn, "SELECT * FROM hospital WHERE main_id = (SELECT id FROM hospital WHERE hospital_id = '$id')");
-                                    while($branches1=mysqli_fetch_array($query1)){
-                                    echo '<form action="mpconnect/hospital/'. urlencode(str_replace(' ', '_', $branches1["name"])) .'" method="post" style="display:inline;">
-                                    <input type="hidden" name="hospital_id" value="'.$branches1["hospital_id"].'">
-                                    <button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">View '.$branches1["name"].' <i class="bi bi-box-arrow-up-right"></i></button>
-                                    </form>';
-                                }?>
-                                <?php $query2=mysqli_query($conn, "SELECT * FROM hospital WHERE main_id =(SELECT main_id FROM hospital WHERE hospital_id = '$id') AND hospital_id != '$id' UNION
-                                    SELECT * FROM hospital WHERE id =(SELECT main_id FROM hospital WHERE hospital_id = '$id')");
-                                    while($branches2=mysqli_fetch_array($query2)){
-                                    echo '<form action="mpconnect/hospital/'. urlencode(str_replace(' ', '_', $branches2["name"])) .'" method="post" style="display:inline;">
-                                    <input type="hidden" name="hospital_id" value="'.$branches2["hospital_id"].'">
-                                    <button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">View '.$branches2["name"].'<i class="bi bi-box-arrow-up-right"></i></button>
-                                    </form>';
-                                }?>
-                                
+											$fmtOpenTime = date('H:i', strtotime($hospital[$openTimeKey]));
+											$fmtCloseTime = date('H:i', strtotime($hospital[$closeTimeKey]));
+									
+											if ($hospital[$openTimeKey] === "00:00:00" && $hospital[$closeTimeKey] === "00:00:00") {
+												$output .= '<p class="mb-1 small text-uppercase font-weight-bold">' . $dayName . ': Closed</p>';
+											} else {
+												$output .= '<p class="mb-1 small text-uppercase font-weight-bold">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime. '</p>';
+											}
+										}
+										$output .= '</div>';                             
+										return $output;
+									}
+								
+									echo displayHospitalTimings($row);?>
+							</div>
 						</div>
 					</div>
 				</div>

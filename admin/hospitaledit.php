@@ -240,17 +240,21 @@
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-md-4 form-group">
+									<div class="col-md-3 form-group">
 										<label for="hospitalinsta">Instagram Link</label>
 										<input type="url" name="hospitalinsta" class="form-control" id="hospitalinsta" value="<?php echo $row['instagram']; ?>" placeholder="Instagram Link">
 									</div>
-									<div class="col-md-4 form-group">
+									<div class="col-md-3 form-group">
 										<label for="hospitalln">Linkedin Link</label>
 										<input type="url" name="hospitalln" class="form-control" id="hospitalln"  value="<?php echo $row['linkedin']; ?>" placeholder="Linkedin Link">
 									</div>
-									<div class="col-md-4 form-group">
+									<div class="col-md-3 form-group">
 										<label for="hospitalfb">Facebook Link</label>
 										<input type="url" name="hospitalfb" class="form-control" id="hospitalfb"  value="<?php echo $row['facebook']; ?>" placeholder="Facebook Link">
+									</div>
+									<div class="col-md-3 form-group">
+										<label for="hospitalyt">Youtube Link</label>
+										<input type="text" class="form-control" id="hospitalyt" name="hospitalyt" value="<?php echo $row['youtube']; ?>">
 									</div>
 								</div>
 								<div class="row">
@@ -266,8 +270,12 @@
 								<div class="row">
 									<div class="col-md-12 form-group">
 										<label class="required" for="about">About</label>
-										<textarea style="width:97%; height:180px; margin:auto" id="about"  name="about" class="about" required><?php echo $row['about']; ?></textarea>
+										<textarea id="about" name="about" class="about form-control" required><?php echo $row['about']; ?></textarea>
 									</div>
+								</div>
+								<div class="form-group">
+									<label class="required" for="service">Services</label>
+									<input type="text" data-role="tagsinput" class="form-control" id="service" name="service" value="<?php echo $row['services']; ?>">
 								</div>
 								<!--div class="row">
 									<div class="col-md-12 form-group">
@@ -394,7 +402,6 @@
 <script src="plugins/select2/js/select2.full.min.js"></script>
 <script>
 	$('.select2').select2();
-	$('#about').summernote({width:"100%", height:"250"});
 	function removeReg(data, status) {
 	  Swal.fire({
 	      text: data,

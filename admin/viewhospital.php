@@ -307,28 +307,40 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Facebook Link:</label>
 									<input type="text" class="form-control" id="facebook">
 								</div>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Instagram Link:</label>
 									<input type="text" class="form-control" id="instagram">
 								</div>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Linkedin Link :</label>
 									<input type="text" class="form-control" id="linkedin">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>Youtube Link :</label>
+									<input type="text" class="form-control" id="youtube">
 								</div>
 							</div>
 							<div class="col-md-12">
 								<div class="form-group">
 									<label>About:</label>
 									<input type="text" class="form-control" id="about">
+								</div>
+							</div>
+							<div class="col-md-12">
+								<div class="form-group">
+									<label>Service:</label>
+									<input type="text" class="form-control" id="services">
 								</div>
 							</div>
 						</div>

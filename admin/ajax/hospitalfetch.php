@@ -120,8 +120,10 @@ $output = '
     <th>Facebook Link</th>
     <th>Instagram Link</th>
     <th>Linkedin Link</th>
+    <th>Youtube Link</th>
     <th>Status</th>
     <!--th>About</th-->
+    <th>Services</th>
     <th>Priority</th>
     <th>logo Image</th>
     <th>Featured Image</th>
@@ -164,9 +166,11 @@ if($total_data > 0)
             <td>'.$main['facebook'].'</td>
             <td>'.$main['instagram'].'</td>
             <td>'.$main['linkedin'].'</td>
+            <td>'.$main['youtube'].'</td>
             <td>'.$main['status'].'</td>
             <!--td>'.$main['about'].'</td>
             <td>'.$main['priority'].'</td-->
+            <td>'.$main['services'].'</td>
             <td><select name="dropdown" id="prioritystatus" onchange="javascript:chg_status(this);">
             <option value="" selected disabled>'.$main["priority"].'</option>
             <option value="viewhospital.php?value=0&id='.$main["id"].'">0</option>
@@ -211,6 +215,7 @@ if($total_data > 0)
             <td>'.$branch['status'].'</td>
             <!--td>'.$branch['about'].'</td>
             <td>'.$branch['priority'].'</td-->
+            <td>'.$branch['services'].'</td>
             <td><select name="dropdown" id="prioritystatus" onchange="javascript:chg_status(this);">
             <option value="" selected disabled>'.$branch["priority"].'</option>
             <option value="viewhospital.php?value=0&id='.$branch["id"].'">0</option>

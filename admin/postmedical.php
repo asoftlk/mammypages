@@ -157,12 +157,12 @@
 	if(isset($_POST['specialitysubmit'])){
 		$specialityname = trim(mysqli_real_escape_string($conn, $_POST['specialityname']));
 		if($specialityname!=null){
-		$checkquery = mysqli_query($conn, "SELECT * FROM midwife_speciality WHERE speciality = '$specialityname'");
+		$checkquery = mysqli_query($conn, "SELECT * FROM medical_speciality WHERE speciality = '$specialityname'");
 		if(mysqli_num_rows($checkquery)>0){
 			echo "Speciality Already Exists";
 		}
 		else{
-			$insertspeciality = mysqli_query($conn, "INSERT INTO midwife_speciality (speciality) VALUES ('$specialityname');");
+			$insertspeciality = mysqli_query($conn, "INSERT INTO medical_speciality (speciality) VALUES ('$specialityname');");
 			if($insertspeciality){
 				echo "Speciality Added";
 			}
@@ -180,7 +180,7 @@
 		$specialityselect = mysqli_real_escape_string($conn, $_POST['specialityselect']);
 		$edited = trim(mysqli_real_escape_string($conn, $_POST['edited']));
 		if($edited!=null){
-			$updatequery = mysqli_query($conn, "UPDATE midwife_speciality SET speciality = '$edited' WHERE id='$specialityselect'");
+			$updatequery = mysqli_query($conn, "UPDATE medical_speciality SET speciality = '$edited' WHERE id='$specialityselect'");
 			if($updatequery){
 				echo "Speciality Updated";
 			}
@@ -194,7 +194,7 @@
 	}
 	if(isset($_POST['specialitydelete'])){
 		$specialityselect = mysqli_real_escape_string($conn, $_POST['specialityselect']);
-			$deletequery = mysqli_query($conn, "DELETE FROM midwife_speciality WHERE id='$specialityselect'");
+			$deletequery = mysqli_query($conn, "DELETE FROM medical_speciality WHERE id='$specialityselect'");
 			if($deletequery){
 				echo "Speciality Deleted";
 			}

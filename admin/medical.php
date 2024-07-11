@@ -62,7 +62,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
-					<a href="viewmidwife.php" class="btn btn-mammy float-right">View Medical Clinics</a>
+					<a href="viewmedclinic.php" class="btn btn-mammy float-right">View Medical Clinics</a>
 					<button type="button" class="btn btn-mammy" id="btnspeciality">+ Add Speciality</button>
 				</div>
 				<br><br>
@@ -132,7 +132,7 @@
                                                 </select>
                                             </div>
                                             <div class="form-group">
-												<label class="required" for="mpname">Medical Clinic Name</label>
+												<label class="required" for="mpname">Medical Clinic Branch Name</label>
 												<input type="text" name="mpname" class="form-control" id="mpname" placeholder="Medical Name">
 											</div>
 											<div class="form-group">
@@ -379,7 +379,7 @@
 		  subtype: {
 			required: true,
 		  },
-		  midwifeworking: {
+		  medicalworking: {
 			required: true,
 		  },
 		  
@@ -540,7 +540,7 @@
 			var specialityname = $('#specialityname').val();
 			$.ajax({
 	            type:"POST",
-	            url: "postmidwife",
+	            url: "postmedical",
 	            data:{specialityname:specialityname, specialitysubmit:"1"},
 				beforeSend: function() {
 					// setting a timeout
@@ -582,7 +582,7 @@
 			if(specialityselect!="null"){
 			$.ajax({
 	            type:"POST",
-	            url: "postmidwife",
+	            url: "postmedical",
 	            data:{specialityselect:specialityselect, edited:edited, specialityupdate:"1"},
 	            success:function(data){
 					if(data=='Speciality Updated'){
@@ -618,7 +618,7 @@
 			if (result.isConfirmed) {
 			$.ajax({
 	            type:"POST",
-	            url: "postmidwife",
+	            url: "postmedical",
 	            data:{specialityselect:specialityselect, specialitydelete:"1"},
 	            success:function(data){
 					if(data=='Speciality Deleted'){
