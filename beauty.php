@@ -378,20 +378,19 @@ include "mp.php";
                             
                             html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
                             html += '<div class="col-md-3" style="margin:auto">';
-                            html += '<a href="mpconnect/saloon/' + encodedName + '">';
-                            html += '<img src="directory/saloon/' + saloon.logo + '" class="img-fluid" style="max-height:5rem"></a>';
+                            html += '<img src="directory/saloon/' + saloon.logo + '" class="img-fluid" style="max-height:5rem">';
                             html += '</div>';
                             html += '<div class="col-md-9 pl-0" style="margin:1rem 0">';
                             html += '<div class="d-flex">';
-                            html += '<p class="text"><a href="mpconnect/saloon/' + encodedName + '" class="namehref">';
+                            html += '<p class="text">';
                         
                             if (saloon.priority > 0) {
-								html += '<p class="text-heading">&nbsp;' + saloon.name + '</p></a>';
+								html += '<p class="text-heading">&nbsp;' + saloon.typeName + '</p>';
                                 html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-2" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }
 							else{
-								html += '<p class="text-heading mr-auto">&nbsp;' + saloon.name + '</p></a>';
+								html += '<p class="text-heading mr-auto">&nbsp;' + saloon.typeName + '</p>';
 								html += '<strong>' + isOpen + '</strong><br>';
 							}
 

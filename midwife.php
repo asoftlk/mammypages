@@ -461,12 +461,12 @@ include "mp.php";
                             html += '<p class="text"><a href="mpconnect/midwife/' + encodedName + '" class="namehref">';
                             
                             if (midwife.priority > 0) {
-								html += '<p class="text-heading">&nbsp;' + midwife.name + '</p></a>';
+								html += '<p class="text-heading">&nbsp;' + midwife.typeName + '</p></a>';
                                 html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-2" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }
 							else{
-								html += '<p class="text-heading mr-auto">&nbsp;' + midwife.name + '</p></a>';
+								html += '<p class="text-heading mr-auto">&nbsp;' + midwife.typeName + '</p></a>';
 								html += '<strong>' + isOpen + '</strong><br>';
 							}
 

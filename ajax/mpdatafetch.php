@@ -35,7 +35,7 @@ if(mysqli_num_rows($result) > 0)
 			if (isset($row['main_id']) && !empty($row['main_id']) && $row['main_id'] != 0) {
 				$mainid = $row['main_id'];
 			
-				$name_query = "SELECT `name` FROM `hospital` WHERE `id` = '$mainid'";
+				$name_query = "SELECT `name` FROM `$type` WHERE `id` = '$mainid'";
 				$namequery = mysqli_query($conn, $name_query);
 			
 				if ($namequery) {
@@ -43,9 +43,9 @@ if(mysqli_num_rows($result) > 0)
 				}
 			}
 			if (!empty($row1['name']) && $row['main_id'] != 0) {
-				$hospital_name =  $row1['name'] . ' - ' . $row['name'];
+				$type_name =  $row1['name'] . ' - ' . $row['name'];
 			} else {
-				$hospital_name =  $row['name'];;
+				$type_name =  $row['name'];;
 			};
 		$output .= '  
 			<div class="row m-0" style="border-bottom: 1px solid #f4f4f4 ;">
@@ -77,7 +77,7 @@ if(mysqli_num_rows($result) > 0)
 									}
 									$rating=$rating-1;									
 								}
-							$output .= '</div><a href="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $row["name"])).'" class="namehref"><p class="text-heading">&nbsp;'.$hospital_name.'</p></a>
+							$output .= '</div><a href="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $row["name"])).'" class="namehref"><p class="text-heading">&nbsp;'.$type_name.'</p></a>
 							<p class="text">&nbsp;'.$speciality.'</P>
 							<div class="d-flex justify-content-between">
 							<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           

@@ -385,15 +385,14 @@ include "mp.php";
                             html += '<div class="col-md-9 pl-0" style="margin:1rem 0">';
                             html += '<div class="d-flex">';
                             html += '<p class="text"><a href="mpconnect/pharmacy/' + encodedName + '" class="namehref">';
-                            html += '<p class="text-heading">&nbsp;' + pharmacy.name + '</p></a>';
                            
                             if (pharmacy.priority > 0) {
-								html += '<p class="text-heading">&nbsp;' + pharmacy.name + '</p></a>';
+								html += '<p class="text-heading">&nbsp;' + pharmacy.typeName + '</p></a>';
                                 html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-2" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }
 							else{
-								html += '<p class="text-heading mr-auto">&nbsp;' + pharmacy.name + '</p></a>';
+								html += '<p class="text-heading mr-auto">&nbsp;' + pharmacy.typeName + '</p></a>';
 								html += '<strong>' + isOpen + '</strong><br>';
 							}
 

@@ -166,7 +166,7 @@ include "mp.php";
                         if (isset($row['main_id']) && !empty($row['main_id']) && $row['main_id'] != 0) {
                             $mainid = $row['main_id'];
                         
-                            $name_query = "SELECT `name` FROM `hospital` WHERE `id` = '$mainid'";
+                            $name_query = "SELECT `name` FROM `medical` WHERE `id` = '$mainid'";
                             $namequery = mysqli_query($conn, $name_query);
                         
                             if ($namequery) {
@@ -387,12 +387,12 @@ include "mp.php";
                             html += '<p class="text"><a href="mpconnect/medical/' + encodedName + '" class="namehref">';
                            
                             if (medical.priority > 0) {
-								html += '<p class="text-heading">&nbsp;' + medical.name + '</p></a>';
+								html += '<p class="text-heading">&nbsp;' + medical.typeName + '</p></a>';
                                 html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-2" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }
 							else{
-								html += '<p class="text-heading mr-auto">&nbsp;' + medical.name + '</p></a>';
+								html += '<p class="text-heading mr-auto">&nbsp;' + medical.typeName + '</p></a>';
 								html += '<strong>' + isOpen + '</strong><br>';
 							}
 

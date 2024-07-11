@@ -386,12 +386,12 @@ include "mp.php";
                             html += '<p class="text"><a href="mpconnect/studio/' + encodedName + '" class="namehref">';
                            
                             if (studio.priority > 0) {
-								html += '<p class="text-heading">&nbsp;' + studio.name + '</p></a>';
+								html += '<p class="text-heading">&nbsp;' + studio.typeName + '</p></a>';
                                 html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-2" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }
 							else{
-								html += '<p class="text-heading mr-auto">&nbsp;' + studio.name + '</p></a>';
+								html += '<p class="text-heading mr-auto">&nbsp;' + studio.typeName + '</p></a>';
 								html += '<strong>' + isOpen + '</strong><br>';
 							}
                             

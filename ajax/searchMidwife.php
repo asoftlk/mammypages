@@ -39,13 +39,20 @@ if (isset($_POST["search"])) {
             $midwifeId = $row['midwife_id'];
             $ratingQuery = mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count FROM mp_comments WHERE mp_id= '$midwifeId'");
             $ratingRow = mysqli_fetch_assoc($ratingQuery);
-            if ($ratingRow['count'] != 0) {
-                $row['rating'] = $ratingRow['total'] / $ratingRow['count'];
-            } else {
-                $row['rating'] = 0;
-            }
+            $row['rating'] = $ratingRow['count'] != 0 ? $ratingRow['total'] / $ratingRow['count'] : 0;
 
-            $html .= '<li><a class="title-list" href="mpdetails?type=midwife&id='.$row["midwife_id"].'" style="text-decoration:none; color:black"><div class="d-flex"><img src="directory/midwife/'.$row["image"].'" style="width:50px; height:40px; object-fit:cover; margin-right:5px; border-radius:5px"><p class="mb-0">'.$row["name"].'</p></div></a></li>';
+            $type_name_head = $row['name'];
+            if (isset($row['main_id']) && !empty($row['main_id']) && $row['main_id'] != 0) {
+                $mainId = $row['main_id'];
+                $nameQuery = mysqli_query($conn, "SELECT `name` FROM `midwife` WHERE `id` = '$mainId'");
+                if ($nameQuery) {
+                    $mainRow = mysqli_fetch_assoc($nameQuery);
+                    $type_name_head = !empty($mainRow['name']) ? $mainRow['name'] . ' - ' . $row['name'] : $row['name'];
+                }
+            }
+            $row['typeName'] = $type_name_head;
+
+            $html .= '<li><div class="d-flex"><img src="directory/midwife/'.$row["image"].'" style="width:50px; height:40px; object-fit:cover; margin-right:5px; border-radius:5px"><p class="mb-0">'.$type_name_head.'</p></div></li>';
             $list[] = $row;
         }
     } else {
