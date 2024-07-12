@@ -525,13 +525,19 @@
 									}
 						 			echo '</div>';
 									}*/
-							echo	'</div>
-								<div class="row fillbg mt-1 l-border-radius py-2">
-									<p class="heading text-left mt-1 text-uppercase font-weight-bold" style="margin:0.5rem 0 1rem; font-size:12px">Services</p>
-									<p>'.$services.'</p>
-								</div>
-								';
-							
+                            $servicesArray = explode(',', $services);
+                            $servicesHtml = '<ul>';
+                            foreach ($servicesArray as $service) {
+                                $servicesHtml .= '<li>' . trim($service) . '</li>';
+                            }
+                            $servicesHtml .= '</ul>';
+                            
+                            echo	'</div>
+                                    <div class="row fillbg mt-1 l-border-radius py-2">
+                                        <p class="heading text-left mt-1 text-uppercase font-weight-bold" style="margin:0.5rem 0 1rem; font-size:12px">Services</p>
+                                        ' . $servicesHtml . '
+                                    </div>
+                                    ';
 						}
                     ?>
 
@@ -711,12 +717,12 @@
 									}
 									?>
 							<div class="card-body">
-								<?php
-									echo	($row["address"]!==null)?'<p class="small"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
-									echo 	($row["mobile"]!==null)?'<p class="small"><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
-									echo 	($row["whatsapp"]!==null)?'<p class="small"><i class="bi bi-whatsapp"></i>&nbsp;<a href="https://wa.me/'.$row["whatsapp"].'" target="_blank" class="text-decoration-none text-dark">'.$row["whatsapp"].'</a></p>':null;
-									echo	($row["email"]!==null)?'<p class="small"><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
-									echo	($row["website"]!==null)?'<p class="small"><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
+								<?php 
+									echo	(strlen($row["address"]) > 0)?'<p class="small"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
+									echo 	(strlen($row["mobile"]) > 0)?'<p class="small"><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
+									echo 	(strlen($row["whatsapp"]) > 0)?'<p class="small"><i class="bi bi-whatsapp"></i>&nbsp;<a href="https://wa.me/'.$row["whatsapp"].'" target="_blank" class="text-decoration-none text-dark">'.$row["whatsapp"].'</a></p>':null;
+									echo	(strlen($row["email"]) > 0)?'<p class="small"><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
+									echo	(strlen($row["website"]) > 0)?'<p class="small"><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
 									;
 					
 									?>
@@ -758,6 +764,7 @@
 
 										date_default_timezone_set('Asia/Colombo');
 										$currentDay = strtolower(date('l')); 
+                                        // var_dump($currentDay);exit;
 										$currentTime = date('H:i:s');
 										$curDayOpen =$hospital[$currentDay. '_open'];
 										$curDayClose =$hospital[$currentDay. '_close'];
@@ -774,11 +781,12 @@
 
 											$fmtOpenTime = date('H:i', strtotime($hospital[$openTimeKey]));
 											$fmtCloseTime = date('H:i', strtotime($hospital[$closeTimeKey]));
+                                            $isToday = (strtolower($dayName) == strtolower($currentDay)) ? 'text-success':'';
 									
 											if ($hospital[$openTimeKey] === "00:00:00" && $hospital[$closeTimeKey] === "00:00:00") {
-												$output .= '<p class="mb-1 small text-uppercase font-weight-bold">' . $dayName . ': Closed</p>';
+												$output .= '<p class="mb-1 small text-uppercase font-weight-bold ">' . $dayName . ': Closed</p>';
 											} else {
-												$output .= '<p class="mb-1 small text-uppercase font-weight-bold">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime. '</p>';
+												$output .= '<p class="mb-1 small text-uppercase font-weight-bold '.$isToday.'">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime. '</p>';
 											}
 										}
 										$output .= '</div>';                             
