@@ -327,3 +327,14 @@ display: none;
 .map iframe{
   border-radius: 17px !important;
 }
+.btn-info {
+  color: #fff;
+  background-color: #5e52a3;
+  border-color: #5e52a3;
+  box-shadow: none;
+}
+.btn-info:hover {
+  color: #fff;
+  background-color: #5e52a3eb;
+  border-color: #5e52a3eb;
+}
