@@ -459,7 +459,6 @@
 	$(document).ajaxComplete(function() {
 	    if (count == 0) {
 	        $('#btn_more').click();
-            console.log("yy");
 	        count++;
 	    }
 	});

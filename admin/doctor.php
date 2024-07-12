@@ -33,6 +33,9 @@ ul.ui-autocomplete {
     width:50%;
 }
 </style>
+<?php 
+    $days = ['mon' => 'monday', 'tue' => 'tuesday', 'wed' => 'wednesday', 'thu' => 'thursday', 'fri' => 'friday', 'sat' => 'saturday', 'sun' => 'sunday'];
+?>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -127,7 +130,7 @@ ul.ui-autocomplete {
 					  <input type="text" name="qualification" class="form-control" id="qualification" placeholder="qualification">
 					</div>
 					<div class="form-group">
-					  <label class="required" for="doctoraddr">doctor Address</label>
+					  <label class="required" for="doctoraddr">Doctor Address</label>
 					  <input type="text" name="doctoraddr" class="form-control" id="doctoraddr" placeholder="Address">
 					</div>
 					
@@ -146,12 +149,13 @@ ul.ui-autocomplete {
 					  <input type="url" name="doctorweb" class="form-control" id="doctorweb" placeholder="Website">
 					</div>
 					<div class="form-group">
-					  <label class="required" for="doctortype">doctor type</label>
-					  <select class="form-control" name="doctortype" id="doctortype">
-							<option selected="" disabled="" value="null" class="hidden">--Select doctor Type</option>
-							<option value="Government doctor">Government doctor</option>
-							<option value="Private doctor">Private doctor</option>
-					  </select>
+					  <label class="required" for="doctorshospital">Hospital Visits</label>
+                      <select class="form-control select2" name="doctorshospital[]" id="doctorshospital" multiple data-placeholder='--Select Hospital--'>              
+						<?php $query=mysqli_query($conn, "SELECT * FROM hospital");
+						while($row=mysqli_fetch_array($query)){
+						echo   '<option value="'.$row["name"].'">'.$row["name"].'</option>';
+						}?>
+                        </select>
 					</div>
 					
 					<div class="form-group">
@@ -165,42 +169,31 @@ ul.ui-autocomplete {
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>Monday</td>
-									<td><input type="time" name="monopentime" class="form-control form-control-sm border-0" id="monopentime" placeholder="Monday Open Time"></td>
-									<td><input type="time" name="monendtime" class="form-control form-control-sm border-0" id="monendtime" placeholder="Monday End Time"></td>
-								</tr>
-								<tr>
-									<td>Tuesday</td>
-									<td><input type="time" name="tueopentime" class="form-control form-control-sm border-0" id="tueopentime" placeholder="Tuesday Open Time"></td>
-									<td><input type="time" name="tueendtime" class="form-control form-control-sm border-0" id="tueendtime" placeholder="Tuesday End Time"></td>
-								</tr>
-								<tr>
-									<td>Wednesday</td>
-									<td><input type="time" name="wedopentime" class="form-control form-control-sm border-0" id="wedopentime" placeholder="Wednesday Open Time"></td>
-									<td><input type="time" name="wedendtime" class="form-control form-control-sm border-0" id="wedendtime" placeholder="Wednesday End Time"></td>
-								</tr>
-								<tr>
-									<td>Thursday</td>
-									<td><input type="time" name="thuopentime" class="form-control form-control-sm border-0" id="thuopentime" placeholder="Thursday Open Time"></td>
-									<td><input type="time" name="thuendtime" class="form-control form-control-sm border-0" id="thuendtime" placeholder="Thursday End Time"></td>
-								</tr>
-								<tr>
-									<td>Friday</td>
-									<td><input type="time" name="friopentime" class="form-control form-control-sm border-0" id="friopentime" placeholder="Friday Open Time"></td>
-									<td><input type="time" name="friendtime" class="form-control form-control-sm border-0" id="friendtime" placeholder="Friday End Time"></td>
-								</tr>
-								<tr>
-									<td>Saturday</td>
-									<td><input type="time" name="satopentime" class="form-control form-control-sm border-0" id="satopentime" placeholder="Saturday Open Time"></td>
-									<td><input type="time" name="satendtime" class="form-control form-control-sm border-0" id="satendtime" placeholder="Saturday End Time"></td>
-								</tr>
-								<tr>
-									<td>Sunday</td>
-									<td><input type="time" name="sunopentime" class="form-control form-control-sm border-0" id="sunopentime" placeholder="Sunday Open Time"></td>
-									<td><input type="time" name="sunendtime" class="form-control form-control-sm border-0" id="sunendtime" placeholder="Sunday End Time"></td>
-								</tr>
-							</tbody>
+                                <?php foreach ($days as $abbr => $day): ?>
+                                <tr>
+                                    <td><?php echo ucfirst($day); ?></td>
+                                    <td>
+                                        <input type="time" 
+                                            name="<?php echo $abbr; ?>opentime" 
+                                            class="form-control form-control-sm border-0" 
+                                            id="<?php echo $abbr; ?>opentime" 
+                                            placeholder="<?php echo ucfirst($day); ?> Open Time" 
+                                        >
+                                    </td>
+                                    <td>
+                                        <input type="time" 
+                                            name="<?php echo $abbr; ?>endtime" 
+                                            class="form-control form-control-sm border-0" 
+                                            id="<?php echo $abbr; ?>endtime" 
+                                            placeholder="<?php echo ucfirst($day); ?> End Time" 
+                                        >
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-info" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
 						</table>
 					</div>
 					
