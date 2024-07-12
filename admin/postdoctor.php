@@ -5,23 +5,23 @@ $time = date("d-m-Y")."-".time();
 if(isset($_POST['sub-hos'])){
 	$doctorid = "Doctor-".mt_rand(1000000,9999999);
 	$dtime_id = "doctime-".mt_rand(1000000,9999999);
-	  $doctorname = filter_input(INPUT_POST, 'doctorname');
-	 $doctorspecialist1 = $_POST['doctorspecialist'];
-	 $doctorspecialist ="";
-	 for($i=0; $i<count($doctorspecialist1);$i++){
-		 if($i==(count($doctorspecialist1)-1)){
-			 $doctorspecialist .= $doctorspecialist1[$i];
-		 }
+    $doctorname = filter_input(INPUT_POST, 'doctorname');
+    $doctorspecialist1 = $_POST['doctorspecialist'];
+    $doctorspecialist ="";
+    for($i=0; $i<count($doctorspecialist1);$i++){
+        if($i==(count($doctorspecialist1)-1)){
+            $doctorspecialist .= $doctorspecialist1[$i];
+        }
 		 else{
-		 $doctorspecialist .= $doctorspecialist1[$i]." ///";
-		 }
-	 }
-	 $doctoraddr = filter_input(INPUT_POST, 'doctoraddr');
+             $doctorspecialist .= $doctorspecialist1[$i]." ///";
+            }
+        }
+        $doctoraddr = filter_input(INPUT_POST, 'doctoraddr');
      $doctorqualification = filter_input(INPUT_POST, 'qualification');
-	$doctorcont = filter_input(INPUT_POST, 'doctorcont');
-	$doctoremail = filter_input(INPUT_POST, 'doctoremail');
-	$doctorweb = filter_input(INPUT_POST, 'doctorweb');
-	$doctortype = filter_input(INPUT_POST, 'doctortype');
+     $doctorcont = filter_input(INPUT_POST, 'doctorcont');
+     $doctoremail = filter_input(INPUT_POST, 'doctoremail');
+     $doctorweb = filter_input(INPUT_POST, 'doctorweb');
+     $visitHospital = implode(', ', $_POST['doctorshospital']);
 	$doctorworking = filter_input(INPUT_POST, 'doctorworking');
 	$doctorfb = filter_input(INPUT_POST, 'doctorfb');
 	$doctorinsta = filter_input(INPUT_POST, 'doctorinsta');
@@ -105,12 +105,12 @@ if(isset($_POST['sub-hos'])){
 			$logoupload = move_uploaded_file($_FILES['logoimage']['tmp_name'], "../directory/doctor/".$logotarget);
 			
 		if($featureupload){
-		 $query= "INSERT INTO doctor (doctor_id, name, speciality,qualification, address, mobile, email, website, type, working_hours,  facebook, instagram, linkedin,logo, status, about,priority, image) 
-		 	        values ('$doctorid', '$doctorname', '$doctorspecialist', '$doctorqualification','$doctoraddr',  '$doctorcont',  '$doctoremail', '$doctorweb', '$doctortype', '$doctorworking', '$doctorfb',  '$doctorinsta', '$doctorln', '$logotarget', '$status', '$about','$priority','$featuretarget')";
+		 $query= "INSERT INTO doctor (doctor_id, name, speciality,qualification, address, mobile, email, website, visit_hospital, working_hours,  facebook, instagram, linkedin,logo, status, about,priority, image) 
+		 	        values ('$doctorid', '$doctorname', '$doctorspecialist', '$doctorqualification','$doctoraddr',  '$doctorcont',  '$doctoremail', '$doctorweb', '$visitHospital', '$doctorworking', '$doctorfb',  '$doctorinsta', '$doctorln', '$logotarget', '$status', '$about','$priority','$featuretarget')";
 			$result = mysqli_query($conn, $query);
 
-			$workingTimesQuery = "INSERT INTO doctor_working_times (dtime_id, doctor_id, doctor_type, monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
-								VALUES ('$dtime_id','$doctorid', '$doctortype', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
+			$workingTimesQuery = "INSERT INTO doctor_working_times (dtime_id, doctor_id,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
+								VALUES ('$dtime_id','$doctorid', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
 			$resultWorkingTimes = mysqli_query($conn, $workingTimesQuery);
 			 if($result){
 				echo "Posted Successfully";

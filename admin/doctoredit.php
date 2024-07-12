@@ -28,8 +28,17 @@ label:not(.form-check-label):not(.custom-file-label) {
 </style>
 <?php
 $id=$_GET['id'];
-$result = mysqli_query($conn,"SELECT * from doctor Where id='$id'");
+$result = mysqli_query($conn,"SELECT * from doctor d LEFT JOIN doctor_working_times hwt ON hwt.doctor_id = d.doctor_id Where id='$id'");
 $row= mysqli_fetch_array($result);
+$days = ['mon' => 'monday', 'tue' => 'tuesday', 'wed' => 'wednesday', 'thu' => 'thursday', 'fri' => 'friday', 'sat' => 'saturday', 'sun' => 'sunday'];
+$times = [];
+    
+    foreach ($days as $abbr => $day) {
+        $openKey = $day . '_open';
+        $closeKey = $day . '_close';
+        $times[$abbr . 'open'] = $row[$openKey] == '00:00:00' ? '' : $row[$openKey];
+        $times[$abbr . 'close'] = $row[$closeKey] == '00:00:00' ? '' : $row[$closeKey];
+    }
 ?>
  
 <script>
@@ -60,7 +69,7 @@ $(document).ready(function() {
       <div class="container-fluid">
         <div class="row">
 		<div class="col-12">
-			<a href="viewhospital.php" class="btn btn-mammy">Cancel / Back</a>
+			<a href="viewdoctors.php" class="btn btn-mammy">Cancel / Back</a>
 		  </div><br><br>
           <!-- left column -->
           <div class="col-md-12">
@@ -79,7 +88,7 @@ $(document).ready(function() {
 						</div>
 						
 						<div class="col-md-6 form-group">
-						<label class="required" for="">doctor Specialist In</label>
+						<label class="required" for="">Doctor Specialist In</label>
 						<select class="form-control select2" name="doctorspecialist[]" id="doctorspecialist" multiple data-placeholder='--Select Speciality--'>
 						<?php 
 						$hospitallist=mysqli_query($conn, "SELECT * FROM doctor_speciality");
@@ -105,7 +114,7 @@ $(document).ready(function() {
 					
 					<div class="row">
 						<div class="col-md-6 form-group">
-						<label class="required" for="doctoraddr">doctor Address</label>
+						<label class="required" for="doctoraddr">Doctor Address</label>
 					  <input type="text" name="doctoraddr" class="form-control" id="doctoraddr"  value="<?php echo $row['address']; ?>" placeholder="Address">
 						</div>
 						
@@ -131,24 +140,63 @@ $(document).ready(function() {
 					
 					<div class="row">
 					<div class="col-md-6 form-group">
-						<label for="doctor qualification">qualification</label>
+						<label for="doctor qualification">Qualification</label>
 					  <input type="text" name="doctorqualification" class="form-control" id="doctorqualification"  value="<?php echo $row['qualification']; ?>" >
 						</div>	
-						<div class="col-md-6 form-group">
-						<label class="required" for="doctortype">doctor type</label>
-						  <select class="form-control" name="doctortype" id="doctortype">
-								<option selected="" disabled="" value="null" class="hidden">--Select doctor Type</option>
-								<option value="Government doctor" <?php if($row['type']=="Government doctor") echo  'selected="selected"';?>>Government doctor</option>
-								<option value="Private doctor" <?php if($row['type']=="Private doctor") echo  'selected="selected"';?>>Private doctor</option>
-						  </select>
-						  </div>					  
+                        <div class="form-group">
+                            <?php $existingHospitals = array_map('trim', explode(',', $row['visit_hospital']));?>
+                            <label class="required" for="doctorshospital">Hospital Visits</label>
+                            <select class="form-control select2" name="doctorshospital[]" id="doctorshospital" multiple data-placeholder='--Select Hospital--'>              
+                                <?php $query=mysqli_query($conn, "SELECT * FROM hospital");
+                                 while($row1=mysqli_fetch_array($query)){
+                                    $hospitalName = trim($row1["name"]);
+                                    $selected = in_array($hospitalName, $existingHospitals) ? 'selected' : '';
+                                    echo '<option value="'.$hospitalName.'" '.$selected.'>'.$hospitalName.'</option>';
+                                }?>
+                        </select>
+					</div>
+                        				  
 					</div>
 				
 					<div class="row">
-						<div class="col-md-6 form-group">
-						<label class="required" for="doctorworking">Hours of Operation</label>
-					  <input type="text" name="doctorworking" class="form-control" id="doctorworking" value="<?php echo $row['working_hours']; ?>" placeholder="Working Hours">
-						</div>
+                    <div class="col-md-12 form-group">
+                            <label class="required" for="branchworking">Hours of Operation</label>
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Day</th>
+                                        <th>Open time</th>
+                                        <th>End time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($days as $abbr => $day): ?>
+                                    <tr>
+                                        <td><?php echo ucfirst($day); ?></td>
+                                        <td>
+                                            <input type="time" 
+                                                name="<?php echo $abbr; ?>opentime" 
+                                                class="form-control form-control-sm border-0" 
+                                                id="<?php echo $abbr; ?>opentime" 
+                                                placeholder="<?php echo ucfirst($day); ?> Open Time" 
+                                                value="<?php echo $times[$abbr . 'open']; ?>">
+                                        </td>
+                                        <td>
+                                            <input type="time" 
+                                                name="<?php echo $abbr; ?>endtime" 
+                                                class="form-control form-control-sm border-0" 
+                                                id="<?php echo $abbr; ?>endtime" 
+                                                placeholder="<?php echo ucfirst($day); ?> End Time" 
+                                                value="<?php echo $times[$abbr . 'close']; ?>">
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-info" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
 						<div class="col-md-6 form-group">
 						<label for="doctortfb">Facebook Link</label>
 						  <input type="url" name="doctorfb" class="form-control" id="doctorfb"  value="<?php echo $row['facebook']; ?>" placeholder="Facebook Link">

@@ -94,7 +94,6 @@ if($total_data > 0)
         <td>'.$row['email'].'</td>
 		
 		<td>'.$row['website'].'</td>
-		<td>'.$row['type'].'</td>
 		<td>'.$row['working_hours'].'</td>
 		
 		<td>'.$row['facebook'].'</td>

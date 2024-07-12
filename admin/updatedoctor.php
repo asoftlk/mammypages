@@ -21,8 +21,10 @@ date_default_timezone_set('Asia/Kolkata');
   $mobile = mysqli_real_escape_string($conn, $_POST['doctorcont']);
  $email = mysqli_real_escape_string($conn, $_POST['doctoremail']);
  $website = mysqli_real_escape_string($conn, $_POST['doctorweb']);
- $type = mysqli_real_escape_string($conn, $_POST['doctortype']);
- $working_hours = mysqli_real_escape_string($conn, $_POST['doctorworking']);
+//  $type = mysqli_real_escape_string($conn, $_POST['doctortype']);
+ $visitHospital = implode(', ', $_POST['doctorshospital']);
+//  $working_hours = mysqli_real_escape_string($conn, $_POST['doctorworking']);
+ $working_hours = null;
  $facebook = mysqli_real_escape_string($conn, $_POST['doctorfb']);
  $instagram = mysqli_real_escape_string($conn, $_POST['doctorinsta']);
  $linkedin = mysqli_real_escape_string($conn, $_POST['doctorln']);
@@ -47,7 +49,7 @@ $logoimage =$_FILES['logoimage']['name'];
 	}
 
 	   
- $updatequery = "Update doctor SET name='$name',speciality='$speciality',address='$address', mobile='$mobile',email='$email',website='$website', type='$type', working_hours='$working_hours', facebook='$facebook', instagram='$instagram', linkedin='$linkedin', status='$status',about='$about' ";		
+ $updatequery = "Update doctor SET name='$name',speciality='$speciality',address='$address', mobile='$mobile',email='$email',website='$website', visit_hospital='$visitHospital', working_hours='$working_hours', facebook='$facebook', instagram='$instagram', linkedin='$linkedin', status='$status',about='$about' ";		
 	$featuredimage = $_FILES['featuredimage']['name'];
 		
 		

@@ -615,7 +615,6 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <!-- PHP to generate days and time inputs -->
                                                         <?php foreach ($days as $abbr => $day): ?>
                                                             <tr>
                                                                 <td><?php echo ucfirst($day); ?></td>
