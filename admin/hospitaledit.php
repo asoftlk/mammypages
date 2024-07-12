@@ -107,13 +107,14 @@
                                         <?php
                                     }
                                     ?>
-
+                                    <?php  if($row["is_main"] !== 'N') {?> 
 									<div class="col-md-6 form-group">
 										<label class="required" for="hospitalname"><?php echo ($row["is_main"] === 'N') ? "Hospital Branch Name" : "Hospital Name" ?>
                                     </label>
 										<input type="text" name="hospitalname" class="form-control" id="hospitalname"
 											value="<?php echo $row["name"]; ?>" placeholder="Hospital Name">
 									</div>
+                                    <?php }?>
 									<div class="col-md-6 form-group">
 										<label class="required" for="">Hospital Specialist In</label>
 										<select class="form-control select2" name="hospitalspecialist[]" id="hospitalspecialist" multiple data-placeholder='--Select Speciality--'>

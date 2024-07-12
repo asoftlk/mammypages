@@ -117,21 +117,7 @@
                                     $closeTime = $row[$currentDay . '_close'];
                                     $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mt-2 mr-1">Open</span>' : '<span class="text-danger text mt-2 mr-1">Closed</span>';
 									
-									if (isset($row['main_id']) && !empty($row['main_id']) && $row['main_id'] != 0) {
-										$mainid = $row['main_id'];
-									
-										$name_query = "SELECT `name` FROM `hospital` WHERE `id` = '$mainid'";
-										$namequery = mysqli_query($conn, $name_query);
-									
-										if ($namequery) {
-											$row1 = mysqli_fetch_array($namequery);
-										}
-									}
-									if (!empty($row1['name']) && $row['main_id'] != 0) {
-										$type_name_head =  $row1['name'] . ' - ' . $row['name'];
-									} else {
-										$type_name_head =  $row['name'];;
-									};
+			
 								echo '<div class="row m-0 priority-list sort-item">
 										<div class="col-md-3" style="margin:auto">
 										<div>
@@ -141,7 +127,7 @@
 										<div class="col-md-9 pl-0" style="margin:1rem 0">
 										<div class="d-flex">
 											<p class="text">
-												<p class="text-heading">&nbsp;'.$type_name_head.'</p>
+												<p class="text-heading">&nbsp;'.$row['name'].'</p>
 												<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-3" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
 												<strong>' . $isOpen . '</strong>
 										</div>
@@ -415,12 +401,12 @@
                             html += '<div class="d-flex">';
                             html += '<p class="text">';
                             if (hospital.priority > 0) {
-								html += '<p class="text-heading">&nbsp;' + hospital.typeName + '</p>';
+								html += '<p class="text-heading">&nbsp;yy' + hospital.name + '</p>';
                                 html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-2" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }
 							else{
-								html += '<p class="text-heading mr-auto">&nbsp;' + hospital.typeName + '</p>';
+								html += '<p class="text-heading mr-auto">&nbsp;' + hospital.name + '</p>';
 								html += '<strong>' + isOpen + '</strong><br>';
 							}
                             html += '</div>';

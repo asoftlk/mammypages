@@ -147,21 +147,7 @@ if(mysqli_num_rows($result) > 0)
         $closeTime = $row[$currentDay . '_close'];
         $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1" style="float:right">Open</span>' : '<span class="text-danger text mr-1" style="float:right">Closed</span>'
     ;
-        if (isset($row['main_id']) && !empty($row['main_id']) && $row['main_id'] != 0) {
-            $mainid = $row['main_id'];
         
-            $name_query = "SELECT `name` FROM `hospital` WHERE `id` = '$mainid'";
-            $namequery = mysqli_query($conn, $name_query);
-        
-            if ($namequery) {
-                $row1 = mysqli_fetch_array($namequery);
-            }
-        }
-        if (!empty($row1['name']) && $row['main_id'] != 0) {
-            $hospital_name =  $row1['name'] . ' - ' . $row['name'];
-        } else {
-            $hospital_name =  $row['name'];;
-        };
         $output .= '  
         <div class="row m-0 sort-item">
             <div class="col-md-3" style="margin:auto">
@@ -192,7 +178,7 @@ if(mysqli_num_rows($result) > 0)
                     }
                 $output .= '</div>
                 
-                <p class="text-heading">&nbsp;' . $hospital_name . '</p>
+                <p class="text-heading">&nbsp;' . $row['name'] . '</p>
                 <p class="text">&nbsp;' . $speciality . '</p>
                 <div class="d-flex justify-content-between">
                     <p class="text">

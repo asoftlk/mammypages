@@ -44,13 +44,13 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1>Hospital Clinics</h1>
+					<h1>Hospital</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active"><a href="viewhospital">Hospital Clinics</a></li>
-						<li class="breadcrumb-item active">Add Hospital Clinics</li>
+						<li class="breadcrumb-item active"><a href="viewhospital">Hospital</a></li>
+						<li class="breadcrumb-item active">Add Hospital</li>
 					</ol>
 				</div>
 			</div>
@@ -62,7 +62,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
-					<a href="viewhospital.php" class="btn btn-mammy float-right">View Hospital Clinics</a>
+					<a href="viewhospital.php" class="btn btn-mammy float-right">View Hospital</a>
 					<button type="button" class="btn btn-mammy" id="btnspeciality">+ Add Speciality</button>
 				</div>
 				<br><br>
@@ -504,7 +504,7 @@
                         <div class="card-body">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#new" role="tab">New Hospital Clinic</a>
+                                    <a class="nav-link active" data-toggle="tab" href="#new" role="tab">New Hospital</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-toggle="tab" href="#addbranch" role="tab">Add Branch</a>
@@ -518,9 +518,9 @@
                                                 $hospitalQuery = mysqli_query($conn, "SELECT DISTINCT * FROM hospital WHERE is_main = 'Y'");
                                             ?>
                                             <div class="form-group branch">
-                                                <label class="required" for="mainId">Hospital Clinic Name</label>
+                                                <label class="required" for="mainId">Hospital Name</label>
                                                 <select name="mainId" class="form-control" id="mainId" required>
-                                                    <option value="">Select Hospital Clinic</option>
+                                                    <option value="">Select Hospital</option>
                                                     <?php
                                                     while ($hospitalRow = mysqli_fetch_array($hospitalQuery)) {
                                                         $hospitalArray = explode(" ///", $hospitalRow['name']);
@@ -535,8 +535,8 @@
                                                     ?>
                                                 </select>
                                             </div>
-                                            <div class="form-group">
-												<label class="required" for="hospitalname">Hospital Clinic Name</label>
+                                            <div class="form-group new">
+												<label class="required" for="hospitalname">Hospital Name</label>
 												<input type="text" name="hospitalname" class="form-control" id="hospitalname" placeholder="Hospital Name">
 											</div>
 											<div class="form-group">
@@ -549,15 +549,15 @@
 												</select>
 											</div>
 											<div class="form-group">
-												<label class="required" for="hospitaladdr">Hospital Clinic Address</label>
+												<label class="required" for="hospitaladdr">Hospital Address</label>
 												<input type="text" name="hospitaladdr" class="form-control" id="hospitaladdr" placeholder="Address">
 											</div>
 											<div class="form-group">
-												<label for="hospitalmap" class="required">Hospital Clinic Map location</label>
+												<label for="hospitalmap" class="required">Hospital Map location</label>
 												<input type="text" name="hospitalmap" class="form-control" id="hospitalmap" placeholder="Copy form Google Map by poining the location">
 											</div>
 											<div class="form-group">
-												<label class="required" for="hospitalcity">Hospital Clinic city(required to show for branches)</label>
+												<label class="required" for="hospitalcity">Hospital city(required to show for branches)</label>
 												<input type="text" name="hospitalcity" class="form-control" id="hospitalcity" placeholder="City">
 											</div>
 											<div class="form-group">
@@ -577,27 +577,27 @@
 												<input type="url" name="hospitalweb" class="form-control" id="hospitalweb" placeholder="Website">
 											</div>
 											<div class="form-group">
-												<label class="required" for="hospitaltype">Hospital Clinic type</label>
+												<label class="required" for="hospitaltype">Hospital type</label>
 												<select class="form-control" name="hospitaltype" id="hospitaltype">
-													<option selected="" disabled="" value="null" class="hidden">--Select Hospital Clinic Type</option>
-													<option value="Government hospital">Government Hospital Clinic</option>
-													<option value="Private hospital">Private Hospital Clinic</option>
+													<option selected="" disabled="" value="null" class="hidden">--Select Hospital Type</option>
+													<option value="Government hospital">Government Hospital</option>
+													<option value="Private hospital">Private Hospital</option>
 												</select>
 											</div>
 											<div class="form-group hospitalsubtype">
-												<label for="hospitalsubtype" class="required">Hospital Clinic Subtype</label>
+												<label for="hospitalsubtype" class="required">Hospital Subtype</label>
 												<select class="form-control" name="hospitalsubtype" id="hospitalsubtype">
-													<option selected="" disabled="" value="null" class="hidden">--Select Hospital Clinic Subype</option>
-													<option value="National Hospital">National Hospital Clinic</option>
-													<option value="Teaching Hospital">Teaching Hospital Clinic</option>
-													<option value="Specialized Teaching Hospital">Specialized Teaching Hospital Clinic</option>
-													<option value="Other Specialized Hospital">Other Specialized Hospital Clinic</option>
-													<option value="Provincial General Hospital">Provincial General Hospital Clinic</option>
-													<option value="Base Hospital Type - A">Base Hospital Clinic Type - A</option>
-													<option value="Base Hospital Type - B">Base Hospital Clinic Type - B</option>
-													<option value="Divisional Hospital Type - A">Divisional Hospital Clinic Type - A</option>
-													<option value="Divisional Hospital Type - B">Divisional Hospital Clinic Type - B</option>
-													<option value="Divisional Hospital Type - C">Divisional Hospital Clinic Type - C</option>
+													<option selected="" disabled="" value="null" class="hidden">--Select Hospital Subype</option>
+													<option value="National Hospital">National Hospital</option>
+													<option value="Teaching Hospital">Teaching Hospital</option>
+													<option value="Specialized Teaching Hospital">Specialized Teaching Hospital</option>
+													<option value="Other Specialized Hospital">Other Specialized Hospital</option>
+													<option value="Provincial General Hospital">Provincial General Hospital</option>
+													<option value="Base Hospital Type - A">Base Hospital Type - A</option>
+													<option value="Base Hospital Type - B">Base Hospital Type - B</option>
+													<option value="Divisional Hospital Type - A">Divisional Hospital Type - A</option>
+													<option value="Divisional Hospital Type - B">Divisional Hospital Type - B</option>
+													<option value="Divisional Hospital Type - C">Divisional Hospital Type - C</option>
 													<option value="Primary Medical Care Unit">Primary Medical Care Unit</option>
 													<option value="Others">Others</option>
 												</select>
@@ -1073,12 +1073,14 @@
 	    });
 	  } );
 </script>
+
 <script>
     $(document).ready(function () {
         $('a[href="#new"]').tab('show');
         $(".branch").hide();
         $(".isMain").val('Y');
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        
+        $('a[data-toggle="tab"]').on('click', function (e) {
             var target = $(e.target).attr("href");
             if (target === "#new") {
                 $(".branch").hide();

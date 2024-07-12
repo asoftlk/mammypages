@@ -5,7 +5,7 @@
 	if(isset($_POST['sub-hos'])){
 		$hospital_id = "hospital-".mt_rand(1000000,9999999);
 		$hosttime_id = "hosttime-".mt_rand(1000000,9999999);
-		$hospitalname = filter_input(INPUT_POST, 'hospitalname');
+		
 		$hospitalspecialist1 = $_POST['hospitalspecialist'];
 		$hospitalspecialist ="";
 		for($i=0; $i<count($hospitalspecialist1);$i++){
@@ -17,10 +17,21 @@
 			}
 		}
         $isMain = filter_input(INPUT_POST, 'isMain');
-		$mainId = filter_input(INPUT_POST, 'mainId');
+        $mainId = filter_input(INPUT_POST, 'mainId');
+        $hospitalcity = filter_input(INPUT_POST, 'hospitalcity');
+        
+        $hospitalname = null;
+        if($isMain === 'N'){
+            $sql = "SELECT name FROM hospital WHERE id = $mainId";
+            $res = mysqli_query($conn,$sql);
+            $result = mysqli_fetch_array($res);
+            $hospitalname = $result['name'].'-'.$hospitalcity;
+        } else {
+            $hospitalname = filter_input(INPUT_POST, 'hospitalname');
+        }
+
 		$hospitaladdr = filter_input(INPUT_POST, 'hospitaladdr');
 		$hospitalmap = filter_input(INPUT_POST, 'hospitalmap');
-		$hospitalcity = filter_input(INPUT_POST, 'hospitalcity');
 		$hospitalcont = filter_input(INPUT_POST, 'hospitalcont');
 		$hospitalwhatsapp = filter_input(INPUT_POST, 'hospitalwhatsapp');
 		$hospitalemail = filter_input(INPUT_POST, 'hospitalemail');
