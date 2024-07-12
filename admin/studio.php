@@ -102,405 +102,6 @@
 				<!-- left column -->
 				<div class="col-md-12">
 					<div class="card card-primary">
-						<!-- <div class="card-body">
-							<ul class="nav nav-tabs" role="tablist">
-								<li class="nav-item">
-									<a class="nav-link active" data-toggle="tab" href="#new" role="tab">New studio</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" data-toggle="tab" href="#addbranch" role="tab">Add branch</a>
-								</li>
-							</ul>
-							<div class="tab-content">
-								<div class="tab-pane active" id="new" role="tabpanel">
-									<input type="hidden" id="catvalue">
-									<div id="Studio">
-										<form id="quickForm" method="POST" action="poststudio" enctype="multipart/form-data">
-											<div class="form-group">
-												<label class="required" for="studioname">Name</label>
-												<input type="text" name="studioname" class="form-control" id="studioname" placeholder="Studio Name">
-											</div>
-											<div class="form-group">
-												<label class="required">Speciality</label>
-												<select class="form-control select2" name="studiospecialist[]" id="studiospecialist" multiple data-placeholder='--Select Speciality--'>
-												<?php $query=mysqli_query($conn, "SELECT * FROM studio_speciality");
-													while($row=mysqli_fetch_array($query)){
-													echo   '<option value="'.$row["speciality"].'">'.$row["speciality"].'</option>';
-													}?>
-												</select>
-											</div>
-											<div class="form-group">
-												<label class="required" for="studioaddr">Studio Address</label>
-												<input type="text" name="studioaddr" class="form-control" id="studioaddr" placeholder="Address">
-											</div>
-											<div class="form-group">
-												<label for="studiomap" class="required">Studio Map location</label>
-												<input type="text" name="studiomap" class="form-control" id="studiomap" placeholder="Copy form Google Map by poining the location">
-											</div>
-											<div class="form-group">
-												<label class="required" for="studiocity">Studio city(required to show for branches)</label>
-												<input type="text" name="studiocity" class="form-control" id="studiocity" placeholder="City">
-											</div>
-											<div class="form-group">
-												<label class="required" for="studiocont">Contact Number</label>
-												<input type="tel" name="studiocont" class="form-control" id="studiocont" placeholder="Contact Number">
-											</div>
-											<div class="form-group">
-												<label for="studiowhatsapp">Whatsapp Number</label>
-												<input type="tel" name="studiowhatsapp" class="form-control" id="studiowhatsapp" placeholder="Contact Number">
-											</div>
-											<div class="form-group">
-												<label class="required" for="studioemail">Email</label>
-												<input type="email" name="studioemail" class="form-control" id="studioemail" placeholder="Email ID">
-											</div>
-											<div class="form-group">
-												<label for="studioweb">Website</label>
-												<input type="url" name="studioweb" class="form-control" id="studioweb" placeholder="Website">
-											</div>
-											<div class="form-group">
-												<label class="required" for="studiotype">Studio type</label>
-												<select class="form-control" name="studiotype" id="studiotype">
-													<option selected="" disabled="" value="null" class="hidden">--Select Studio Type</option>
-													<option value="Government Studio">Government Studio</option>
-													<option value="Private Studio">Private Studio</option>
-												</select>
-											</div>
-											<div class="form-group studiosubtype">
-												<label for="studiosubtype" class="required">Studio Subtype</label>
-												<select class="form-control" name="studiosubtype" id="studiosubtype">
-													<option selected="" disabled="" value="null" class="hidden">--Select Studio Subype</option>
-													<option value="National Studio">National Studio</option>
-													<option value="Teaching Studio">Teaching Studio</option>
-													<option value="Specialized Teaching Studio">Specialized Teaching Studio</option>
-													<option value="Other Specialized Studio">Other Specialized Studio</option>
-													<option value="Provincial General Studio">Provincial General Studio</option>
-													<option value="Base Studio Type - A">Base Studio Type - A</option>
-													<option value="Base Studio Type - B">Base Studio Type - B</option>
-													<option value="Divisional Studio Type - A">Divisional Studio Type - A</option>
-													<option value="Divisional Studio Type - B">Divisional Studio Type - B</option>
-													<option value="Divisional Studio Type - C">Divisional Studio Type - C</option>
-													<option value="Primary Medical Care Unit">Primary Medical Care Unit</option>
-													<option value="Others">Others</option>
-												</select>
-											</div>
-											<div class="form-group">
-												<label class="required" for="branchworking">Hours of Operation</label>
-												<table class="table table-sm table-bordered">
-													<thead>
-														<tr>
-															<th>Day</th>
-															<th>Open time</th>
-															<th>End time</th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr>
-															<td>Monday</td>
-															<td><input type="time" name="monopentime" class="form-control form-control-sm border-0" id="monopentime" placeholder="Monday Open Time"></td>
-															<td><input type="time" name="monendtime" class="form-control form-control-sm border-0" id="monendtime" placeholder="Monday End Time"></td>
-														</tr>
-														<tr>
-															<td>Tuesday</td>
-															<td><input type="time" name="tueopentime" class="form-control form-control-sm border-0" id="tueopentime" placeholder="Tuesday Open Time"></td>
-															<td><input type="time" name="tueendtime" class="form-control form-control-sm border-0" id="tueendtime" placeholder="Tuesday End Time"></td>
-														</tr>
-														<tr>
-															<td>Wednesday</td>
-															<td><input type="time" name="wedopentime" class="form-control form-control-sm border-0" id="wedopentime" placeholder="Wednesday Open Time"></td>
-															<td><input type="time" name="wedendtime" class="form-control form-control-sm border-0" id="wedendtime" placeholder="Wednesday End Time"></td>
-														</tr>
-														<tr>
-															<td>Thursday</td>
-															<td><input type="time" name="thuopentime" class="form-control form-control-sm border-0" id="thuopentime" placeholder="Thursday Open Time"></td>
-															<td><input type="time" name="thuendtime" class="form-control form-control-sm border-0" id="thuendtime" placeholder="Thursday End Time"></td>
-														</tr>
-														<tr>
-															<td>Friday</td>
-															<td><input type="time" name="friopentime" class="form-control form-control-sm border-0" id="friopentime" placeholder="Friday Open Time"></td>
-															<td><input type="time" name="friendtime" class="form-control form-control-sm border-0" id="friendtime" placeholder="Friday End Time"></td>
-														</tr>
-														<tr>
-															<td>Saturday</td>
-															<td><input type="time" name="satopentime" class="form-control form-control-sm border-0" id="satopentime" placeholder="Saturday Open Time"></td>
-															<td><input type="time" name="satendtime" class="form-control form-control-sm border-0" id="satendtime" placeholder="Saturday End Time"></td>
-														</tr>
-														<tr>
-															<td>Sunday</td>
-															<td><input type="time" name="sunopentime" class="form-control form-control-sm border-0" id="sunopentime" placeholder="Sunday Open Time"></td>
-															<td><input type="time" name="sunendtime" class="form-control form-control-sm border-0" id="sunendtime" placeholder="Sunday End Time"></td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-											<div class="form-group row">
-												<div class="col-md-4">
-													<label for="studiofb">Facebook Link</label>
-													<input type="url" name="studiofb" class="form-control" id="studiofb" placeholder="Facebook Link">
-												</div>
-												<div class="col-md-4">
-													<label for="studioinsta">Instagram Link</label>
-													<input type="url" name="studioinsta" class="form-control" id="studioinsta" placeholder="Instagram Link">
-												</div>
-												<div class="col-md-4">
-													<label for="studioln">Linkedin Link</label>
-													<input type="url" name="studioln" class="form-control" id="studioln" placeholder="Linkedin Link">
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="required">Status</label>
-												<select class="form-control" name="status" id="status">
-													<option selected="" disabled="" value="null" class="hidden">--Select Status</option>
-													<option value="Verified">Verified</option>
-													<option value="Not Verified">Not Verified</option>
-												</select>
-											</div>
-											<div class="row">
-												<label class="required" for="about">About</label>
-												<textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required></textarea>
-											</div>
-									
-											<div class="form-group">
-												<label class="required" for="logoimage">logo Image</label>
-												<div class="input-group">
-													<div class="custom-file">
-														<input type="file" name="logoimage" class="custom-file-input" id="logoimage" accept="image/*">
-														<label class="custom-file-label" for="logoimage">Choose file</label>
-													</div>
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="required" for="featuredimage">Featured Image</label>
-												<div class="input-group">
-													<div class="custom-file">
-														<input type="file" name="featuredimage" class="custom-file-input" id="featuredimage"  accept="image/*">
-														<label class="custom-file-label" for="featuredimage">Choose file</label>
-													</div>
-												</div>
-											</div>
-											<div id="galleryimages">
-												<div class="form-group">
-													<label class="required" for="galimages">Gallery Images</label>
-													<div class="input-group">
-														<div class="custom-file">
-															<input type="file" name="galimages[]" class="custom-file-input galimages" accept="image/*">
-															<label class="custom-file-label" for="galimages">Choose file</label>
-														</div>
-													</div>
-												</div>
-											</div>
-											<button class="btn btn-sm btn-primary add-image" style="float:left">Add More</button>
-											<br>
-											<br>
-											<div class="form-group">
-												<label  for="videoembed">Embed Video</label>
-												<input type="text" name="videoembed" class="form-control" placeholder="Embed Video Code">
-											</div>
-											<p class="text-center  font-weight-bold">Or</p>
-											<div class="form-group">
-												<label for="galvideo">Gallery Video</label>
-												<div class="input-group">
-													<div class="custom-file">
-														<input type="file" name="galvideo" class="custom-file-input" id="galvideo" accept="video/*">
-														<label class="custom-file-label" for="galvideo">Choose file</label>
-													</div>
-												</div>
-											</div>
-											<br>
-											<br>
-											<div class="card-footer">
-												<button type="submit" name="sub-mid" class="btn btn-sm btn-primary">Submit</button>
-											</div>
-										</form>
-										</div>
-									</div>
-									<div class="tab-pane" id="addbranch" role="tabpanel">
-										<div id="branch">
-											<form id="quickForm" method="POST" action="poststudiobranch" enctype="multipart/form-data">
-												<?php
-													$studioQuery = mysqli_query($conn, "SELECT DISTINCT * FROM studio");
-												?>
-												<div class="form-group">
-													<label class="required" for="bstudioname">Studio Name</label>
-													<select name="bstudioname" class="form-control" id="bstudioname" required>
-														<option value="">Select studio</option>
-														<?php
-														while ($studioRow = mysqli_fetch_array($studioQuery)) {
-															$studioArray = explode(" ///", $studioRow['name']);
-															$studioidArray = explode(" ///", $studioRow['studio_id']);
-															
-															for ($i = 0; $i < count($studioArray); $i++) {
-																$name = $studioArray[$i];
-																$id = $studioidArray[$i];
-																echo '<option value="' . $id . '">' . $name . '</option>';
-															}
-														}
-														?>
-													</select>
-
-												</div>
-												<div class="form-group">
-													<label class="required" for="branchname">Branch Name</label>
-													<input type="text" name="branchname" class="form-control" id="branchname" placeholder="Branch Name" required>
-												</div>
-												<div class="form-group">
-													<label class="required" for="branchaddr">Branch Address</label>
-													<input type="text" name="branchaddr" class="form-control" id="branchaddr" placeholder="Address" required>
-												</div>
-												<div class="form-group">
-													<label for="branchmap" class="required">Branch Map location</label>
-													<input type="text" name="branchmap" class="form-control" id="branchmap" placeholder="Copy form Google Map by poining the location" required>
-												</div>
-												<div class="form-group">
-													<label class="required" for="branchcity">Branch city(required to show for branches)</label>
-													<input type="text" name="branchcity" class="form-control" id="branchcity" placeholder="City" required>
-												</div>
-												<div class="form-group">
-													<label class="required" for="branchcont">Contact Number</label>
-													<input type="tel" name="branchcont" class="form-control" id="branchcont" placeholder="Contact Number" required>
-												</div>
-												<div class="form-group">
-													<label for="branchwhatsapp">Whatsapp Number</label>
-													<input type="tel" name="branchwhatsapp" class="form-control" id="branchwhatsapp" placeholder="Whatsapp Number">
-												</div>
-												<div class="form-group">
-													<label class="required" for="branchemail">Email</label>
-													<input type="email" name="branchemail" class="form-control" id="branchemail" placeholder="Email ID" required>
-												</div>
-												<div class="form-group">
-													<label for="branchweb">Website</label>
-													<input type="url" name="branchweb" class="form-control" id="branchweb" placeholder="Website">
-												</div>
-												<div class="form-group">
-													<label class="required" for="branchworking">Hours of Operation</label>
-													<table class="table table-sm table-bordered">
-														<thead>
-															<tr>
-																<th>Day</th>
-																<th>Open time</th>
-																<th>End time</th>
-															</tr>
-														</thead>
-														<tbody>
-															<tr>
-																<td>Monday</td>
-																<td><input type="time" name="monopentime" class="form-control form-control-sm border-0" id="monopentime" placeholder="Monday Open Time"></td>
-																<td><input type="time" name="monendtime" class="form-control form-control-sm border-0" id="monendtime" placeholder="Monday End Time"></td>
-															</tr>
-															<tr>
-																<td>Tuesday</td>
-																<td><input type="time" name="tueopentime" class="form-control form-control-sm border-0" id="tueopentime" placeholder="Tuesday Open Time"></td>
-																<td><input type="time" name="tueendtime" class="form-control form-control-sm border-0" id="tueendtime" placeholder="Tuesday End Time"></td>
-															</tr>
-															<tr>
-																<td>Wednesday</td>
-																<td><input type="time" name="wedopentime" class="form-control form-control-sm border-0" id="wedopentime" placeholder="Wednesday Open Time"></td>
-																<td><input type="time" name="wedendtime" class="form-control form-control-sm border-0" id="wedendtime" placeholder="Wednesday End Time"></td>
-															</tr>
-															<tr>
-																<td>Thursday</td>
-																<td><input type="time" name="thuopentime" class="form-control form-control-sm border-0" id="thuopentime" placeholder="Thursday Open Time"></td>
-																<td><input type="time" name="thuendtime" class="form-control form-control-sm border-0" id="thuendtime" placeholder="Thursday End Time"></td>
-															</tr>
-															<tr>
-																<td>Friday</td>
-																<td><input type="time" name="friopentime" class="form-control form-control-sm border-0" id="friopentime" placeholder="Friday Open Time"></td>
-																<td><input type="time" name="friendtime" class="form-control form-control-sm border-0" id="friendtime" placeholder="Friday End Time"></td>
-															</tr>
-															<tr>
-																<td>Saturday</td>
-																<td><input type="time" name="satopentime" class="form-control form-control-sm border-0" id="satopentime" placeholder="Saturday Open Time"></td>
-																<td><input type="time" name="satendtime" class="form-control form-control-sm border-0" id="satendtime" placeholder="Saturday End Time"></td>
-															</tr>
-															<tr>
-																<td>Sunday</td>
-																<td><input type="time" name="sunopentime" class="form-control form-control-sm border-0" id="sunopentime" placeholder="Sunday Open Time"></td>
-																<td><input type="time" name="sunendtime" class="form-control form-control-sm border-0" id="sunendtime" placeholder="Sunday End Time"></td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
-												<div class="form-group row">
-													<div class="col-md-4">
-														<label for="branchfb">Facebook Link</label>
-														<input type="url" name="branchfb" class="form-control" id="branchfb" placeholder="Facebook Link">
-													</div>
-													<div class="col-md-4">
-														<label for="branchinsta">Instagram Link</label>
-														<input type="url" name="branchinsta" class="form-control" id="branchinsta" placeholder="Instagram Link">
-													</div>
-													<div class="col-md-4">
-														<label for="branchln">Linkedin Link</label>
-														<input type="url" name="branchln" class="form-control" id="branchln" placeholder="Linkedin Link">
-													</div>
-												</div>
-												<div class="form-group">
-													<label class="required">Status</label>
-													<select class="form-control" name="status" id="status">
-														<option selected="" disabled="" value="null" class="hidden">--Select Status</option>
-														<option value="Verified">Verified</option>
-														<option value="Not Verified">Not Verified</option>
-													</select>
-												</div>
-												<div class="form-group row ml-2">
-													<label class="required" for="branchabout">About</label>
-													<textarea style="width:97%; height:180px; margin:auto" id="branchabout" name="branchabout" class="about" required></textarea>
-												</div>
-												<div class="form-group">
-													<label class="required" for="logoimage">logo Image</label>
-													<div class="input-group">
-														<div class="custom-file">
-															<input type="file" name="logoimage" class="custom-file-input" id="logoimage" accept="image/*">
-															<label class="custom-file-label" for="logoimage" required>Choose file</label>
-														</div>
-													</div>
-												</div>
-												<div class="form-group">
-													<label class="required" for="featuredimage">Featured Image</label>
-													<div class="input-group">
-														<div class="custom-file">
-															<input type="file" name="featuredimage" class="custom-file-input" id="featuredimage"  accept="image/*">
-															<label class="custom-file-label" for="featuredimage" required>Choose file</label>
-														</div>
-													</div>
-												</div>
-												<div id="branchgalleryimages">
-													<div class="form-group">
-														<label for="galimages">Gallery Images</label>
-														<div class="input-group">
-															<div class="custom-file">
-																<input type="file" name="galimages[]" class="custom-file-input galimages" accept="image/*">
-																<label class="custom-file-label" for="galimages">Choose file</label>
-															</div>
-														</div>
-													</div>
-												</div>
-												<button class="btn btn-sm btn-primary add-image-branch" style="float:left">Add More</button>
-												<br>
-												<br>
-												<div class="form-group">
-													<label  for="videoembed">Embed Video</label>
-													<input type="text" name="videoembed" class="form-control" placeholder="Embed Video Code">
-												</div>
-												<p class="text-center  font-weight-bold">Or</p>
-												<div class="form-group">
-													<label for="galvideo">Gallery Video</label>
-													<div class="input-group">
-														<div class="custom-file">
-															<input type="file" name="galvideo" class="custom-file-input" id="galvideo" accept="video/*">
-															<label class="custom-file-label" for="galvideo">Choose file</label>
-														</div>
-													</div>
-												</div>
-												<div class="card-footer">
-													<button type="submit" name="sub-mid-branch" class="btn btn-sm btn-primary">Submit</button>
-												</div>
-											</form>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div> -->
-
                         <div class="card-body">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
@@ -512,7 +113,7 @@
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="new" role="tabpanel">
-                                    <div id="Hospital">
+                                    <div id="Studio">
                                         <form id="quickForm" method="POST" action="poststudio" enctype="multipart/form-data">
                                             <?php
                                                 $studioQuery = mysqli_query($conn, "SELECT DISTINCT * FROM studio WHERE is_main = 'Y'");
@@ -548,6 +149,16 @@
 													}?>
 												</select>
 											</div>
+											<div class="form-group row">
+												<div class="col-md-6">
+													<label class="required" for="studioregno">Studio Registration No</label>
+													<input type="text" name="studioregno" class="form-control" id="studioregno" placeholder="Registration No">
+												</div>
+												<div class="col-md-6">
+													<label class="required" for="studioestablishment">Year of Establishment</label>
+													<input type="text" name="studioestablishment" class="form-control" id="studioestablishment" placeholder="Establishment">
+												</div>
+											</div>
 											<div class="form-group">
 												<label class="required" for="studioaddr">Studio Address</label>
 												<input type="text" name="studioaddr" class="form-control" id="studioaddr" placeholder="Address">
@@ -559,6 +170,10 @@
 											<div class="form-group">
 												<label class="required" for="studiocity">Studio city(required to show for branches)</label>
 												<input type="text" name="studiocity" class="form-control" id="studiocity" placeholder="City">
+											</div>
+											<div class="form-group">
+												<label class="required" for="studiocontactperson">Studio Contact Person</label>
+												<input type="text" name="studiocontactperson" class="form-control" id="studiocontactperson" placeholder="Address">
 											</div>
 											<div class="form-group">
 												<label class="required" for="studiocont">Contact Number</label>
@@ -576,34 +191,6 @@
 												<label for="studioweb">Website</label>
 												<input type="url" name="studioweb" class="form-control" id="studioweb" placeholder="Website">
 											</div>
-											<div class="form-group">
-												<label class="required" for="studiotype">Studio type</label>
-												<select class="form-control" name="studiotype" id="studiotype">
-													<option selected="" disabled="" value="null" class="hidden">--Select Studio Type</option>
-													<option value="Government studio">Government Studio</option>
-													<option value="Private studio">Private Studio</option>
-												</select>
-											</div>
-											<div class="form-group studiosubtype">
-												<label for="studiosubtype" class="required">Studio Subtype</label>
-												<select class="form-control" name="studiosubtype" id="studiosubtype">
-													<option selected="" disabled="" value="null" class="hidden">--Select Studio Subype</option>
-													<option value="National Studio">National Studio</option>
-													<option value="Teaching Studio">Teaching Studio</option>
-													<option value="Specialized Teaching Studio">Specialized Teaching Studio</option>
-													<option value="Other Specialized Studio">Other Specialized Studio</option>
-													<option value="Provincial General Studio">Provincial General Studio</option>
-													<option value="Base Studio Type - A">Base Studio Type - A</option>
-													<option value="Base Studio Type - B">Base Studio Type - B</option>
-													<option value="Divisional Studio Type - A">Divisional Studio Type - A</option>
-													<option value="Divisional Studio Type - B">Divisional Studio Type - B</option>
-													<option value="Divisional Studio Type - C">Divisional Studio Type - C</option>
-													<option value="Primary Medical Care Unit">Primary Medical Care Unit</option>
-													<option value="Others">Others</option>
-												</select>
-											</div>
-                                            <!-- Conditional Fields for New Hospital -->
-                                            <!-- <div id="newHospitalFields" style="display: none;"> -->
                                             <div class="form-group">
                                                 <label class="required" for="branchworking">Hours of Operation</label>
                                                 <table class="table table-sm table-bordered">
@@ -636,7 +223,7 @@
                                                                     >
                                                                 </td>
                                                                 <td>
-                                                                    <button type="button" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
+                                                                    <button type="button" class="btn btn-sm btn-info" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
                                                                 </td>
                                                             </tr>
                                                         <?php endforeach; ?>
@@ -644,32 +231,31 @@
                                                 </table>
                                             </div>
                                             <div class="form-group row">
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<label for="studiofb">Facebook Link</label>
 													<input type="url" name="studiofb" class="form-control" id="studiofb" placeholder="Facebook Link">
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<label for="studioinsta">Instagram Link</label>
 													<input type="url" name="studioinsta" class="form-control" id="studioinsta" placeholder="Instagram Link">
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<label for="studioln">Linkedin Link</label>
 													<input type="url" name="studioln" class="form-control" id="studioln" placeholder="Linkedin Link">
 												</div>
+												<div class="col-md-3">
+													<label for="studioyt">Youtube Link</label>
+													<input type="url" name="studioyt" class="form-control" id="studioyt" placeholder="Youtube Link">
+												</div>
 											</div>
 											<div class="form-group">
-												<label class="required">Status</label>
-												<select class="form-control" name="status" id="status">
-													<option selected="" disabled="" value="null" class="hidden">--Select Status</option>
-													<option value="Verified">Verified</option>
-													<option value="Not Verified">Not Verified</option>
-												</select>
-											</div>
-											<div class="row">
 												<label class="required" for="about">About</label>
-												<textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required></textarea>
+												<textarea class="form-control" id="about" name="about" class="about" required></textarea>
 											</div>
-									
+											<div class="form-group">
+												<label class="required" for="service">Services</label>
+												<input type="text" data-role="tagsinput" class="form-control" id="service" name="service" placeholder="Service">
+											</div>
 											<div class="form-group">
 												<label class="required" for="logoimage">logo Image</label>
 												<div class="input-group">
@@ -750,8 +336,6 @@
 <script src="plugins/select2/js/select2.full.min.js"></script>
 <script>
 	$('.select2').select2();
-	$('#about').summernote({width:"100%", height:"250"});
-	$('#branchabout').summernote({width:"100%", height:"250"});
 	
 	$(function () {
 	
@@ -781,10 +365,13 @@
 		  studioemail: {
 			required: true,
 	      },
-		  studiotype: {
+		  studiosubtype: {
 			required: true,
 		  },
-		  studiosubtype: {
+		  studioestablishment: {
+			required: true,
+	      },
+		  studiocontactperson: {
 			required: true,
 		  },
 		  studioworking: {

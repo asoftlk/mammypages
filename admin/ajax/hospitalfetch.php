@@ -212,6 +212,7 @@ if($total_data > 0)
             <td>'.$branch['facebook'].'</td>
             <td>'.$branch['instagram'].'</td>
             <td>'.$branch['linkedin'].'</td>
+            <td>'.$branch['youtube'].'</td>
             <td>'.$branch['status'].'</td>
             <!--td>'.$branch['about'].'</td>
             <td>'.$branch['priority'].'</td-->

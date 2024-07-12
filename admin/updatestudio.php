@@ -21,22 +21,20 @@
 	 $map = mysqli_real_escape_string($conn, $_POST['studiomap']);
 	 $city = mysqli_real_escape_string($conn, $_POST['studiocity']);
 	 $mobile = mysqli_real_escape_string($conn, $_POST['studiocont']);
+	 $studioregno = mysqli_real_escape_string($conn, $_POST['studioregno']);
+	 $studioestablishment = mysqli_real_escape_string($conn, $_POST['studioestablishment']);
+	 $studiocontactperson = mysqli_real_escape_string($conn, $_POST['studiocontactperson']);
 	 $email = mysqli_real_escape_string($conn, $_POST['studioemail']);
 	 $whatsapp = mysqli_real_escape_string($conn, $_POST['studiowhatsapp']);
 	$website = mysqli_real_escape_string($conn, $_POST['studioweb']);
-	 $type = mysqli_real_escape_string($conn, $_POST['studiotype']);
-	 if($type == "Private studio"){
-		$subtype="";
-	 }
-	 else{
-		$subtype = mysqli_real_escape_string($conn, $_POST['studiosubtype']);
-	 }
+
 	//  $working_hours = mysqli_real_escape_string($conn, $_POST['studioworking']);
      $working_hours = null;
 	 $facebook = mysqli_real_escape_string($conn, $_POST['studiofb']);
 	 $instagram = mysqli_real_escape_string($conn, $_POST['studioinsta']);
 	 $linkedin = mysqli_real_escape_string($conn, $_POST['studioln']);
-	 $status = mysqli_real_escape_string($conn, $_POST['status']);
+	 $youtube = mysqli_real_escape_string($conn, $_POST['studioyt']);
+	 $service = mysqli_real_escape_string($conn, $_POST['service']);
 	 $about = mysqli_real_escape_string($conn, $_POST['about']);
 	 $videoembed = mysqli_real_escape_string($conn, $_POST['videoembed']);
 	 //$priority = mysqli_real_escape_string($conn, $_POST['priority']);	
@@ -131,7 +129,7 @@
 	           $articleinsert= mysqli_query($conn, "INSERT INTO mpstudio_gallery ( studio_id, image_name) VALUES ('$studioid', '$target')");
 	       }
 	}	   
-	$updatequery = "Update studio SET name='$name',speciality='$speciality',address='$address', map='$map', city='$city', mobile='$mobile',email='$email',whatsapp='$whatsapp',website='$website',type='$type', subtype='$subtype', working_hours='$working_hours', facebook='$facebook', instagram='$instagram', linkedin='$linkedin', status='$status',about='$about' ";		
+	$updatequery = "Update studio SET name='$name',speciality='$speciality',registraion_no='$studioregno', establishment='$studioestablishment', contact_person='$studiocontactperson',address='$address', map='$map', city='$city', mobile='$mobile',email='$email',whatsapp='$whatsapp',website='$website', facebook='$facebook', instagram='$instagram', linkedin='$linkedin',youtube='$youtube',about='$about',services='$service' ";		
 		$featuredimage = $_FILES['featuredimage']['name'];
 			
 			

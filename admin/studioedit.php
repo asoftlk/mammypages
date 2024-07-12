@@ -151,6 +151,17 @@ $(document).ready(function() {
 					  <input type="text" name="studiomap" class="form-control" id="studiomap"  value="<?php echo htmlspecialchars($row['map']); ?>" placeholder="Copy form Google Map by poining the location">
 						</div>					  
 					</div>
+					<div class="row">
+						<div class="col-md-6 form-group">
+						<label class="required" for="studioregno">Studio Registraion</label>
+					  <input type="text" name="studioregno" class="form-control" id="studioregno"  value="<?php echo $row['registraion_no']; ?>" placeholder="registraion">
+						</div>
+						
+						<div class="col-md-6 form-group">
+						<label class="required" for="studioestablishment">Year of Establishment</label>
+					  <input type="text" name="studioestablishment" class="form-control" id="studioestablishment"  value="<?php echo $row['establishment']; ?>" placeholder="Year of Establishment">
+						</div>					  
+					</div>
 					
 					<div class="row">
 						<div class="col-md-6 form-group">
@@ -164,7 +175,18 @@ $(document).ready(function() {
 						</div>					  
 					</div>
 					
-					
+					<div class="row">
+						<div class="col-md-6 form-group">
+						<label class="required" for="studiocontactperson">Studio Contact Person</label>
+					  <input type="text" name="studiocontactperson" class="form-control" id="studiocontactperson"  value="<?php echo $row['contact_person']; ?>" placeholder="contact person">
+						</div>
+						
+						<div class="col-md-6 form-group">
+						<label class="required" for="service">Service</label>
+					  <input type="tel" name="service" class="form-control" id="service"  value="<?php echo $row['services']; ?>" placeholder="services">
+						</div>					  
+					</div>
+
 					<div class="row">
 						<div class="col-md-6 form-group">
 						<label for="studiowhatsapp">Whatsapp Number</label>
@@ -173,43 +195,13 @@ $(document).ready(function() {
 						<div class="col-md-6 form-group">
 						<label class="required" for="studioemail">Email</label>
 					  <input type="email" name="studioemail" class="form-control" id="studioemail"  value="<?php echo $row['email']; ?>" placeholder="Email ID">
-						</div>					  
-					</div>
-					
-					
-					<div class="row">
+						</div>		
 						<div class="col-md-6 form-group">
 						<label for="studioweb">Website</label>
-					  <input type="url" name="studioweb" class="form-control" id="studioweb"  value="<?php echo $row['website']; ?>" placeholder="Website">
-						</div>
-						<div class="col-md-6 form-group">
-						<label class="required" for="studiotype">studio type</label>
-                        <?php echo $row['type']?>
-						  <select class="form-control" name="studiotype" id="studiotype">
-								<option selected="" disabled="" value="null" class="hidden">--Select studio Type</option>
-								<option value="Government studio" <?php if($row['type']=="Government studio") echo  'selected="selected"';?>>Government studio</option>
-								<option value="Private studio" <?php if($row['type']=="Private studio") echo  'selected="selected"';?>>Private studio</option>
-						  </select>
-						  </div>					  
+					  <input type="text" name="studioweb" class="form-control" id="studioweb"  value="<?php echo $row['website']; ?>" placeholder="Website">
+						</div>				  
 					</div>
-					<div class="form-group studiosubtype">
-					  <label for="studiosubtype" class="required">studio Subtype</label>
-					  <select class="form-control" name="studiosubtype" id="studiosubtype">
-							<option selected="" disabled="" value="null" class="hidden">--Select studio Subype</option>
-							<option value="National studio" <?php if($row['subtype']=="National studio") echo  'selected="selected"';?>>National studio</option>
-							<option value="Teaching studio" <?php if($row['subtype']=="Teaching studio") echo  'selected="selected"';?>>Teaching studio</option>
-							<option value="Specialized Teaching studio" <?php if($row['subtype']=="Specialized Teaching studio") echo  'selected="selected"';?>>Specialized Teaching studio</option>
-							<option value="Other Specialized studio" <?php if($row['subtype']=="Other Specialized studio") echo  'selected="selected"';?>>Other Specialized studio</option>
-							<option value="Provincial General studio" <?php if($row['subtype']=="Provincial General studio") echo  'selected="selected"';?>>Provincial General studio</option>
-							<option value="Base studio Type - A" <?php if($row['subtype']=="Base studio Type - A") echo  'selected="selected"';?>>Base studio Type - A</option>
-							<option value="Base studio Type - B" <?php if($row['subtype']=="Base studio Type - B") echo  'selected="selected"';?>>Base studio Type - B</option>
-							<option value="Divisional studio Type - A" <?php if($row['subtype']=="Divisional studio Type - A") echo  'selected="selected"';?>>Divisional studio Type - A</option>
-							<option value="Divisional studio Type - B" <?php if($row['subtype']=="Divisional studio Type - B") echo  'selected="selected"';?>>Divisional studio Type - B</option>
-							<option value="Divisional studio Type - C" <?php if($row['subtype']=="Divisional studio Type - C") echo  'selected="selected"';?>>Divisional studio Type - C</option>
-							<option value="Primary Medical Care Unit" <?php if($row['subtype']=="Primary Medical Care Unit") echo  'selected="selected"';?>>Primary Medical Care Unit</option>
-							<option value="Others" <?php if($row['subtype']=="Others") echo  'selected="selected"';?>>Others</option>
-					  </select>
-					</div>
+					
                     <div class="form-group">
                         <label class="required" for="branchworking">Hours of Operation</label>
                         <table class="table table-sm table-bordered">
@@ -241,7 +233,7 @@ $(document).ready(function() {
                                         value="<?php echo $times[$abbr . 'close']; ?>">
                                 </td>
                                 <td>
-                                    <button type="button" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
+                                    <button type="button" class="btn btn-sm btn-info" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -249,35 +241,26 @@ $(document).ready(function() {
                         </table>
                     </div>
                     <div class="row">
-						<div class="col-md-4 form-group">
+						<div class="col-md-3 form-group">
 						    <label for="studiofb">Facebook Link</label>
 						  <input type="url" name="studiofb" class="form-control" id="studiofb"  value="<?php echo $row['facebook']; ?>" placeholder="Facebook Link">
 						</div>	
-						<div class="col-md-4 form-group">
+						<div class="col-md-3 form-group">
 						    <label for="studioinsta">Instagram Link</label>
 						  <input type="url" name="studioinsta" class="form-control" id="studioinsta" value="<?php echo $row['instagram']; ?>" placeholder="Instagram Link">
 						</div>
-						<div class="col-md-4 form-group">
+						<div class="col-md-3 form-group">
 						    <label for="studioln">Linkedin Link</label>
 						  <input type="url" name="studioln" class="form-control" id="studioln"  value="<?php echo $row['linkedin']; ?>" placeholder="Linkedin Link">
+						</div>		
+						<div class="col-md-3 form-group">
+						    <label for="studioyt">Youtube Link</label>
+						  <input type="url" name="studioyt" class="form-control" id="studioyt"  value="<?php echo $row['youtube']; ?>" placeholder="Youtube Link">
 						</div>					  
 					</div>
-					
-					<div class="row">
-						<div class="col-md-12 form-group">
-						<label class="required">Status</label>
-                        <select class="form-control" name="status" id="status" >
-                          <option selected="" disabled="" value="null" class="hidden">--Select Status</option>
-						  <option value="Verified" <?php if($row['status']=="Verified") echo  'selected="selected"';?>>Verified</option>
-						  <option value="Not Verified" <?php if($row['status']=="Not Verified") echo  'selected="selected"';?>>Not Verified</option>
-						</select>
-						</div>
-					</div>
-					  <div class="row">
-						<div class="col-md-12 form-group">
+					  <div class="form-group">
 						<label class="required" for="about">About</label>
-					  <textarea style="width:97%; height:180px; margin:auto" id="about"  name="about" class="about" required><?php echo $row['about']; ?></textarea>
-						</div>					  
+					  	<textarea class="form-control" id="about"  name="about" class="about" required><?php echo $row['about']; ?></textarea>				  
 					</div>
 					<!--div class="row">
 					  <div class="col-md-12 form-group">
@@ -415,7 +398,6 @@ $(document).ready(function() {
 
 <script>
 $('.select2').select2();
-$('#about').summernote({width:"100%", height:"250"});
 function removeReg(data, status) {
   Swal.fire({
       text: data,

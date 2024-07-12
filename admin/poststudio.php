@@ -31,7 +31,11 @@
 		$studiofb = filter_input(INPUT_POST, 'studiofb');
 		$studioinsta = filter_input(INPUT_POST, 'studioinsta');
 		$studioln = filter_input(INPUT_POST, 'studioln');
-		$status = filter_input(INPUT_POST, 'status');
+		$studioyt = filter_input(INPUT_POST, 'studioyt');
+		$studioregno = filter_input(INPUT_POST, 'studioregno');
+		$studioestablishment = filter_input(INPUT_POST, 'studioestablishment');
+		$studiocontactperson = filter_input(INPUT_POST, 'studiocontactperson');
+		$service = filter_input(INPUT_POST, 'service');
 		$about = mysqli_real_escape_string($conn, $_POST['about']);
 		$videoembed = mysqli_real_escape_string($conn, $_POST['videoembed']);
 
@@ -129,9 +133,11 @@
 				$logoupload = move_uploaded_file($_FILES['logoimage']['tmp_name'], "../directory/studio/".$logotarget);
 				
 			if($featureupload){
-				$query= "INSERT INTO studio (studio_id, name, speciality, address, is_main,main_id , map, city, mobile, email, whatsapp, website, type, subtype, working_hours,  facebook, instagram, linkedin,logo, status, about,priority, image, video) 
-						values ('$studio_id', '$studioname', '$studiospecialist', '$studioaddr', '$isMain','$mainId', '$studiomap', '$studiocity', '$studiocont',  '$studioemail','$studiowhatsapp',  '$studioweb', '$studiotype', '$studiosubtype', '$studioworking', '$studiofb',  '$studioinsta', '$studioln', '$logotarget', '$status', '$about','$priority','$featuretarget', '$videotarget')";
+				$query = "INSERT INTO studio (studio_id, registraion_no, name, speciality, address, establishment, contact_person, is_main, main_id, map, city, mobile, email, whatsapp, website, facebook, instagram, linkedin, youtube, logo, image, video, about, services, priority) 
+				VALUES ('$studio_id', '$studioregno', '$studioname', '$studiospecialist', '$studioaddr', '$studioestablishment', '$studiocontactperson', '$isMain', '$mainId', '$studiomap', '$studiocity', '$studiocont', '$studioemail', '$studiowhatsapp', '$studioweb', '$studiofb', '$studioinsta', '$studioln', '$studioyt', '$logotarget', '$featuretarget', '$videotarget', '$about', '$service', '$priority')";
+				
 				$result = mysqli_query($conn, $query);
+				
 
 				$workingTimesQuery = "INSERT INTO studio_working_times (sttime_id, studio_id, studio_type,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
 							VALUES ('$sttime_id','$studio_id', '$studiotype', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";

@@ -102,26 +102,27 @@ if($total_filter_data==0){
 }
 
 $output = '
-<label>Total Studio Clinics - '.$total_data.'</label>  
+<label>Total Studio - '.$total_data.'</label>  
   <div class="color-box ml-5"></div>
     <span class="color-label">branches</span>
 <table class="table table-striped table-bordered">
   <tr>
-    <th>Studio Clinic Id</th>
-	<th>Name</th>
-	<th>Studio Clinic Specialist In</th>
-   	<th>Studio Clinic Address</th>
+    <th>Studio Id</th>
+    <th>Studio Name</th>
+	  <th>Registration No</th>
+	  <th>Studio Specialist In</th>
+   	<th>Studio Address</th>
+    <th>Contact Person</th>
     <th>Contact Number</th>
-	<th>Email</th>
+	  <th>Email</th>
     <th>Whatsapp Number</th>
-     <th>Website</th>
-    <th>Studio Clinic type</th>
-    <th>Hours of Operation</th>
+    <th>Website</th>
     <th>Facebook Link</th>
     <th>Instagram Link</th>
     <th>Linkedin Link</th>
-    <th>Status</th>
+    <th>Youtube Link</th>
     <!--th>About</th-->
+     <th>Service</th>
     <th>Priority</th>
     <th>logo Image</th>
     <th>Featured Image</th>
@@ -152,21 +153,22 @@ if($total_data > 0)
         <tr class="branch-header '.$arrowClass.'" data-main-id="'.$main['id'].'">
             <td>'.$main['studio_id'].'</td>
             <td>'.$main['name'].'</td>
+            <td>'.$main['registraion_no'].'</td>
             <td>'.$main['speciality'].'</td>
             <td>'.$main['address']."  ".$main['city'].'</td>
+            <td>'.$main['contact_person'].'</td>
             <td>'.$main['mobile'].'</td>
             <td>'.$main['email'].'</td>
             <td>'.$main['whatsapp'].'</td>
             <td>'.$main['website'].'</td>
-            <td>'.$main['type'].'</td>
-            <td>'.$main['working_hours'].'</td>
             
             <td>'.$main['facebook'].'</td>
             <td>'.$main['instagram'].'</td>
             <td>'.$main['linkedin'].'</td>
-            <td>'.$main['status'].'</td>
+            <td>'.$main['youtube'].'</td>
             <!--td>'.$main['about'].'</td>
             <td>'.$main['priority'].'</td-->
+            <td>'.$main['services'].'</td>
             <td><select name="dropdown" id="prioritystatus" onchange="javascript:chg_status(this);">
             <option value="" selected disabled>'.$main["priority"].'</option>
             <option value="viewstudio.php?value=0&id='.$main["id"].'">0</option>
@@ -196,21 +198,22 @@ if($total_data > 0)
             $output .=    '<tr class="bg-tbl branch" data-main-id="'.$main['id'].'">
             <td>'.$branch['studio_id'].'</td>
             <td>'.$branch['name'].'</td>
+            <td>'.$branch['registraion_no'].'</td>
             <td>'.$branch['speciality'].'</td>
             <td>'.$branch['address']."  ".$branch['city'].'</td>
+            <td>'.$branch['contact_person'].'</td>
             <td>'.$branch['mobile'].'</td>
             <td>'.$branch['email'].'</td>
             <td>'.$branch['whatsapp'].'</td>
             <td>'.$branch['website'].'</td>
-            <td>'.$branch['type'].'</td>
-            <td>'.$branch['working_hours'].'</td>
             
             <td>'.$branch['facebook'].'</td>
             <td>'.$branch['instagram'].'</td>
             <td>'.$branch['linkedin'].'</td>
-            <td>'.$branch['status'].'</td>
+            <td>'.$branch['youtube'].'</td>
             <!--td>'.$branch['about'].'</td>
             <td>'.$branch['priority'].'</td-->
+            <td>'.$branch['services'].'</td>
             <td><select name="dropdown" id="prioritystatus" onchange="javascript:chg_status(this);">
             <option value="" selected disabled>'.$branch["priority"].'</option>
             <option value="viewstudio.php?value=0&id='.$branch["id"].'">0</option>

@@ -186,12 +186,22 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
+									<label>Registration NO:</label><input type="text" class="form-control" id="registraion_no">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
 									<label>Studio Name:</label><input type="text" class="form-control" id="name">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Studio Specialist In</label><input type="text" class="form-control" id="speciality">
+									<label>Studio Specialist In</label><input type="text" class="form-control" id="establishment">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Year of Establishment</label><input type="text" class="form-control" id="speciality">
 								</div>
 							</div>
 							<div class="col-md-4">
@@ -210,6 +220,12 @@
 								<div class="form-group">
 									<label>Studio city(Required to show for branches):</label>
 									<input type="text" class="form-control" id="city">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Studio Contact person:</label>
+									<input type="text" class="form-control" id="contact_person">
 								</div>
 							</div>
 							<div class="col-md-4">
@@ -238,20 +254,14 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Studio type:</label>
-									<input type="text" class="form-control" id="type">
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>Status:</label>
-									<input type="text" class="form-control" id="status">
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
 									<label>Priority:</label>
 									<input type="text" class="form-control" id="priority">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Services:</label>
+									<input type="text" class="form-control" id="services">
 								</div>
 							</div>
 							<div class="col-md-12">
@@ -307,22 +317,28 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Facebook Link:</label>
 									<input type="text" class="form-control" id="facebook">
 								</div>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Instagram Link:</label>
 									<input type="text" class="form-control" id="instagram">
 								</div>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Linkedin Link :</label>
 									<input type="text" class="form-control" id="linkedin">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>Linkedin Link :</label>
+									<input type="text" class="form-control" id="youtube">
 								</div>
 							</div>
 							<div class="col-md-12">
