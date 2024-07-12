@@ -163,7 +163,7 @@ if(mysqli_num_rows($result) > 0)
             $hospital_name =  $row['name'];;
         };
         $output .= '  
-        <div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">
+        <div class="row m-0 sort-item">
             <div class="col-md-3" style="margin:auto">
                 <div>
                     <img src="directory/hospital/' . $row['logo'] . '" class="img-fluid" style="max-height:5rem">

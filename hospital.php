@@ -4,6 +4,11 @@
 	// ini_set('display_startup_errors', 1);
 	// error_reporting(E_ALL);
 	?>
+	<style>
+		.main-content-sec .article-sec .top-menu {
+			background-color: transparent !important;
+		}
+	</style>
 <div class="content">
 	<section class="main-content-sec">
 		<div class="container-fluid p-0">
@@ -29,8 +34,8 @@
 				</div>
 				<div class="col-md-6">
 					<div class="article-sec">
-						<div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-x8q3gx">
-							<img src="https://s3.ap-southeast-1.amazonaws.com/dlg.dialog.lk/s3fs-public/2022-12/dialog-and-nonvoice.jpg" alt="Advertisement" style="width: 100%; height: 100%; object-fit: cover;">
+						<div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-x8q3gx l-border-radius">
+							<img class="l-border-radius" src="https://s3.ap-southeast-1.amazonaws.com/dlg.dialog.lk/s3fs-public/2022-12/dialog-and-nonvoice.jpg" alt="Advertisement" style="width: 100%; height: 100%; object-fit: cover;">
 						</div>
 						<form action="" method="POST">
                             <input class="form-control form-control-sm" type="search" name="searchHospital" id="searchHospital" placeholder="Search Hospital" aria-label="Search">
@@ -127,7 +132,7 @@
 									} else {
 										$type_name_head =  $row['name'];;
 									};
-								echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
+								echo '<div class="row m-0 priority-list sort-item">
 										<div class="col-md-3" style="margin:auto">
 										<div>
 											<img src="directory/hospital/'.$row['logo'].'" class="img-fluid" style="max-height:5rem">
@@ -192,8 +197,8 @@
 				</div>
 				<div class="col-md-3">
 					<div class="right-cont-part">
-						<div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-vuzb25">
-							<img src="https://www.shutterstock.com/image-vector/megafon-bharti-airtel-limited-safaricom-600nw-2409713703.jpg" alt="Advertisement" style="width: 100%; object-fit: cover;">
+						<div class="card l-border-radius">
+							<img class="card-img l-border-radius" src="https://www.shutterstock.com/image-vector/megafon-bharti-airtel-limited-safaricom-600nw-2409713703.jpg" alt="Advertisement" style="width: 100%; object-fit: cover;">
 						</div>
 						<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 						<!-- Square -->
@@ -319,7 +324,7 @@
         //                     var encodedName = encodeURIComponent(hospital.name.replace(/\s+/g, '_'));
         //                     var hospitalId = hospital.hospital_id;
 	                        
-	    //                     html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
+	    //                     html += '<div class="row m-0" style="border-bottom: 8px solid #f4f4f4;">';
 	    //                     html += '<div class="col-md-3" style="margin:auto">';
 	    //                     html += '<a href="mpconnect/hospital/' + encodedName + '">';  
 	    //                     html += '<img src="directory/hospital/' + hospital.logo + '" class="img-fluid" style="max-height:5rem"></a>';
@@ -402,7 +407,7 @@
 
                             var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success text mt-2 mr-1">Open</span>' : '<span class="text-danger text mt-2 mr-1">Closed</span>';
 
-                            html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
+                            html += '<div class="row m-0" style="border-bottom: 8px solid #f4f4f4;">';
                             html += '<div class="col-md-3" style="margin:auto">';
                             html += '<img src="directory/hospital/' + hospital.logo + '" class="img-fluid" style="max-height:5rem">';
                             html += '</div>';

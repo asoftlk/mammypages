@@ -513,7 +513,7 @@
 						       						    echo '</h5>';
 									        
 									    echo '
-									<div class="abouthospital" id="abouthospital">'.$row["about"].'</div>
+									<div class="abouthospital" id="abouthospital"><p style="font-size: 14px;">'.$row["about"].'</p></div>
 									<p class="expand text-right" style="display:none">Read More</p>';
 									/*$images = mysqli_query($conn, "SELECT * FROM mpgallery WHERE hospitalid = '$row[hospitalid]'");
 									$count= mysqli_num_rows($images);
@@ -533,7 +533,7 @@
                             $servicesHtml .= '</ul>';
                             
                             echo	'</div>
-                                    <div class="row fillbg mt-1 l-border-radius py-2">
+                                    <div class="row fillbg mt-1 l-border-radius py-2 l-service">
                                         <p class="heading text-left mt-1 text-uppercase font-weight-bold" style="margin:0.5rem 0 1rem; font-size:12px">Services</p>
                                         ' . $servicesHtml . '
                                     </div>
@@ -718,11 +718,11 @@
 									?>
 							<div class="card-body">
 								<?php 
-									echo	(strlen($row["address"]) > 0)?'<p class="small"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
-									echo 	(strlen($row["mobile"]) > 0)?'<p class="small"><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
-									echo 	(strlen($row["whatsapp"]) > 0)?'<p class="small"><i class="bi bi-whatsapp"></i>&nbsp;<a href="https://wa.me/'.$row["whatsapp"].'" target="_blank" class="text-decoration-none text-dark">'.$row["whatsapp"].'</a></p>':null;
-									echo	(strlen($row["email"]) > 0)?'<p class="small"><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
-									echo	(strlen($row["website"]) > 0)?'<p class="small"><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
+									echo	(strlen($row["address"]) > 0)?'<p class="small"><i class="bi bi-geo-alt-fill mr-1"></i>&nbsp;'.$row["address"].'</p>':null;
+									echo 	(strlen($row["mobile"]) > 0)?'<p class="small"><i class="bi bi-telephone-fill mr-1"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
+									echo 	(strlen($row["whatsapp"]) > 0)?'<p class="small"><i class="bi bi-whatsapp mr-1"></i>&nbsp;<a href="https://wa.me/'.$row["whatsapp"].'" target="_blank" class="text-decoration-none text-dark">'.$row["whatsapp"].'</a></p>':null;
+									echo	(strlen($row["email"]) > 0)?'<p class="small"><i class="bi bi-envelope-fill mr-1"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
+									echo	(strlen($row["website"]) > 0)?'<p class="small"><i class="bi bi-globe mr-1"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
 									;
 					
 									?>
@@ -735,7 +735,7 @@
 									while($branches1=mysqli_fetch_array($query1)){
 									echo '<form action="mpconnect/hospital/'. urlencode(str_replace(' ', '_', $branches1["name"])) .'" method="post" style="display:inline;">
 									<input type="hidden" name="hospital_id" value="'.$branches1["hospital_id"].'">
-									<button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">View '.$branches1["name"].' <i class="bi bi-box-arrow-up-right"></i></button>
+									<button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">'.$branches1["name"].' <i class="bi bi-box-arrow-up-right ml-2"></i></button>
 									</form>';
 								}?>
 								<?php $query2=mysqli_query($conn, "SELECT * FROM hospital WHERE main_id =(SELECT main_id FROM hospital WHERE hospital_id = '$id') AND hospital_id != '$id' UNION
@@ -743,7 +743,7 @@
 									while($branches2=mysqli_fetch_array($query2)){
 									echo '<form action="mpconnect/hospital/'. urlencode(str_replace(' ', '_', $branches2["name"])) .'" method="post" style="display:inline;">
 									<input type="hidden" name="hospital_id" value="'.$branches2["hospital_id"].'">
-									<button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">View '.$branches2["name"].'<i class="bi bi-box-arrow-up-right"></i></button>
+									<button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">'.$branches2["name"].'<i class="bi bi-box-arrow-up-right ml-2"></i></button>
 									</form>';
 								}?>
 							</div>

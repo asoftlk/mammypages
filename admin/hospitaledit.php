@@ -231,7 +231,7 @@
                                                             value="<?php echo $times[$abbr . 'close']; ?>">
                                                     </td>
                                                     <td>
-                                                        <button type="button" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
+                                                        <button type="button" class="btn btn-sm btn-info" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
                                                     </td>
                                                 </tr>
                                                 <?php endforeach; ?>
