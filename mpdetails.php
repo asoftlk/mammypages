@@ -378,7 +378,6 @@
 						$type = isset($_GET['type']) ? mysqli_real_escape_string($conn, $_GET['type']) : '';
                         $id = isset($_POST[$type . '_id']) ? $_POST[$type . '_id'] : '';
                         $name = isset($_GET['name']) ? mysqli_real_escape_string($conn, str_replace('_', ' ', $_GET['name'])) : '';
-
 						if (!empty($type) && !empty($name)) {
 							$tablegallery_name = "mp" . $type . "_gallery";
 							$id_column = $type . '_id';
@@ -392,8 +391,7 @@
 						}		
             				
 						$row= mysqli_fetch_array($typequery);
-						$typeid = $row["$id_column"];
-
+						$typeid = $row[$id_column];
 						$type_name = $row['name'];
 						$specialityarray = explode(" ///", $row['speciality']);
 						$speciality = "";
@@ -476,9 +474,13 @@
 										}
 									echo '</div>';
 										
-								    echo '<div class="col-3 col-md-3 position-relative">
-								        <p class="mptype position-absolute" style="right:10px"><span>'.$row['type'].'</span></p><br>
-								        <div class="d-flex float-right">';
+								    echo '<div class="col-3 col-md-3 position-relative">';
+								        if (isset($row['type']) && !empty($row['type'])){
+
+											echo '<p class="mptype position-absolute" style="right:10px"><span>'.$row['type'].'</span></p><br>';
+										}
+								        
+										echo  '<div class="d-flex float-right">';
 										echo !empty($row['facebook']) ?  '<a href="'.$row["facebook"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-facebook p-1"></i></a>&nbsp;':"";
 										echo !empty($row['instagram']) ?  '<a href="'.$row["instagram"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-instagram p-1"></i></a>&nbsp;':"";
 										echo !empty($row['linkedin']) ?  '<a href="'.$row["linkedin"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-linkedin p-1"></i></a>&nbsp;':"";
@@ -523,7 +525,7 @@
 						       						    echo '</h5>';
 									        
 									    echo '
-									<div class="abouttype" id="abouttype">'.$row["about"].'</div>
+									<div class="abouttype" id="abouttype"><p style="font-size: 14px;">'.$row["about"].'</p></div>
 									<p class="expand text-right" style="display:none">Read More</p>';
 									/*$images = mysqli_query($conn, "SELECT * FROM $tablegallery_name WHERE $id_column = '$row[$typeid]'");
 									$count= mysqli_num_rows($images);
@@ -533,13 +535,52 @@
 									while($row1= mysqli_fetch_array($images)){
 										echo '<img src="directory/'. $type .'/'.$row1["image_name"].'" class="img-fluid">';
 									}
-						 			echo '</div>';
 									}*/
-							echo	'</div>
-								';
-							
-						}
+									echo '</div>';
+									if (isset($row['services']) && !empty($row['services'])){
+										$services = $row['services'];
+										$servicesArray = explode(',', $services);
+										$servicesHtml = '<ul>';
+										foreach ($servicesArray as $service) {
+											$servicesHtml .= '<li>' . trim($service) . '</li>';
+										}
+										$servicesHtml .= '</ul>';
+										
+										echo	'
+												<div class="row fillbg mt-1 l-border-radius py-2 l-service">
+													<p class="heading text-left mt-1 text-uppercase font-weight-bold" style="margin:0.5rem 0 1rem; font-size:12px">Services</p>
+													' . $servicesHtml . '
+												</div>
+										';
+									}
+									echo '<div class="row fillbg mt-1 l-border-radius py-2 l-service">';
+										if (isset($row['contact_person']) && !empty($row['contact_person'])){
+											$establishment = $row['establishment'];
+											$contact_person = $row['contact_person'];
+											$profile_pic = $row['profile_pic'];
+											$cover_pic = $row['cover_pic'];
+											$registraion_no = $row['registraion_no'];
+											echo '<div class="row">
+													<div class="col-sm-2">
+														<img class="profile-img" src="directory/'. $type .'/'.$profile_pic.'">
+													</div>
+													<div class="col-sm-5 d-flex align-items-center">
+														<div>
+															<p class="font-weight-bold small mb-0">'.$contact_person.'</p>
+														</div>
+													</div>
+													<div class="col-sm-5 d-flex align-items-center justify-content-end">
+														<div>
+															<p class="small mb-0"><span class="font-weight-bold">Since :</span> '.$establishment.'</p>
+															<p class="small mb-0"><span class="font-weight-bold">Register No :</span> '.$registraion_no.' </p>
+														</div>
+													</div>
+												</div>
+											</div>';
+										}
+								}
 						?>
+						
 					<?php 
 						$reviewquery = mysqli_query($conn, "SELECT comment from mp_comments WHERE mp_id ='$row[$id_column]' AND userid='$userid'");
 						$reviewrow = mysqli_fetch_assoc($reviewquery);
@@ -706,95 +747,94 @@
 					</div>
 				</div>
 				<div class="col-md-3">
-					<div class="right-cont-part">
-						<div class="fillbg px-2 l-border-radius">
+				<div class="right-cont-part">
+						<div class="card l-border-radius">
 							<?php	if(strpos($row["map"], 'iframe')){
-								echo '<div class="map">'.$row["map"].'</div><br>';
-								}
-								else{
-								echo '<iframe width="100%" height="200" src="https://maps.google.com/maps?q='.$row["map"].'&output=embed"></iframe><br>';
-								}
-                                function displayTypeTimings($typequery) {
-                                    $daysOfWeek = [
-                                        'monday' => 'Monday',
-                                        'tuesday' => 'Tuesday',
-                                        'wednesday' => 'Wednesday',
-                                        'thursday' => 'Thursday',
-                                        'friday' => 'Friday',
-                                        'saturday' => 'Saturday',
-                                        'sunday' => 'Sunday'
-                                    ];
-                                    date_default_timezone_set('Asia/Colombo');
-                                    $currentDay = strtolower(date('l')); 
-                                    $currentTime = date('H:i:s');
-                                    $curDayOpen =$typequery[$currentDay. '_open'];
-                                    $curDayClose =$typequery[$currentDay. '_close'];
-                                    $isOpen = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose) ? 
-                                    '<span class="text-success">Now open</span>' : 
-                                    '<span class="text-danger">Now closed</span>';
+										echo '<div class="map card-img-top">'.$row["map"].'</div><br>';
+									}
+									else{
+										echo '<div class="card-img-top"><iframe width="100%" height="200" src="https://maps.google.com/maps?q='.$row["map"].'&output=embed"></iframe></div>';
+									}
+									?>
+							<div class="card-body">
+								<?php 
+									echo	(strlen($row["address"]) > 0)?'<p class="small"><i class="bi bi-geo-alt-fill mr-1"></i>&nbsp;'.$row["address"].'</p>':null;
+									echo 	(strlen($row["mobile"]) > 0)?'<p class="small"><i class="bi bi-telephone-fill mr-1"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
+									echo 	(strlen($row["whatsapp"]) > 0)?'<p class="small"><i class="bi bi-whatsapp mr-1"></i>&nbsp;<a href="https://wa.me/'.$row["whatsapp"].'" target="_blank" class="text-decoration-none text-dark">'.$row["whatsapp"].'</a></p>':null;
+									echo	(strlen($row["email"]) > 0)?'<p class="small"><i class="bi bi-envelope-fill mr-1"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
+									echo	(strlen($row["website"]) > 0)?'<p class="small"><i class="bi bi-globe mr-1"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
+									;
+					
+									?>
+							</div>
+						</div>
+						<div class="card mt-1 l-border-radius">
+							<div class="card-body">
+								<label class="border-bottom pb-2 w-100 small text-uppercase font-weight-bold">Branches</label>
+								<?php $query1=mysqli_query($conn, "SELECT * FROM $type WHERE main_id = (SELECT id FROM $type WHERE $id_column = '$typeid')");
+									while($branches1=mysqli_fetch_array($query1)){
+									echo '<form action="mpconnect/'.$type.'/'. urlencode(str_replace(' ', '_', $branches1["name"])) .'" method="post" style="display:inline;">
+									<input type="hidden" name="'.$id_column.'" value="'.$branches1["$id_column"].'">
+									<button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">'.$branches1["name"].' <i class="bi bi-box-arrow-up-right ml-2"></i></button>
+									</form>';
+								}?>
+								<?php $query2=mysqli_query($conn, "SELECT * FROM $type WHERE main_id =(SELECT main_id FROM $type WHERE $id_column = '$typeid') AND $id_column != '$typeid' UNION
+									SELECT * FROM $type WHERE id =(SELECT main_id FROM $type WHERE $id_column = '$typeid')");
+									while($branches2=mysqli_fetch_array($query2)){
+									echo '<form action="mpconnect/'.$type.'/'. urlencode(str_replace(' ', '_', $branches2["name"])) .'" method="post" style="display:inline;">
+									<input type="hidden" name="'.$id_column.'" value="'.$branches2["$id_column"].'">
+									<button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">'.$branches2["name"].'<i class="bi bi-box-arrow-up-right ml-2"></i></button>
+									</form>';
+								}?>
+							</div>
+						</div>
+						<div class="card mt-1 l-border-radius">
+							<div class="card-body">
+								<?php
+									function displayHospitalTimings($typequery) {
+										$daysOfWeek = [
+											'monday' => 'Monday',
+											'tuesday' => 'Tuesday',
+											'wednesday' => 'Wednesday',
+											'thursday' => 'Thursday',
+											'friday' => 'Friday',
+											'saturday' => 'Saturday',
+											'sunday' => 'Sunday'
+										];
 
-                                    $output = '<br><i class="bi bi-clock-history small"></i> <a class="btn btn-sm btn-link text-decoration-none toggle-btn collapsed" type="button" data-toggle="collapse" data-target="#timecollapse" aria-expanded="false" aria-controls="timecollapse">'.$isOpen.'<i class="bi bi-chevron-up"></i></a>
-									<div class="collapse width ml-4" id="timecollapse">
-										<div class="card card-body p-0 border-0" style="width: 220px;">';
+										date_default_timezone_set('Asia/Colombo');
+										$currentDay = strtolower(date('l')); 
+                                        // var_dump($currentDay);exit;
+										$currentTime = date('H:i:s');
+										$curDayOpen =$typequery[$currentDay. '_open'];
+										$curDayClose =$typequery[$currentDay. '_close'];
+										$isOpen = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose) ? 
+										'<span class="text-success">Now open</span>' : 
+										'<span class="text-danger">Now closed</span>';
 
-                                    $output .= '<div class="type-timings">';
-                                    foreach ($daysOfWeek as $dayKey => $dayName) {
-                                        $openTimeKey = $dayKey . '_open';
-                                        $closeTimeKey = $dayKey . '_close';
+										$output = '<p class="small font-weight-bold">HOURS OF OPERATION</p>';
+									
+										$output .= '<div class="hospital-timings ml-4">';
+										foreach ($daysOfWeek as $dayKey => $dayName) {
+											$openTimeKey = $dayKey . '_open';
+											$closeTimeKey = $dayKey . '_close';
 
-                                        $fmtOpenTime = date('H:i', strtotime($typequery[$openTimeKey]));
-                                        $fmtCloseTime = date('H:i', strtotime($typequery[$closeTimeKey]));
-                                
-                                        if ($typequery[$openTimeKey] === "00:00:00" && $typequery[$closeTimeKey] === "00:00:00") {
-                                            $output .= '<p class="mb-0 small">' . $dayName . ': Closed</p>';
-                                        } else {
-                                            $output .= '<p class="mb-0 small">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime . '</p>';
-                                        }
-                                    }
-                                    $output .= '</div></div></div>';
-                                
-                                    return $output;
-                                }
-                                
-                                if($type !=='doctor'){echo displayTypeTimings($row);}
-						                                
-								echo	($row["address"]!==null)?'<p class="mt-4 small"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
-								echo 	($row["mobile"]!==null)?'<p class="small"><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
-								echo	($row["email"]!==null)?'<p class="small"><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
-								echo	($row["website"]!==null)?'<p class="small"><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
-								if($type !=='doctor'){echo 	'<label class="border-bottom pb-2 w-100 small">Branches</label>
-								';}
-
-								// echo	($row["address"]!==null)?'<p class="mt-4"><i class="bi bi-geo-alt-fill"></i>&nbsp;'.$row["address"].'</p>':null;
-								// echo 	($row["mobile"]!==null)?'<p><i class="bi bi-telephone-fill"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
-								// echo	($row["email"]!==null)?'<p><i class="bi bi-envelope-fill"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
-								// echo	($row["website"]!==null)?'<p><i class="bi bi-globe"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
-								// echo 	'<label class="border-bottom pb-2 w-100">Branches</label>
-								// <div>
-								// ';
+											$fmtOpenTime = date('H:i', strtotime($typequery[$openTimeKey]));
+											$fmtCloseTime = date('H:i', strtotime($typequery[$closeTimeKey]));
+                                            $isToday = (strtolower($dayName) == strtolower($currentDay)) ? 'text-success':'';
+									
+											if ($typequery[$openTimeKey] === "00:00:00" && $typequery[$closeTimeKey] === "00:00:00") {
+												$output .= '<p class="mb-1 small text-uppercase font-weight-bold ">' . $dayName . ': Closed</p>';
+											} else {
+												$output .= '<p class="mb-1 small text-uppercase font-weight-bold '.$isToday.'">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime. '</p>';
+											}
+										}
+										$output .= '</div>';                             
+										return $output;
+									}
 								
-								
-								?>
-                                <?php
-                                $query1 = mysqli_query($conn, "SELECT * FROM $type WHERE main_id = (SELECT id FROM $type WHERE $id_column = '$typeid')");
-                                while ($branches1 = mysqli_fetch_array($query1)) {
-                                    echo '<form action="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $branches1["name"])).'" method="post" style="display:inline;">
-                                            <input type="hidden" name="'.$id_column.'" value="'.$branches1["$id_column"].'">
-                                            <button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">View '.$branches1["name"].' <i class="bi bi-box-arrow-up-right"></i></button>
-                                        </form>';
-                                }
-
-                                $query2 = mysqli_query($conn, "SELECT * FROM $type WHERE main_id IN (SELECT main_id FROM $type WHERE $id_column = '$typeid') AND $id_column != '$typeid' 
-                                                                UNION 
-                                                                SELECT * FROM $type WHERE id = (SELECT main_id FROM $type WHERE $id_column = '$typeid')");
-                                while ($branches2 = mysqli_fetch_array($query2)) {
-                                    echo '<form action="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $branches2["name"])).'" method="post" style="display:inline;">
-                                            <input type="hidden" name="'.$id_column.'" value="'.$branches2["$id_column"].'">
-                                            <button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">View '.$branches2["name"].' <i class="bi bi-box-arrow-up-right"></i></button>
-                                        </form>';
-                                }
-								echo '</div>'
-                                ?>
+									echo displayHospitalTimings($row);?>
+							</div>
 						</div>
 					</div>
 				</div>

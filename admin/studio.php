@@ -159,6 +159,26 @@
 													<input type="text" name="studioestablishment" class="form-control" id="studioestablishment" placeholder="Establishment">
 												</div>
 											</div>
+											<div class="form-group row">
+												<div class="col-md-6">
+													<label class="required" for="profileimage">Profile Image</label>
+													<div class="input-group">
+														<div class="custom-file">
+															<input type="file" name="profileimage" class="custom-file-input" id="profileimage"  accept="image/*">
+															<label class="custom-file-label" for="profileimage">Choose file</label>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<label for="coverimage">Cover Image</label>
+													<div class="input-group">
+														<div class="custom-file">
+															<input type="file" name="coverimage" class="custom-file-input" id="coverimage"  accept="image/*">
+															<label class="custom-file-label" for="coverimage">Choose file</label>
+														</div>
+													</div>
+												</div>
+											</div>
 											<div class="form-group">
 												<label class="required" for="studioaddr">Studio Address</label>
 												<input type="text" name="studioaddr" class="form-control" id="studioaddr" placeholder="Address">
@@ -365,9 +385,6 @@
 		  studioemail: {
 			required: true,
 	      },
-		  studiosubtype: {
-			required: true,
-		  },
 		  studioestablishment: {
 			required: true,
 	      },
@@ -384,7 +401,13 @@
 		  about: {
 			required: true,
 		  },
-		 	  
+		  profileimage: {
+	            required: true,
+	            extension: "jpg|jpeg|png"
+		  },
+		  coverimage: {
+	            extension: "jpg|jpeg|png"
+		  },
 		  featuredimage: {
 	            required: true,
 	            extension: "jpg|jpeg|png"

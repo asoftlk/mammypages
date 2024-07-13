@@ -160,30 +160,65 @@ $(document).ready(function() {
 						<div class="col-md-6 form-group">
 						<label class="required" for="studioestablishment">Year of Establishment</label>
 					  <input type="text" name="studioestablishment" class="form-control" id="studioestablishment"  value="<?php echo $row['establishment']; ?>" placeholder="Year of Establishment">
-						</div>					  
-					</div>
-					
-					<div class="row">
+						</div>	
 						<div class="col-md-6 form-group">
-						<label class="required" for="studiocity">studio city(required to show for branches)</label>
-					  <input type="text" name="studiocity" class="form-control" id="hospitcity"  value="<?php echo $row['city']; ?>" placeholder="City">
+							<label class="required" for="studiocity">studio city(required to show for branches)</label>
+							<input type="text" name="studiocity" class="form-control" id="hospitcity"  value="<?php echo $row['city']; ?>" placeholder="City">
+						</div>
+							
+						<div class="col-md-6 form-group">
+							<label class="required" for="studiocont">Contact Number</label>
+							<input type="tel" name="studiocont" class="form-control" id="studiocont"  value="<?php echo $row['mobile']; ?>" placeholder="Contact Number">
+						</div>	
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="required" for="profileimage">Profile Image</label>
+
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" accept="image/*" id="customFileprofile" name="profileimage" value="" >
+									<label class="custom-file-label" name="profileimage" for="profileimage"><?php echo $row['profile_pic'] ?></label>
+								</div>	
+							</div>
+
+							<div class="text-center">
+								<div id="customFileprofilepreview">
+								<?php if(($row['image']!="") && file_exists("../directory/studio/".$row['profile_pic'])){?>
+									<p class="img-center" style="color:green;margin-bottom:0">Profile Image Preview</p>
+										<button class="close img-center" onclick="removepreview($('#customFileprofile'))" style=" position: absolute;z-index: 1;"><span style=" font-size:x-large; color:red; font-weight:bolder">&times;</span></button>
+										<img src="../directory/studio/<?php echo $row['profile_pic'] ?>" class="img-fluid img-center" style="position:relative; width:200px; max-height: 180px; border:1px solid gray; margin-bottom:5px"/>
+								<?php } ?>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="required" for="coverImage">Cover Image</label>
+
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" accept="image/*" id="customFilecover" name="coverimage" value="" >
+									<label class="custom-file-label" name="coverimage" for="coverimage"><?php echo $row['cover_pic'] ?></label>
+								</div>	
+								</div>
+
+							<div class="text-center">
+								<div id="customFilecoverpreview">
+								<?php if(($row['image']!="") && file_exists("../directory/studio/".$row['cover_pic'])){?>
+									<p class="img-center" style="color:green;margin-bottom:0">Cover Image Preview</p>
+										<button class="close img-center" onclick="removepreview($('#customFilecover'))" style=" position: absolute;z-index: 1;"><span style=" font-size:x-large; color:red; font-weight:bolder">&times;</span></button>
+										<img src="../directory/studio/<?php echo $row['cover_pic'] ?>" class="img-fluid img-center" style="position:relative; width:200px; max-height: 180px; border:1px solid gray; margin-bottom:5px"/>
+								<?php } ?>
+								</div>
+							</div>
+						</div>
+					
+						<div class="col-md-6 form-group">
+							<label class="required" for="studiocontactperson">Studio Contact Person</label>
+					  		<input type="text" name="studiocontactperson" class="form-control" id="studiocontactperson"  value="<?php echo $row['contact_person']; ?>" placeholder="contact person">
 						</div>
 						
 						<div class="col-md-6 form-group">
-						<label class="required" for="studiocont">Contact Number</label>
-					  <input type="tel" name="studiocont" class="form-control" id="studiocont"  value="<?php echo $row['mobile']; ?>" placeholder="Contact Number">
-						</div>					  
-					</div>
-					
-					<div class="row">
-						<div class="col-md-6 form-group">
-						<label class="required" for="studiocontactperson">Studio Contact Person</label>
-					  <input type="text" name="studiocontactperson" class="form-control" id="studiocontactperson"  value="<?php echo $row['contact_person']; ?>" placeholder="contact person">
-						</div>
-						
-						<div class="col-md-6 form-group">
-						<label class="required" for="service">Service</label>
-					  <input type="tel" name="service" class="form-control" id="service"  value="<?php echo $row['services']; ?>" placeholder="services">
+							<label class="required" for="service">Service</label>
+							<input type="tel" name="service" class="form-control" id="service"  value="<?php echo $row['services']; ?>" placeholder="services">
 						</div>					  
 					</div>
 
@@ -562,7 +597,7 @@ $(function () {
 			var fileName = $(this).val().split("\\").pop();
 			$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 			});
-			$(document).on('change', "#customFilefeature, #customFilelogo, .customFilegallery", function(){
+			$(document).on('change', "#customFilefeature,#customFileprofile,#customFilecover, #customFilelogo, .customFilegallery", function(){
 				var fileName1 = $(this).attr('id');
 				var filetype = event.target.files[0];
 				if (filetype) {

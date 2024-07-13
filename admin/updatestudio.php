@@ -130,9 +130,87 @@
 	       }
 	}	   
 	$updatequery = "Update studio SET name='$name',speciality='$speciality',registraion_no='$studioregno', establishment='$studioestablishment', contact_person='$studiocontactperson',address='$address', map='$map', city='$city', mobile='$mobile',email='$email',whatsapp='$whatsapp',website='$website', facebook='$facebook', instagram='$instagram', linkedin='$linkedin',youtube='$youtube',about='$about',services='$service' ";		
-		$featuredimage = $_FILES['featuredimage']['name'];
-			
-			
+	
+				$profileimage = $_FILES['profileimage']['name'];
+	            if($profileimage != ""){
+					$removeimg= mysqli_query($conn, "SELECT profile_pic from studio WHERE id= '$id'");
+					$imagename = mysqli_fetch_assoc($removeimg);
+					if($imagename['profile_pic'] && file_exists("../directory/studio/".$imagename['profile_pic'])){
+						unlink("../directory/studio/".$imagename['profile_pic']);
+					}
+	                $ext1 = pathinfo($_FILES["profileimage"]["name"], PATHINFO_EXTENSION);
+	                $profileimagetarget = "cpprofile".$time.".".$ext1;
+	                //$image_link = "https://veramasa.com/udyogsadhna/images/".$target;
+	                    if (in_array($profileimage, ['jpg', 'png', 'jpeg'])) {
+	                            echo 'You Featured file extension must be .jpg, .png or .jpeg';
+								exit();
+	                        } 
+	                        elseif ($_FILES['profileimage']['size'] > 10000000) { // file shouldn't be larger than 1Megabyte
+	                            echo '"Featured image too large!"';
+								exit();
+	                        }
+	                    else{
+	                        move_uploaded_file($_FILES['profileimage']['tmp_name'], "../directory/studio/".$profileimagetarget);
+	                        }
+							$updatequery .= ", profile_pic= '$profileimagetarget' "; 
+	            }
+	            else{
+	                
+	            }
+				$coverimage = $_FILES['coverimage']['name'];
+	            if($coverimage != ""){
+					$removeimg= mysqli_query($conn, "SELECT cover_pic from studio WHERE id= '$id'");
+					$imagename = mysqli_fetch_assoc($removeimg);
+					if($imagename['cover_pic'] && file_exists("../directory/studio/".$imagename['cover_pic'])){
+						unlink("../directory/studio/".$imagename['cover_pic']);
+					}
+	                $ext1 = pathinfo($_FILES["coverimage"]["name"], PATHINFO_EXTENSION);
+	                $coverimagetarget = "cpcover".$time.".".$ext1;
+	                //$image_link = "https://veramasa.com/udyogsadhna/images/".$target;
+	                    if (in_array($coverimage, ['jpg', 'png', 'jpeg'])) {
+	                            echo 'You Featured file extension must be .jpg, .png or .jpeg';
+								exit();
+	                        } 
+	                        elseif ($_FILES['coverimage']['size'] > 10000000) { // file shouldn't be larger than 1Megabyte
+	                            echo '"Featured image too large!"';
+								exit();
+	                        }
+	                    else{
+	                        move_uploaded_file($_FILES['coverimage']['tmp_name'], "../directory/studio/".$coverimagetarget);
+	                        }
+							$updatequery .= ", cover_pic= '$coverimagetarget' "; 
+	            }
+	            else{
+	                
+	            }
+				$featuredimage = $_FILES['featuredimage']['name'];
+	            if($featuredimage != ""){
+					$removeimg= mysqli_query($conn, "SELECT image from studio WHERE id= '$id'");
+					$imagename = mysqli_fetch_assoc($removeimg);
+					if($imagename['image'] && file_exists("../directory/studio/".$imagename['image'])){
+						unlink("../directory/studio/".$imagename['image']);
+					}
+	                $ext1 = pathinfo($_FILES["featuredimage"]["name"], PATHINFO_EXTENSION);
+	                $featuretarget = "fea".$time.".".$ext1;
+	                //$image_link = "https://veramasa.com/udyogsadhna/images/".$target;
+	                    if (in_array($featuredimage, ['jpg', 'png', 'jpeg'])) {
+	                            echo 'You Featured file extension must be .jpg, .png or .jpeg';
+								exit();
+	                        } 
+	                        elseif ($_FILES['featuredimage']['size'] > 10000000) { // file shouldn't be larger than 1Megabyte
+	                            echo '"Featured image too large!"';
+								exit();
+	                        }
+	                    else{
+	                        move_uploaded_file($_FILES['featuredimage']['tmp_name'], "../directory/studio/".$featuretarget);
+	                        }
+							$updatequery .= ", image= '$featuretarget' "; 
+	            }
+	            else{
+	                
+	            }
+
+				$featuredimage = $_FILES['featuredimage']['name'];
 	            if($featuredimage != ""){
 					$removeimg= mysqli_query($conn, "SELECT image from studio WHERE id= '$id'");
 					$imagename = mysqli_fetch_assoc($removeimg);

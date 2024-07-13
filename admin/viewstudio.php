@@ -22,6 +22,10 @@
 		unlink("../directory/studio/".$row['logo']);}
 		if(file_exists("../directory/studio/".$row['image'])){
 		unlink("../directory/studio/".$row['image']);}
+		if(file_exists("../directory/studio/".$row['profile_pic'])){
+		unlink("../directory/studio/".$row['profile_pic']);}
+		if(file_exists("../directory/studio/".$row['cover_pic'])){
+		unlink("../directory/studio/".$row['cover_pic']);}
 		$galleryquery= mysqli_query($conn, "SELECT * FROM mpstudio_gallery WHERE studio_id = '$row[studio_id]'");
 		while($galleryrow = mysqli_fetch_array($galleryquery)){
 			if(file_exists("../directory/studio/".$galleryrow['image_name'])){
@@ -218,14 +222,26 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Studio city(Required to show for branches):</label>
+									<label>Studio city:</label>
 									<input type="text" class="form-control" id="city">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Studio Contact person:</label>
+									<label>Contact person Name:</label>
 									<input type="text" class="form-control" id="contact_person">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Contact person profile pic:</label>
+									<img src=""  onerror="this.style.display='none';" id="profile_pic" class="img-fluid" style="max-height:110px">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Contact person cover:</label>
+									<img src=""  onerror="this.style.display='none';" id="cover_pic" class="img-fluid" style="max-height:110px">
 								</div>
 							</div>
 							<div class="col-md-4">
@@ -434,6 +450,28 @@
 	                       }
 	                       }
 					if(key == 'image')
+	                       {
+	                       if(data1[key]){
+	                         $('#'+key).attr('src', '../directory/studio/'+data1[key]);  
+	                           $('#'+key).attr('disabled', value);
+							$('#'+key).show();
+	                       }
+	                       else{
+	                             $('#'+key).remove();  
+	                       }
+	                       }
+						   if(key == 'profile_pic')
+	                       {
+	                       if(data1[key]){
+	                         $('#'+key).attr('src', '../directory/studio/'+data1[key]);  
+	                           $('#'+key).attr('disabled', value);
+							$('#'+key).show();
+	                       }
+	                       else{
+	                             $('#'+key).remove();  
+	                       }
+	                       }
+						   if(key == 'cover_pic')
 	                       {
 	                       if(data1[key]){
 	                         $('#'+key).attr('src', '../directory/studio/'+data1[key]);  

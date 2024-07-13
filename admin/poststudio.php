@@ -25,8 +25,6 @@
 		$studiowhatsapp = filter_input(INPUT_POST, 'studiowhatsapp');
 		$studioemail = filter_input(INPUT_POST, 'studioemail');
 		$studioweb = filter_input(INPUT_POST, 'studioweb');
-		$studiotype = filter_input(INPUT_POST, 'studiotype');
-		$studiosubtype = filter_input(INPUT_POST, 'studiosubtype');
 		$studioworking = filter_input(INPUT_POST, 'studioworking');
 		$studiofb = filter_input(INPUT_POST, 'studiofb');
 		$studioinsta = filter_input(INPUT_POST, 'studioinsta');
@@ -58,7 +56,10 @@
 		
 		$logoimage = $_FILES['logoimage']['name'];
 		$featuredimage = $_FILES['featuredimage']['name'];
-			$galimages = $_FILES['galimages']['name'];
+		$profileimage = $_FILES['profileimage']['name'];
+		$coverimage = $_FILES['coverimage']['name'];
+		$galimages = $_FILES['galimages']['name'];
+
 			if(!empty($videoembed)){
 				$videotarget = $videoembed;
 			}
@@ -82,8 +83,8 @@
 			}
 			$videotarget = isset($videotarget) ? $videotarget : '';
 			if($featuredimage != NULL){
-			$ext1 = pathinfo($_FILES["featuredimage"]["name"], PATHINFO_EXTENSION);
-			$featuretarget = "fea".$time.".".$ext1;
+				$ext1 = pathinfo($_FILES["featuredimage"]["name"], PATHINFO_EXTENSION);
+				$featuretarget = "fea".$time.".".$ext1;
 				if (in_array($featuredimage, ['jpg', 'png', 'jpeg'])) {
 						echo 'You featured image extension must be .jpg, .png or .jpeg';
 						exit();
@@ -120,37 +121,63 @@
 					$featureupload = move_uploaded_file($_FILES['featuredimage']['tmp_name'], "../directory/studio/".$featuretarget);
 				}
 				
-			$ext2 = pathinfo($_FILES["logoimage"]["name"], PATHINFO_EXTENSION);
-			$logotarget = "logo".$time.".".$ext2;
-				if (in_array($logoimage, ['jpg', 'png', 'jpeg'])) {
-						echo 'Logo image extension must be .jpg, .png or .jpeg';
-						exit();
-					}
-				if ($_FILES['logoimage']['size'] > 30000000) { // file shouldn't be larger than 1Megabyte
-						echo '"Logo image too large! Max size 30MB"';
-						exit();
-					}	
-				$logoupload = move_uploaded_file($_FILES['logoimage']['tmp_name'], "../directory/studio/".$logotarget);
-				
-			if($featureupload){
-				$query = "INSERT INTO studio (studio_id, registraion_no, name, speciality, address, establishment, contact_person, is_main, main_id, map, city, mobile, email, whatsapp, website, facebook, instagram, linkedin, youtube, logo, image, video, about, services, priority) 
-				VALUES ('$studio_id', '$studioregno', '$studioname', '$studiospecialist', '$studioaddr', '$studioestablishment', '$studiocontactperson', '$isMain', '$mainId', '$studiomap', '$studiocity', '$studiocont', '$studioemail', '$studiowhatsapp', '$studioweb', '$studiofb', '$studioinsta', '$studioln', '$studioyt', '$logotarget', '$featuretarget', '$videotarget', '$about', '$service', '$priority')";
-				
-				$result = mysqli_query($conn, $query);
-				
+				$ext2 = pathinfo($_FILES["logoimage"]["name"], PATHINFO_EXTENSION);
+				$logotarget = "logo".$time.".".$ext2;
+					if (in_array($logoimage, ['jpg', 'png', 'jpeg'])) {
+							echo 'Logo image extension must be .jpg, .png or .jpeg';
+							exit();
+						}
+					if ($_FILES['logoimage']['size'] > 30000000) { // file shouldn't be larger than 1Megabyte
+							echo '"Logo image too large! Max size 30MB"';
+							exit();
+						}	
+					$logoupload = move_uploaded_file($_FILES['logoimage']['tmp_name'], "../directory/studio/".$logotarget);
+					
+				$ext3 = pathinfo($_FILES["profileimage"]["name"], PATHINFO_EXTENSION);
+				$profiletarget = "proimg".$time.".".$ext2;
+					if (in_array($profileimage, ['jpg', 'png', 'jpeg'])) {
+							echo 'Profile image extension must be .jpg, .png or .jpeg';
+							exit();
+						}
+					if ($_FILES['profileimage']['size'] > 30000000) { // file shouldn't be larger than 1Megabyte
+							echo '"Profile image too large! Max size 30MB"';
+							exit();
+						}	
+				$profileimageupload = move_uploaded_file($_FILES['profileimage']['tmp_name'], "../directory/studio/".$profiletarget);
 
-				$workingTimesQuery = "INSERT INTO studio_working_times (sttime_id, studio_id, studio_type,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
-							VALUES ('$sttime_id','$studio_id', '$studiotype', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
-				$resultWorkingTimes = mysqli_query($conn, $workingTimesQuery);
-				if($result && $resultWorkingTimes){
-					$conn->commit();
-					echo "Posted Successfully";
-				}
-				else{
-					$conn->rollback();
-					echo "Failed to Post";
-				}
-			}	
+				$ext4 = pathinfo($_FILES["coverimage"]["name"], PATHINFO_EXTENSION);
+				$covertarget = "coverimg".$time.".".$ext2;
+					if (in_array($coverimage, ['jpg', 'png', 'jpeg'])) {
+							echo 'Cover image extension must be .jpg, .png or .jpeg';
+							exit();
+						}
+					if ($_FILES['coverimage']['size'] > 30000000) { // file shouldn't be larger than 1Megabyte
+							echo '"Cover image too large! Max size 30MB"';
+							exit();
+						}	
+				$coverimageupload = move_uploaded_file($_FILES['coverimage']['tmp_name'], "../directory/studio/".$covertarget);
+						
+
+				if($featureupload){
+					$query = "INSERT INTO studio (studio_id, registraion_no, name, speciality, address, establishment, contact_person, profile_pic, cover_pic, is_main, main_id, map, city, mobile, email, whatsapp, website, facebook, instagram, linkedin, youtube, logo, image, video, about, services, priority) 
+          			VALUES ('$studio_id', '$studioregno', '$studioname', '$studiospecialist', '$studioaddr', '$studioestablishment', '$studiocontactperson', '$profiletarget', '$covertarget', '$isMain', '$mainId', '$studiomap', '$studiocity', '$studiocont', '$studioemail', '$studiowhatsapp', '$studioweb', '$studiofb', '$studioinsta', '$studioln', '$studioyt', '$logotarget', '$featuretarget', '$videotarget', '$about', '$service', '$priority')";
+
+					$result = mysqli_query($conn, $query);
+					
+
+					$workingTimesQuery = "INSERT INTO studio_working_times (sttime_id, studio_id,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
+								VALUES ('$sttime_id','$studio_id', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
+					$resultWorkingTimes = mysqli_query($conn, $workingTimesQuery);
+					if($result && $resultWorkingTimes){
+						$conn->commit();
+						echo "Posted Successfully";
+					}
+					else{
+						$conn->rollback();
+						echo "Failed to Post";
+					}
+				}	
+				
 			}
 		
 		}

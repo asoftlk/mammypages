@@ -112,6 +112,8 @@ $output = '
 	  <th>Registration No</th>
 	  <th>Studio Specialist In</th>
    	<th>Studio Address</th>
+    <th>Profile Picture</th>
+    <th>Cover Picture</th>
     <th>Contact Person</th>
     <th>Contact Number</th>
 	  <th>Email</th>
@@ -124,8 +126,8 @@ $output = '
     <!--th>About</th-->
      <th>Service</th>
     <th>Priority</th>
-    <th>logo Image</th>
-    <th>Featured Image</th>
+    <th>Studio logo Image</th>
+    <th>Studio Featured Image</th>
 	<th>datetime</th>
     <th>View</th>
     <th>Edit</th>
@@ -156,6 +158,8 @@ if($total_data > 0)
             <td>'.$main['registraion_no'].'</td>
             <td>'.$main['speciality'].'</td>
             <td>'.$main['address']."  ".$main['city'].'</td>
+            <td><div class="zoom"><img src="../directory/studio/'.$main["profile_pic"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td><div class="zoom"><img src="../directory/studio/'.$main["cover_pic"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
             <td>'.$main['contact_person'].'</td>
             <td>'.$main['mobile'].'</td>
             <td>'.$main['email'].'</td>
@@ -201,6 +205,8 @@ if($total_data > 0)
             <td>'.$branch['registraion_no'].'</td>
             <td>'.$branch['speciality'].'</td>
             <td>'.$branch['address']."  ".$branch['city'].'</td>
+            <td><div class="zoom"><img src="../directory/studio/'.$branch["profile_pic"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td><div class="zoom"><img src="../directory/studio/'.$branch["cover_pic"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
             <td>'.$branch['contact_person'].'</td>
             <td>'.$branch['mobile'].'</td>
             <td>'.$branch['email'].'</td>
