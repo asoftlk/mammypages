@@ -151,8 +151,17 @@ $(document).ready(function() {
 					  <input type="text" name="mapLocation" class="form-control" id="mapLocation"  value="<?php echo htmlspecialchars($row['map']); ?>" placeholder="Copy form Google Map by poining the location">
 						</div>					  
 					</div>
-					
 					<div class="row">
+						<div class="col-md-6 form-group">
+						<label class="required" for="saloonregno">Saloon Registraion</label>
+					  <input type="text" name="saloonregno" class="form-control" id="saloonregno"  value="<?php echo $row['registraion_no']; ?>" placeholder="registraion">
+						</div>
+						
+						<div class="col-md-6 form-group">
+						<label class="required" for="saloonestablishment">Year of Establishment</label>
+					  <input type="text" name="saloonestablishment" class="form-control" id="saloonestablishment"  value="<?php echo $row['establishment']; ?>" placeholder="Year of Establishment">
+						</div>	
+						
 						<div class="col-md-6 form-group">
 						<label class="required" for="city">Saloon city(required to show for branches)</label>
 					  <input type="text" name="city" class="form-control" id="hospitcity"  value="<?php echo $row['city']; ?>" placeholder="City">
@@ -161,9 +170,68 @@ $(document).ready(function() {
 						<div class="col-md-6 form-group">
 						<label class="required" for="contactNumber">Contact Number</label>
 					  <input type="tel" name="contactNumber" class="form-control" id="contactNumber"  value="<?php echo $row['mobile']; ?>" placeholder="Contact Number">
+						</div>	
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="required" for="profileimage">Profile Image</label>
+
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" accept="image/*" id="customFileprofile" name="profileimage" value="" >
+									<label class="custom-file-label" name="profileimage" for="profileimage"><?php echo $row['profile_pic'] ?></label>
+								</div>	
+							</div>
+
+							<div class="text-center">
+								<div id="customFileprofilepreview">
+								<?php if(($row['image']!="") && file_exists("../directory/saloon/".$row['profile_pic'])){?>
+									<p class="img-center" style="color:green;margin-bottom:0">Profile Image Preview</p>
+										<button class="close img-center" onclick="removepreview($('#customFileprofile'))" style=" position: absolute;z-index: 1;"><span style=" font-size:x-large; color:red; font-weight:bolder">&times;</span></button>
+										<img src="../directory/saloon/<?php echo $row['profile_pic'] ?>" class="img-fluid img-center" style="position:relative; width:200px; max-height: 180px; border:1px solid gray; margin-bottom:5px"/>
+								<?php } ?>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="required" for="coverImage">Cover Image</label>
+
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" accept="image/*" id="customFilecover" name="coverimage" value="" >
+									<label class="custom-file-label" name="coverimage" for="coverimage"><?php echo $row['cover_pic'] ?></label>
+								</div>	
+								</div>
+
+							<div class="text-center">
+								<div id="customFilecoverpreview">
+								<?php if(($row['image']!="") && file_exists("../directory/saloon/".$row['cover_pic'])){?>
+									<p class="img-center" style="color:green;margin-bottom:0">Cover Image Preview</p>
+										<button class="close img-center" onclick="removepreview($('#customFilecover'))" style=" position: absolute;z-index: 1;"><span style=" font-size:x-large; color:red; font-weight:bolder">&times;</span></button>
+										<img src="../directory/saloon/<?php echo $row['cover_pic'] ?>" class="img-fluid img-center" style="position:relative; width:200px; max-height: 180px; border:1px solid gray; margin-bottom:5px"/>
+								<?php } ?>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 form-group">
+							<label class="required" for="salooncontactperson">Saloon Contact Person</label>
+					  		<input type="text" name="salooncontactperson" class="form-control" id="salooncontactperson"  value="<?php echo $row['contact_person']; ?>" placeholder="contact person">
+						</div>
+						
+						<div class="col-md-6 form-group">
+							<label class="required" for="service">Service</label>
+							<input type="tel" name="service" class="form-control" id="service"  value="<?php echo $row['services']; ?>" placeholder="services">
 						</div>					  
 					</div>
 					
+					<div class="row">
+						<div class="col-md-6 form-group">
+							<label for="qualification">Qualification</label>
+							<input type="text" name="qualification" class="form-control" id="qualification"  value="<?php echo $row['qualification']; ?>" placeholder="qualification">
+						</div>
+						<div class="col-md-6 form-group">
+							<label for="web">Website</label>
+							<input type="url" name="web" class="form-control" id="web"  value="<?php echo $row['website']; ?>" placeholder="Website">
+						</div>				  
+					</div>
 					
 					<div class="row">
 						<div class="col-md-6 form-group">
@@ -177,39 +245,6 @@ $(document).ready(function() {
 					</div>
 					
 					
-					<div class="row">
-						<div class="col-md-6 form-group">
-						<label for="web">Website</label>
-					  <input type="url" name="web" class="form-control" id="web"  value="<?php echo $row['website']; ?>" placeholder="Website">
-						</div>
-						<div class="col-md-6 form-group">
-						<label class="required" for="type">Saloon type</label>
-                        <?php echo $row['type']?>
-						  <select class="form-control" name="type" id="type">
-								<option selected="" disabled="" value="null" class="hidden">--Select Saloon Type</option>
-								<option value="Government saloon" <?php if($row['type']=="Government saloon") echo  'selected="selected"';?>>Government Saloon</option>
-								<option value="Private saloon" <?php if($row['type']=="Private saloon") echo  'selected="selected"';?>>Private Saloon</option>
-						  </select>
-						  </div>					  
-					</div>
-					<div class="form-group subtype">
-					  <label for="subtype" class="required">Saloon Subtype</label>
-					  <select class="form-control" name="subtype" id="subtype">
-							<option selected="" disabled="" value="null" class="hidden">--Select Saloon Subype</option>
-							<option value="National saloon" <?php if($row['subtype']=="National saloon") echo  'selected="selected"';?>>National Saloon</option>
-							<option value="Teaching saloon" <?php if($row['subtype']=="Teaching saloon") echo  'selected="selected"';?>>Teaching Saloon</option>
-							<option value="Specialized Teaching saloon" <?php if($row['subtype']=="Specialized Teaching saloon") echo  'selected="selected"';?>>Specialized Teaching Saloon</option>
-							<option value="Other Specialized saloon" <?php if($row['subtype']=="Other Specialized saloon") echo  'selected="selected"';?>>Other Specialized Saloon</option>
-							<option value="Provincial General saloon" <?php if($row['subtype']=="Provincial General saloon") echo  'selected="selected"';?>>Provincial General Saloon</option>
-							<option value="Base saloon Type - A" <?php if($row['subtype']=="Base saloon Type - A") echo  'selected="selected"';?>>Base Saloon Type - A</option>
-							<option value="Base saloon Type - B" <?php if($row['subtype']=="Base saloon Type - B") echo  'selected="selected"';?>>Base Saloon Type - B</option>
-							<option value="Divisional saloon Type - A" <?php if($row['subtype']=="Divisional saloon Type - A") echo  'selected="selected"';?>>Divisional Saloon Type - A</option>
-							<option value="Divisional saloon Type - B" <?php if($row['subtype']=="Divisional saloon Type - B") echo  'selected="selected"';?>>Divisional Saloon Type - B</option>
-							<option value="Divisional saloon Type - C" <?php if($row['subtype']=="Divisional saloon Type - C") echo  'selected="selected"';?>>Divisional Saloon Type - C</option>
-							<option value="Primary saloon Care Unit" <?php if($row['subtype']=="Primary saloon Care Unit") echo  'selected="selected"';?>>Primary saloon Care Unit</option>
-							<option value="Others" <?php if($row['subtype']=="Others") echo  'selected="selected"';?>>Others</option>
-					  </select>
-					</div>
                     <div class="form-group">
                         <label class="required" for="branchworking">Hours of Operation</label>
                         <table class="table table-sm table-bordered">
@@ -241,7 +276,7 @@ $(document).ready(function() {
                                         value="<?php echo $times[$abbr . 'close']; ?>">
                                 </td>
                                 <td>
-                                    <button type="button" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
+                                    <button type="button" class="btn btn-sm btn-info" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -249,34 +284,27 @@ $(document).ready(function() {
                         </table>
                     </div>
                     <div class="row">
-						<div class="col-md-4 form-group">
+						<div class="col-md-3 form-group">
 						    <label for="fb">Facebook Link</label>
 						  <input type="url" name="fb" class="form-control" id="fb"  value="<?php echo $row['facebook']; ?>" placeholder="Facebook Link">
 						</div>	
-						<div class="col-md-4 form-group">
+						<div class="col-md-43form-group">
 						    <label for="insta">Instagram Link</label>
 						  <input type="url" name="insta" class="form-control" id="insta" value="<?php echo $row['instagram']; ?>" placeholder="Instagram Link">
 						</div>
-						<div class="col-md-4 form-group">
+						<div class="col-md-3 form-group">
 						    <label for="linkedin">Linkedin Link</label>
 						  <input type="url" name="linkedin" class="form-control" id="linkedin"  value="<?php echo $row['linkedin']; ?>" placeholder="Linkedin Link">
+						</div>	
+						<div class="col-md-3 form-group">
+						    <label for="youtube">Youtube Link</label>
+						  <input type="url" name="youtube" class="form-control" id="youtube"  value="<?php echo $row['youtube']; ?>" placeholder="Youtube Link">
 						</div>					  
-					</div>
-					
-					<div class="row">
-						<div class="col-md-12 form-group">
-						<label class="required">Status</label>
-                        <select class="form-control" name="status" id="status" >
-                          <option selected="" disabled="" value="null" class="hidden">--Select Status</option>
-						  <option value="Verified" <?php if($row['status']=="Verified") echo  'selected="selected"';?>>Verified</option>
-						  <option value="Not Verified" <?php if($row['status']=="Not Verified") echo  'selected="selected"';?>>Not Verified</option>
-						</select>
-						</div>
 					</div>
 					  <div class="row">
 						<div class="col-md-12 form-group">
 						<label class="required" for="about">About</label>
-					  <textarea style="width:97%; height:180px; margin:auto" id="about"  name="about" class="about" required><?php echo $row['about']; ?></textarea>
+					  <textarea class="form-control" id="about"  name="about" class="about" required><?php echo $row['about']; ?></textarea>
 						</div>					  
 					</div>
 					<!--div class="row">
@@ -415,7 +443,6 @@ $(document).ready(function() {
 
 <script>
 $('.select2').select2();
-$('#about').summernote({width:"100%", height:"250"});
 function removeReg(data, status) {
   Swal.fire({
       text: data,
@@ -455,7 +482,7 @@ $(function () {
 	  'specialist[]': {
         required: true,
       },
-	 contactNumber:{
+	 	contactNumber:{
 		  required: true,
 		  rangelength: [10, 12],
 	  },
@@ -465,25 +492,21 @@ $(function () {
 	  address: {
         required: true,
       },
+	  saloonregno: {
+        required: true,
+      },
+	  saloonestablishment: {
+        required: true,
+      },
+	  contact_person: {
+        required: true,
+      },
 	  city:{
 		  required: true,
 	  },	  
 	  email: {
 		required: true,
       },
-	  type: {
-		required: true,
-	  },
-	  subtype: {
-		required: true,
-	  },
-	  midwifeworking: {
-		required: true,
-	  },
-	  
-	  status: {
-		required: true,
-	  },
 	  about: {
 		required: true,
 	  },

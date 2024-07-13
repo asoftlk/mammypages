@@ -22,6 +22,10 @@
 		unlink("../directory/saloon/".$row['logo']);}
 		if(file_exists("../directory/saloon/".$row['image'])){
 		unlink("../directory/saloon/".$row['image']);}
+		if(file_exists("../directory/saloon/".$row['profile_pic'])){
+		unlink("../directory/saloon/".$row['profile_pic']);}
+		if(file_exists("../directory/saloon/".$row['cover_pic'])){
+		unlink("../directory/saloon/".$row['cover_pic']);}
 		$galleryquery= mysqli_query($conn, "SELECT * FROM mpsaloon_gallery WHERE saloon_id = '$row[saloon_id]'");
 		while($galleryrow = mysqli_fetch_array($galleryquery)){
 			if(file_exists("../directory/saloon/".$galleryrow['image_name'])){
@@ -186,12 +190,22 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
+									<label>Registration NO:</label><input type="text" class="form-control" id="registraion_no">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
 									<label>Saloon Name:</label><input type="text" class="form-control" id="name">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
 									<label>Saloon Specialist In</label><input type="text" class="form-control" id="speciality">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Year of Establishment</label><input type="text" class="form-control" id="establishment">
 								</div>
 							</div>
 							<div class="col-md-4">
@@ -208,10 +222,35 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Saloon city(Required to show for branches):</label>
+									<label>Saloon city:</label>
 									<input type="text" class="form-control" id="city">
 								</div>
 							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Beautician Name:</label>
+									<input type="text" class="form-control" id="contact_person">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Beautician’s Qualification:</label>
+									<input type="text" class="form-control" id="qualification">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Beautician’s profile pic:</label><br>
+									<img src=""  onerror="this.style.display='none';" id="profile_pic" class="img-fluid" style="max-height:110px">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Beautician’s cover:</label>
+									<img src=""  onerror="this.style.display='none';" id="cover_pic" class="img-fluid" style="max-height:110px">
+								</div>
+							</div>
+							
 							<div class="col-md-4">
 								<div class="form-group">
 									<label>Contact Number:</label>
@@ -238,20 +277,14 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Saloon type:</label>
-									<input type="text" class="form-control" id="type">
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>Status:</label>
-									<input type="text" class="form-control" id="status">
-								</div>
-							</div>
-							<div class="col-md-4">
-								<div class="form-group">
 									<label>Priority:</label>
 									<input type="text" class="form-control" id="priority">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Services:</label>
+									<input type="text" class="form-control" id="services">
 								</div>
 							</div>
 							<div class="col-md-12">
@@ -307,22 +340,28 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Facebook Link:</label>
 									<input type="text" class="form-control" id="facebook">
 								</div>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Instagram Link:</label>
 									<input type="text" class="form-control" id="instagram">
 								</div>
 							</div>
-							<div class="col-md-4">
+							<div class="col-md-3">
 								<div class="form-group">
 									<label>Linkedin Link :</label>
 									<input type="text" class="form-control" id="linkedin">
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="form-group">
+									<label>Youtube Link :</label>
+									<input type="text" class="form-control" id="youtube">
 								</div>
 							</div>
 							<div class="col-md-12">
@@ -414,7 +453,30 @@
                             } else{
                                 $('#'+key).remove();  
                             }
-                        } else{
+                        }
+						if(key == 'profile_pic')
+	                       {
+	                       if(data1[key]){
+	                         $('#'+key).attr('src', '../directory/saloon/'+data1[key]);  
+	                           $('#'+key).attr('disabled', value);
+							$('#'+key).show();
+	                       }
+	                       else{
+	                             $('#'+key).remove();  
+	                       }
+	                       }
+						   if(key == 'cover_pic')
+	                       {
+	                       if(data1[key]){
+	                         $('#'+key).attr('src', '../directory/saloon/'+data1[key]);  
+	                           $('#'+key).attr('disabled', value);
+							$('#'+key).show();
+	                       }
+	                       else{
+	                             $('#'+key).remove();  
+	                       }
+	                       }
+						 else{
                             data1[key] === '00:00:00' ? '':$('#'+key).val(data1[key]); 
                             $('#'+key).attr('disabled', value);
                         }

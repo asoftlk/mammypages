@@ -25,4 +25,22 @@ ADD COLUMN `cover_pic` TEXT NULL AFTER `profile_pic`;
 ALTER TABLE `studio` 
 DROP COLUMN `type`;
 
+ALTER TABLE `saloon` 
+DROP COLUMN `working_hours`,
+DROP COLUMN `subtype`,
+DROP COLUMN `type`,
+DROP COLUMN `status`,
+ADD COLUMN `registraion_no` TEXT NOT NULL AFTER `saloon_id`,
+ADD COLUMN `establishment` INT(4) NOT NULL AFTER `address`,
+ADD COLUMN `contact_person` TEXT NOT NULL AFTER `establishment`,
+ADD COLUMN `profile_pic` TEXT NOT NULL AFTER `contact_person`,
+ADD COLUMN `cover_pic` TEXT NULL AFTER `profile_pic`,
+ADD COLUMN `qualification` TEXT NULL AFTER `cover_pic`,
+ADD COLUMN `youtube` TEXT NULL AFTER `linkedin`,
+ADD COLUMN `services` TEXT NULL AFTER `about`,
+ADD COLUMN `certificate` TEXT NULL AFTER `speciality`;
+
+ALTER TABLE `saloon` 
+CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
+
 -- akila is here
