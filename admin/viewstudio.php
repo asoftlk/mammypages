@@ -200,12 +200,12 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Studio Specialist In</label><input type="text" class="form-control" id="establishment">
+									<label>Studio Specialist In</label><input type="text" class="form-control" id="speciality">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Year of Establishment</label><input type="text" class="form-control" id="speciality">
+									<label>Year of Establishment</label><input type="text" class="form-control"  id="establishment">
 								</div>
 							</div>
 							<div class="col-md-4">

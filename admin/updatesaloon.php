@@ -23,20 +23,17 @@
         $mobile = mysqli_real_escape_string($conn, $_POST['contactNumber']);
         $whatsapp = mysqli_real_escape_string($conn, $_POST['whatsapp']);
         $email = mysqli_real_escape_string($conn, $_POST['email']);
-        $website = mysqli_real_escape_string($conn, $_POST['web']);
-        $type = mysqli_real_escape_string($conn, $_POST['type']);
-        if($type == "Private saloon"){
-        $subtype="";
-        }
-        else{
-        $subtype = mysqli_real_escape_string($conn, $_POST['subtype']);
-        }
+        $website = mysqli_real_escape_string($conn, $_POST['web']);;
+        $saloonregno = mysqli_real_escape_string($conn, $_POST['saloonregno']);
+        $saloonestablishment = mysqli_real_escape_string($conn, $_POST['saloonestablishment']);
+        $salooncontactperson = mysqli_real_escape_string($conn, $_POST['salooncontactperson']);
+
     //  $working_hours = mysqli_real_escape_string($conn, $_POST['midwifeworking']);
         $working_hours = null;
         $facebook = mysqli_real_escape_string($conn, $_POST['fb']);
         $instagram = mysqli_real_escape_string($conn, $_POST['insta']);
         $linkedin = mysqli_real_escape_string($conn, $_POST['linkedin']);
-        $status = mysqli_real_escape_string($conn, $_POST['status']);
+        $service = mysqli_real_escape_string($conn, $_POST['service']);
         $about = mysqli_real_escape_string($conn, $_POST['about']);
         $videoembed = mysqli_real_escape_string($conn, $_POST['videoembed']);
         //$priority = mysqli_real_escape_string($conn, $_POST['priority']);	
@@ -131,9 +128,61 @@
                 $articleinsert= mysqli_query($conn, "INSERT INTO mpsaloon_gallery ( saloon_id, image_name) VALUES ('$mpId', '$target')");
             }
     }	   
-    $updatequery = "Update saloon SET name='$name',speciality='$speciality',address='$address', map='$map', city='$city', mobile='$mobile',email='$email',whatsapp='$whatsapp',website='$website',type='$type', subtype='$subtype', working_hours='$working_hours', facebook='$facebook', instagram='$instagram', linkedin='$linkedin', status='$status',about='$about' ";		
+    $updatequery = "Update saloon SET name='$name',speciality='$speciality',registraion_no='$saloonregno', establishment='$saloonestablishment', contact_person='$salooncontactperson',address='$address', map='$map', city='$city', mobile='$mobile',email='$email',whatsapp='$whatsapp',website='$website', facebook='$facebook', instagram='$instagram', linkedin='$linkedin',about='$about',services='$service' ";		
         $featuredimage = $_FILES['featuredimage']['name'];
             
+                $profileimage = $_FILES['profileimage']['name'];
+	            if($profileimage != ""){
+					$removeimg= mysqli_query($conn, "SELECT profile_pic from saloon WHERE id= '$id'");
+					$imagename = mysqli_fetch_assoc($removeimg);
+					if($imagename['profile_pic'] && file_exists("../directory/saloon/".$imagename['profile_pic'])){
+						unlink("../directory/saloon/".$imagename['profile_pic']);
+					}
+	                $ext1 = pathinfo($_FILES["profileimage"]["name"], PATHINFO_EXTENSION);
+	                $profileimagetarget = "cpprofile".$time.".".$ext1;
+	                //$image_link = "https://veramasa.com/udyogsadhna/images/".$target;
+	                    if (in_array($profileimage, ['jpg', 'png', 'jpeg'])) {
+	                            echo 'You Featured file extension must be .jpg, .png or .jpeg';
+								exit();
+	                        } 
+	                        elseif ($_FILES['profileimage']['size'] > 10000000) { // file shouldn't be larger than 1Megabyte
+	                            echo '"Featured image too large!"';
+								exit();
+	                        }
+	                    else{
+	                        move_uploaded_file($_FILES['profileimage']['tmp_name'], "../directory/saloon/".$profileimagetarget);
+	                        }
+							$updatequery .= ", profile_pic= '$profileimagetarget' "; 
+	            }
+	            else{
+	                
+	            }
+				$coverimage = $_FILES['coverimage']['name'];
+	            if($coverimage != ""){
+					$removeimg= mysqli_query($conn, "SELECT cover_pic from saloon WHERE id= '$id'");
+					$imagename = mysqli_fetch_assoc($removeimg);
+					if($imagename['cover_pic'] && file_exists("../directory/saloon/".$imagename['cover_pic'])){
+						unlink("../directory/saloon/".$imagename['cover_pic']);
+					}
+	                $ext1 = pathinfo($_FILES["coverimage"]["name"], PATHINFO_EXTENSION);
+	                $coverimagetarget = "cpcover".$time.".".$ext1;
+	                //$image_link = "https://veramasa.com/udyogsadhna/images/".$target;
+	                    if (in_array($coverimage, ['jpg', 'png', 'jpeg'])) {
+	                            echo 'You Featured file extension must be .jpg, .png or .jpeg';
+								exit();
+	                        } 
+	                        elseif ($_FILES['coverimage']['size'] > 10000000) { // file shouldn't be larger than 1Megabyte
+	                            echo '"Featured image too large!"';
+								exit();
+	                        }
+	                    else{
+	                        move_uploaded_file($_FILES['coverimage']['tmp_name'], "../directory/saloon/".$coverimagetarget);
+	                        }
+							$updatequery .= ", cover_pic= '$coverimagetarget' "; 
+	            }
+	            else{
+	                
+	            }
             
                 if($featuredimage != ""){
                     $removeimg= mysqli_query($conn, "SELECT image from saloon WHERE id= '$id'");

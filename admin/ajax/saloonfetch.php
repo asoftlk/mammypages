@@ -104,27 +104,31 @@ $output = '
 <table class="table table-striped table-bordered">
   <tr>
     <th>Saloon Id</th>
-	<th>Name</th>
-	<th>Saloon Specialist In</th>
+    <th>Name</th>
+    <th>Registration No</th>
+    <th>Saloon Specialist In</th>
    	<th>Saloon Address</th>
+    <th>Beautician Name</th>
+    <th>Beautician’s Image</th>
+    <th>Beautician’s Cover Picture</th>
+    <th>Beautician’s Qualification</th>
     <th>Contact Number</th>
-	<th>Email</th>
+	  <th>Email</th>
     <th>Whatsapp Number</th>
-     <th>Website</th>
-    <th>Saloon type</th>
-    <th>Hours of Operation</th>
+    <th>Website</th>
     <th>Facebook Link</th>
     <th>Instagram Link</th>
     <th>Linkedin Link</th>
-    <th>Status</th>
+    <th>Youtube Link</th>
+    <th>Service(s)</th>
     <!--th>About</th-->
     <th>Priority</th>
     <th>logo Image</th>
     <th>Featured Image</th>
-	<th>Date Time</th>
+	  <th>Date Time</th>
     <th>View</th>
     <th>Edit</th>
-	<th>Delete</th>
+	  <th>Delete</th>
   </tr>
 ';
 
@@ -148,19 +152,23 @@ if($total_data > 0)
         <tr class="branch-header '.$arrowClass.'" data-main-id="'.$main['id'].'">
             <td>'.$main['saloon_id'].'</td>
             <td>'.$main['name'].'</td>
+            <td>'.$main['registraion_no'].'</td>
             <td>'.$main['speciality'].'</td>
             <td>'.$main['address']."  ".$main['city'].'</td>
+            <td>'.$main['contact_person'].'</td>
+            <td><div class="zoom"><img src="../directory/studio/'.$main["profile_pic"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td><div class="zoom"><img src="../directory/studio/'.$main["cover_pic"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td>'.$main['qualification'].'</td>
             <td>'.$main['mobile'].'</td>
             <td>'.$main['email'].'</td>
             <td>'.$main['whatsapp'].'</td>
             <td>'.$main['website'].'</td>
-            <td>'.$main['type'].'</td>
-            <td>'.$main['working_hours'].'</td>
             
             <td>'.$main['facebook'].'</td>
             <td>'.$main['instagram'].'</td>
             <td>'.$main['linkedin'].'</td>
-            <td>'.$main['status'].'</td>
+            <td>'.$main['youtube'].'</td>
+            <td>'.$main['services'].'</td>
             <!--td>'.$main['about'].'</td>
             <td>'.$main['priority'].'</td-->
             <td><select name="dropdown" id="prioritystatus" onchange="javascript:chg_status(this);">
@@ -192,19 +200,24 @@ if($total_data > 0)
             $output .=    '<tr class="bg-tbl branch" data-main-id="'.$main['id'].'">
             <td>'.$branch['saloon_id'].'</td>
             <td>'.$branch['name'].'</td>
+            <td>'.$branch['registraion_no'].'</td>
             <td>'.$branch['speciality'].'</td>
             <td>'.$branch['address']."  ".$branch['city'].'</td>
+            <td>'.$branch['contact_person'].'</td>
+            <td><div class="zoom"><img src="../directory/studio/'.$branch["profile_pic"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td><div class="zoom"><img src="../directory/studio/'.$branch["cover_pic"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td>'.$branch['qualification'].'</td>
+            <td>'.$branch['address'].'</td>
             <td>'.$branch['mobile'].'</td>
             <td>'.$branch['email'].'</td>
             <td>'.$branch['whatsapp'].'</td>
             <td>'.$branch['website'].'</td>
-            <td>'.$branch['type'].'</td>
-            <td>'.$branch['working_hours'].'</td>
             
             <td>'.$branch['facebook'].'</td>
             <td>'.$branch['instagram'].'</td>
             <td>'.$branch['linkedin'].'</td>
-            <td>'.$branch['status'].'</td>
+             <td>'.$branch['youtube'].'</td>
+            <td>'.$branch['services'].'</td>
             <!--td>'.$branch['about'].'</td>
             <td>'.$branch['priority'].'</td-->
             <td><select name="dropdown" id="prioritystatus" onchange="javascript:chg_status(this);">

@@ -37,7 +37,12 @@
 		$facebook = filter_input(INPUT_POST, 'fb');
 		$instagram = filter_input(INPUT_POST, 'insta');
 		$linkedin = filter_input(INPUT_POST, 'linkedin');
-		$status = filter_input(INPUT_POST, 'status');
+		$youtube = filter_input(INPUT_POST, 'youtube');
+		$saloonregno = filter_input(INPUT_POST, 'saloonregno');
+		$saloonestablishment = filter_input(INPUT_POST, 'saloonestablishment');
+		$contact_person = filter_input(INPUT_POST, 'contact_person');
+		$service = filter_input(INPUT_POST, 'service');
+		$qualification = filter_input(INPUT_POST, 'qualification');
 		$about = mysqli_real_escape_string($conn, $_POST['about']);
 		$videoembed = mysqli_real_escape_string($conn, $_POST['videoembed']);
 
@@ -61,6 +66,10 @@
 		$logoimage = $_FILES['logoimage']['name'];
 		$featuredimage = $_FILES['featuredimage']['name'];
 			$galimages = $_FILES['galimages']['name'];
+		$profileimage = $_FILES['profileimage']['name'];
+		$coverimage = $_FILES['coverimage']['name'];
+		$certificateimage = $_FILES['certificateimage']['name'];
+
 			if(!empty($videoembed)){
 				$videotarget = $videoembed;
 			}
@@ -134,10 +143,49 @@
 					}	
 				$logoupload = move_uploaded_file($_FILES['logoimage']['tmp_name'], "../directory/saloon/".$logotarget);
 				
+				$ext3 = pathinfo($_FILES["profileimage"]["name"], PATHINFO_EXTENSION);
+				$profiletarget = "proimg".$time.".".$ext2;
+					if (in_array($profileimage, ['jpg', 'png', 'jpeg'])) {
+							echo 'Profile image extension must be .jpg, .png or .jpeg';
+							exit();
+						}
+					if ($_FILES['profileimage']['size'] > 30000000) { // file shouldn't be larger than 1Megabyte
+							echo '"Profile image too large! Max size 30MB"';
+							exit();
+						}	
+				$profileimageupload = move_uploaded_file($_FILES['profileimage']['tmp_name'], "../directory/saloon/".$profiletarget);
+
+				$ext4 = pathinfo($_FILES["coverimage"]["name"], PATHINFO_EXTENSION);
+				$covertarget = "coverimg".$time.".".$ext2;
+					if (in_array($coverimage, ['jpg', 'png', 'jpeg'])) {
+							echo 'Cover image extension must be .jpg, .png or .jpeg';
+							exit();
+						}
+					if ($_FILES['coverimage']['size'] > 30000000) { // file shouldn't be larger than 1Megabyte
+							echo '"Cover image too large! Max size 30MB"';
+							exit();
+						}	
+				$coverimageupload = move_uploaded_file($_FILES['coverimage']['tmp_name'], "../directory/saloon/".$covertarget);
+				
+				$ext5 = pathinfo($_FILES["certificateimage"]["name"], PATHINFO_EXTENSION);
+				$certificatetarget = "cetiimg".$time.".".$ext2;
+					if (in_array($certificateimage, ['jpg', 'png', 'jpeg'])) {
+							echo 'Certificate image extension must be .jpg, .png or .jpeg';
+							exit();
+						}
+					if ($_FILES['certificateimage']['size'] > 30000000) { // file shouldn't be larger than 1Megabyte
+							echo '"Certificate image too large! Max size 30MB"';
+							exit();
+						}	
+				$certificateimageupload = move_uploaded_file($_FILES['certificateimage']['tmp_name'], "../directory/saloon/".$certificatetarget);
+						
+
+
 			if($featureupload){
-				$query= "INSERT INTO saloon (saloon_Id, name, speciality, address, is_main,main_id , map, city, mobile, email, whatsapp, website, type, subtype, working_hours,  facebook, instagram, linkedin,logo, status, about,priority, image, video) 
-						values ('$saloon_Id', '$name', '$speciality', '$address', '$isMain','$mainId', '$mapLocation', '$city', '$contactNumber',  '$email','$whatsapp',  '$web', '$type', '$subtype', '$working', '$facebook',  '$instagram', '$linkedin', '$logotarget', '$status', '$about','$priority','$featuretarget', '$videotarget')";
+				$query = "INSERT INTO saloon (saloon_Id, registraion_no, name, speciality, address, establishment, contact_person, profile_pic, cover_pic, qualification, is_main, main_id, map, city, mobile, email, whatsapp, website, facebook, instagram, linkedin, youtube, logo, about, services, priority, image, video, certificate) 
+						VALUES ('$saloon_Id', '$saloonregno', '$name', '$speciality', '$address', '$saloonestablishment', '$contact_person', '$profiletarget', '$covertarget', '$qualification', '$isMain', '$mainId', '$mapLocation', '$city', '$contactNumber', '$email', '$whatsapp', '$web', '$facebook', '$instagram', '$linkedin', '$youtube', '$logotarget', '$about', '$service', '$priority', '$featuretarget', '$videotarget', '$certificateimage')";
 				$result = mysqli_query($conn, $query);
+
 
 				$workingTimesQuery = "INSERT INTO saloon_working_times (sltime_id, saloon_Id, saloon_type,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
 							VALUES ('$sltime_id','$saloon_Id', '$type', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";

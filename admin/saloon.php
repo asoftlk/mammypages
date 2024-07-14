@@ -144,6 +144,54 @@
 													}?>
 												</select>
 											</div>
+											<div class="form-group row">
+												<div class="col-md-6">
+													<label class="required" for="saloonregno">Registration No</label>
+													<input type="text" name="saloonregno" class="form-control" id="saloonregno" placeholder="Registration No">
+												</div>
+												<div class="col-md-6">
+													<label class="required" for="saloonestablishment">Year of Establishment</label>
+													<input type="text" name="saloonestablishment" class="form-control" id="saloonestablishment" placeholder="Establishment">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="required" for="contact_person">Beautician Name</label>
+												<input type="text" name="contact_person" class="form-control" id="contact_person" placeholder="Address">
+											</div>
+											<div class="form-group row">
+												<div class="col-md-6">
+													<label class="required" for="profileimage">Beautician’s Image</label>
+													<div class="input-group">
+														<div class="custom-file">
+															<input type="file" name="profileimage" class="custom-file-input" id="profileimage"  accept="image/*">
+															<label class="custom-file-label" for="profileimage">Choose file</label>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<label for="coverimage">Beautician’s Cover Image</label>
+													<div class="input-group">
+														<div class="custom-file">
+															<input type="file" name="coverimage" class="custom-file-input" id="coverimage"  accept="image/*">
+															<label class="custom-file-label" for="coverimage">Choose file</label>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="qualification">Beautician’s Qualification</label>
+												<input type="text" name="qualification" class="form-control" id="qualification" placeholder="qualification">
+											</div>
+											<div class="form-group">
+												<label class="required" for="certificateimage">Beautician’s Certificate</label>
+												<div class="input-group">
+													<div class="custom-file">
+													<input type="file" name="certificateimage" class="custom-file-input" id="certificateimage" accept="image/*" multiple>
+													<label class="custom-file-label" for="certificateimage">Choose files</label>
+													</div>
+												</div>
+											</div>
+
 											<div class="form-group">
 												<label class="required" for="address">Saloon Address</label>
 												<input type="text" name="address" class="form-control" id="address" placeholder="Address">
@@ -171,32 +219,6 @@
 											<div class="form-group">
 												<label for="web">Website</label>
 												<input type="url" name="web" class="form-control" id="web" placeholder="Website">
-											</div>
-											<div class="form-group">
-												<label class="required" for="type">Saloon type</label>
-												<select class="form-control" name="type" id="type">
-													<option selected="" disabled="" value="null" class="hidden">--Select Saloon Type</option>
-													<option value="Government saloon">Government Saloon</option>
-													<option value="Private saloon">Private Saloon</option>
-												</select>
-											</div>
-											<div class="form-group subtype">
-												<label for="subtype" class="required">Saloon Subtype</label>
-												<select class="form-control" name="subtype" id="subtype">
-													<option selected="" disabled="" value="null" class="hidden">--Select Saloon Subype</option>
-													<option value="National Saloon">National Saloon</option>
-													<option value="Teaching Saloon">Teaching Saloon</option>
-													<option value="Specialized Teaching Saloon">Specialized Teaching Saloon</option>
-													<option value="Other Specialized Saloon">Other Specialized Saloon</option>
-													<option value="Provincial General Saloon">Provincial General Saloon</option>
-													<option value="Base Saloon Type - A">Base Saloon Type - A</option>
-													<option value="Base Saloon Type - B">Base Saloon Type - B</option>
-													<option value="Divisional Saloon Type - A">Divisional Saloon Type - A</option>
-													<option value="Divisional Saloon Type - B">Divisional Saloon Type - B</option>
-													<option value="Divisional Saloon Type - C">Divisional Saloon Type - C</option>
-													<option value="Primary Saloon Care Unit">Primary Saloon Care Unit</option>
-													<option value="Others">Others</option>
-												</select>
 											</div>
                                             <div class="form-group">
                                                 <label class="required" for="branchworking">Hours of Operation</label>
@@ -229,7 +251,7 @@
                                                                     >
                                                                 </td>
                                                                 <td>
-                                                                    <button type="button" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
+                                                                    <button type="button" class="btn btn-sm btn-info" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
                                                                 </td>
                                                             </tr>
                                                         <?php endforeach; ?>
@@ -237,32 +259,31 @@
                                                 </table>
                                             </div>
                                             <div class="form-group row">
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<label for="fb">Facebook Link</label>
 													<input type="url" name="fb" class="form-control" id="fb" placeholder="Facebook Link">
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<label for="insta">Instagram Link</label>
 													<input type="url" name="insta" class="form-control" id="insta" placeholder="Instagram Link">
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<label for="linkedin">Linkedin Link</label>
 													<input type="url" name="linkedin" class="form-control" id="linkedin" placeholder="Linkedin Link">
 												</div>
+												<div class="col-md-3">
+													<label for="youtube">Youtube Link</label>
+													<input type="url" name="youtube" class="form-control" id="youtube" placeholder="Youtube Link">
+												</div>
 											</div>
 											<div class="form-group">
-												<label class="required">Status</label>
-												<select class="form-control" name="status" id="status">
-													<option selected="" disabled="" value="null" class="hidden">--Select Status</option>
-													<option value="Verified">Verified</option>
-													<option value="Not Verified">Not Verified</option>
-												</select>
-											</div>
-											<div class="row">
 												<label class="required" for="about">About</label>
-												<textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required></textarea>
+												<textarea class="form-control" id="about" name="about" class="about" required></textarea>
 											</div>
-									
+											<div class="form-group">
+												<label class="required" for="service">Services</label>
+												<input type="text" data-role="tagsinput" class="form-control" id="service" name="service" placeholder="Service">
+											</div>
 											<div class="form-group">
 												<label class="required" for="logoimage">logo Image</label>
 												<div class="input-group">
@@ -342,8 +363,6 @@
 <script src="plugins/select2/js/select2.full.min.js"></script>
 <script>
 	$('.select2').select2();
-	$('#about').summernote({width:"100%", height:"250"});
-	$('#branchabout').summernote({width:"100%", height:"250"});
 	
 	$(function () {
 	
@@ -373,23 +392,18 @@
 		  email: {
 			required: true,
 	      },
-		  type: {
-			required: true,
-		  },
-		  subtype: {
-			required: true,
-		  },
-		  saloonworking: {
-			required: true,
-		  },
-		  
-		  status: {
-			required: true,
-		  },
 		  about: {
 			required: true,
 		  },
-		 	  
+		saloonregno: {
+			required: true,
+		},
+		saloonestablishment: {
+			required: true,
+		},
+		contact_person: {
+			required: true,
+		},
 		  featuredimage: {
 	            required: true,
 	            extension: "jpg|jpeg|png"
