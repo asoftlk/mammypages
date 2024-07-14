@@ -46,14 +46,14 @@ CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
 -- akila is here
 
 DROP TABLE `medical_branch`;
-ALTER TABLE `mammy`.`medical` 
+ALTER TABLE `medical` 
 CHANGE COLUMN `type` `established` VARCHAR(300) NOT NULL ,
 CHANGE COLUMN `subtype` `service` TEXT NULL DEFAULT NULL ;
 
-ALTER TABLE `mammy`.`medical_working_times` 
+ALTER TABLE `medical_working_times` 
 DROP COLUMN `medical_type`;
 
-ALTER TABLE `mammy`.`medical` 
+ALTER TABLE `medical` 
 ADD COLUMN `doctor_id` INT NULL AFTER `name`;
 
 
