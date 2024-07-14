@@ -113,12 +113,12 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1>Medical Clinic</h1>
+					<h1>Doctor Clinics & Nursing homes</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active">Medical Clinic</li>
+						<li class="breadcrumb-item active">Doctor Clinics & Nursing homes</li>
 					</ol>
 				</div>
 			</div>
@@ -129,7 +129,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
-					<a href="medical.php" class="btn btn-mammy float-right">+ Add Medical Clinic</a>
+					<a href="medical.php" class="btn btn-mammy float-right">+ Add Doctor Clinics & Nursing homes</a>
 				</div>
 				<br><br>
 				<div class="col-12">
@@ -181,34 +181,34 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Medical Clinic Id:</label><input type="text" class="form-control" id="medical_id">
+									<label>Clinic Id:</label><input type="text" class="form-control" id="medical_id">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Medical Clinic Name:</label><input type="text" class="form-control" id="name">
+									<label>Clinic Name:</label><input type="text" class="form-control" id="name">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Medical Clinic Specialist In</label><input type="text" class="form-control" id="speciality">
+									<label>Clinic Specialist In</label><input type="text" class="form-control" id="speciality">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Medical Clinic Address:</label>
+									<label>Clinic Address:</label>
 									<input type="text" class="form-control" id="address">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Medical Clinic Map location:</label>
+									<label>Clinic Map location:</label>
 									<input type="text" class="form-control" id="map">
 								</div>
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Medical Clinic city(Required to show for branches):</label>
+									<label>City:</label>
 									<input type="text" class="form-control" id="city">
 								</div>
 							</div>
@@ -236,12 +236,7 @@
 									<input type="text" class="form-control" id="website">
 								</div>
 							</div>
-							<div class="col-md-4">
-								<div class="form-group">
-									<label>Medical Clinic type:</label>
-									<input type="text" class="form-control" id="type">
-								</div>
-							</div>
+							
 							<div class="col-md-4">
 								<div class="form-group">
 									<label>Status:</label>

@@ -107,21 +107,7 @@ include "mp.php";
                             }
                             ?>
                     </select>
-                </label>
-                <label class="select">
-                    <select name="type"  class="filter-box" id="type">
-                        <option value="">Select type</option>
-                        <?php
-                            $typeQuery = mysqli_query($conn, "SELECT DISTINCT type FROM doctor");
-                            while ($typeRow = mysqli_fetch_array($typeQuery)) {
-                                $typeArray = explode(" ///", $typeRow['type']);
-                                foreach ($typeArray as $type) {
-                                    echo '<option value="' . $type . '">' . $type . '</option>';
-                                }
-                            }
-                            ?>
-                    </select>
-                </label>
+                </label>       
                 <label class="select">
                     <select name="city"  class="filter-box" id="city">
                         <option value="">Select City</option>
@@ -140,7 +126,7 @@ include "mp.php";
             </div>
         </form>
          <div class="top-menu">     
-			<?php $doctor =mysqli_query($conn, "SELECT * FROM doctor WHERE priority > 0 ORDER BY priority LIMIT 5");
+			<?php $doctor =mysqli_query($conn, "SELECT * FROM doctor INNER JOIN doctor_working_times hwt ON hwt.doctor_id = doctor.doctor_id WHERE priority > 0 ORDER BY priority LIMIT 5");
 					$count = 0;
 					$numrows = mysqli_num_rows($doctor);
 					while($row=mysqli_fetch_array($doctor)){
@@ -155,6 +141,13 @@ include "mp.php";
 								$speciality .= $specialityarray[$i].", ";
 							}
 						}
+                        date_default_timezone_set('Asia/Colombo');
+                        $currentDay = strtolower(date('l')); 
+                        $currentTime = date('H:i:s'); 
+                        $openTime = $row[$currentDay . '_open'];
+                        $closeTime = $row[$currentDay . '_close'];
+                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1" style="float:right">Available</span>' : '<span class="text-danger text mr-1" style="float:right">Not Available</span>';
+
 					echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
 							<div class="col-md-3" style="margin:auto">
 							<div>
@@ -165,6 +158,7 @@ include "mp.php";
 							<div class="d-flex">
                             <p class="text"><a href="mpconnect/doctor/' .urlencode(str_replace(' ', '_', $row["name"])). '" class="namehref"><p class="text-heading">&nbsp;'.$row["name"].'</p></a>
                                 <img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
+                                <strong>' . $isOpen . '</strong>
                             </div>
 							<div class="d-flex">
 							<p class="text">&nbsp;'.$speciality.'</P>

@@ -44,13 +44,13 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1>Medical Clinics</h1>
+					<h1>Doctor Clinics & Nursing homes</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="#">Home</a></li>
-						<li class="breadcrumb-item active"><a href="viewmedclinic">Medical Clinics</a></li>
-						<li class="breadcrumb-item active">Add Medical Clinics</li>
+						<li class="breadcrumb-item active"><a href="viewmedclinic">Doctor Clinics & Nursing homes</a></li>
+						<li class="breadcrumb-item active">Add Doctor Clinics & Nursing homes</li>
 					</ol>
 				</div>
 			</div>
@@ -62,7 +62,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
-					<a href="viewmedclinic.php" class="btn btn-mammy float-right">View Medical Clinics</a>
+					<a href="viewmedclinic.php" class="btn btn-mammy float-right">View Doctor Clinics & Nursing homes</a>
 					<button type="button" class="btn btn-mammy" id="btnspeciality">+ Add Speciality</button>
 				</div>
 				<br><br>
@@ -107,21 +107,34 @@
                                 <li class="nav-item">
                                     <a class="nav-link active" data-toggle="tab" href="#new" role="tab">New Medical Clinic</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#addbranch" role="tab">Add Branch</a>
-                                </li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="new" role="tabpanel">
                                     <div id="Hospital">
                                         <form id="quickForm" method="POST" action="postmedical" enctype="multipart/form-data">
+                                       
+                                            <div class="form-group">
+												<label class="required" for="mpname">Clinic Name</label>
+												<input type="text" name="mpname" class="form-control" id="mpname" placeholder="Medical Name">
+											</div>
+                                            <div class="form-group">
+                                                <label class="" for="specialist">Specialist in</label>
+                                                <select class="form-control" name="specialist" id="specialist">
+                                                    <option selected="" disabled="" value="null" class="hidden">--Select Speciality</option>
+                                                    <?php $specialityquery = mysqli_query($conn, "SELECT * FROM medical_speciality");
+                                                        While($specialityrow= mysqli_fetch_assoc($specialityquery)){
+                                                            echo '<option value="'.$specialityrow["speciality"].'">'.$specialityrow["speciality"].'</option>';
+                                                        }
+                                                    ?>
+                                                </select>
+                                            </div>
                                             <?php
-                                                $mainSelectQuery = mysqli_query($conn, "SELECT DISTINCT * FROM medical WHERE is_main = 'Y'");
+                                                $mainSelectQuery = mysqli_query($conn, "SELECT DISTINCT * FROM doctor");
                                             ?>
-                                            <div class="form-group branch">
-                                                <label class="required" for="mainId">Medical Clinic Name</label>
-                                                <select name="mainId" class="form-control" id="mainId" required>
-                                                    <option value="">Select Medical Clinic</option>
+                                            <div class="form-group">
+                                                <label class="required" for="mainId">Doctor's Name</label>
+                                                <select name="doctorId" class="form-control" id="mainId" required>
+                                                    <option value="">Select Doctor</option>
                                                     <?php
                                                     while ($hospitalRow = mysqli_fetch_array($mainSelectQuery)) {
                                                         $name = $hospitalRow['name'];
@@ -131,33 +144,24 @@
                                                     ?>
                                                 </select>
                                             </div>
-                                            <div class="form-group">
-												<label class="required" for="mpname">Medical Clinic Branch Name</label>
-												<input type="text" name="mpname" class="form-control" id="mpname" placeholder="Medical Name">
+											<div class="form-group">
+												<label class="required">Year of Establishment</label>
+												<input type="text" name="estYear" class="form-control" id="address" placeholder="Address">
 											</div>
 											<div class="form-group">
-												<label class="required">Speciality</label>
-												<select class="form-control select2" name="specialist[]" id="specialist" multiple data-placeholder='--Select Speciality--'>
-												<?php $query=mysqli_query($conn, "SELECT * FROM medical_speciality");
-													while($row=mysqli_fetch_array($query)){
-													echo   '<option value="'.$row["speciality"].'">'.$row["speciality"].'</option>';
-													}?>
-												</select>
-											</div>
-											<div class="form-group">
-												<label class="required" for="address">Medical Clinic Address</label>
+												<label class="required" for="address">Address</label>
 												<input type="text" name="address" class="form-control" id="address" placeholder="Address">
 											</div>
 											<div class="form-group">
-												<label for="mapLocation" class="required">Medical Clinic Map location</label>
-												<input type="text" name="mapLocation" class="form-control" id="mapLocation" placeholder="Copy form Google Map by poining the location">
-											</div>
-											<div class="form-group">
-												<label class="required" for="city">Medical Clinic city(required to show for branches)</label>
+												<label class="required" for="address">City</label>
 												<input type="text" name="city" class="form-control" id="city" placeholder="City">
 											</div>
 											<div class="form-group">
-												<label class="required" for="contactNumber">Contact Number</label>
+												<label for="mapLocation" class="required">Location (Map)</label>
+												<input type="text" name="mapLocation" class="form-control" id="mapLocation" placeholder="Copy form Google Map by poining the location">
+											</div>
+											<div class="form-group">
+												<label class="required" for="contactNumber">Contact No</label>
 												<input type="tel" name="contactNumber" class="form-control" id="contactNumber" placeholder="Contact Number">
 											</div>
 											<div class="form-group">
@@ -171,32 +175,6 @@
 											<div class="form-group">
 												<label for="web">Website</label>
 												<input type="url" name="web" class="form-control" id="web" placeholder="Website">
-											</div>
-											<div class="form-group">
-												<label class="required" for="type">Medical Clinic type</label>
-												<select class="form-control" name="type" id="type">
-													<option selected="" disabled="" value="null" class="hidden">--Select Medical Clinic Type</option>
-													<option value="Government medical">Government Medical Clinic</option>
-													<option value="Private medical">Private Medical Clinic</option>
-												</select>
-											</div>
-											<div class="form-group subtype">
-												<label for="subtype" class="required">Medical Clinic Subtype</label>
-												<select class="form-control" name="subtype" id="subtype">
-													<option selected="" disabled="" value="null" class="hidden">--Select Medical Clinic Subype</option>
-													<option value="National Medical">National Medical Clinic</option>
-													<option value="Teaching Medical">Teaching Medical Clinic</option>
-													<option value="Specialized Teaching Medical">Specialized Teaching Medical Clinic</option>
-													<option value="Other Specialized Medical">Other Specialized Medical Clinic</option>
-													<option value="Provincial General Medical">Provincial General Medical Clinic</option>
-													<option value="Base Medical Type - A">Base Medical Clinic Type - A</option>
-													<option value="Base Medical Type - B">Base Medical Clinic Type - B</option>
-													<option value="Divisional Medical Type - A">Divisional Medical Clinic Type - A</option>
-													<option value="Divisional Medical Type - B">Divisional Medical Clinic Type - B</option>
-													<option value="Divisional Medical Type - C">Divisional Medical Clinic Type - C</option>
-													<option value="Primary Medical Care Unit">Primary Medical Care Unit</option>
-													<option value="Others">Others</option>
-												</select>
 											</div>
                                             <div class="form-group">
                                                 <label class="required" for="branchworking">Hours of Operation</label>
@@ -258,6 +236,10 @@
 													<option value="Not Verified">Not Verified</option>
 												</select>
 											</div>
+                                            <div class="form-group">
+												<label class="required" for="service">Services</label>
+												<input type="text" data-role="tagsinput" class="form-control" id="service" name="service">
+											</div>
 											<div class="row">
 												<label class="required" for="about">About</label>
 												<textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required></textarea>
@@ -312,7 +294,6 @@
 											<br>
 											<br>
 											<div class="card-footer">
-                                                <input class="isMain"  name="isMain" type="hidden" hidden/>
 												<button type="submit" name="medical" class="btn btn-sm btn-primary">Submit</button>
 											</div>
                                         </form>
@@ -354,9 +335,6 @@
 	      mpname: {
 	        required: true,
 	      },
-		  'specialist[]': {
-	        required: true,
-	      },
 		 contactNumber:{
 			  required: true,
 			  rangelength: [10, 12],
@@ -367,7 +345,10 @@
 		  address: {
 	        required: true,
 	      },
-		  city:{
+		  city: {
+	        required: true,
+	      },
+		  estYear:{
 			  required: true,
 		  },	  
 		  email: {
@@ -419,7 +400,7 @@
 				cache: false,
 				processData: false,
 	            success:function(data){
-					if(data.trim() ==='Medical Clinic Posted Successfully'){
+					if(data.trim() ==='Doctor Clinics & Nursing homes Posted Successfully'){
 	                    removeReg(data, 'success');
 					}
 					else{
@@ -457,13 +438,14 @@
 	    })
 	    .then(function(value) {
 	      //console.log('returned value:', value);
-	if(data.trim()=="Medical Clinic Posted Successfully" || data=="Speciality Added" || data=="Speciality Updated" || data=='Speciality Deleted'){
+	if(data.trim()=="Doctor Clinics & Nursing homes Posted Successfully" || data=="Speciality Added" || data=="Speciality Updated" || data=='Speciality Deleted'){
 		  window.location.href="medical";
 		  }
 		  
 	    });
 	};
 	$(document).ready(function(){
+        $('a[href="#new"]').tab('show');
 		$("#mpcategory option").each(function()
 		{
 			var value=$(this).val();
@@ -658,25 +640,6 @@
 	      source: availableTags
 	    });
 	  } );
-</script>
-<script>
-    $(document).ready(function () {
-        $('a[href="#new"]').tab('show');
-        $(".branch").hide();
-        $(".isMain").val('Y');
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            var target = $(e.target).attr("href");
-            if (target === "#new") {
-                $(".branch").hide();
-                $(".new").show();
-                $(".isMain").val('Y');
-            } else if (target === "#addbranch") {
-                $(".branch").show();
-                $(".new").hide();
-                $(".isMain").val('N');
-            }
-        });
-    });
 </script>
 </body>
 </html>

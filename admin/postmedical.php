@@ -10,29 +10,22 @@
 	
 
         $name = mysqli_real_escape_string($conn, $_POST['mpname']);
-        $speciality1 = $_POST['specialist'];
-        $speciality ="";
-            for($i=0; $i<count($speciality1);$i++){
-                if($i==(count($speciality1)-1)){
-                    $speciality .= $speciality1[$i];
-                }
-                else{
-                $speciality .= $speciality1[$i]." ///";
-                }
-            }
-        
-            
-        $isMain = filter_input(INPUT_POST, 'isMain');
-		$mainId = filter_input(INPUT_POST, 'mainId');
+        $speciality = $_POST['specialist'];
+                    
+        $isMain = null;
+		$mainId = null;
 		$address = filter_input(INPUT_POST, 'address');
 		$mapLocation = filter_input(INPUT_POST, 'mapLocation');
 		$city = filter_input(INPUT_POST, 'city');
 		$contactNumber = filter_input(INPUT_POST, 'contactNumber');
 		$whatsapp = filter_input(INPUT_POST, 'whatsapp');
 		$email = filter_input(INPUT_POST, 'email');
-		$web = filter_input(INPUT_POST, 'web');
-		$type = filter_input(INPUT_POST, 'type');
-		$subtype = filter_input(INPUT_POST, 'subtype');
+		$web = filter_input(INPUT_POST, 'web'); 
+		$doctorId = filter_input(INPUT_POST, 'doctorId'); 
+
+		$estYear = filter_input(INPUT_POST, 'estYear');
+		$service = filter_input(INPUT_POST, 'service');
+
 		$working = null;
 		$facebook = filter_input(INPUT_POST, 'fb');
 		$instagram = filter_input(INPUT_POST, 'insta');
@@ -135,16 +128,16 @@
 				$logoupload = move_uploaded_file($_FILES['logoimage']['tmp_name'], "../directory/medical/".$logotarget);
 				
 			if($featureupload){
-				$query= "INSERT INTO medical (medical_Id, name, speciality, address, is_main,main_id , map, city, mobile, email, whatsapp, website, type, subtype, working_hours,  facebook, instagram, linkedin,logo, status, about,priority, image, video) 
-						values ('$medical_Id', '$name', '$speciality', '$address', '$isMain','$mainId', '$mapLocation', '$city', '$contactNumber',  '$email','$whatsapp',  '$web', '$type', '$subtype', '$working', '$facebook',  '$instagram', '$linkedin', '$logotarget', '$status', '$about','$priority','$featuretarget', '$videotarget')";
+				$query= "INSERT INTO medical (medical_Id, name,doctor_id, speciality, address, is_main,main_id , map, city, mobile, email, whatsapp, website, service, established, working_hours,  facebook, instagram, linkedin,logo, status, about,priority, image, video) 
+						values ('$medical_Id', '$name','$doctorId', '$speciality', '$address', '$isMain','$mainId', '$mapLocation', '$city', '$contactNumber',  '$email','$whatsapp',  '$web', '$service', '$estYear', '$working', '$facebook',  '$instagram', '$linkedin', '$logotarget', '$status', '$about','$priority','$featuretarget', '$videotarget')";
 				$result = mysqli_query($conn, $query);
 
-				$workingTimesQuery = "INSERT INTO medical_working_times (metime_id, medical_Id, medical_type,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
-							VALUES ('$midtime_id','$medical_Id', '$type', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
+				$workingTimesQuery = "INSERT INTO medical_working_times (metime_id, medical_Id,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
+							VALUES ('$midtime_id','$medical_Id', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
 				$resultWorkingTimes = mysqli_query($conn, $workingTimesQuery);
 				if($result && $resultWorkingTimes){
 					$conn->commit();
-					echo "Medical Clinic Posted Successfully";
+					echo "Doctor Clinics & Nursing homes Posted Successfully";
 				}
 				else{
 					$conn->rollback();

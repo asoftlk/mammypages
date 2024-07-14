@@ -57,13 +57,12 @@ $output = '
   <tr>
     <th>doctor Id</th>
 	<th>Name</th>
-	<th>doctor Specialist In</th>
-  <th>doctor qualification</th>
-   	<th>doctor Address</th>
+	<th>Doctor Specialist In</th>
+  <th>Doctor qualification</th>
+   	<th>Doctor Address</th>
     <th>Contact Number</th>
 	<th>Email</th>
        <th>Website</th>
-    <th>doctor type</th>
     <th>Hours of Operation</th>
     <th>Facebook Link</th>
     <th>Instagram Link</th>
@@ -92,10 +91,8 @@ if($total_data > 0)
         <td>'.$row['address']."  ".$row['city'].'</td>
         <td>'.$row['mobile'].'</td>
         <td>'.$row['email'].'</td>
-		
 		<td>'.$row['website'].'</td>
 		<td>'.$row['working_hours'].'</td>
-		
 		<td>'.$row['facebook'].'</td>
 		<td>'.$row['instagram'].'</td>
 		<td>'.$row['linkedin'].'</td>

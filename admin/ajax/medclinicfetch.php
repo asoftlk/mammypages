@@ -70,7 +70,7 @@ else
 }
 
 $query = "
-SELECT * FROM medical ";
+SELECT m.id, medical_id, m.name, m.doctor_id, m.speciality, m.address, is_main, m.main_id, m.map, m.city, m.mobile, m.email, m.whatsapp, m.website, established, service, m.working_hours, m.facebook, m.instagram, m.linkedin, m.logo, m.image, m.video, m.status, m.about, m.priority, m.datetime,d.name AS docName FROM medical m INNER JOIN doctor d ON d.id = m.doctor_id ";
 
 if($_POST['query'] != '')
 {
@@ -111,18 +111,17 @@ $output = '
     <th>Contact Number</th>
 	<th>Email</th>
     <th>Whatsapp Number</th>
-     <th>Website</th>
-    <th>Medical Clinic type</th>
-    <th>Hours of Operation</th>
+    <th>Website</th>
+    <th>Established</th>
+    <th>Doctor Name</th>
     <th>Facebook Link</th>
     <th>Instagram Link</th>
     <th>Linkedin Link</th>
     <th>Status</th>
-    <!--th>About</th-->
     <th>Priority</th>
     <th>logo Image</th>
     <th>Featured Image</th>
-	<th>datetime</th>
+	<th>Datetime</th>
     <th>View</th>
     <th>Edit</th>
 	<th>Delete</th>
@@ -155,8 +154,8 @@ if($total_data > 0)
             <td>'.$main['email'].'</td>
             <td>'.$main['whatsapp'].'</td>
             <td>'.$main['website'].'</td>
-            <td>'.$main['type'].'</td>
-            <td>'.$main['working_hours'].'</td>
+            <td>'.$main['established'].'</td>
+            <td>'.$main['docName'].'</td>
             
             <td>'.$main['facebook'].'</td>
             <td>'.$main['instagram'].'</td>

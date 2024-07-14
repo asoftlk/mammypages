@@ -381,6 +381,8 @@
 							</div>
 							<!-- /.card-body -->
 							<div class="card-footer">
+                                <input name="isMain" type="hidden" value="<?php echo $row["is_main"]?>" />
+                                <input name="mainId" type="hidden" value="<?php echo $row["main_id"]?>" />
 								<button type="submit" class="btn btn-primary" name="submit" id="submit">Update</button>
 							</div>
 						</form>

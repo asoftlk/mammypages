@@ -30,7 +30,11 @@ if(mysqli_num_rows($result) > 0)
 			$currentTime = date('H:i:s'); 
 			$openTime = $row[$currentDay . '_open'];
 			$closeTime = $row[$currentDay . '_close'];
-			$isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1" style="float:right">Open</span>' : '<span class="text-danger text mr-1" style="float:right">Closed</span>';
+            if($type !== 'doctor') {
+                $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1" style="float:right">Open</span>' : '<span class="text-danger text mr-1" style="float:right">Closed</span>';
+            } else {
+                $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1" style="float:right">Available</span>' : '<span class="text-danger text mr-1" style="float:right">Not Available</span>';
+            }
 
 			if (isset($row['main_id']) && !empty($row['main_id']) && $row['main_id'] != 0) {
 				$mainid = $row['main_id'];

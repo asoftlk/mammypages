@@ -6,8 +6,9 @@
 	 $time = date("d-m-Y")."-".time();
 	 $id = mysqli_real_escape_string($conn, $_POST['id']);
 	 $hospitalid = mysqli_real_escape_string($conn, $_POST['hospitalid']);
-	 $name = mysqli_real_escape_string($conn, $_POST['hospitalname']);
 	 $speciality1 = $_POST['hospitalspecialist'];
+     $isMain = filter_input(INPUT_POST, 'isMain');
+     $mainId = filter_input(INPUT_POST, 'mainId');
 	 $speciality ="";
 		 for($i=0; $i<count($speciality1);$i++){
 			 if($i==(count($speciality1)-1)){
@@ -17,9 +18,19 @@
 			 $speciality .= $speciality1[$i]." ///";
 			 }
 		 }
+
+         $city = mysqli_real_escape_string($conn, $_POST['hospitalcity']);
+         $name = null;
+        if($isMain === 'N'){
+            $sql = "SELECT name FROM hospital WHERE id = $mainId";
+            $res = mysqli_query($conn,$sql);
+            $result = mysqli_fetch_array($res);
+            $name = $result['name'].'-'.$city;
+        } else {
+            $name = filter_input(INPUT_POST, 'hospitalname');
+        }
 	 $address = mysqli_real_escape_string($conn, $_POST['hospitaladdr']);
 	 $map = mysqli_real_escape_string($conn, $_POST['hospitalmap']);
-	 $city = mysqli_real_escape_string($conn, $_POST['hospitalcity']);
 	 $mobile = mysqli_real_escape_string($conn, $_POST['hospitalcont']);
 	 $email = mysqli_real_escape_string($conn, $_POST['hospitalemail']);
 	 $whatsapp = mysqli_real_escape_string($conn, $_POST['hospitalwhatsapp']);

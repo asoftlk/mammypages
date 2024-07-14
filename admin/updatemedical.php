@@ -1,22 +1,14 @@
     <?php
     include "../connect.php";
     session_start();
-    if(isset($_POST['submit'])){
+    if(isset($_POST['id'])){
     date_default_timezone_set('Asia/Kolkata');
         $time = date("d-m-Y")."-".time();
         $id = mysqli_real_escape_string($conn, $_POST['id']);
         $mpId = mysqli_real_escape_string($conn, $_POST['mpId']);
         $name = mysqli_real_escape_string($conn, $_POST['mpname']);
-        $speciality1 = $_POST['specialist'];
-        $speciality ="";
-            for($i=0; $i<count($speciality1);$i++){
-                if($i==(count($speciality1)-1)){
-                    $speciality .= $speciality1[$i];
-                }
-                else{
-                $speciality .= $speciality1[$i]." ///";
-                }
-            }
+        $speciality = $_POST['specialist'][0];
+  
         $address = mysqli_real_escape_string($conn, $_POST['address']);
         $map = mysqli_real_escape_string($conn, $_POST['mapLocation']);
         $city = mysqli_real_escape_string($conn, $_POST['city']);
@@ -24,13 +16,15 @@
         $whatsapp = mysqli_real_escape_string($conn, $_POST['whatsapp']);
         $email = mysqli_real_escape_string($conn, $_POST['email']);
         $website = mysqli_real_escape_string($conn, $_POST['web']);
-        $type = mysqli_real_escape_string($conn, $_POST['type']);
-        if($type == "Private medical"){
-        $subtype="";
-        }
-        else{
-        $subtype = mysqli_real_escape_string($conn, $_POST['subtype']);
-        }
+        
+        $isMain = null;
+		$mainId = null;
+        
+		$estYear = filter_input(INPUT_POST, 'estYear');
+		$service = filter_input(INPUT_POST, 'service');
+
+		$doctorId = filter_input(INPUT_POST, 'doctorId'); 
+
     //  $working_hours = mysqli_real_escape_string($conn, $_POST['midwifeworking']);
         $working_hours = null;
         $facebook = mysqli_real_escape_string($conn, $_POST['fb']);
@@ -131,7 +125,7 @@
                 $articleinsert= mysqli_query($conn, "INSERT INTO mpmedical_gallery ( medical_id, image_name) VALUES ('$mpId', '$target')");
             }
     }	   
-    $updatequery = "Update medical SET name='$name',speciality='$speciality',address='$address', map='$map', city='$city', mobile='$mobile',email='$email',whatsapp='$whatsapp',website='$website',type='$type', subtype='$subtype', working_hours='$working_hours', facebook='$facebook', instagram='$instagram', linkedin='$linkedin', status='$status',about='$about' ";		
+    $updatequery = "Update medical SET name='$name',speciality='$speciality',doctor_id='$doctorId',address='$address', map='$map', city='$city', mobile='$mobile',email='$email',whatsapp='$whatsapp',website='$website',established='$estYear', service='$service', working_hours='$working_hours', facebook='$facebook', instagram='$instagram', linkedin='$linkedin', status='$status',about='$about' ";		
         $featuredimage = $_FILES['featuredimage']['name'];
             
             
@@ -241,7 +235,7 @@
                                         WHERE medical_id = '$mpId'";
                 mysqli_query($conn, $updateWorkingTime);
             }
-            echo 'Medical Clinic Updated';
+            echo 'Doctor Clinics & Nursing homes Updated';
         }
         else{
             echo 'Update Failed, Please try again!';
