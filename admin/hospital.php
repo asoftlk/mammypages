@@ -256,7 +256,7 @@
 											</div>
 											<div class="row">
 												<label class="required" for="about">About</label>
-												<textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required></textarea>
+												<textarea class="form-control" id="about" name="about" class="about" required></textarea>
 											</div>
 									
 											<div class="form-group">
@@ -443,7 +443,7 @@
 												</div>
 												<div class="form-group row ml-2">
 													<label class="required" for="branchabout">About</label>
-													<textarea style="width:97%; height:180px; margin:auto" id="branchabout" name="branchabout" class="about" required></textarea>
+													<textarea class="form-control" id="branchabout" name="branchabout" class="about" required></textarea>
 												</div>
 												<div class="form-group">
 													<label class="required" for="logoimage">logo Image</label>
@@ -670,7 +670,7 @@
 											</div>
 											<div class="form-group">
 												<label class="required" for="about">About</label>
-												<!-- <textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required></textarea> -->
+												<!-- <textarea class="form-control" id="about" name="about" class="about" required></textarea> -->
 												 <textarea id="about" name="about" class="about form-control" required></textarea>
 											</div>
 											<div class="form-group">

@@ -156,8 +156,8 @@ if($total_data > 0)
             <td>'.$main['speciality'].'</td>
             <td>'.$main['address']."  ".$main['city'].'</td>
             <td>'.$main['contact_person'].'</td>
-            <td><div class="zoom"><img src="../directory/studio/'.$main["profile_pic"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
-            <td><div class="zoom"><img src="../directory/studio/'.$main["cover_pic"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td><div class="zoom"><img src="../directory/saloon/'.$main["profile_pic"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td><div class="zoom"><img src="../directory/saloon/'.$main["cover_pic"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
             <td>'.$main['qualification'].'</td>
             <td>'.$main['mobile'].'</td>
             <td>'.$main['email'].'</td>
@@ -204,8 +204,8 @@ if($total_data > 0)
             <td>'.$branch['speciality'].'</td>
             <td>'.$branch['address']."  ".$branch['city'].'</td>
             <td>'.$branch['contact_person'].'</td>
-            <td><div class="zoom"><img src="../directory/studio/'.$branch["profile_pic"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
-            <td><div class="zoom"><img src="../directory/studio/'.$branch["cover_pic"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td><div class="zoom"><img src="../directory/saloon/'.$branch["profile_pic"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
+            <td><div class="zoom"><img src="../directory/saloon/'.$branch["cover_pic"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
             <td>'.$branch['qualification'].'</td>
             <td>'.$branch['address'].'</td>
             <td>'.$branch['mobile'].'</td>

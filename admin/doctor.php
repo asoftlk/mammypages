@@ -219,9 +219,9 @@ ul.ui-autocomplete {
 						  <option value="Not Verified">Not Verified</option>
 						</select>
 					</div>
-					<div class="row">
+					<div class="form-group">
 					  <label class="required" for="about">About</label>
-					  <textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required></textarea>
+					  <textarea class="form-control" id="about" name="about" class="about" required></textarea>
 					</div>
 					
 					<!--div class="form-group">
@@ -306,7 +306,7 @@ $cities= json_encode($array);
 <script src="plugins/select2/js/select2.full.min.js"></script>
 <script>
 $('.select2').select2();
-$('#about').summernote({width:"100%", height:"250"});
+
 
 $(function () {
 

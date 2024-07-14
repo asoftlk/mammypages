@@ -226,8 +226,8 @@ $(document).ready(function() {
 					</div>
 					  <div class="row">
 						<div class="col-md-12 form-group">
-						<label class="required" for="about">About</label>
-					  <textarea style="width:97%; height:180px; margin:auto" id="about"  name="about" class="about" required><?php echo $row['about']; ?></textarea>
+							<label class="required" for="about">About</label>
+					  		<textarea class="form-control" id="about"  name="about" class="about" required><?php echo $row['about']; ?></textarea>
 						</div>					  
 					</div>
 					<!--div class="row">
@@ -318,7 +318,7 @@ $(document).ready(function() {
 
 <script>
 $('.select2').select2();
-$('#about').summernote({width:"100%", height:"250"});
+
 function removeReg(data, status) {
   Swal.fire({
       text: data,

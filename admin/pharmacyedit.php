@@ -172,7 +172,7 @@ foreach ($days as $abbr => $day) {
                                                         <input type="time" name="<?php echo $abbr; ?>endtime" class="form-control form-control-sm border-0" id="<?php echo $abbr; ?>endtime" placeholder="<?php echo ucfirst($day); ?> End Time" value="<?php echo $times[$abbr . 'close']; ?>">
                                                     </td>
                                                     <td>
-                                                        <button type="button" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
+                                                        <button type="button" class="btn btn-sm btn-info" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
@@ -207,7 +207,7 @@ foreach ($days as $abbr => $day) {
                                 <div class="row">
                                     <div class="col-md-12 form-group">
                                         <label class="required" for="about">About</label>
-                                        <textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required><?php echo $row['about']; ?></textarea>
+                                        <textarea class="form-control" id="about" name="about" class="about" required><?php echo $row['about']; ?></textarea>
                                     </div>
                                 </div>
                                 <!--div class="row">
@@ -353,10 +353,6 @@ foreach ($days as $abbr => $day) {
 
 <script>
     $('.select2').select2();
-    $('#about').summernote({
-        width: "100%",
-        height: "250"
-    });
 
     function removeReg(data, status) {
         Swal.fire({

@@ -43,10 +43,10 @@
 	<section class="content-header">
 		<div class="container-fluid">
 			<div class="row mb-2">
-				<div class="col-sm-6">
+				<div class="col-sm-4">
 					<h1>Doctor Clinics & Nursing homes</h1>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-sm-8">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="#">Home</a></li>
 						<li class="breadcrumb-item active"><a href="viewmedclinic">Doctor Clinics & Nursing homes</a></li>
@@ -207,7 +207,7 @@
                                                                     >
                                                                 </td>
                                                                 <td>
-                                                                    <button type="button" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
+                                                                    <button type="button" class="btn btn-sm btn-info" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
                                                                 </td>
                                                             </tr>
                                                         <?php endforeach; ?>
@@ -215,21 +215,21 @@
                                                 </table>
                                             </div>
                                             <div class="form-group row">
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<label for="fb">Facebook Link</label>
 													<input type="url" name="fb" class="form-control" id="fb" placeholder="Facebook Link">
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<label for="insta">Instagram Link</label>
 													<input type="url" name="insta" class="form-control" id="insta" placeholder="Instagram Link">
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<label for="linkedin">Linkedin Link</label>
 													<input type="url" name="linkedin" class="form-control" id="linkedin" placeholder="Linkedin Link">
 												</div>
-												<div class="col-md-4">
-													<label for="linkedin">Youtube Link</label>
-													<input type="url" name="youtube" class="form-control" id="youtube" placeholder="Youtube Link">
+												<div class="col-md-3">
+													<label for="youtube">Youtube Link</label>
+													<input type="url" name="youtube" class="form-control" id="youtube" placeholder="3">
 												</div>
 											</div>
 											<div class="form-group">
@@ -244,9 +244,9 @@
 												<label class="required" for="service">Services</label>
 												<input type="text" data-role="tagsinput" class="form-control" id="service" name="service">
 											</div>
-											<div class="row">
+											<div class="form-group">
 												<label class="required" for="about">About</label>
-												<textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required></textarea>
+												<textarea class="form-control" id="about" name="about" class="about" required></textarea>
 											</div>
 									
 											<div class="form-group">
@@ -327,7 +327,7 @@
 <script src="plugins/select2/js/select2.full.min.js"></script>
 <script>
 	$('.select2').select2();
-	$('#about').summernote({width:"100%", height:"250"});
+	
 	$('#branchabout').summernote({width:"100%", height:"250"});
 	
 	$(function () {

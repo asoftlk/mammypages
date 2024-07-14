@@ -719,8 +719,8 @@
 							<div class="card-body">
 								<?php 
 									echo	(strlen($row["address"]) > 0)?'<p class="small"><i class="bi bi-geo-alt-fill mr-1"></i>&nbsp;'.$row["address"].'</p>':null;
-									echo 	(strlen($row["mobile"]) > 0)?'<p class="small"><i class="bi bi-telephone-fill mr-1"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
-									echo 	(strlen($row["whatsapp"]) > 0)?'<p class="small"><i class="bi bi-whatsapp mr-1"></i>&nbsp;<a href="https://wa.me/'.$row["whatsapp"].'" target="_blank" class="text-decoration-none text-dark">'.$row["whatsapp"].'</a></p>':null;
+									echo 	(strlen($row["mobile"]) > 0)?'<p class="small"><i class="bi bi-telephone-fill mr-1"></i>&nbsp;<a href="tel:/' . str_replace(' ', '', $row["mobile"]) . '" target="_blank" class="text-decoration-none text-dark">'. str_replace(' ', '', $row["mobile"]) . '</a></p>':null;
+									echo 	(strlen($row["whatsapp"]) > 0)?'<p class="small"><i class="bi bi-whatsapp mr-1"></i>&nbsp;<a href="https://wa.me//' . str_replace(' ', '', $row["whatsapp"]) . '" target="_blank" class="text-decoration-none text-dark">'. str_replace(' ', '', $row["whatsapp"]) . '</a></p>':null;
 									echo	(strlen($row["email"]) > 0)?'<p class="small"><i class="bi bi-envelope-fill mr-1"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
 									echo	(strlen($row["website"]) > 0)?'<p class="small"><i class="bi bi-globe mr-1"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
 									;

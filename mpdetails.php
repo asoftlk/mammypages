@@ -220,7 +220,7 @@
 		.followbtn{
 		position: absolute;
 		right: 4%;
-		top: -40%;
+		top: -45%;
 		}
 	}
 	.toggle-btn.collapsed .bi-chevron-up::before {
@@ -393,18 +393,21 @@
 						$row= mysqli_fetch_array($typequery);
 						$typeid = $row[$id_column];
 						$type_name = $row['name'];
-						$specialityarray = explode(" ///", $row['speciality']);
-						$speciality = "";
-						$videourl = $row['video'];
-						for($i=0; $i< count($specialityarray); $i++){
-							if($i == count($specialityarray)-1){
-								
-								$speciality .= $specialityarray[$i];
-							}
-							else{
-								$speciality .= $specialityarray[$i].", ";
-							}
-						};
+						if (isset($row['speciality'])) {
+							$specialityarray = explode(" ///", $row['speciality']);
+							$speciality = "";
+							$videourl = $row['video'];
+							for($i=0; $i< count($specialityarray); $i++){
+								if($i == count($specialityarray)-1){
+									
+									$speciality .= $specialityarray[$i];
+								}
+								else{
+									$speciality .= $specialityarray[$i].", ";
+								}
+							};
+						}
+
 						if (isset($row['main_id']) && !empty($row['main_id'])) {
 							$mainid = $row['main_id'];
 			
@@ -420,6 +423,8 @@
 							$targetUrl = 'doctors';
 						} elseif ($type == 'saloon') {
 							$targetUrl = 'beauty';
+						} elseif ($type == 'pharmacy') {
+							$targetUrl = 'pharmacies';
 						} else {
 							$targetUrl = $type;
 						}
@@ -428,8 +433,8 @@
 							$urltelegram=urlencode('https://www.mammypages.com/mpstudio_details?type=studio&id='.$row["$id_column"].'&text='.$row["name"]);
 						echo '<div class="row fillbg l-border-radius-top">
 								<div class="text-center p-0">
-								<img src="directory/'. $type .'/'.$row["image"].'" class="img-fluid mb-2" style="width:100%; max-height:250px; border-radius: 15px;">
-								<a href="'. $targetUrl .'"><i class="bi bi-caret-left backbutton" data-toggle="tooltip" title="Back" data-placement="left" area-hidden="true"></i></a>
+									<img src="directory/'. $type .'/'.$row["image"].'" class="img-fluid mb-2" style="width:100%; max-height:250px; border-radius: 15px;">
+									<a href="'. $targetUrl .'"><i class="bi bi-caret-left backbutton" data-toggle="tooltip" title="Back" data-placement="left" area-hidden="true"></i></a>
 								</div>
 							 </div>
 								<div class="row fillbg l-border-radius-bottom l-title-card">
@@ -443,8 +448,6 @@
 										
 										 if(!empty($speciality)){
 											echo '<p class="mb-0">'.$speciality.'</p>';
-										} else {
-											echo '<p class="mb-0" style="height:24px;"></p>';
 										}
 										$ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$typeid'");
 										$ratingrow = mysqli_fetch_assoc($ratingquery);
@@ -561,53 +564,53 @@
 												</div>
 										';
 									}
-									echo '<div class="row fillbg mt-1 l-border-radius py-2 l-contact">';
-										if (isset($row['contact_person']) && !empty($row['contact_person'])){
-											$establishment = $row['establishment'];
-											$contact_person = $row['contact_person'];
-											$profile_pic = $row['profile_pic'];
-											$cover_pic = $row['cover_pic'];
-											$registraion_no = $row['registraion_no'];
-											if (isset($row['qualification'])){
-												$typequalification = $row['qualification'];
+									if (isset($row['contact_person']) && !empty($row['contact_person'])){
+										echo '<div class="row fillbg mt-1 l-border-radius py-2 l-contact">';
+										$establishment = $row['establishment'];
+										$contact_person = $row['contact_person'];
+										$profile_pic = $row['profile_pic'];
+										$cover_pic = $row['cover_pic'];
+										$registraion_no = $row['registraion_no'];
+										if (isset($row['qualification'])){
+											$typequalification = $row['qualification'];
+										}
+										else {
+											$typequalification = '';
+										}
+										echo '<div class="row">
+											<div class="col-sm-2">
+												<img class="profile-img" src="directory/'. $type .'/'.$profile_pic.'">
+											</div>
+											<div class="col-sm-5 d-flex align-items-center">
+												<div>
+													<p class="font-weight-bold small mb-0">'.$contact_person.'</p>
+													<p class="small mb-0">'.$typequalification.'</p>
+												</div>
+											</div>
+											<div class="col-sm-5 d-flex align-items-center justify-content-end">
+												<div>
+													<p class="small mb-0"><span class="font-weight-bold">Since :</span> '.$establishment.'</p>
+													<p class="small mb-0"><span class="font-weight-bold">Register No :</span> '.$registraion_no.' </p>
+												</div>
+											</div>
+										</div>';
+										if (isset($row['certificate']) && !empty($row['certificate'])){
+											$certificate = $row['certificate'];
+											$certificateArray = explode(',', $certificate);
+											$certificateHtml = '<ul class="list-unstyled">';
+											foreach ($certificateArray as $certificate) {
+												$certificateHtml .= '<li><img class="certificate-img" src="directory/'. $type .'/'. trim($certificate) .'"></li>';
 											}
-											else {
-												$typequalification = '';
-											}
-											echo '<div class="row">
-													<div class="col-sm-2">
-														<img class="profile-img" src="directory/'. $type .'/'.$profile_pic.'">
+											$certificateHtml .= '</ul>';
+											
+											echo	'
+													<div class="row my-3">
+														' . $certificateHtml . '
 													</div>
-													<div class="col-sm-5 d-flex align-items-center">
-														<div>
-															<p class="font-weight-bold small mb-0">'.$contact_person.'</p>
-															<p class="small mb-0">'.$typequalification.'</p>
-														</div>
-													</div>
-													<div class="col-sm-5 d-flex align-items-center justify-content-end">
-														<div>
-															<p class="small mb-0"><span class="font-weight-bold">Since :</span> '.$establishment.'</p>
-															<p class="small mb-0"><span class="font-weight-bold">Register No :</span> '.$registraion_no.' </p>
-														</div>
-													</div>
-												</div>';
-												if (isset($row['certificate']) && !empty($row['certificate'])){
-													$certificate = $row['certificate'];
-													$certificateArray = explode(',', $certificate);
-													$certificateHtml = '<ul class="list-unstyled">';
-													foreach ($certificateArray as $certificate) {
-														$certificateHtml .= '<li><img class="certificate-img" src="directory/'. $type .'/'. trim($certificate) .'"></li>';
-													}
-													$certificateHtml .= '</ul>';
-													
-													echo	'
-															<div class="row my-3">
-																' . $certificateHtml . '
-															</div>
-													';
-												}
+											';
 										}
 										echo '</div>';
+									}
 								}
 						?>
 						
@@ -774,13 +777,8 @@
 							//echo '</div>';
 							}
 							?>
-						<?php 
-							if($type == 'doctor' || $type == 'medical'){
-								echo '</div>';
-							}
-						?>
+						</div>
 					</div>
-				</div>
 				<div class="col-md-3">
 					<div class="right-cont-part">
 							<div class="card l-border-radius">
@@ -794,8 +792,8 @@
 								<div class="card-body">
 									<?php 
 										echo	(strlen($row["address"]) > 0)?'<p class="small"><i class="bi bi-geo-alt-fill mr-1"></i>&nbsp;'.$row["address"].'</p>':null;
-										echo 	(strlen($row["mobile"]) > 0)?'<p class="small"><i class="bi bi-telephone-fill mr-1"></i>&nbsp;<a href="tel:'.$row["mobile"].'" target="_blank" class="text-decoration-none text-dark">'.$row["mobile"].'</a></p>':null;
-										echo 	(strlen($row["whatsapp"]) > 0)?'<p class="small"><i class="bi bi-whatsapp mr-1"></i>&nbsp;<a href="https://wa.me/'.$row["whatsapp"].'" target="_blank" class="text-decoration-none text-dark">'.$row["whatsapp"].'</a></p>':null;
+										echo 	(strlen($row["mobile"]) > 0)?'<p class="small"><i class="bi bi-telephone-fill mr-1"></i>&nbsp;<a href="tel:/' . str_replace(' ', '', $row["mobile"]) . '" target="_blank" class="text-decoration-none text-dark">'. str_replace(' ', '', $row["mobile"]) . '</a></p>':null;
+										echo 	(strlen($row["whatsapp"]) > 0)?'<p class="small"><i class="bi bi-whatsapp mr-1"></i>&nbsp;<a href="https://wa.me//' . str_replace(' ', '', $row["whatsapp"]) . '" target="_blank" class="text-decoration-none text-dark">'. str_replace(' ', '', $row["whatsapp"]) . '</a></p>':null;
 										echo	(strlen($row["email"]) > 0)?'<p class="small"><i class="bi bi-envelope-fill mr-1"></i>&nbsp;<a href="mailto:'.$row["email"].'" target="_blank" class="text-decoration-none text-dark">'.$row["email"].'</a></p>':null;
 										echo	(strlen($row["website"]) > 0)?'<p class="small"><i class="bi bi-globe mr-1"></i>&nbsp;<a href="'.$row["website"].'" target="_blank" class="text-decoration-none text-dark">'.$row["website"].'</a></p>':null;
 										;
@@ -803,10 +801,11 @@
 										?>
 								</div>
 							</div>
-							<div class="card mt-1 l-border-radius">
+						<?php if (isset($row['is_main']) && (strlen($row["is_main"]) > 0)) {
+							echo '<div class="card mt-1 l-border-radius">
 								<div class="card-body">
-									<label class="border-bottom pb-2 w-100 small text-uppercase font-weight-bold">Branches</label>
-									<?php 
+									<label class="border-bottom pb-2 w-100 small text-uppercase font-weight-bold">Branches</label>';
+									
                                     $query1=mysqli_query($conn, "SELECT * FROM $type WHERE main_id = (SELECT id FROM $type WHERE $id_column = '$typeid')");
                                     
 										while($branches1=mysqli_fetch_array($query1)){
@@ -814,17 +813,18 @@
 										<input type="hidden" name="'.$id_column.'" value="'.$branches1["$id_column"].'">
 										<button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">'.$branches1["name"].' <i class="bi bi-box-arrow-up-right ml-2"></i></button>
 										</form>';
-									}?>
-									<?php $query2=mysqli_query($conn, "SELECT * FROM $type WHERE main_id =(SELECT main_id FROM $type WHERE $id_column = '$typeid' AND main_id = !0) AND $id_column != '$typeid' UNION
+									}
+									$query2=mysqli_query($conn, "SELECT * FROM $type WHERE main_id =(SELECT main_id FROM $type WHERE $id_column = '$typeid' AND main_id = !0) AND $id_column != '$typeid' UNION
 										SELECT * FROM $type WHERE id =(SELECT main_id FROM $type WHERE $id_column = '$typeid')");
 										while($branches2=mysqli_fetch_array($query2)){
 										echo '<form action="mpconnect/'.$type.'/'. urlencode(str_replace(' ', '_', $branches2["name"])) .'" method="post" style="display:inline;">
 										<input type="hidden" name="'.$id_column.'" value="'.$branches2["$id_column"].'">
 										<button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">'.$branches2["name"].'<i class="bi bi-box-arrow-up-right ml-2"></i></button>
 										</form>';
-									}?>
-								</div>
-							</div>
+									}
+								echo '</div>
+							</div>';
+							}?>
 							<div class="card mt-1 l-border-radius">
 								<div class="card-body">
 									<?php

@@ -194,7 +194,7 @@ foreach ($days as $abbr => $day) {
                                                         <input type="time" name="<?php echo $abbr; ?>endtime" class="form-control form-control-sm border-0" id="<?php echo $abbr; ?>endtime" placeholder="<?php echo ucfirst($day); ?> End Time" value="<?php echo $times[$abbr . 'close']; ?>">
                                                     </td>
                                                     <td>
-                                                        <button type="button" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
+                                                        <button type="button" class="btn btn-sm btn-info" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
@@ -202,20 +202,20 @@ foreach ($days as $abbr => $day) {
                                     </table>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-4 form-group">
+                                    <div class="col-md-3 form-group">
                                         <label for="fb">Facebook Link</label>
                                         <input type="url" name="fb" class="form-control" id="fb" value="<?php echo $row['facebook']; ?>" placeholder="Facebook Link">
                                     </div>
-                                    <div class="col-md-4 form-group">
+                                    <div class="col-md-3 form-group">
                                         <label for="insta">Instagram Link</label>
                                         <input type="url" name="insta" class="form-control" id="insta" value="<?php echo $row['instagram']; ?>" placeholder="Instagram Link">
                                     </div>
-                                    <div class="col-md-4 form-group">
+                                    <div class="col-md-3 form-group">
                                         <label for="linkedin">Linkedin Link</label>
                                         <input type="url" name="linkedin" class="form-control" id="linkedin" value="<?php echo $row['linkedin']; ?>" placeholder="Linkedin Link">
                                     </div>
-                                    <div class="col-md-4 form-group">
-                                        <label for="youtube">Youtube Link</label>
+                                    <div class="col-md-3 form-group">
+                                        <label for="youtube">3</label>
                                         <input type="url" name="youtube" class="form-control" id="youtube" value="<?php echo $row['youtube']; ?>">
                                     </div>                
                                 </div>
@@ -238,7 +238,7 @@ foreach ($days as $abbr => $day) {
                                 <div class="row">
                                     <div class="col-md-12 form-group">
                                         <label class="required" for="about">About</label>
-                                        <textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required><?php echo $row['about']; ?></textarea>
+                                        <textarea class="form-control" id="about" name="about" class="about" required><?php echo $row['about']; ?></textarea>
                                     </div>
                                 </div>
                             <!--div class="row">
@@ -385,10 +385,6 @@ foreach ($days as $abbr => $day) {
 
 <script>
     $('.select2').select2();
-    $('#about').summernote({
-        width: "100%",
-        height: "250"
-    });
 
     function removeReg(data, status) {
         Swal.fire({

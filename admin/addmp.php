@@ -121,9 +121,9 @@
 						  <option value="Not Verified">Not Verified</option>
 						</select>
 					</div>
-					<div class="row">
+					<div class="form-group">
 					  <label for="about">About</label>
-					  <textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required></textarea>
+					  <textarea class="form-control" id="about" name="about" class="about" required></textarea>
 					</div>
 					<div class="form-group">
 						<label for="featuredimage">Featured Image</label>

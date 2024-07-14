@@ -169,20 +169,20 @@
                                                 </table>
                                             </div>
                                             <div class="form-group row">
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<label for="fb">Facebook Link</label>
 													<input type="url" name="fb" class="form-control" id="fb" placeholder="Facebook Link">
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<label for="insta">Instagram Link</label>
 													<input type="url" name="insta" class="form-control" id="insta" placeholder="Instagram Link">
 												</div>
-												<div class="col-md-4">
+												<div class="col-md-3">
 													<label for="linkedin">Linkedin Link</label>
 													<input type="url" name="linkedin" class="form-control" id="linkedin" placeholder="Linkedin Link">
 												</div>
-												<div class="col-md-4">
-													<label for="linkedin">Youtube Link</label>
+												<div class="col-md-3">
+													<label for="youtube">Youtube Link</label>
 													<input type="url" name="youtube" class="form-control" id="youtube" placeholder="Youtube Link">
 												</div>
 											</div>
@@ -194,9 +194,9 @@
 													<option value="Not Verified">Not Verified</option>
 												</select>
 											</div>
-											<div class="row">
+											<div class="form-group">
 												<label class="required" for="about">About</label>
-												<textarea style="width:97%; height:180px; margin:auto" id="about" name="about" class="about" required></textarea>
+												<textarea class="form-control" id="about" name="about" class="about" required></textarea>
 											</div>
 									
 											<div class="form-group">
@@ -278,7 +278,7 @@
 <script src="plugins/select2/js/select2.full.min.js"></script>
 <script>
 	$('.select2').select2();
-	$('#about').summernote({width:"100%", height:"250"});
+	
 	$('#branchabout').summernote({width:"100%", height:"250"});
 	
 	$(function () {
