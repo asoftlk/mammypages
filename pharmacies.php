@@ -95,34 +95,6 @@ include "mp.php";
                 
             <div class="d-flex justify-content-start">
                 <label class="select">
-                    <select name="speciality" class="filter-box"  id="speciality">
-                        <option value="">Select Speciality</option>
-                        <?php
-                            $specialityQuery = mysqli_query($conn, "SELECT DISTINCT speciality FROM pharmacy");
-                            while ($specialityRow = mysqli_fetch_array($specialityQuery)) {
-                                $specialityArray = explode(" ///", $specialityRow['speciality']);
-                                foreach ($specialityArray as $spec) {
-                                    echo '<option value="' . $spec . '">' . $spec . '</option>';
-                                }
-                            }
-                            ?>
-                    </select>
-                </label>
-                <label class="select">
-                    <select name="type" class="filter-box" id="type">
-                        <option value="">Select type</option>
-                        <?php
-                            $typeQuery = mysqli_query($conn, "SELECT DISTINCT type FROM pharmacy");
-                            while ($typeRow = mysqli_fetch_array($typeQuery)) {
-                                $typeArray = explode(" ///", $typeRow['type']);
-                                foreach ($typeArray as $type) {
-                                    echo '<option value="' . $type . '">' . $type . '</option>';
-                                }
-                            }
-                            ?>
-                    </select>
-                </label>
-                <label class="select">
                     <select name="city"  class="filter-box" id="city">
                         <option value="">Select City</option>
                         <?php
@@ -148,17 +120,6 @@ include "mp.php";
                     $currentDay = strtolower(date('l')); 
                     $currentTime = date('H:i:s'); 
 					while($row=mysqli_fetch_array($pharmacy)){
-						$specialityarray = explode(" ///", $row['speciality']);
-						$speciality = "";
-						for($i=0; $i< count($specialityarray); $i++){
-							if($i == count($specialityarray)-1){
-								
-								$speciality .= $specialityarray[$i];
-							}
-							else{
-								$speciality .= $specialityarray[$i].", ";
-							}
-						}
                         $openTime = $row[$currentDay . '_open'];
                         $closeTime = $row[$currentDay . '_close'];
                         $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1">Open</span>' : '<span class="text-danger text mr-1">Closed</span>';
@@ -181,17 +142,16 @@ include "mp.php";
 					echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
 							<div class="col-md-3" style="margin:auto">
 							<div>
-								<a href="mpconnect/pharmacy/' .urlencode(str_replace(' ', '_', $row["name"])). '"><img src="directory/pharmacy/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>
+								<img src="directory/pharmacy/'.$row['logo'].'" class="img-fluid" style="max-height:5rem">
 							</div>
 							</div>
 							<div class="col-md-9 pl-0" style="margin:1rem 0">
 							<div class="d-flex">
-                            <p class="text"><a href="mpconnect/pharmacy/' .urlencode(str_replace(' ', '_', $row["name"])). '" class="namehref"><p class="text-heading">&nbsp;'.$type_name_head.'</p></a>
+                            <p class="text"><p class="text-heading">&nbsp;'.$type_name_head.'</p>
                                 <img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-2" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
                                 <strong>' . $isOpen . '</strong>
                             </div>
 							<div class="d-flex">
-							<p class="text">&nbsp;'.$speciality.'</P>
 							<div class="ml-auto">';
 							
 							$ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$row[pharmacy_id]'");
@@ -313,10 +273,9 @@ include "mp.php";
             }
         });
 
-        $('#searchpharmacy, #speciality, #type, #city').on('input change keyup', function() {
+        $('#searchpharmacy, #city').on('input change keyup', function() {
             var query = $('#searchpharmacy').val();
             var speciality = $('#speciality').val();
-            var type = $('#type').val();
             var city = $('#city').val();
 
             if (query.length >= 1 || speciality || type || city) {
@@ -331,8 +290,6 @@ include "mp.php";
 
         $('#clearFilters').click(function() {
             $('#searchpharmacy').val('');
-            $('#speciality').val('');
-            $('#type').val('');
             $('#city').val('');
 
             $("#suggesstion-box").hide();
