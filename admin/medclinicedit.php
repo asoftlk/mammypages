@@ -214,6 +214,10 @@ foreach ($days as $abbr => $day) {
                                         <label for="linkedin">Linkedin Link</label>
                                         <input type="url" name="linkedin" class="form-control" id="linkedin" value="<?php echo $row['linkedin']; ?>" placeholder="Linkedin Link">
                                     </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="youtube">Youtube Link</label>
+                                        <input type="url" name="youtube" class="form-control" id="youtube" value="<?php echo $row['youtube']; ?>">
+                                    </div>                
                                 </div>
 
                                 <div class="row">

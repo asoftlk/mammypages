@@ -191,7 +191,7 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Pharmacy Specialist In</label><input type="text" class="form-control" id="speciality">
+									<label>Established</label><input type="text" class="form-control" id="established">
 								</div>
 							</div>
 							<div class="col-md-4">
@@ -238,8 +238,8 @@
 							</div>
 							<div class="col-md-4">
 								<div class="form-group">
-									<label>Pharmacy type:</label>
-									<input type="text" class="form-control" id="type">
+									<label>Certificate:</label>
+									<input type="text" class="form-control" id="certificate">
 								</div>
 							</div>
 							<div class="col-md-4">
@@ -323,6 +323,12 @@
 								<div class="form-group">
 									<label>Linkedin Link :</label>
 									<input type="text" class="form-control" id="linkedin">
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Youtube Link :</label>
+									<input type="text" class="form-control" id="youtube">
 								</div>
 							</div>
 							<div class="col-md-12">

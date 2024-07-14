@@ -30,6 +30,7 @@
         $facebook = mysqli_real_escape_string($conn, $_POST['fb']);
         $instagram = mysqli_real_escape_string($conn, $_POST['insta']);
         $linkedin = mysqli_real_escape_string($conn, $_POST['linkedin']);
+        $youtube = filter_input(INPUT_POST, 'youtube');
         $status = mysqli_real_escape_string($conn, $_POST['status']);
         $about = mysqli_real_escape_string($conn, $_POST['about']);
         $videoembed = mysqli_real_escape_string($conn, $_POST['videoembed']);
@@ -125,7 +126,7 @@
                 $articleinsert= mysqli_query($conn, "INSERT INTO mpmedical_gallery ( medical_id, image_name) VALUES ('$mpId', '$target')");
             }
     }	   
-    $updatequery = "Update medical SET name='$name',speciality='$speciality',doctor_id='$doctorId',address='$address', map='$map', city='$city', mobile='$mobile',email='$email',whatsapp='$whatsapp',website='$website',established='$estYear', service='$service', working_hours='$working_hours', facebook='$facebook', instagram='$instagram', linkedin='$linkedin', status='$status',about='$about' ";		
+    $updatequery = "Update medical SET name='$name',speciality='$speciality',doctor_id='$doctorId',address='$address', map='$map', city='$city', mobile='$mobile',email='$email',whatsapp='$whatsapp',website='$website',youtube='$youtube',established='$estYear', service='$service', working_hours='$working_hours', facebook='$facebook', instagram='$instagram', linkedin='$linkedin', status='$status',about='$about' ";		
         $featuredimage = $_FILES['featuredimage']['name'];
             
             

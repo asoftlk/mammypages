@@ -7,16 +7,7 @@
         $id = mysqli_real_escape_string($conn, $_POST['id']);
         $mpId = mysqli_real_escape_string($conn, $_POST['mpId']);
         $name = mysqli_real_escape_string($conn, $_POST['mpname']);
-        $speciality1 = $_POST['specialist'];
-        $speciality ="";
-            for($i=0; $i<count($speciality1);$i++){
-                if($i==(count($speciality1)-1)){
-                    $speciality .= $speciality1[$i];
-                }
-                else{
-                $speciality .= $speciality1[$i]." ///";
-                }
-            }
+       
         $address = mysqli_real_escape_string($conn, $_POST['address']);
         $map = mysqli_real_escape_string($conn, $_POST['mapLocation']);
         $city = mysqli_real_escape_string($conn, $_POST['city']);
@@ -24,13 +15,10 @@
         $whatsapp = mysqli_real_escape_string($conn, $_POST['whatsapp']);
         $email = mysqli_real_escape_string($conn, $_POST['email']);
         $website = mysqli_real_escape_string($conn, $_POST['web']);
-        $type = mysqli_real_escape_string($conn, $_POST['type']);
-        if($type == "Private pharmacy"){
-        $subtype="";
-        }
-        else{
-        $subtype = mysqli_real_escape_string($conn, $_POST['subtype']);
-        }
+        $estYear = filter_input(INPUT_POST, 'estYear');
+		$service = filter_input(INPUT_POST, 'service');
+        $youtube = filter_input(INPUT_POST, 'youtube');
+        $cerNo = filter_input(INPUT_POST, 'cerNo');
     //  $working_hours = mysqli_real_escape_string($conn, $_POST['midwifeworking']);
         $working_hours = null;
         $facebook = mysqli_real_escape_string($conn, $_POST['fb']);
@@ -130,8 +118,9 @@
                 }
                 $articleinsert= mysqli_query($conn, "INSERT INTO mppharmacy_gallery ( pharmacy_id, image_name) VALUES ('$mpId', '$target')");
             }
-    }	   
-    $updatequery = "Update pharmacy SET name='$name',speciality='$speciality',address='$address', map='$map', city='$city', mobile='$mobile',email='$email',whatsapp='$whatsapp',website='$website',type='$type', subtype='$subtype', working_hours='$working_hours', facebook='$facebook', instagram='$instagram', linkedin='$linkedin', status='$status',about='$about' ";		
+    }	 
+    $updatequery = "Update pharmacy SET name='$name',address='$address', map='$map', city='$city', mobile='$mobile',email='$email',established='$estYear',
+    whatsapp='$whatsapp',website='$website', working_hours='$working_hours', facebook='$facebook', instagram='$instagram', linkedin='$linkedin', status='$status',about='$about',service='$service',certificate='$cerNo',youtube='$youtube' ";		
         $featuredimage = $_FILES['featuredimage']['name'];
             
             

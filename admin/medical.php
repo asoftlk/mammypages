@@ -227,6 +227,10 @@
 													<label for="linkedin">Linkedin Link</label>
 													<input type="url" name="linkedin" class="form-control" id="linkedin" placeholder="Linkedin Link">
 												</div>
+												<div class="col-md-4">
+													<label for="linkedin">Youtube Link</label>
+													<input type="url" name="youtube" class="form-control" id="youtube" placeholder="Youtube Link">
+												</div>
 											</div>
 											<div class="form-group">
 												<label class="required">Status</label>
