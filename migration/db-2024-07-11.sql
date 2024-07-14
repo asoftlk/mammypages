@@ -56,5 +56,17 @@ DROP COLUMN `medical_type`;
 ALTER TABLE `medical` 
 ADD COLUMN `doctor_id` INT NULL AFTER `name`;
 
+ALTER TABLE `pharmacy` 
+DROP COLUMN `type`,
+ADD COLUMN `established` VARCHAR(45) NULL AFTER `email`,
+ADD COLUMN `youtube` TEXT NULL AFTER `linkedin`,
+CHANGE COLUMN `speciality` `service` TEXT NULL DEFAULT NULL AFTER `priority`,
+CHANGE COLUMN `subtype` `certificate` VARCHAR(300) NULL DEFAULT NULL ;
+
+DROP TABLE `pharmacy_speciality`;
+DROP TABLE `pharmacy_branch`;
+
+ALTER TABLE `pharmacy_working_times` 
+DROP COLUMN `pharmacy_type`;
 
 -- thushitha

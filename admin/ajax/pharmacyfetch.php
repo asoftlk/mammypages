@@ -105,17 +105,17 @@ $output = '
   <tr>
     <th>Pharmacy Id</th>
 	<th>Name</th>
-	<th>Pharmacy Specialist In</th>
+	<th>Pharmacy Established</th>
    	<th>Pharmacy Address</th>
     <th>Contact Number</th>
 	<th>Email</th>
     <th>Whatsapp Number</th>
      <th>Website</th>
-    <th>Pharmacy type</th>
     <th>Hours of Operation</th>
     <th>Facebook Link</th>
     <th>Instagram Link</th>
     <th>Linkedin Link</th>
+    <th>Youtube Link</th>
     <th>Status</th>
     <!--th>About</th-->
     <th>Priority</th>
@@ -148,18 +148,17 @@ if($total_data > 0)
         <tr class="branch-header '.$arrowClass.'" data-main-id="'.$main['id'].'">
             <td>'.$main['pharmacy_id'].'</td>
             <td>'.$main['name'].'</td>
-            <td>'.$main['speciality'].'</td>
+            <td>'.$main['established'].'</td>
             <td>'.$main['address']."  ".$main['city'].'</td>
             <td>'.$main['mobile'].'</td>
             <td>'.$main['email'].'</td>
             <td>'.$main['whatsapp'].'</td>
             <td>'.$main['website'].'</td>
-            <td>'.$main['type'].'</td>
             <td>'.$main['working_hours'].'</td>
-            
             <td>'.$main['facebook'].'</td>
             <td>'.$main['instagram'].'</td>
             <td>'.$main['linkedin'].'</td>
+            <td>'.$main['youtube'].'</td>
             <td>'.$main['status'].'</td>
             <!--td>'.$main['about'].'</td>
             <td>'.$main['priority'].'</td-->
@@ -187,53 +186,7 @@ if($total_data > 0)
             
         
         </tr>';
-        if($hasBranches) {
-            foreach($branches[$main['id']] as $branch) {
-            $output .=    '<tr class="bg-tbl branch" data-main-id="'.$main['id'].'">
-            <td>'.$branch['pharmacy_id'].'</td>
-            <td>'.$branch['name'].'</td>
-            <td>'.$branch['speciality'].'</td>
-            <td>'.$branch['address']."  ".$branch['city'].'</td>
-            <td>'.$branch['mobile'].'</td>
-            <td>'.$branch['email'].'</td>
-            <td>'.$branch['whatsapp'].'</td>
-            <td>'.$branch['website'].'</td>
-            <td>'.$branch['type'].'</td>
-            <td>'.$branch['working_hours'].'</td>
-            
-            <td>'.$branch['facebook'].'</td>
-            <td>'.$branch['instagram'].'</td>
-            <td>'.$branch['linkedin'].'</td>
-            <td>'.$branch['status'].'</td>
-            <!--td>'.$branch['about'].'</td>
-            <td>'.$branch['priority'].'</td-->
-            <td><select name="dropdown" id="prioritystatus" onchange="javascript:chg_status(this);">
-            <option value="" selected disabled>'.$branch["priority"].'</option>
-            <option value="viewpharmacy.php?value=0&id='.$branch["id"].'">0</option>
-            <option value="viewpharmacy.php?value=1&id='.$branch["id"].'">1</option>
-            <option value="viewpharmacy.php?value=2&id='.$branch["id"].'">2</option>
-            <option value="viewpharmacy.php?value=3&id='.$branch["id"].'">3</option>
-            <option value="viewpharmacy.php?value=4&id='.$branch["id"].'">4</option>
-            <option value="viewpharmacy.php?value=5&id='.$branch["id"].'">5</option>
-            </select>
-            </td>
-            <td><div class="zoom"><img src="../directory/pharmacy/'.$branch["logo"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
-            <td><div class="zoom"><img src="../directory/pharmacy/'.$branch["image"].'"  onerror="this.onerror=null; this.remove();" class="img-fluid" width="75" height="75"><div></td>
-            <td>'.$branch['datetime'].'</td>
-            
-        </select>
-        </td>
-        <td><a href="javascript:fetch_id('.$branch[0].', true)"><button type="button" class="btn" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-lg fa-eye" aria-hidden="true" style="color:green;"></i></button></a></td>
-            
-            <td><a href="pharmacyedit.php?id='.$branch["id"].'"><i class="fa fa-lg fa-pencil" aria-hidden="true" style="color:black;"></i></a></td>
-            
-            <td align="center"><a href="javascript:del_id('.$branch[0].')"><i class="fa fa-trash" aria-hidden="true" style="color:red;"></i></a> </td>
-            
         
-        </tr>';
-
-            }
-        }
   }
   $output .= '</table>';
 }

@@ -320,6 +320,12 @@
 									<input type="text" class="form-control" id="linkedin">
 								</div>
 							</div>
+							<div class="col-md-4">
+								<div class="form-group">
+									<label>Youtube Link :</label>
+									<input type="text" class="form-control" id="youtube">
+								</div>
+							</div>
 							<div class="col-md-12">
 								<div class="form-group">
 									<label>About:</label>

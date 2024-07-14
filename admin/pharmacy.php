@@ -66,39 +66,7 @@
 					<button type="button" class="btn btn-mammy" id="btnspeciality">+ Add Speciality</button>
 				</div>
 				<br><br>
-				<div class="col-12">
-					<div class="card card-primary specialityview" style="display:none">
-						<div class="card-body">
-							<h5>Add New Speciality</h5>
-							<form id="addspeciality" method="POST" action="addspeciality">
-								<div class="form-group specialityselectview">
-									<label class="required">Speciality</label>
-									<select class="form-control" name="specialityselect" id="specialityselect">
-										<option selected="" disabled="" value="null" class="hidden">--Select Speciality</option>
-										<?php $specialityquery = mysqli_query($conn, "SELECT * FROM pharmacy_speciality");
-											While($specialityrow= mysqli_fetch_assoc($specialityquery)){
-												echo '<option value="'.$specialityrow["id"].'">'.$specialityrow["speciality"].'</option>';
-											}
-											?>
-									</select>
-								</div>
-								<div class="form-group specialityselectview">
-									<label class="required" for="specialityname">Edit</label>
-									<input type="text" name="editselected" class="form-control" id="editselected" placeholder="Enter Edited text">
-								</div>
-								<div class="form-group newspeciality">
-									<label class="required" for="specialityname">Add</label>
-									<input type="text" name="specialityname" class="form-control" id="specialityname" placeholder="Specalist In">
-								</div>
-								<input type="submit" name="specialitysubmit" id="specialitysubmit" class="btn btn-mammy mr-4" value="Add">
-								<input type="submit" name="specialityedit" id="specialityedit" class="btn btn-primary mr-4" value="Edit">
-								<input type="hidden" name="specialityupdate" id="specialityupdate" class="btn btn-primary mr-4" value="Update">
-								<input type="hidden" name="specialitydelete" id="specialitydelete" class="btn btn-secondary mr-4" value="Delete">
-								<input type="hidden" name="specialitycancel" id="specialitycancel" class="btn btn-sm btn-secondary" value="Cancel">
-							</form>
-						</div>
-					</div>
-				</div>
+				
 				<!-- left column -->
 				<div class="col-md-12">
 					<div class="card card-primary">
@@ -107,55 +75,41 @@
                                 <li class="nav-item">
                                     <a class="nav-link active" data-toggle="tab" href="#new" role="tab">New Pharmacy</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#addbranch" role="tab">Add Branch</a>
-                                </li>
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="new" role="tabpanel">
                                     <div id="Hospital">
                                         <form id="quickForm" method="POST" action="postpharmacy" enctype="multipart/form-data">
-                                            <?php
-                                                $mainSelectQuery = mysqli_query($conn, "SELECT DISTINCT * FROM pharmacy WHERE is_main = 'Y'");
-                                            ?>
-                                            <div class="form-group branch">
-                                                <label class="required" for="mainId">Pharmacy Name</label>
-                                                <select name="mainId" class="form-control" id="mainId" required>
-                                                    <option value="">Select Pharmacy</option>
-                                                    <?php
-                                                    while ($hospitalRow = mysqli_fetch_array($mainSelectQuery)) {
-                                                        $name = $hospitalRow['name'];
-                                                        $id = $hospitalRow['id'];
-                                                        echo '<option value="' . $id . '" ' . $selected . '>' . $name . '</option>';
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
                                             <div class="form-group">
 												<label class="required" for="mpname">Pharmacy Name</label>
 												<input type="text" name="mpname" class="form-control" id="mpname" placeholder="Pharmacy Name">
 											</div>
-											<div class="form-group">
-												<label class="required">Speciality</label>
-												<select class="form-control select2" name="specialist[]" id="specialist" multiple data-placeholder='--Select Speciality--'>
-												<?php $query=mysqli_query($conn, "SELECT * FROM pharmacy_speciality");
-													while($row=mysqli_fetch_array($query)){
-													echo   '<option value="'.$row["speciality"].'">'.$row["speciality"].'</option>';
-													}?>
-												</select>
+                                            <div class="form-group">
+												<label class="required" for="phName">Pharmacist Name</label>
+												<input type="text" name="phName" class="form-control" id="phName" placeholder="Pharmacist Name">
 											</div>
+                                            <div class="form-group">
+												<label class="required" for="cerNo">Certificate No</label>
+												<input type="text" name="cerNo" class="form-control" id="cerNo" placeholder="Certificate No">
+											</div>
+                                            <div class="form-group">
+												<label class="required" for="cerNo">Year of Establishment</label>
+												<input type="text" name="estYear" class="form-control" id="estYear" placeholder="Year of Establishment">
+											</div>
+											
 											<div class="form-group">
-												<label class="required" for="address">Pharmacy Address</label>
+												<label class="required" for="address">Address</label>
 												<input type="text" name="address" class="form-control" id="address" placeholder="Address">
 											</div>
 											<div class="form-group">
-												<label for="mapLocation" class="required">Pharmacy Map location</label>
-												<input type="text" name="mapLocation" class="form-control" id="mapLocation" placeholder="Copy form Google Map by poining the location">
-											</div>
-											<div class="form-group">
-												<label class="required" for="city">Pharmacy city(required to show for branches)</label>
+												<label class="required" for="address">City</label>
 												<input type="text" name="city" class="form-control" id="city" placeholder="City">
 											</div>
+											<div class="form-group">
+												<label for="mapLocation" class="required">Location(Map)</label>
+												<input type="text" name="mapLocation" class="form-control" id="mapLocation" placeholder="Copy form Google Map by poining the location">
+											</div>
+											
 											<div class="form-group">
 												<label class="required" for="contactNumber">Contact Number</label>
 												<input type="tel" name="contactNumber" class="form-control" id="contactNumber" placeholder="Contact Number">
@@ -172,31 +126,9 @@
 												<label for="web">Website</label>
 												<input type="url" name="web" class="form-control" id="web" placeholder="Website">
 											</div>
-											<div class="form-group">
-												<label class="required" for="type">Pharmacy type</label>
-												<select class="form-control" name="type" id="type">
-													<option selected="" disabled="" value="null" class="hidden">--Select Pharmacy Type</option>
-													<option value="Government pharmacy">Government Pharmacy</option>
-													<option value="Private pharmacy">Private Pharmacy</option>
-												</select>
-											</div>
-											<div class="form-group subtype">
-												<label for="subtype" class="required">Pharmacy Subtype</label>
-												<select class="form-control" name="subtype" id="subtype">
-													<option selected="" disabled="" value="null" class="hidden">--Select Pharmacy Subype</option>
-													<option value="National Pharmacy">National Pharmacy</option>
-													<option value="Teaching Pharmacy">Teaching Pharmacy</option>
-													<option value="Specialized Teaching Pharmacy">Specialized Teaching Pharmacy</option>
-													<option value="Other Specialized Pharmacy">Other Specialized Pharmacy</option>
-													<option value="Provincial General Pharmacy">Provincial General Pharmacy</option>
-													<option value="Base Pharmacy Type - A">Base Pharmacy Type - A</option>
-													<option value="Base Pharmacy Type - B">Base Pharmacy Type - B</option>
-													<option value="Divisional Pharmacy Type - A">Divisional Pharmacy Type - A</option>
-													<option value="Divisional Pharmacy Type - B">Divisional Pharmacy Type - B</option>
-													<option value="Divisional Pharmacy Type - C">Divisional Pharmacy Type - C</option>
-													<option value="Primary Pharmacy Care Unit">Primary Pharmacy Care Unit</option>
-													<option value="Others">Others</option>
-												</select>
+                                            <div class="form-group">
+												<label class="required" for="service">Services</label>
+												<input type="text" data-role="tagsinput" class="form-control" id="service" name="service">
 											</div>
                                             <div class="form-group">
                                                 <label class="required" for="branchworking">Hours of Operation</label>
@@ -229,7 +161,7 @@
                                                                     >
                                                                 </td>
                                                                 <td>
-                                                                    <button type="button" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
+                                                                    <button class="btn btn-sm btn-info" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
                                                                 </td>
                                                             </tr>
                                                         <?php endforeach; ?>
@@ -248,6 +180,10 @@
 												<div class="col-md-4">
 													<label for="linkedin">Linkedin Link</label>
 													<input type="url" name="linkedin" class="form-control" id="linkedin" placeholder="Linkedin Link">
+												</div>
+												<div class="col-md-4">
+													<label for="linkedin">Youtube Link</label>
+													<input type="url" name="youtube" class="form-control" id="youtube" placeholder="Youtube Link">
 												</div>
 											</div>
 											<div class="form-group">
@@ -464,6 +400,7 @@
 	    });
 	};
 	$(document).ready(function(){
+        $('a[href="#new"]').tab('show');
 		$("#mpcategory option").each(function()
 		{
 			var value=$(this).val();
@@ -658,25 +595,6 @@
 	      source: availableTags
 	    });
 	  } );
-</script>
-<script>
-    $(document).ready(function () {
-        $('a[href="#new"]').tab('show');
-        $(".branch").hide();
-        $(".isMain").val('Y');
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            var target = $(e.target).attr("href");
-            if (target === "#new") {
-                $(".branch").hide();
-                $(".new").show();
-                $(".isMain").val('Y');
-            } else if (target === "#addbranch") {
-                $(".branch").show();
-                $(".new").hide();
-                $(".isMain").val('N');
-            }
-        });
-    });
 </script>
 </body>
 </html>

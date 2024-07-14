@@ -30,6 +30,7 @@
 		$facebook = filter_input(INPUT_POST, 'fb');
 		$instagram = filter_input(INPUT_POST, 'insta');
 		$linkedin = filter_input(INPUT_POST, 'linkedin');
+		$youtube = filter_input(INPUT_POST, 'youtube');
 		$status = filter_input(INPUT_POST, 'status');
 		$about = mysqli_real_escape_string($conn, $_POST['about']);
 		$videoembed = mysqli_real_escape_string($conn, $_POST['videoembed']);
@@ -128,8 +129,8 @@
 				$logoupload = move_uploaded_file($_FILES['logoimage']['tmp_name'], "../directory/medical/".$logotarget);
 				
 			if($featureupload){
-				$query= "INSERT INTO medical (medical_Id, name,doctor_id, speciality, address, is_main,main_id , map, city, mobile, email, whatsapp, website, service, established, working_hours,  facebook, instagram, linkedin,logo, status, about,priority, image, video) 
-						values ('$medical_Id', '$name','$doctorId', '$speciality', '$address', '$isMain','$mainId', '$mapLocation', '$city', '$contactNumber',  '$email','$whatsapp',  '$web', '$service', '$estYear', '$working', '$facebook',  '$instagram', '$linkedin', '$logotarget', '$status', '$about','$priority','$featuretarget', '$videotarget')";
+				$query= "INSERT INTO medical (medical_Id, name,doctor_id, speciality, address, is_main,main_id , map, city, mobile, email, whatsapp, website, service, established, working_hours,  facebook, instagram, linkedin,youtube,logo, status, about,priority, image, video) 
+						values ('$medical_Id', '$name','$doctorId', '$speciality', '$address', '$isMain','$mainId', '$mapLocation', '$city', '$contactNumber',  '$email','$whatsapp',  '$web', '$service', '$estYear', '$working', '$facebook',  '$instagram', '$linkedin', '$youtube','$logotarget', '$status', '$about','$priority','$featuretarget', '$videotarget')";
 				$result = mysqli_query($conn, $query);
 
 				$workingTimesQuery = "INSERT INTO medical_working_times (metime_id, medical_Id,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
