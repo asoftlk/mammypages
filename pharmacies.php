@@ -275,11 +275,11 @@ include "mp.php";
 
         $('#searchpharmacy, #city').on('input change keyup', function() {
             var query = $('#searchpharmacy').val();
-            var speciality = $('#speciality').val();
             var city = $('#city').val();
 
-            if (query.length >= 1 || speciality || type || city) {
-                load_data(query, speciality, type, city);
+            if (query.length >= 1 ||  city) {
+                console.log("ok");
+                load_data(query, null, null, city);
                 $('.priority-list').hide();
             } else {
                 $("#suggesstion-box").hide();
@@ -304,8 +304,6 @@ include "mp.php";
                 data: {
                     search: "search",
                     value: value,
-                    speciality: speciality,
-                    type: type,
                     city: city
                 },
                 success: function(data) {

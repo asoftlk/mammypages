@@ -8,7 +8,7 @@ if (isset($_POST["search"])) {
     $conditions = array();
 
     if (!empty($value)) {
-        $conditions[] = "(name LIKE '%".str_replace(" ", "%", $value)."%' OR speciality LIKE '%".str_replace(" ", "%", $value)."%' OR city LIKE '%".str_replace(" ", "%", $value)."%' OR type LIKE '%".str_replace(" ", "%", $value)."%')";
+        $conditions[] = "(name LIKE '%".str_replace(" ", "%", $value)."%' OR city LIKE '%".str_replace(" ", "%", $value)."%')";
     }
     if (!empty($city)) {
         $conditions[] = "city = '$city'";

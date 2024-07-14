@@ -738,7 +738,9 @@
 									<button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">'.$branches1["name"].' <i class="bi bi-box-arrow-up-right ml-2"></i></button>
 									</form>';
 								}?>
-								<?php $query2=mysqli_query($conn, "SELECT * FROM hospital WHERE main_id =(SELECT main_id FROM hospital WHERE hospital_id = '$id') AND hospital_id != '$id' UNION
+								<?php 
+                                $query2=mysqli_query($conn, "SELECT * FROM hospital WHERE main_id =(SELECT main_id FROM hospital WHERE hospital_id = '$id'
+                                AND main_id = !0) AND hospital_id != '$id' UNION
 									SELECT * FROM hospital WHERE id =(SELECT main_id FROM hospital WHERE hospital_id = '$id')");
 									while($branches2=mysqli_fetch_array($query2)){
 									echo '<form action="mpconnect/hospital/'. urlencode(str_replace(' ', '_', $branches2["name"])) .'" method="post" style="display:inline;">

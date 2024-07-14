@@ -807,7 +807,6 @@
 								<div class="card-body">
 									<label class="border-bottom pb-2 w-100 small text-uppercase font-weight-bold">Branches</label>
 									<?php 
-                                    var_dump($typeid);exit;
                                     $query1=mysqli_query($conn, "SELECT * FROM $type WHERE main_id = (SELECT id FROM $type WHERE $id_column = '$typeid')");
                                     
 										while($branches1=mysqli_fetch_array($query1)){
@@ -816,7 +815,7 @@
 										<button type="submit" class="btn btn-link text-muted text-left text-decoration-none w-100 p-1" style="font-size:14px; height:28px">'.$branches1["name"].' <i class="bi bi-box-arrow-up-right ml-2"></i></button>
 										</form>';
 									}?>
-									<?php $query2=mysqli_query($conn, "SELECT * FROM $type WHERE main_id =(SELECT main_id FROM $type WHERE $id_column = '$typeid') AND $id_column != '$typeid' UNION
+									<?php $query2=mysqli_query($conn, "SELECT * FROM $type WHERE main_id =(SELECT main_id FROM $type WHERE $id_column = '$typeid' AND main_id = !0) AND $id_column != '$typeid' UNION
 										SELECT * FROM $type WHERE id =(SELECT main_id FROM $type WHERE $id_column = '$typeid')");
 										while($branches2=mysqli_fetch_array($query2)){
 										echo '<form action="mpconnect/'.$type.'/'. urlencode(str_replace(' ', '_', $branches2["name"])) .'" method="post" style="display:inline;">
@@ -842,7 +841,6 @@
 
 											date_default_timezone_set('Asia/Colombo');
 											$currentDay = strtolower(date('l')); 
-											// var_dump($currentDay);exit;
 											$currentTime = date('H:i:s');
 											$curDayOpen =$typequery[$currentDay. '_open'];
 											$curDayClose =$typequery[$currentDay. '_close'];

@@ -13,17 +13,7 @@ if(mysqli_num_rows($result) > 0)
 	date_default_timezone_set('Asia/Colombo');
 	while($row = mysqli_fetch_array($result))  
 	{ 
-		$specialityarray = explode(" ///", $row['speciality']);
-		$speciality = "";
-		for($i=0; $i< count($specialityarray); $i++){
-			if($i == count($specialityarray)-1){
-				
-				$speciality .= $specialityarray[$i];
-			}
-			else{
-				$speciality .= $specialityarray[$i].", ";
-			}
-		}
+		
 		$count = $_POST['count']+10;  
 
 			$currentDay = strtolower(date('l')); 
@@ -81,6 +71,8 @@ if(mysqli_num_rows($result) > 0)
 									}
 									$rating=$rating-1;									
 								}
+                                $speciality = isset($row['speciality']) ? $row['speciality'] : '';
+
 							$output .= '</div><a href="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $row["name"])).'" class="namehref"><p class="text-heading">&nbsp;'.$type_name.'</p></a>
 							<p class="text">&nbsp;'.$speciality.'</P>
 							<div class="d-flex justify-content-between">

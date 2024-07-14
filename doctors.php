@@ -108,20 +108,6 @@ include "mp.php";
                             ?>
                     </select>
                 </label>       
-                <label class="select">
-                    <select name="city"  class="filter-box" id="city">
-                        <option value="">Select City</option>
-                        <?php
-                            $cityQuery = mysqli_query($conn, "SELECT DISTINCT city FROM doctor");
-                            while ($cityRow = mysqli_fetch_array($cityQuery)) {
-                                $cityArray = explode(" ///", $cityRow['city']);
-                                foreach ($cityArray as $city) {
-                                    echo '<option value="' . $city . '">' . $city . '</option>';
-                                }
-                            }
-                            ?>
-                    </select>
-                </label>
                 <a class="btn btn-sm filter-btn" type="button" id="clearFilters">Clear Filters</a>
             </div>
         </form>
@@ -267,8 +253,6 @@ include "mp.php";
                         $('#remove_row').remove();
                         $('#load_data').append(data);
                         initialData = data;
-                        console.log("gg");
-                        console.log(initialData);
                     } else {
                         $('#btn_more').attr("class", "btn btn-secondary form-control");
                         $('#btn_more').attr("disabled", "true");
@@ -287,14 +271,11 @@ include "mp.php";
         $('#searchdoctor, #speciality, #type, #city').on('input change keyup', function() {
             var query = $('#searchdoctor').val();
             var speciality = $('#speciality').val();
-            var type = $('#type').val();
-            var city = $('#city').val();
 
-            if (query.length >= 1 || speciality || type || city) {
-                load_data(query, speciality, type, city);
+            if (query.length >= 1 || speciality) {
+                load_data(query, speciality, null, null);
                 $('.priority-list').hide();
             } else {
-                console.log("ff");
                 $("#suggesstion-box").hide();
                 $('#load_data').html(initialData);
                 $('.priority-list').show();
@@ -320,8 +301,6 @@ include "mp.php";
                     search: "search",
                     value: value,
                     speciality: speciality,
-                    type: type,
-                    city: city
                 },
                 success: function(data) {
                     var result = JSON.parse(data);
