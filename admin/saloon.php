@@ -131,7 +131,7 @@
                                                     ?>
                                                 </select>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group new">
 												<label class="required" for="mpname">Saloon Name</label>
 												<input type="text" name="mpname" class="form-control" id="mpname" placeholder="saloon Name">
 											</div>
@@ -156,7 +156,7 @@
 											</div>
 											<div class="form-group">
 												<label class="required" for="contact_person">Beautician Name</label>
-												<input type="text" name="contact_person" class="form-control" id="contact_person" placeholder="Address">
+												<input type="text" name="contact_person" class="form-control" id="contact_person" placeholder="Beautician Name">
 											</div>
 											<div class="form-group row">
 												<div class="col-md-6">
@@ -186,12 +186,12 @@
 												<label class="required" for="certificateimage">Beautician’s Certificate</label>
 												<div class="input-group">
 													<div class="custom-file">
-													<input type="file" name="certificateimage" class="custom-file-input" id="certificateimage" accept="image/*" multiple>
+													<input type="file" name="certificateimage[]" class="custom-file-input" id="certificateimage" accept="image/*" multiple>
 													<label class="custom-file-label" for="certificateimage">Choose files</label>
 													</div>
 												</div>
 											</div>
-
+                                            
 											<div class="form-group">
 												<label class="required" for="address">Saloon Address</label>
 												<input type="text" name="address" class="form-control" id="address" placeholder="Address">
@@ -678,7 +678,7 @@
         $('a[href="#new"]').tab('show');
         $(".branch").hide();
         $(".isMain").val('Y');
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $('a[data-toggle="tab"]').on('click', function (e) {
             var target = $(e.target).attr("href");
             if (target === "#new") {
                 $(".branch").hide();
@@ -689,6 +689,15 @@
                 $(".new").hide();
                 $(".isMain").val('N');
             }
+        });
+        $('#certificateimage').on('change', function() {
+            var fileNames = '';
+            for (var i = 0; i < this.files.length; i++) {
+                fileNames += this.files[i].name + ', ';
+            }
+            fileNames = fileNames.slice(0, -2); 
+            $(this).next('.custom-file-label').attr('data-content', fileNames || 'Choose files');
+            $(this).next('.custom-file-label').text(fileNames || 'Choose files');
         });
     });
 </script>

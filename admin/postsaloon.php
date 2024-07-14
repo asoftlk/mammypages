@@ -5,10 +5,6 @@
 	if(isset($_POST['sub-saloon'])){
 		$saloon_Id = "saloon-".mt_rand(1000000,9999999);
 		$sltime_id = "sltime-".mt_rand(1000000,9999999);
-
-		$name = filter_input(INPUT_POST, 'name');
-	
-
         $name = mysqli_real_escape_string($conn, $_POST['mpname']);
         $speciality1 = $_POST['specialist'];
         $speciality ="";
@@ -65,10 +61,40 @@
 		
 		$logoimage = $_FILES['logoimage']['name'];
 		$featuredimage = $_FILES['featuredimage']['name'];
-			$galimages = $_FILES['galimages']['name'];
+        $galimages = $_FILES['galimages']['name'];
 		$profileimage = $_FILES['profileimage']['name'];
 		$coverimage = $_FILES['coverimage']['name'];
-		$certificateimage = $_FILES['certificateimage']['name'];
+		$certificateimage = $_FILES['certificateimage[]']['name'];
+        $certificateTargetsString = null;
+        
+        if (isset($_FILES['certificateimage']) && !empty($_FILES['certificateimage']['name'][0])) {
+            $totalFiles = count($_FILES['certificateimage']['name']);
+            $certificateTargets = []; 
+            for ($i = 0; $i < $totalFiles; $i++) {
+                $fileName = $_FILES['certificateimage']['name'][$i];
+                $fileTmpName = $_FILES['certificateimage']['tmp_name'][$i];
+                $fileSize = $_FILES['certificateimage']['size'][$i];
+                $fileType = $_FILES['certificateimage']['type'][$i];
+                $uniId = uniqid();
+    
+                $ext7 = pathinfo($fileName, PATHINFO_EXTENSION);
+                $cerificateTarget = "certificate".$uniId.".".$ext7;
+                if (in_array($fileName, ['jpg', 'png', 'jpeg'])) {
+                        echo 'Image extension must be .jpg, .png or .jpeg';
+                        exit();
+                    }
+                if ($fileSize> 30000000) { // file shouldn't be larger than 1Megabyte
+                        echo '"Image too large! Max size 30MB"';
+                        exit();
+                    }	
+                $cerificateUpload = move_uploaded_file($fileTmpName, "../directory/saloon/".$cerificateTarget);
+                $certificateTargets[] = $cerificateTarget;
+            }
+            $certificateTargetsString = implode(',', $certificateTargets);
+        } else {
+            echo 'No files selected.<br>';
+        }
+
 
 			if(!empty($videoembed)){
 				$videotarget = $videoembed;
@@ -167,23 +193,9 @@
 						}	
 				$coverimageupload = move_uploaded_file($_FILES['coverimage']['tmp_name'], "../directory/saloon/".$covertarget);
 				
-				$ext5 = pathinfo($_FILES["certificateimage"]["name"], PATHINFO_EXTENSION);
-				$certificatetarget = "cetiimg".$time.".".$ext2;
-					if (in_array($certificateimage, ['jpg', 'png', 'jpeg'])) {
-							echo 'Certificate image extension must be .jpg, .png or .jpeg';
-							exit();
-						}
-					if ($_FILES['certificateimage']['size'] > 30000000) { // file shouldn't be larger than 1Megabyte
-							echo '"Certificate image too large! Max size 30MB"';
-							exit();
-						}	
-				$certificateimageupload = move_uploaded_file($_FILES['certificateimage']['tmp_name'], "../directory/saloon/".$certificatetarget);
-						
-
-
 			if($featureupload){
 				$query = "INSERT INTO saloon (saloon_Id, registraion_no, name, speciality, address, establishment, contact_person, profile_pic, cover_pic, qualification, is_main, main_id, map, city, mobile, email, whatsapp, website, facebook, instagram, linkedin, youtube, logo, about, services, priority, image, video, certificate) 
-						VALUES ('$saloon_Id', '$saloonregno', '$name', '$speciality', '$address', '$saloonestablishment', '$contact_person', '$profiletarget', '$covertarget', '$qualification', '$isMain', '$mainId', '$mapLocation', '$city', '$contactNumber', '$email', '$whatsapp', '$web', '$facebook', '$instagram', '$linkedin', '$youtube', '$logotarget', '$about', '$service', '$priority', '$featuretarget', '$videotarget', '$certificateimage')";
+						VALUES ('$saloon_Id', '$saloonregno', '$name', '$speciality', '$address', '$saloonestablishment', '$contact_person', '$profiletarget', '$covertarget', '$qualification', '$isMain', '$mainId', '$mapLocation', '$city', '$contactNumber', '$email', '$whatsapp', '$web', '$facebook', '$instagram', '$linkedin', '$youtube', '$logotarget', '$about', '$service', '$priority', '$featuretarget', '$videotarget', '$certificateTargetsString')";
 				$result = mysqli_query($conn, $query);
 
 
