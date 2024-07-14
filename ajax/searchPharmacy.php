@@ -3,20 +3,12 @@ include '../connect.php';
 
 if (isset($_POST["search"])) {
     $value = mysqli_real_escape_string($conn, $_POST["value"]);
-    $speciality = mysqli_real_escape_string($conn, $_POST["speciality"]);
-    $type = mysqli_real_escape_string($conn, $_POST["type"]);
     $city = mysqli_real_escape_string($conn, $_POST["city"]);
 
     $conditions = array();
 
     if (!empty($value)) {
         $conditions[] = "(name LIKE '%".str_replace(" ", "%", $value)."%' OR speciality LIKE '%".str_replace(" ", "%", $value)."%' OR city LIKE '%".str_replace(" ", "%", $value)."%' OR type LIKE '%".str_replace(" ", "%", $value)."%')";
-    }
-    if (!empty($speciality)) {
-        $conditions[] = "speciality = '$speciality'";
-    }
-    if (!empty($type)) {
-        $conditions[] = "type = '$type'";
     }
     if (!empty($city)) {
         $conditions[] = "city = '$city'";
