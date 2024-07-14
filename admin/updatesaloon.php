@@ -27,8 +27,8 @@
         $saloonregno = mysqli_real_escape_string($conn, $_POST['saloonregno']);
         $saloonestablishment = mysqli_real_escape_string($conn, $_POST['saloonestablishment']);
         $salooncontactperson = mysqli_real_escape_string($conn, $_POST['salooncontactperson']);
-
-    //  $working_hours = mysqli_real_escape_string($conn, $_POST['midwifeworking']);
+        
+        //  $working_hours = mysqli_real_escape_string($conn, $_POST['midwifeworking']);
         $working_hours = null;
         $facebook = mysqli_real_escape_string($conn, $_POST['fb']);
         $instagram = mysqli_real_escape_string($conn, $_POST['insta']);
@@ -37,8 +37,7 @@
         $about = mysqli_real_escape_string($conn, $_POST['about']);
         $videoembed = mysqli_real_escape_string($conn, $_POST['videoembed']);
         //$priority = mysqli_real_escape_string($conn, $_POST['priority']);	
-            
-
+        
     $logoimage =$_FILES['logoimage']['name'];
         if(isset($_FILES['galleryimages']['name'])){
             $galleryimages = $_FILES['galleryimages']['name'];
@@ -129,7 +128,35 @@
             }
     }	   
     $updatequery = "Update saloon SET name='$name',speciality='$speciality',registraion_no='$saloonregno', establishment='$saloonestablishment', contact_person='$salooncontactperson',address='$address', map='$map', city='$city', mobile='$mobile',email='$email',whatsapp='$whatsapp',website='$website', facebook='$facebook', instagram='$instagram', linkedin='$linkedin',about='$about',services='$service' ";		
-        $featuredimage = $_FILES['featuredimage']['name'];
+    
+    $certificateimage = $_FILES['certificateimage[]']['name'];
+        if (isset($_FILES['certificateimage']) && !empty($_FILES['certificateimage']['name'][0])) {
+            $totalFiles = count($_FILES['certificateimage']['name']);
+            $certificateTargets = []; 
+            for ($i = 0; $i < $totalFiles; $i++) {
+                $fileName = $_FILES['certificateimage']['name'][$i];
+                $fileTmpName = $_FILES['certificateimage']['tmp_name'][$i];
+                $fileSize = $_FILES['certificateimage']['size'][$i];
+                $fileType = $_FILES['certificateimage']['type'][$i];
+                $uniId = uniqid();
+    
+                $ext7 = pathinfo($fileName, PATHINFO_EXTENSION);
+                $cerificateTarget = "certificate".$uniId.".".$ext7;
+                if (in_array($fileName, ['jpg', 'png', 'jpeg'])) {
+                        echo 'Image extension must be .jpg, .png or .jpeg';
+                        exit();
+                    }
+                if ($fileSize> 30000000) { // file shouldn't be larger than 1Megabyte
+                        echo '"Image too large! Max size 30MB"';
+                        exit();
+                    }	
+                $cerificateUpload = move_uploaded_file($fileTmpName, "../directory/saloon/".$cerificateTarget);
+                $certificateTargets[] = $cerificateTarget;
+            }
+            $certificateTargetsString = implode(',', $certificateTargets);
+            $updatequery .= ", certificate= '$cerificateTarget' "; 
+        }
+         $featuredimage = $_FILES['featuredimage']['name'];
             
                 $profileimage = $_FILES['profileimage']['name'];
 	            if($profileimage != ""){

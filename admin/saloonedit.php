@@ -163,14 +163,31 @@ $(document).ready(function() {
 						</div>	
 						
 						<div class="col-md-6 form-group">
-						<label class="required" for="city">Saloon city(required to show for branches)</label>
-					  <input type="text" name="city" class="form-control" id="hospitcity"  value="<?php echo $row['city']; ?>" placeholder="City">
+							<label class="required" for="city">Saloon city(required to show for branches)</label>
+					  		<input type="text" name="city" class="form-control" id="hospitcity"  value="<?php echo $row['city']; ?>" placeholder="City">
+						</div>
+						<div class="col-md-6 form-group">
+							<label class="required" for="contactNumber">Contact Number</label>
+					 	 	<input type="tel" name="contactNumber" class="form-control" id="contactNumber"  value="<?php echo $row['mobile']; ?>" placeholder="Contact Number">
+						</div>	
+						<div class="col-md-12 form-group">
+							<label class="required" for="certificateimage">Saloon Certificates</label>
+							<br>
+							<div class="custom-file">
+									<input type="file" class="custom-file-input" accept="image/*" id="certificateimage" name="logoimage" value="" >
+									<label class="custom-file-label" name="certificateimage[]" for="certificateimage"><?php echo $row['certificate'] ?></label>
+							</div>
+							<div class="text-center">
+								<div id="customFilecertificatepreview">
+								<?php if(($row['certificate']!="") && file_exists("../directory/saloon/".$row['certificate'])){?>
+									<p class="img-center" style="color:green;margin-bottom:0">Logo Preview</p>
+										<button class="close img-center" onclick="removepreview($('#certificateimage'))" style=" position: absolute;z-index: 1;"><span style=" font-size:x-large; color:red; font-weight:bolder">&times;</span></button>
+										<img src="../directory/saloon/<?php echo $row['certificate'] ?>" class="img-fluid img-center" style="position:relative; width:200px; max-height: 180px; border:1px solid gray; margin-bottom:5px"/>
+								<?php } ?>
+								</div>
+							</div>
 						</div>
 						
-						<div class="col-md-6 form-group">
-						<label class="required" for="contactNumber">Contact Number</label>
-					  <input type="tel" name="contactNumber" class="form-control" id="contactNumber"  value="<?php echo $row['mobile']; ?>" placeholder="Contact Number">
-						</div>	
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="required" for="profileimage">Profile Image</label>
