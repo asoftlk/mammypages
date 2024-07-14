@@ -806,7 +806,10 @@
 							<div class="card mt-1 l-border-radius">
 								<div class="card-body">
 									<label class="border-bottom pb-2 w-100 small text-uppercase font-weight-bold">Branches</label>
-									<?php $query1=mysqli_query($conn, "SELECT * FROM $type WHERE main_id = (SELECT id FROM $type WHERE $id_column = '$typeid')");
+									<?php 
+                                    var_dump($typeid);exit;
+                                    $query1=mysqli_query($conn, "SELECT * FROM $type WHERE main_id = (SELECT id FROM $type WHERE $id_column = '$typeid')");
+                                    
 										while($branches1=mysqli_fetch_array($query1)){
 										echo '<form action="mpconnect/'.$type.'/'. urlencode(str_replace(' ', '_', $branches1["name"])) .'" method="post" style="display:inline;">
 										<input type="hidden" name="'.$id_column.'" value="'.$branches1["$id_column"].'">

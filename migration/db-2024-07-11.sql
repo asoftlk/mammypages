@@ -68,8 +68,7 @@ DROP TABLE `pharmacy_branch`;
 ALTER TABLE `pharmacy_working_times` 
 DROP COLUMN `pharmacy_type`;
 
--- thushitha
-
 ALTER TABLE `doctor` 
 ADD COLUMN `whatsapp` TEXT NULL AFTER `linkedin`;
 -- akila is here
+-- thushitha
