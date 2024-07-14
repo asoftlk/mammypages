@@ -43,7 +43,6 @@ ADD COLUMN `certificate` TEXT NULL AFTER `speciality`;
 ALTER TABLE `saloon` 
 CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
 
--- akila is here
 
 DROP TABLE `medical_branch`;
 ALTER TABLE `medical` 
@@ -56,5 +55,8 @@ DROP COLUMN `medical_type`;
 ALTER TABLE `medical` 
 ADD COLUMN `doctor_id` INT NULL AFTER `name`;
 
-
 -- thushitha
+
+ALTER TABLE `doctor` 
+ADD COLUMN `whatsapp` TEXT NULL AFTER `linkedin`;
+-- akila is here

@@ -109,20 +109,6 @@ include "mp.php";
                     </select>
                 </label>
                 <label class="select">
-                    <select name="type"  class="filter-box" id="type">
-                        <option value="">Select type</option>
-                        <?php
-                            $typeQuery = mysqli_query($conn, "SELECT DISTINCT type FROM medical");
-                            while ($typeRow = mysqli_fetch_array($typeQuery)) {
-                                $typeArray = explode(" ///", $typeRow['type']);
-                                foreach ($typeArray as $type) {
-                                    echo '<option value="' . $type . '">' . $type . '</option>';
-                                }
-                            }
-                            ?>
-                    </select>
-                </label>
-                <label class="select">
                     <select name="city"  class="filter-box" id="city">
                         <option value="">Select City</option>
                         <?php
