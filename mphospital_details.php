@@ -341,7 +341,7 @@
 		transform: rotate(180deg);
 	}
 	.carousel-item img {
-		min-height:380px;
+		width: 100%;
 		max-height: 380px;
 		margin: auto;
 	}
@@ -872,6 +872,9 @@
 <div class="modal fade" id="video" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 	<div class="modal-content">
+		<div class="text-center py-1 bg-dark">
+			<p class="h5 text-white mb-0"><?php echo $row['name'] . " Video"; ?></p>
+		</div>
 			<div class="ratio ratio-16x9">
 				<div class="modal-body p-0">
 					<?php

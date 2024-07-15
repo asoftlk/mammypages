@@ -446,7 +446,7 @@
                         for (let index = 0; index < cerAr.length; index++) {
                             const certi = cerAr[index];
                             var source = '../directory/saloon/'+certi;
-                            html+='<img  style="max-height:110px" src="'+source+'"/>'
+                            html+='<img class="mr-1"  style="max-height:110px" src="'+source+'"/>'
                             
                         }
                         html+='</div>'

@@ -177,9 +177,11 @@ $(document).ready(function() {
                                 <input type="file" class="custom-file-input" accept="image/*" id="certificateimage" name="certificateimage[]" multiple value="<?php echo $row['certificate']; ?>">
                                 <label class="custom-file-label" id="certificateLabel" for="certificateimage"></label>
                             </div>
-                            <div class="text-center">
+                            <div>
                                 <div id="certificateimagepreview">
                                     <p class="img-center" style="color:green;margin-bottom:0">Certificate Preview</p>
+									<div class="d-flex">
+										
                                     <?php
                                     $cerArray = explode(',', $row['certificate']);
                                     foreach ($cerArray as $certificate) {
@@ -190,12 +192,13 @@ $(document).ready(function() {
                                                 <button type="button" class="close" onclick="removeCertificate('<?php echo $certificateId; ?>')" style="position: absolute;z-index: 1;">
                                                     <span style="font-size:x-large; color:red; font-weight:bolder">&times;</span>
                                                 </button>
-                                                <img src="../directory/saloon/<?php echo $certificate; ?>" class="img-fluid" style="width:200px; max-height: 180px; border:1px solid gray; margin-bottom:5px"/>
+                                                <img src="../directory/saloon/<?php echo $certificate; ?>" class="img-fluid mr-1" style="width:100px; max-height: 180px; border:1px solid gray; margin-bottom:5px"/>
                                             </div>
                                     <?php
                                         }
                                     }
                                     ?>
+									</div>
                                 </div>
                                 <input type="hidden" id="remainingCertificates" name="remainingCertificates" value="<?php echo $row['certificate']; ?>">
                             </div>
