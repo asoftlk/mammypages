@@ -214,9 +214,6 @@
 	border-radius: .25rem;
 	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 	}
-	#jssor_1 img{
-	width: 100% !important;
-	}
 	@media only screen and (min-width: 768px) {
 		.followbtn{
 		position: absolute;
@@ -224,119 +221,6 @@
 		top: -40%;
 		}
 	}
-</style>
-<script type="text/javascript" src="assets/js/jssor.slider.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function ($) {
-	
-	    var jssor_1_SlideshowTransitions = [
-	      {$Duration:1200,x:0.3,$During:{$Left:[0.3,0.7]},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,x:-0.3,$SlideOut:true,$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,x:-0.3,$During:{$Left:[0.3,0.7]},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,x:0.3,$SlideOut:true,$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,y:0.3,$During:{$Top:[0.3,0.7]},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,y:-0.3,$SlideOut:true,$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,y:-0.3,$During:{$Top:[0.3,0.7]},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,y:0.3,$SlideOut:true,$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,x:0.3,$Cols:2,$During:{$Left:[0.3,0.7]},$ChessMode:{$Column:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,x:0.3,$Cols:2,$SlideOut:true,$ChessMode:{$Column:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,y:0.3,$Rows:2,$During:{$Top:[0.3,0.7]},$ChessMode:{$Row:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,y:0.3,$Rows:2,$SlideOut:true,$ChessMode:{$Row:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,y:0.3,$Cols:2,$During:{$Top:[0.3,0.7]},$ChessMode:{$Column:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,y:-0.3,$Cols:2,$SlideOut:true,$ChessMode:{$Column:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,x:0.3,$Rows:2,$During:{$Left:[0.3,0.7]},$ChessMode:{$Row:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,x:-0.3,$Rows:2,$SlideOut:true,$ChessMode:{$Row:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,x:0.3,y:0.3,$Cols:2,$Rows:2,$During:{$Left:[0.3,0.7],$Top:[0.3,0.7]},$ChessMode:{$Column:3,$Row:12},$Easing:{$Left:$Jease$.$InCubic,$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,x:0.3,y:0.3,$Cols:2,$Rows:2,$During:{$Left:[0.3,0.7],$Top:[0.3,0.7]},$SlideOut:true,$ChessMode:{$Column:3,$Row:12},$Easing:{$Left:$Jease$.$InCubic,$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,$Delay:20,$Clip:3,$Assembly:260,$Easing:{$Clip:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,$Delay:20,$Clip:3,$SlideOut:true,$Assembly:260,$Easing:{$Clip:$Jease$.$OutCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,$Delay:20,$Clip:12,$Assembly:260,$Easing:{$Clip:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-	      {$Duration:1200,$Delay:20,$Clip:12,$SlideOut:true,$Assembly:260,$Easing:{$Clip:$Jease$.$OutCubic,$Opacity:$Jease$.$Linear},$Opacity:2}
-	    ];
-	
-	    var jssor_1_options = {
-	      $AutoPlay: 1,
-	      $SlideshowOptions: {
-	        $Class: $JssorSlideshowRunner$,
-	        $Transitions: jssor_1_SlideshowTransitions,
-	        $TransitionsOrder: 1
-	      },
-	      $ArrowNavigatorOptions: {
-	        $Class: $JssorArrowNavigator$
-	      },
-	      $ThumbnailNavigatorOptions: {
-	        $Class: $JssorThumbnailNavigator$,
-	        $SpacingX: 5,
-	        $SpacingY: 5
-	      }
-	    };
-	
-	    var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
-	
-	    /*#region responsive code begin*/
-	
-	    var MAX_WIDTH = 980;
-	
-	    function ScaleSlider() {
-	        var containerElement = jssor_1_slider.$Elmt.parentNode;
-	        var containerWidth = containerElement.clientWidth;
-	
-	        if (containerWidth) {
-	
-	            var expectedWidth = Math.min(MAX_WIDTH || containerWidth, containerWidth);
-	
-	            jssor_1_slider.$ScaleWidth(expectedWidth);
-	        }
-	        else {
-	            window.setTimeout(ScaleSlider, 30);
-	        }
-	    }
-	
-	    ScaleSlider();
-	
-	    $(window).bind("load", ScaleSlider);
-	    $(window).bind("resize", ScaleSlider);
-	    $(window).bind("orientationchange", ScaleSlider);
-	    /*#endregion responsive code end*/
-	});
-</script>
-<style>
-	/* jssor slider loading skin spin css */
-	.jssorl-009-spin img {
-	animation-name: jssorl-009-spin;
-	animation-duration: 1.6s;
-	animation-iteration-count: infinite;
-	animation-timing-function: linear;
-	}
-	@keyframes jssorl-009-spin {
-	from {
-	transform: rotate(0deg);
-	}
-	to {
-	transform: rotate(360deg);
-	}
-	}
-	.jssora106 {display:block;position:absolute;cursor:pointer;}
-	.jssora106 .c {fill:#fff;opacity:.3;}
-	.jssora106 .a {fill:none;stroke:#000;stroke-width:350;stroke-miterlimit:10;}
-	.jssora106:hover .c {opacity:.5;}
-	.jssora106:hover .a {opacity:.8;}
-	.jssora106.jssora106dn .c {opacity:.2;}
-	.jssora106.jssora106dn .a {opacity:1;}
-	.jssora106.jssora106ds {opacity:.3;pointer-events:none;}
-	.jssort101 .p {position: absolute;top:0;left:0;box-sizing:border-box;background:#000;}
-	.jssort101 .p .cv {position:relative;top:0;left:0;width:100%;height:100%;border:2px solid #000;box-sizing:border-box;z-index:1;}
-	.jssort101 .a {fill:none;stroke:#fff;stroke-width:400;stroke-miterlimit:10;visibility:hidden;}
-	.jssort101 .p:hover .cv, .jssort101 .p.pdn .cv {border:none;border-color:transparent;}
-	.jssort101 .p:hover{padding:2px;}
-	.jssort101 .p:hover .cv {background-color:rgba(0,0,0,6);opacity:.35;}
-	.jssort101 .p:hover.pdn{padding:0;}
-	.jssort101 .p:hover.pdn .cv {border:2px solid #fff;background:none;opacity:.35;}
-	.jssort101 .pav .cv {border-color:#fff;opacity:.35;}
-	.jssort101 .pav .a, .jssort101 .p:hover .a {visibility:visible;}
-	.jssort101 .t {position:absolute;top:0;left:0;width:100%;height:100%;border:none;opacity:.6;}
-	.jssort101 .pav .t, .jssort101 .p:hover .t{opacity:1;}
-
 	.toggle-btn.collapsed .bi-chevron-up::before {
 		transform: rotate(180deg);
 	}
@@ -350,6 +234,9 @@
 	}
 	#gallery .modal-body{
 		background-color: #222;
+	}
+	iframe{
+		width: 100% !important;
 	}
 </style>
 <div class="content">
@@ -505,14 +392,12 @@
 									        
 									        $galquery= mysqli_query($conn, "SELECT image_name FROM mpgallery WHERE hospitalid= '".$row["hospital_id"]."' and image_name!=''");
 											if(mysqli_num_rows($galquery)>0){
-											echo	'<span class="galimage">GALLERY</span>';	
+												echo '<span class="galimage">GALLERY</span>';	
 											}
-									        if(!empty($row['video'])){
-									        echo '<span class="galvideo">VIDEO</span>';
+									        if (!empty($videourl)) {
+												echo '<span class="galvideo">VIDEO</span>';
 											}
-						       						    echo '</h5>';
-									        
-									    echo '
+									    echo '</h5>
 									<div class="abouthospital" id="abouthospital"><p style="font-size: 14px;">'.$row["about"].'</p></div>
 									<p class="expand text-right" style="display:none">Read More</p>';
 									/*$images = mysqli_query($conn, "SELECT * FROM mpgallery WHERE hospitalid = '$row[hospitalid]'");
@@ -869,12 +754,12 @@
 </div>
 
 
-<div class="modal fade" id="video" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
+<div class="modal fade" id="videomodal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-	<div class="modal-content">
-		<div class="text-center py-1 bg-dark">
-			<p class="h5 text-white mb-0"><?php echo $row['name'] . " Video"; ?></p>
-		</div>
+		<div class="modal-content">
+			<div class="text-center py-1 bg-dark">
+				<p class="h5 text-white mb-0"><?php echo $row['name'] . " Video"; ?></p>
+			</div>
 			<div class="ratio ratio-16x9">
 				<div class="modal-body p-0">
 					<?php
@@ -902,15 +787,25 @@
 <script>
 	$(document).on('click', '.galimage', function(){
 		$('#gallery').modal('show');
-		$("[data-u=image]").css({'height': '380px','top': '0px','left': '0px','display': 'block','position': 'absolute','max-width': '10000px','z-index': '1', 'width':'auto'});	
+		$("[data-u=image]").css({
+			'height': '380px',
+			'top': '0px',
+			'left': '0px',
+			'display': 'block',
+			'position': 'absolute',
+			'max-width': '10000px',
+			'z-index': '1',
+			'width': 'auto'
+		}); 
 	});
+
 	$(document).on('click', '.galvideo', function(){
-		$('#video').modal('show');
-		//var width = $("#video").outerWidth();
-		//var height = $("#video").outerHeight();
-		//$('iframe, video').removeAttr('width height');
-		$('iframe, video').css({'max-width':'100%', 'height':'auto', 'min-height':'300px'});
-		
+		$('#videomodal').modal('show');
+		$('iframe, video').css({
+			'max-width': '100%',
+			'height': 'auto',
+			'min-height': '300px'
+		});
 	});
 	 function removeReg(data, status) {
 	  Swal.fire({

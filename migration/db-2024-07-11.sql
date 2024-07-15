@@ -70,5 +70,12 @@ DROP COLUMN `pharmacy_type`;
 
 ALTER TABLE `doctor` 
 ADD COLUMN `whatsapp` TEXT NULL AFTER `linkedin`;
--- akila is here
+
 -- thushitha
+ALTER TABLE `hospital` 
+CHANGE COLUMN `video` `video` TEXT NULL DEFAULT NULL ;
+
+ALTER TABLE `doctor` 
+CHANGE COLUMN `video` `video` TEXT NULL DEFAULT NULL ;
+
+-- akila is here

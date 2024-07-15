@@ -59,6 +59,9 @@ include "mp.php";
         border-radius: 10px;
         background: #c1c1c1;
     }
+    .main-content-sec .article-sec .top-menu {
+        background-color: transparent !important;
+    }
 </style>
 <div class="content">
 <section class="main-content-sec">

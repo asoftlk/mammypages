@@ -4,6 +4,11 @@
 	// ini_set('display_startup_errors', 1);
 	// error_reporting(E_ALL);
 	?>
+<style>
+	.main-content-sec .article-sec .top-menu {
+		background-color: transparent !important;
+	}
+</style>
 <div class="content">
 	<section class="main-content-sec">
 		<div class="container-fluid p-0">
