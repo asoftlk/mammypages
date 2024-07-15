@@ -856,9 +856,9 @@
                                                     $isToday = (strtolower($dayName) == strtolower($currentDay)) ? 'text-success':'';
                                                     if ($typequery[$openTimeKey] === "00:00:00" && $typequery[$closeTimeKey] === "00:00:00") {
                                                         if(isset($typequery['doctor_id'])){
-                                                            $output .= '<p class="mb-1 small text-uppercase font-weight-bold ">' . $dayName . ': Not Available</p>';
+                                                            $output .= '<p class="mb-1 small font-weight-bold "><span class="text-uppercase">' . $dayName . ':</span> Not Available</p>';
                                                         }else {
-                                                            $output .= '<p class="mb-1 small text-uppercase font-weight-bold ">' . $dayName . ': Closed</p>';
+                                                            $output .= '<p class="mb-1 small font-weight-bold "><span class="text-uppercase">' . $dayName . ':</span> Closed</p>';
                                                         }
                                                     } else {
                                                         $output .= '<p class="mb-1 small text-uppercase font-weight-bold '.$isToday.'">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime. '</p>';
@@ -885,12 +885,9 @@
 <div class="modal fade" id="gallery" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
-			<!-- <div class="modal-header" style="padding:0.2rem 1rem">
-				<h5 class="modal-title" id="galleryModalLabel"><?php echo $row['name'] . " Gallery"; ?></h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-				</button>
-			</div> -->
+			<div class="text-center py-1 bg-dark">
+				<p class="h5 text-white mb-0"><?php echo $row['name'] . " Gallery"; ?></p>
+			</div>
 			<div class="modal-body p-0">
 				<div id="galcarousel" class="carousel slide" data-ride="carousel">
 					<ol class="carousel-indicators">
@@ -898,10 +895,12 @@
 						$galquery = mysqli_query($conn, "SELECT * FROM $tablegallery_name WHERE $id_column= '$typeid'");
 						$activeClass = 'active';
 						$counter = 0;
+						$imageCount = 0;
 						while ($galrow = mysqli_fetch_array($galquery)) {
 							echo '<li data-target="#galcarousel" data-slide-to="'.$counter.'" class="'.$activeClass.'"></li>';
 							$activeClass = '';
 							$counter++;
+							$imageCount++;
 						}
 						?>
 					</ol>
@@ -919,6 +918,7 @@
 						}
 						?>
 					</div>
+					<?php if ($imageCount > 1): ?>
 					<a class="carousel-control-prev" href="#galcarousel" role="button" data-slide="prev">
 						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 						<span class="sr-only">Previous</span>
@@ -927,16 +927,18 @@
 						<span class="carousel-control-next-icon" aria-hidden="true"></span>
 						<span class="sr-only">Next</span>
 					</a>
+					<?php endif; ?>
 				</div>
 			</div>
 			<div class="text-center py-1 bg-dark">
-				<button  type="button" data-dismiss="modal" aria-label="Close" class="btn btn-sm btn-light" data-mdb-dismiss="modal">
-				Close
+				<button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-sm btn-light" data-mdb-dismiss="modal">
+					Close
 				</button>
 			</div>
 		</div>
 	</div>
 </div>
+
 <div class="modal fade" id="video" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
