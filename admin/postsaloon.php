@@ -64,7 +64,6 @@
         $galimages = $_FILES['galimages']['name'];
 		$profileimage = $_FILES['profileimage']['name'];
 		$coverimage = $_FILES['coverimage']['name'];
-		$certificateimage = $_FILES['certificateimage[]']['name'];
         $certificateTargetsString = null;
         
         if (isset($_FILES['certificateimage']) && !empty($_FILES['certificateimage']['name'][0])) {

@@ -370,6 +370,12 @@
 									<input type="text" class="form-control" id="about">
 								</div>
 							</div>
+                            <div class="col-md-12">
+								<div class="form-group">
+									<label id="cerLabel">Certificate:</label>
+									
+								</div>
+							</div>
 						</div>
 				    </form>
 				</div>
@@ -433,8 +439,19 @@
             data:{id:id},
             success:function(data) {
                 var data1= JSON.parse(data);
-                console.log(data1);
                 for(var key in data1){
+                    if(key == 'certificate'){
+                        var cerAr = data1[key].split(",");
+                        var html='<div>';
+                        for (let index = 0; index < cerAr.length; index++) {
+                            const certi = cerAr[index];
+                            var source = '../directory/saloon/'+certi;
+                            html+='<img  style="max-height:110px" src="'+source+'"/>'
+                            
+                        }
+                        html+='</div>'
+                        $('#cerLabel').after(html)
+                    }
                     if($("#" + key).length != 0){
                         if(key == 'logo'){
                             if(data1[key]) {

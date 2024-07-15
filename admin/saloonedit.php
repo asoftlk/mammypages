@@ -169,23 +169,36 @@ $(document).ready(function() {
 						<div class="col-md-6 form-group">
 							<label class="required" for="contactNumber">Contact Number</label>
 					 	 	<input type="tel" name="contactNumber" class="form-control" id="contactNumber"  value="<?php echo $row['mobile']; ?>" placeholder="Contact Number">
-						</div>	
+						</div>
 						<div class="col-md-12 form-group">
 							<label class="required" for="certificateimage">Saloon Certificates</label>
 							<br>
 							<div class="custom-file">
-									<input type="file" class="custom-file-input" accept="image/*" id="certificateimage" name="logoimage" value="" >
-									<label class="custom-file-label" name="certificateimage[]" for="certificateimage"><?php echo $row['certificate'] ?></label>
-							</div>
-							<div class="text-center">
-								<div id="customFilecertificatepreview">
-								<?php if(($row['certificate']!="") && file_exists("../directory/saloon/".$row['certificate'])){?>
-									<p class="img-center" style="color:green;margin-bottom:0">Logo Preview</p>
-										<button class="close img-center" onclick="removepreview($('#certificateimage'))" style=" position: absolute;z-index: 1;"><span style=" font-size:x-large; color:red; font-weight:bolder">&times;</span></button>
-										<img src="../directory/saloon/<?php echo $row['certificate'] ?>" class="img-fluid img-center" style="position:relative; width:200px; max-height: 180px; border:1px solid gray; margin-bottom:5px"/>
-								<?php } ?>
-								</div>
-							</div>
+                                <input type="file" class="custom-file-input" accept="image/*" id="certificateimage" name="certificateimage[]" multiple value="<?php echo $row['certificate']; ?>">
+                                <label class="custom-file-label" id="certificateLabel" for="certificateimage"></label>
+                            </div>
+                            <div class="text-center">
+                                <div id="certificateimagepreview">
+                                    <p class="img-center" style="color:green;margin-bottom:0">Certificate Preview</p>
+                                    <?php
+                                    $cerArray = explode(',', $row['certificate']);
+                                    foreach ($cerArray as $certificate) {
+                                        if (($certificate != "") && file_exists("../directory/saloon/" . $certificate)) {
+                                            $certificateId = pathinfo($certificate, PATHINFO_FILENAME);
+                                    ?>
+                                            <div id="<?php echo $certificateId; ?>" class="img-container" style="position:relative;">
+                                                <button type="button" class="close" onclick="removeCertificate('<?php echo $certificateId; ?>')" style="position: absolute;z-index: 1;">
+                                                    <span style="font-size:x-large; color:red; font-weight:bolder">&times;</span>
+                                                </button>
+                                                <img src="../directory/saloon/<?php echo $certificate; ?>" class="img-fluid" style="width:200px; max-height: 180px; border:1px solid gray; margin-bottom:5px"/>
+                                            </div>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                </div>
+                                <input type="hidden" id="remainingCertificates" name="remainingCertificates" value="<?php echo $row['certificate']; ?>">
+                            </div>
 						</div>
 						
 						<div class="col-md-6">
@@ -323,7 +336,7 @@ $(document).ready(function() {
 						<label class="required" for="about">About</label>
 					  <textarea class="form-control" id="about"  name="about" class="about" required><?php echo $row['about']; ?></textarea>
 						</div>					  
-					</div>
+					</div> 
 					<!--div class="row">
 					  <div class="col-md-12 form-group">
 						<label >Priority</label>
@@ -345,7 +358,7 @@ $(document).ready(function() {
 					</div-->
 	
 					<div class="form-group">
-						<label class="required" for="logoimage">logo Image</label>
+						<label class="required" for="logoimage">Logo Image</label>
 					<br>
 					<div class="custom-file">
 							<input type="file" class="custom-file-input" accept="image/*" id="customFilelogo" name="logoimage" value="" >
@@ -635,6 +648,61 @@ $(function () {
 			 $(fileName1).siblings(".custom-file-label").text("choose file");
 			 $('#'+fileName2+'preview').empty();
 		}
+        // document.addEventListener('DOMContentLoaded', function () {
+        //     document.getElementById('certificateimage').addEventListener('change', function(e) {
+        //         var fileNames = '';
+        //         for (var i = 0; i < this.files.length; i++) {
+        //             fileNames += this.files[i].name + ', ';
+        //         }
+        //         fileNames = fileNames.slice(0, -2); // Remove the last comma and space
+        //         this.nextElementSibling.textContent = fileNames || 'Choose files';
+        //     });
+        // });
+        // function removeCertificate(imageId) {
+        //     var imageElement = document.getElementById(imageId);
+        //     if (imageElement) {
+        //         imageElement.parentNode.removeChild(imageElement);
+        //     }
+
+        //     var removedFiles = document.getElementById('removedFiles');
+        //     removedFiles.value += imageId + ',';
+
+        //     var fileInput = document.getElementById('certificateimage');
+        //     var fileNames = '';
+        //     for (var i = 0; i < fileInput.files.length; i++) {
+        //         fileNames += fileInput.files[i].name + ', ';
+        //     }
+        //     fileNames = fileNames.slice(0, -2); 
+        //     fileInput.nextElementSibling.textContent = fileNames || 'Choose files';
+        // }
+        document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('certificateimage').addEventListener('change', function(e) {
+        var fileNames = '';
+        for (var i = 0; i < this.files.length; i++) {
+            fileNames += this.files[i].name + ', ';
+        }
+        fileNames = fileNames.slice(0, -2); // Remove the last comma and space
+        this.nextElementSibling.textContent = fileNames || 'Choose files';
+    });
+});
+
+function removeCertificate(imageId) {
+    // Remove the image preview container
+    var imageContainer = document.getElementById(imageId);
+    if (imageContainer) {
+        imageContainer.parentNode.removeChild(imageContainer);
+    }
+
+    // Update the remaining certificates
+    var remainingCertificatesInput = document.getElementById('remainingCertificates');
+    console.log(remainingCertificatesInput);
+    var remainingCertificates = remainingCertificatesInput.value.split(',').filter(function(cert) {
+        return cert !== imageId + '.jpeg' && cert !== imageId + '.png';
+    }).join(',');
+    
+    remainingCertificatesInput.value = remainingCertificates;
+}
+
 
 </script>
 
