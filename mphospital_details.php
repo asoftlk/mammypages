@@ -525,19 +525,23 @@
 									}
 						 			echo '</div>';
 									}*/
-                            $servicesArray = explode(',', $services);
-                            $servicesHtml = '<ul>';
-                            foreach ($servicesArray as $service) {
-                                $servicesHtml .= '<li>' . trim($service) . '</li>';
-                            }
-                            $servicesHtml .= '</ul>';
-                            
-                            echo	'</div>
-                                    <div class="row fillbg mt-1 l-border-radius py-2 l-service">
-                                        <p class="heading text-left mt-1 text-uppercase font-weight-bold" style="margin:0.5rem 0 1rem; font-size:12px">Services</p>
-                                        ' . $servicesHtml . '
-                                    </div>
-                                    ';
+									echo '</div>';
+									if (isset($row['services']) && !empty($row['services'])){
+										$services = $row['services'];
+										$servicesArray = explode(',', $services);
+										$servicesHtml = '<ul>';
+										foreach ($servicesArray as $service) {
+											$servicesHtml .= '<li>' . trim($service) . '</li>';
+										}
+										$servicesHtml .= '</ul>';
+										
+										echo	'
+												<div class="row fillbg mt-1 l-border-radius py-2 l-service">
+													<p class="heading text-left mt-1 text-uppercase font-weight-bold" style="margin:0.5rem 0 1rem; font-size:12px">Services</p>
+													' . $servicesHtml . '
+												</div>
+										';
+									}
 						}
                     ?>
 
@@ -786,7 +790,7 @@
                                             $isToday = (strtolower($dayName) == strtolower($currentDay)) ? 'text-success':'';
 									
 											if ($hospital[$openTimeKey] === "00:00:00" && $hospital[$closeTimeKey] === "00:00:00") {
-												$output .= '<p class="mb-1 small text-uppercase font-weight-bold ">' . $dayName . ': Closed</p>';
+												$output .= '<p class="mb-1 small font-weight-bold "><span class="text-uppercase">' . $dayName . ':</span> Closed</p>';
 											} else {
 												$output .= '<p class="mb-1 small text-uppercase font-weight-bold '.$isToday.'">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime. '</p>';
 											}
@@ -809,12 +813,9 @@
 <div class="modal fade" id="gallery" tabindex="-1" role="dialog" aria-labelledby="galleryModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
-			<!-- <div class="modal-header" style="padding:0.2rem 1rem">
-				<h5 class="modal-title" id="galleryModalLabel"><?php echo $row['name'] . " Gallery"; ?></h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-				</button>
-			</div> -->
+			<div class="text-center py-1 bg-dark">
+				<p class="h5 text-white mb-0"><?php echo $row['name'] . " Gallery"; ?></p>
+			</div>
 			<div class="modal-body p-0">
 				<div id="galcarousel" class="carousel slide" data-ride="carousel">
 					<ol class="carousel-indicators">
@@ -833,6 +834,7 @@
 						<?php
 						$galquery = mysqli_query($conn, "SELECT * FROM mpgallery WHERE hospitalid= '$typeid'");
 						$activeClass = 'active';
+						$imageCount = 0; 
 						while ($galrow = mysqli_fetch_array($galquery)) {
 							echo '
 								<div class="carousel-item '.$activeClass.'">
@@ -840,9 +842,12 @@
 								</div>
 							';
 							$activeClass = '';
+							$imageCount++; 
 						}
 						?>
 					</div>
+
+					<?php if ($imageCount > 1): ?>
 					<a class="carousel-control-prev" href="#galcarousel" role="button" data-slide="prev">
 						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 						<span class="sr-only">Previous</span>
@@ -851,31 +856,18 @@
 						<span class="carousel-control-next-icon" aria-hidden="true"></span>
 						<span class="sr-only">Next</span>
 					</a>
+					<?php endif; ?>
 				</div>
-
-				<!-- <div class="carousel-thumbnails mt-4 d-flex justify-content-center">
-					<?php
-					// $galquery = mysqli_query($conn, "SELECT * FROM mpgallery WHERE hospitalid= '$typeid'");
-					// $counter = 0;
-					// while ($galrow = mysqli_fetch_array($galquery)) {
-					// 	echo '
-					// 		<div class="mx-2">
-					// 			<img src="directory/hospital/'.$galrow["image_name"].'" alt="Thumbnail" class="img-thumbnail" data-slide-to="'.$counter.'">
-					// 		</div>
-					// 	';
-					// 	$counter++;
-					// }
-					?>
-				</div> -->
 			</div>
 			<div class="text-center py-1 bg-dark">
-				<button  type="button" data-dismiss="modal" aria-label="Close" class="btn btn-sm btn-light" data-mdb-dismiss="modal">
-				Close
+				<button type="button" data-dismiss="modal" aria-label="Close" class="btn btn-sm btn-light" data-mdb-dismiss="modal">
+					Close
 				</button>
 			</div>
 		</div>
 	</div>
 </div>
+
 
 <div class="modal fade" id="video" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">

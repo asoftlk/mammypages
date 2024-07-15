@@ -178,7 +178,7 @@ include "mp.php";
                         } else {
                             $type_name_head =  $row['name'];;
                         };
-					echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
+					echo '<div class="row m-0 priority-list sort-item">
 							<div class="col-md-3" style="margin:auto">
 							<div>
 								<a href="mpconnect/midwife/' .urlencode(str_replace(' ', '_', $row["name"])). '"><img src="directory/midwife/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>

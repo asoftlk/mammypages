@@ -321,7 +321,7 @@ body{
 			<?php $hospital =mysqli_query($conn, "SELECT * FROM hospitals where type ='Hospital'");
 					
 					while($row=mysqli_fetch_array($hospital)){
-					echo '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4 ;">
+					echo '<div class="row m-0 sort-item">
 							<div class="col-md-3" style="margin:auto">
 							<div ><img src="directory/hospitals/'.$row['hospital_image'].'" class="img-fluid" style="max-height:6rem"></div></div><div class="col-md-8" style="margin:1rem 0">
 							<div style="float:right">';

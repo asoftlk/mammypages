@@ -385,3 +385,6 @@ display: none;
   text-transform: capitalize;
   font-size: 14px;
 }
+.main-content-sec .article-sec .top-menu {
+  background-color: transparent !important;
+}

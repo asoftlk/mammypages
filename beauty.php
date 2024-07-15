@@ -163,15 +163,15 @@ include "mp.php";
                         } else {
                             $type_name_head =  $row['name'];;
                         };
-					echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
+					echo '<div class="row m-0 priority-list sort-item">
 							<div class="col-md-3" style="margin:auto">
 							<div>
-								<a href="mpconnect/saloon/' .urlencode(str_replace(' ', '_', $row["name"])). '"><img src="directory/saloon/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>
+								<img src="directory/saloon/'.$row['logo'].'" class="img-fluid" style="max-height:5rem">
 							</div>
 							</div>
 							<div class="col-md-9 pl-0" style="margin:1rem 0">
 							<div class="d-flex">
-                            <p class="text"><a href="mpconnect/saloon/' .urlencode(str_replace(' ', '_', $row["name"])). '" class="namehref"><p class="text-heading">&nbsp;'.$type_name_head.'</p></a>
+                            <p class="text"><p class="text-heading">&nbsp;'.$type_name_head.'</p>
                                 <img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-3" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
                                 <strong>' . $isOpen . '</strong>
                             </div>
