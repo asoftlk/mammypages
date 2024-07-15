@@ -24,7 +24,7 @@ if(mysqli_num_rows($result) > 0)
 		}
           $count = $_POST['count']+10;  
           $output .= '  
-               <div class="row m-0" style="border-bottom: 1px solid #f4f4f4 ;">
+               <div class="row m-0 sort-item">
 							<div class="col-md-3" style="margin:auto">
 							<div>
 								<a href="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $row["name"])).'"><img src="directory/'.$type.'/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>

@@ -139,7 +139,7 @@ include "mp.php";
                         } else {
                             $type_name_head =  $row['name'];;
                         };
-					echo '<div class="row m-0 priority-list" style="border-bottom: 1px solid #f4f4f4 ;">
+					echo '<div class="row m-0 priority-list sort-item">
 							<div class="col-md-3" style="margin:auto">
 							<div>
 								<img src="directory/pharmacy/'.$row['logo'].'" class="img-fluid" style="max-height:5rem">
@@ -334,20 +334,18 @@ include "mp.php";
                             
                             html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
                             html += '<div class="col-md-3" style="margin:auto">';
-                            html += '<a href="mpconnect/pharmacy/' + encodedName + '">';
-                            html += '<img src="directory/pharmacy/' + pharmacy.logo + '" class="img-fluid" style="max-height:5rem"></a>';
+                            html += '<img src="directory/pharmacy/' + pharmacy.logo + '" class="img-fluid" style="max-height:5rem">';
                             html += '</div>';
                             html += '<div class="col-md-9 pl-0" style="margin:1rem 0">';
                             html += '<div class="d-flex">';
-                            html += '<p class="text"><a href="mpconnect/pharmacy/' + encodedName + '" class="namehref">';
                            
                             if (pharmacy.priority > 0) {
-								html += '<p class="text-heading">&nbsp;' + pharmacy.typeName + '</p></a>';
+								html += '<p class="text-heading">&nbsp;' + pharmacy.typeName + '</p>';
                                 html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-2" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }
 							else{
-								html += '<p class="text-heading mr-auto">&nbsp;' + pharmacy.typeName + '</p></a>';
+								html += '<p class="text-heading mr-auto">&nbsp;' + pharmacy.typeName + '</p>';
 								html += '<strong>' + isOpen + '</strong><br>';
 							}
 

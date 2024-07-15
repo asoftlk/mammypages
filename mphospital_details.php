@@ -525,19 +525,23 @@
 									}
 						 			echo '</div>';
 									}*/
-                            $servicesArray = explode(',', $services);
-                            $servicesHtml = '<ul>';
-                            foreach ($servicesArray as $service) {
-                                $servicesHtml .= '<li>' . trim($service) . '</li>';
-                            }
-                            $servicesHtml .= '</ul>';
-                            
-                            echo	'</div>
-                                    <div class="row fillbg mt-1 l-border-radius py-2 l-service">
-                                        <p class="heading text-left mt-1 text-uppercase font-weight-bold" style="margin:0.5rem 0 1rem; font-size:12px">Services</p>
-                                        ' . $servicesHtml . '
-                                    </div>
-                                    ';
+									echo '</div>';
+									if (isset($row['services']) && !empty($row['services'])){
+										$services = $row['services'];
+										$servicesArray = explode(',', $services);
+										$servicesHtml = '<ul>';
+										foreach ($servicesArray as $service) {
+											$servicesHtml .= '<li>' . trim($service) . '</li>';
+										}
+										$servicesHtml .= '</ul>';
+										
+										echo	'
+												<div class="row fillbg mt-1 l-border-radius py-2 l-service">
+													<p class="heading text-left mt-1 text-uppercase font-weight-bold" style="margin:0.5rem 0 1rem; font-size:12px">Services</p>
+													' . $servicesHtml . '
+												</div>
+										';
+									}
 						}
                     ?>
 
