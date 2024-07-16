@@ -445,9 +445,9 @@ body{
                                     <input  type="text" name="addressLine1" placeholder="Address Line 1" required="" class="form-control">
                                 </div>
                             </div>
-                            <div  class="form-group row"><label  for="Address_Line2" class="col-md-4 col-form-label">Address Line 2<sup style="color:red">*</sup></label>
+                            <div  class="form-group row"><label  for="addressLine2" class="col-md-4 col-form-label">Address Line 2</label>
                                 <div  class="col-md-8">
-                                    <input  type="text" name="Address_Line2" id="ship-address" placeholder="Address Line 2" required="" autocomplete="off" class="form-control">
+                                    <input  type="text" name="addressLine2" id="ship-address" placeholder="Address Line 2" autocomplete="off" class="form-control">
                                 </div>
                             </div>
 							<div class="form-group required row"><label for="City" class="col-md-4 col-form-label">City<sup style="color:red">*</sup></label>
@@ -808,9 +808,6 @@ $('#children').on("click", "#remove-lnk", function (e) {
                         addressLine1 : {
                             required: true,
                         },
-                        Address_Line2:{
-                            required: true,
-                        },
                         country:{
                             required: true,
                         },
@@ -879,9 +876,6 @@ $('#children').on("click", "#remove-lnk", function (e) {
                         },
                         addressLine1 : {
                             required: "Address line1 is required",
-                        },
-                        Address_Line2: {
-                            required: "Address line2 is required",
                         },
                         country: {
                             required: "Country is required",

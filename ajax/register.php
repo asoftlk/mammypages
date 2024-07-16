@@ -5,12 +5,12 @@ date_default_timezone_set('Asia/Kolkata');
  
     $firstName = mysqli_real_escape_string($conn, $_POST['firstName']);
     $userid = mysqli_real_escape_string($conn, $firstName.mt_rand(100000,999999));
-    $profileid = mysqli_real_escape_string($conn, MP.mt_rand(1000000,9999999));
+    $profileid = mysqli_real_escape_string($conn, "MP".mt_rand(1000000,9999999));
     $var=1;
     while($var){
     $checkid = mysqli_query($conn, "SELECT profileid FROM users_reg WHERE profileid = '$profileid'");
     if(mysqli_num_rows($checkid)>0){
-        $profileid = mysqli_real_escape_string($conn, MP.mt_rand(1000000,9999999));
+        $profileid = mysqli_real_escape_string($conn, "MP".mt_rand(1000000,9999999));
     }
     else{
         $var=0;
@@ -22,7 +22,7 @@ date_default_timezone_set('Asia/Kolkata');
     $dateOfBirth=date_create_from_format("d/m/Y",$dateOfBirth);
     $dateOfBirth = date_format($dateOfBirth,"Y-m-d");
     $addressLine1 =mysqli_real_escape_string($conn, $_POST['addressLine1']);
-    $Address_Line2 = mysqli_real_escape_string($conn, $_POST['Address_Line2']);
+    $addressLine2 = mysqli_real_escape_string($conn, $_POST['addressLine2']);
     $city =mysqli_real_escape_string($conn, $_POST['city']);
     $country = mysqli_real_escape_string($conn, $_POST['country']);
     $Province =mysqli_real_escape_string($conn,  $_POST['Province']);
@@ -161,7 +161,7 @@ date_default_timezone_set('Asia/Kolkata');
                 $partnerprofiletarget = "";
             }
             
-            $query = "INSERT INTO users_reg (userid, profileid, first_name, middle_name, last_name, dob, address1, address2, country, city, province, profile_image, occupation, planguage, fav_article, marital_status, pregnant, pregnant_week, children, partner_name, partner_profile_image, anniversary_date, partner_dob, partner_occupation, mobile, email, password, mobile_verified, email_verified, status, datetime) VALUES ('$userid', '$profileid', '$firstName', '$middleName', '$lastName', '$dateOfBirth', '$addressLine1', '$Address_Line2', '$country', '$city', '$Province', '$profiletarget', '$Occupation', '$langselection', '$favArticleCategory', '$marital', '$isPregnant', '$pregnancyWeek', '$haveChildren', '$partnerName', '$partnerprofiletarget', '$anniversary', '$partnerdob', '$partneroccupation', '$mobilenumber', '$email', '$password',  0, 0, 0, now())";
+            $query = "INSERT INTO users_reg (userid, profileid, first_name, middle_name, last_name, dob, address1, address2, country, city, province, profile_image, occupation, planguage, fav_article, marital_status, pregnant, pregnant_week, children, partner_name, partner_profile_image, anniversary_date, partner_dob, partner_occupation, mobile, email, password, mobile_verified, email_verified, status, datetime) VALUES ('$userid', '$profileid', '$firstName', '$middleName', '$lastName', '$dateOfBirth', '$addressLine1', '$addressLine2', '$country', '$city', '$Province', '$profiletarget', '$Occupation', '$langselection', '$favArticleCategory', '$marital', '$isPregnant', '$pregnancyWeek', '$haveChildren', '$partnerName', '$partnerprofiletarget', '$anniversary', '$partnerdob', '$partneroccupation', '$mobilenumber', '$email', '$password',  0, 0, 0, now())";
            $result = mysqli_query($conn, $query);
            
             if($result){

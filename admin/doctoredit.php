@@ -197,18 +197,18 @@ $(document).ready(function() {
                                 </tbody>
                             </table>
                         </div>
-						<div class="col-md-6 form-group">
-						<label for="doctortfb">Facebook Link</label>
-						  <input type="url" name="doctorfb" class="form-control" id="doctorfb"  value="<?php echo $row['facebook']; ?>" placeholder="Facebook Link">
-						</div>					  
 					</div>
 					
 					<div class="row">
-						<div class="col-md-6 form-group">
+						<div class="col-md-4 form-group">
+						<label for="doctortfb">Facebook Link</label>
+						  <input type="url" name="doctorfb" class="form-control" id="doctorfb"  value="<?php echo $row['facebook']; ?>" placeholder="Facebook Link">
+						</div>					  
+						<div class="col-md-4 form-group">
 						<label for="doctortinsta">Instagram Link</label>
 						  <input type="url" name="doctorinsta" class="form-control" id="doctorinsta" value="<?php echo $row['instagram']; ?>" placeholder="Instagram Link">
 						</div>
-						<div class="col-md-6 form-group">
+						<div class="col-md-4 form-group">
 						<label for="doctortln">Linkedin Link</label>
 						  <input type="url" name="doctorln" class="form-control" id="doctorln"  value="<?php echo $row['linkedin']; ?>" placeholder="Linkedin Link">
 						</div>					  
