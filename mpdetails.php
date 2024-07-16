@@ -377,7 +377,7 @@
 											echo '<p class="mptype position-absolute" style="right:10px"><span>'.$row['type'].'</span></p><br>';
 										}
 								        
-										echo  '<div class="d-flex float-right">';
+										echo  '<div class="d-flex  float-sm-right">';
 										echo !empty($row['facebook']) ?  '<a href="'.$row["facebook"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-facebook p-1"></i></a>&nbsp;':"";
 										echo !empty($row['instagram']) ?  '<a href="'.$row["instagram"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-instagram p-1"></i></a>&nbsp;':"";
 										echo !empty($row['linkedin']) ?  '<a href="'.$row["linkedin"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-linkedin p-1"></i></a>&nbsp;':"";
@@ -404,7 +404,7 @@
 													echo '<button class="btn btn-secondary followbtn" value="'.$row["$id_column"].'" style="font-size: 13px; padding: 0 5px;">Following</button>';
 												}
 											} else {
-												echo '<button class="btn btn-success followbtn" value="'.$row["$id_column"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
+												echo '<button class="btn btn-success followbtn ml-2" value="'.$row["$id_column"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
 											}
 									echo '</div>
 								</div>

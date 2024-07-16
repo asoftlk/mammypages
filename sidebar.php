@@ -1,12 +1,11 @@
-<h3>MP Directory</h3>
+<h3>MP Connect</h3>
 <ul style="list-style-type:none; padding-left:0">
     <li><a role="button" href="hospital"><i class="icofont-hospital"></i> HOSPITALS</a></li>
     <li><a role="button" href="doctors"><i class="icofont-doctor"></i> DOCTORS</a></li>
-    <li><a role="button" href="medical"><i class="icofont-nurse"></i> DOCTOR CLINICS & NURSING HOMES</a></li>
+    <li><a role="button" href="medical"><i class="icofont-nurse"></i> MEDICAL CLINIC</a></li>
     <li><a role="button" href="pharmacies"><i class="icofont-medical-sign"></i> PHARMACIES</a></li>
     <li><a role="button" href="beauty"><i class="icofont-girl-alt"></i> BEAUTY SALON</a></li>
     <li><a role="button" href="studio"><i class="icofont-camera"></i> STUDIOS</a></li>
-
 </ul>
 
 <script>
