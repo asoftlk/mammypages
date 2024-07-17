@@ -73,8 +73,8 @@ include "mp.php";
                 <?php include "sidebar.php"; ?>
                 <div class="client-sec"><a class="client-btn">Sponsors</a></div>
             </div>
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            <!-- home -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6640694817095655" crossorigin="anonymous"></script>
+            <!-- Square -->
             <ins class="adsbygoogle"
                 style="display:block"
                 data-ad-client="ca-pub-6640694817095655"
@@ -88,9 +88,16 @@ include "mp.php";
    </div>
    <div class="col-md-6">
         <div class="article-sec">
-            <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-x8q3gx">
-                <img src="https://s3.ap-southeast-1.amazonaws.com/dlg.dialog.lk/s3fs-public/2022-12/dialog-and-nonvoice.jpg" alt="Advertisement" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>
+           <!-- rectangle -->
+           <ins class="adsbygoogle l-ads-rectangle"
+                style="display:block"
+                data-ad-client="ca-pub-6640694817095655"
+                data-ad-slot="4022982551"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
         <form action="" method="POST">
             <input class="form-control form-control-sm" type="search" name="searchpharmacy" id="searchpharmacy" placeholder="Search pharmacy" aria-label="Search">
             <!--button class="btn btn-success form-control p-2" type="submit" ><i class="bi bi-search"></i></button-->
@@ -98,7 +105,7 @@ include "mp.php";
                 
             <div class="d-flex justify-content-start">
                 <label class="select">
-                    <select name="city"  class="filter-box" id="city">
+                    <select name="city"  class="filter-box form-select form-select-sm" id="city">
                         <option value="">Select City</option>
                         <?php
                             $cityQuery = mysqli_query($conn, "SELECT DISTINCT city FROM pharmacy");
@@ -125,7 +132,7 @@ include "mp.php";
 					while($row=mysqli_fetch_array($pharmacy)){
                         $openTime = $row[$currentDay . '_open'];
                         $closeTime = $row[$currentDay . '_close'];
-                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1">Open</span>' : '<span class="text-danger text mr-1">Closed</span>';
+                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1 l-open">Open</span>' : '<span class="text-danger text mr-1 l-close">Closed</span>';
                         
                         if (isset($row['main_id']) && !empty($row['main_id']) && $row['main_id'] != 0) {
                             $mainid = $row['main_id'];
@@ -151,11 +158,11 @@ include "mp.php";
 							<div class="col-md-9 pl-0" style="margin:1rem 0">
 							<div class="d-flex">
                             <p class="text"><p class="text-heading">&nbsp;'.$type_name_head.'</p>
-                                <img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-2" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
+                                <img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
                                 <strong>' . $isOpen . '</strong>
                             </div>
 							<div class="d-flex">
-							<div class="ml-auto">';
+							<div class="ml-auto star-bar">';
 							
 							$ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$row[pharmacy_id]'");
 							$ratingrow = mysqli_fetch_assoc($ratingquery);
@@ -206,19 +213,15 @@ include "mp.php";
    </div>
            <div class="col-md-3">
                <div class="right-cont-part">
-                    <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-vuzb25">
-                        <img src="https://www.shutterstock.com/image-vector/megafon-bharti-airtel-limited-safaricom-600nw-2409713703.jpg" alt="Advertisement" style="width: 100%; object-fit: cover;">
-                    </div>
-                   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                     <!-- Square -->
                     <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-6640694817095655"
-                         data-ad-slot="5367742441"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
+                        style="display:block"
+                        data-ad-client="ca-pub-6640694817095655"
+                        data-ad-slot="8142244861"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
                     <script>
-                         (adsbygoogle = window.adsbygoogle || []).push({});
+                        (adsbygoogle = window.adsbygoogle || []).push({});
                     </script>
                </div>
            </div>
@@ -333,9 +336,9 @@ include "mp.php";
                             var openTime = pharmacy[currentDay + '_open'];
                             var closeTime = pharmacy[currentDay + '_close'];
 
-                            var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success text mr-1">Open</span>' : '<span class="text-danger text mr-1">Closed</span>';
+                            var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success text mr-1 l-open">Open</span>' : '<span class="text-danger text mr-1 l-close">Closed</span>';
                             
-                            html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
+                            html += '<div class="row m-0 sort-item">';
                             html += '<div class="col-md-3" style="margin:auto">';
                             html += '<img src="directory/pharmacy/' + pharmacy.logo + '" class="img-fluid" style="max-height:5rem">';
                             html += '</div>';
@@ -344,7 +347,7 @@ include "mp.php";
                            
                             if (pharmacy.priority > 0) {
 								html += '<p class="text-heading">&nbsp;' + pharmacy.typeName + '</p>';
-                                html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-2" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
+                                html += '<img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }
 							else{
@@ -355,7 +358,7 @@ include "mp.php";
                             html += '</div>';
                             html += '<div class="d-flex">';
                             if(speciality){ html+= '<p class="text">&nbsp;' + speciality + '</P>';}
-                            html += '<div class="ml-auto">';
+                            html += '<div class="ml-auto star-bar">';
                             
                             for (var i = 0; i < 5; i++) {
                                 if (rating >= 1) {

@@ -62,6 +62,9 @@ include "mp.php";
     .main-content-sec .article-sec .top-menu {
         background-color: transparent !important;
     }
+    .priority-list .priority-img {
+        left: 6.1rem;
+    }
 </style>
 <div class="content">
 <section class="main-content-sec">
@@ -73,8 +76,8 @@ include "mp.php";
                 <?php include "sidebar.php"; ?>
                 <div class="client-sec"><a class="client-btn">Sponsors</a></div>
             </div>
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            <!-- home -->
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6640694817095655" crossorigin="anonymous"></script>
+            <!-- Square -->
             <ins class="adsbygoogle"
                 style="display:block"
                 data-ad-client="ca-pub-6640694817095655"
@@ -88,9 +91,16 @@ include "mp.php";
    </div>
    <div class="col-md-6">
       <div class="article-sec">
-        <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-x8q3gx">
-            <img src="https://s3.ap-southeast-1.amazonaws.com/dlg.dialog.lk/s3fs-public/2022-12/dialog-and-nonvoice.jpg" alt="Advertisement" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
+        <!-- rectangle -->
+        <ins class="adsbygoogle l-ads-rectangle"
+            style="display:block"
+            data-ad-client="ca-pub-6640694817095655"
+            data-ad-slot="4022982551"
+            data-ad-format="auto"
+            data-full-width-responsive="true"></ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
         <form action="" method="POST">
             <input class="form-control form-control-sm" type="search" name="searchdoctor" id="searchdoctor" placeholder="Search doctor" aria-label="Search">
             <!--button class="btn btn-success form-control p-2" type="submit" ><i class="bi bi-search"></i></button-->
@@ -98,7 +108,7 @@ include "mp.php";
                 
             <div class="d-flex justify-content-start">
                 <label class="select">
-                    <select name="speciality" class="filter-box"  id="speciality">
+                    <select name="speciality"class="filter-box form-select form-select-sm"  id="speciality">
                         <option value="">Select Speciality</option>
                         <?php
                             $specialityQuery = mysqli_query($conn, "SELECT DISTINCT speciality FROM doctor");
@@ -135,7 +145,7 @@ include "mp.php";
                         $currentTime = date('H:i:s'); 
                         $openTime = $row[$currentDay . '_open'];
                         $closeTime = $row[$currentDay . '_close'];
-                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1" style="float:right">Available</span>' : '<span class="text-danger text mr-1" style="float:right">Not Available</span>';
+                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1 l-open" style="float:right">Available</span>' : '<span class="text-danger text mr-1 l-open" style="float:right">Not Available</span>';
 
 					echo '<div class="row m-0 priority-list sort-item">
 							<div class="col-md-3" style="margin:auto">
@@ -146,12 +156,12 @@ include "mp.php";
 							<div class="col-md-9 pl-0" style="margin:1rem 0">
 							<div class="d-flex">
                             <p class="text"><p class="text-heading">&nbsp;'.$row["name"].'</p>
-                                <img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
+                                <img src="assets/images/Paid.png" class="ml-auto priority-img " data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
                                 <strong>' . $isOpen . '</strong>
                             </div>
 							<div class="d-flex">
 							<p class="text">&nbsp;'.$speciality.'</P>
-							<div class="ml-auto">';
+							<div class="ml-auto star-bar">';
 							
 							$ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$row[doctor_id]'");
 							$ratingrow = mysqli_fetch_assoc($ratingquery);
@@ -201,19 +211,15 @@ include "mp.php";
    </div>
            <div class="col-md-3">
                <div class="right-cont-part">
-                    <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-vuzb25">
-                        <img src="https://www.shutterstock.com/image-vector/megafon-bharti-airtel-limited-safaricom-600nw-2409713703.jpg" alt="Advertisement" style="width: 100%; object-fit: cover;">
-                    </div>
-                   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
                     <!-- Square -->
                     <ins class="adsbygoogle"
-                         style="display:block"
-                         data-ad-client="ca-pub-6640694817095655"
-                         data-ad-slot="5367742441"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
+                        style="display:block"
+                        data-ad-client="ca-pub-6640694817095655"
+                        data-ad-slot="8142244861"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
                     <script>
-                         (adsbygoogle = window.adsbygoogle || []).push({});
+                        (adsbygoogle = window.adsbygoogle || []).push({});
                     </script>
                </div>
            </div>
@@ -322,7 +328,7 @@ include "mp.php";
                             var encodedName = encodeURIComponent(doctor.name.replace(/\s+/g, '_'));
                             var doctorId = doctor.doctor_id;
                             
-                            html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
+                            html += '<div class="row m-0 sort-item">';
                             html += '<div class="col-md-3" style="margin:auto">';
                             html += '<img src="directory/doctor/' + doctor.logo + '" class="img-fluid" style="max-height:5rem">';
                             html += '</div>';
@@ -331,13 +337,13 @@ include "mp.php";
                             html += '<p class="text">';
                             html += '<p class="text-heading">&nbsp;' + doctor.name + '</p>';
                             if (doctor.priority > 0) {
-                                html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
+                                html += '<img src="assets/images/Paid.png" class="ml-auto priority-img " data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
                                 
                             }
                             html += '</div>';
                             html += '<div class="d-flex">';
                             html += '<p class="text">&nbsp;' + speciality + '</P>';
-                            html += '<div class="ml-auto">';
+                            html += '<div class="ml-auto star-bar">';
                             
                             for (var i = 0; i < 5; i++) {
                                 if (rating >= 1) {
@@ -353,11 +359,16 @@ include "mp.php";
                             html += '</div></div>';
                             html += '<div class="d-flex justify-content-between">';
                             html += '<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;' + doctor.address + '</P>';                          
-                            html += '<form action="mpconnect/doctor/'+ encodedName +'" method="post" style="display:inline;">';
+                            html += '<form class="desktopview" action="mpconnect/doctor/'+ encodedName +'" method="post" style="display:inline;">';
                             html += '<input type="hidden" name="doctor_id" value="'+doctorId+'">';
                             html += '<button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Doctor</button>';
                             html += '</form>'; 
-                            html += '</div></div></div>';
+                            html += '</div>;';
+                            html += '<form class="mobileview" action="mpconnect/doctor/'+ encodedName +'" method="post" style="display:inline;">';
+                            html += '<input type="hidden" name="doctor_id" value="'+doctorId+'">';
+                            html += '<button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Doctor</button>';
+                            html += '</form>'; 
+                            html += '</div></div>';
                         });
                         $("#load_data").html(html);
                     } else {

@@ -110,7 +110,7 @@ include "mp.php";
                     </select>
                 </label>
                 <label class="select">
-                    <select name="type" class="filter-box" id="type">
+                    <select name="type" class="filter-box form-select form-select-sm" id="type">
                         <option value="">Select type</option>
                         <?php
                             $typeQuery = mysqli_query($conn, "SELECT DISTINCT type FROM midwife");
@@ -124,7 +124,7 @@ include "mp.php";
                     </select>
                 </label>
                 <label class="select">
-                    <select name="city"  class="filter-box" id="city">
+                    <select name="city"  class="filter-box form-select form-select-sm" id="city">
                         <option value="">Select City</option>
                         <?php
                             $cityQuery = mysqli_query($conn, "SELECT DISTINCT city FROM midwife");
@@ -162,7 +162,7 @@ include "mp.php";
 						}
                         $openTime = $row[$currentDay . '_open'];
                         $closeTime = $row[$currentDay . '_close'];
-                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1">Open</span>' : '<span class="text-danger text mr-1">Closed</span>';
+                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1 l-open">Open</span>' : '<span class="text-danger text mr-1 l-close">Closed</span>';
                         if (isset($row['main_id']) && !empty($row['main_id']) && $row['main_id'] != 0) {
                             $mainid = $row['main_id'];
                         
@@ -187,12 +187,12 @@ include "mp.php";
 							<div class="col-md-9 pl-0" style="margin:1rem 0">
 							<div class="d-flex">
                             <p class="text"><a href="mpconnect/midwife/' .urlencode(str_replace(' ', '_', $row["name"])). '" class="namehref"><p class="text-heading">&nbsp;'.$type_name_head.'</p></a>
-                                <img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-2" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
+                                <img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
                                 <strong>' . $isOpen . '</strong>
                             </div>
 							<div class="d-flex">
 							<p class="text">&nbsp;'.$speciality.'</P>
-							<div class="ml-auto">';
+							<div class="ml-auto star-bar">';
 							
 							$ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$row[midwife_id]'");
 							$ratingrow = mysqli_fetch_assoc($ratingquery);
@@ -368,7 +368,7 @@ include "mp.php";
         //                     var encodedName = encodeURIComponent(midwife.name.replace(/\s+/g, '_'));
         //                     var midwifeId = midwife.midwife_id;
                             
-        //                     html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
+        //                     html += '<div class="row m-0 sort-item">';
         //                     html += '<div class="col-md-3" style="margin:auto">';
         //                     html += '<a href="mpconnect/midwife/' + encodedName + '">';
         //                     html += '<img src="directory/midwife/' + midwife.logo + '" class="img-fluid" style="max-height:5rem"></a>';
@@ -449,9 +449,9 @@ include "mp.php";
                             var openTime = midwife[currentDay + '_open'];
                             var closeTime = midwife[currentDay + '_close'];
 
-                            var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success text mr-1">Open</span>' : '<span class="text-danger text mr-1">Closed</span>';
+                            var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success text mr-1 l-open">Open</span>' : '<span class="text-danger text mr-1 l-close">Closed</span>';
 
-                            html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
+                            html += '<div class="row m-0 sort-item">';
                             html += '<div class="col-md-3" style="margin:auto">';
                             html += '<a href="mpconnect/midwife/' + encodedName + '">';  
                             html += '<img src="directory/midwife/' + midwife.logo + '" class="img-fluid" style="max-height:5rem"></a>';
@@ -462,7 +462,7 @@ include "mp.php";
                             
                             if (midwife.priority > 0) {
 								html += '<p class="text-heading">&nbsp;' + midwife.typeName + '</p></a>';
-                                html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto mr-2" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
+                                html += '<img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }
 							else{

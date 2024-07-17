@@ -155,8 +155,8 @@ if(mysqli_num_rows($result) > 0)
                     <img src="directory/hospital/' . $row['logo'] . '" class="img-fluid" style="max-height:5rem">
                 </div>
             </div>
-            <div class="col-md-9 pl-0" style="margin:1rem 0">
-                <div style="float:right">
+            <div class="col-md-9 pl-2 pl-sm-0" style="margin:1rem 0">
+                <div style="float:right" class="star-bar">
                 <strong>' . $isOpen . '</strong><br>';
                 
                     $ratingquery = mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$row[hospital_id]'");
@@ -184,11 +184,15 @@ if(mysqli_num_rows($result) > 0)
                     <p class="text">
                         <img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">
                         &nbsp;' . $row["address"] . '</p>                        
-                    <form action="mpconnect/hospital/' . urlencode(str_replace(' ', '', $row["name"])) . '" method="post" style="display:inline;">
+                    <form class="desktopview" action="mpconnect/hospital/' . urlencode(str_replace(' ', '', $row["name"])) . '" method="post" style="display:inline;">
                         <input type="hidden" name="hospital_id" value="' . $row["hospital_id"] . '">
                         <button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Hospital</button>
                     </form>
                 </div>
+                    <form class="mobileview mt-2" action="mpconnect/hospital/' . urlencode(str_replace(' ', '', $row["name"])) . '" method="post" style="display:inline;">
+                        <input type="hidden" name="hospital_id" value="' . $row["hospital_id"] . '">
+                        <button type="submit" class="btn btn-success p-1 mt-2" style="font-size:12px; height:28px">View&nbsp;Hospital</button>
+                    </form>
             </div>   
         </div>';
     }  

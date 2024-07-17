@@ -191,8 +191,6 @@ margin-bottom: 0;
 }
 .hospitaltype span,
 .type span {
-background-color: #000;
-color: #fff;
 padding: 2px 1px;
 margin-left: 2px;
 text-transform: uppercase;
@@ -304,6 +302,9 @@ display: none;
 .filter-box::-ms-expand {
   display: none;
 }
+.form-select{
+  background-image: none;
+}
 .bi-star-fill, .bi-star-half, .bi-star{
 	color: #eb9c05 !important;
 	}
@@ -384,4 +385,63 @@ display: none;
   margin-top: 10px;
   text-transform: capitalize;
   font-size: 14px;
+}
+.sort-item .col-md-3 .img-fluid{
+  border-radius: 50% !important;
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+.priority-img{
+  position: relative;
+  left: 4.78rem;
+  top: -1rem;
+  border-top-right-radius: 17px;
+  width: 30px;
+  height: 30px;
+}
+.form-select{
+  background-image: none !important;
+}
+.l-ads-rectangle, .l-ads-rectangle #aswift_2_host,.l-ads-rectangle #aswift_2{
+  max-height: 150px;
+}
+.l-review-img{
+  width:12% !important;
+}
+.l-review-form{
+  width:88% !important;
+}
+@media only screen 
+and (max-width : 767px){
+  .priority-img {
+    position: relative;
+    left: 4.78rem;
+    top: -6rem;
+    border-top-right-radius: 17px;
+    width: 30px;
+    height: 30px;
+  }
+  .l-close,.l-open{
+      position: relative;
+      top: -4rem;
+  }
+  .star-bar{
+    position: relative;
+    top: -4.5rem;
+  }
+  .select select option{
+      width: auto;
+      font-size: .65rem !important;
+      padding: 0px;
+  }
+  .hospitaltype span {
+      font-size: 8px;
+  }
+  .l-review-img{
+    width:20% !important;
+  }
+  .l-review-form{
+    width:80% !important;
+  }
 }

@@ -115,7 +115,9 @@ function countFormat($num) {
   <!--link rel="stylesheet" href="mummy/styles/mummystyle.css"-->
   <!--script src="/script/weather.js" defer></script-->
   <script data-ad-client="ca-pub-6640694817095655" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <amp-auto-ads type="adsense" data-ad-client="ca-pub-6640694817095655"></amp-auto-ads>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.8/dist/sweetalert2.all.min.js"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6640694817095655" crossorigin="anonymous"></script>
 
 <style>
   .active {
@@ -308,7 +310,7 @@ and (min-width : 992px){
             <li class="nav-item">
                 <a href="hospital" class="nav-link d-flex flex-column">
                     <i class="icofont-share" style="font-size:25px"></i>
-                    <span class="d-sm-inline" style="font-size:smaller;">MP&nbsp;Directory</span>
+                    <span class="d-sm-inline" style="font-size:smaller;">MP&nbsp;Connect</span>
                 </a>
             </li>
             <li class="nav-item" id="community">
@@ -373,7 +375,7 @@ and (min-width : 992px){
             <li class="nav-item">
                 <a href="hospital" class="nav-link d-flex flex-column">
                     <i class="icofont-share" style="font-size:22px"></i>
-                    <span class="d-sm-inline" style="font-size:10px;">MP&nbsp;Directory</span>
+                    <span class="d-sm-inline" style="font-size:10px;">MP&nbsp;Connect</span>
                 </a>
             </li>
             <li class="nav-item" id="community">

@@ -240,6 +240,14 @@
 	iframe{
 		width: 100% !important;
 	}
+	.zoom:hover {
+		-ms-transform: scale(4.5); /* IE 9 */
+		-webkit-transform: scale(4.5); /* Safari 3-8 */
+		transform: scale(4.5); 
+		position: relative;
+    z-index: 1000;
+	}
+
 </style>
 <div class="content">
 	<section class="main-content-sec">
@@ -327,9 +335,9 @@
 								    <div class="col-4 col-md-3"><img src="directory/'. $type .'/'.$row["logo"].'" class="img-fluid l-main-logo"></div>
 								    <div class="col-5 col-md-6">';
 								         if (!empty($row1['name']) && $row1['name'] != 0) {
-											echo '<p class="typename mb-0">' . $row1['name'] . ' - ' . $row['name'] . '</p>';
+											echo '<p class="typename mb-0 text-capitalize">' . $row1['name'] . ' - ' . $row['name'] . '</p>';
 										} else {
-											echo '<p class="typename mb-0">' . $row['name'] . '</p>';
+											echo '<p class="typename mb-0 text-capitalize">' . $row['name'] . '</p>';
 										}
 										
 										 if(!empty($speciality)){
@@ -371,7 +379,7 @@
 										}
 									echo '</div>';
 										
-								    echo '<div class="col-3 col-md-3 position-relative">';
+								    echo '<div class="col-md-3 position-relative">';
 								        if (isset($row['type']) && !empty($row['type'])){
 
 											echo '<p class="mptype position-absolute" style="right:10px"><span>'.$row['type'].'</span></p><br>';
@@ -473,7 +481,7 @@
 													<p class="small mb-0">'.$typequalification.'</p>
 												</div>
 											</div>
-											<div class="col-sm-5 d-flex align-items-center justify-content-end">
+											<div class="col-sm-5 d-flex align-items-center justify-content-sm-end">
 												<div>
 													<p class="small mb-0"><span class="font-weight-bold">Since :</span> '.$establishment.'</p>
 													<p class="small mb-0"><span class="font-weight-bold">Register No :</span> '.$registraion_no.' </p>
@@ -485,7 +493,7 @@
 											$certificateArray = explode(',', $certificate);
 											$certificateHtml = '<ul class="list-unstyled">';
 											foreach ($certificateArray as $certificate) {
-												$certificateHtml .= '<li><img class="certificate-img" src="directory/'. $type .'/'. trim($certificate) .'"></li>';
+												$certificateHtml .= '<li><img class="certificate-img zoom" src="directory/'. $type .'/'. trim($certificate) .'"></li>';
 											}
 											$certificateHtml .= '</ul>';
 											
@@ -510,7 +518,7 @@
 					<div id="commentspost" style="margin:0.5rem 0rem;">
 						<div class="row p-2 fillbg l-border-radius" style="text-align:end; flex-flow: wrap">
 							<p  class="heading text-left mt-1" style="margin:0.5rem 0 1rem;font-weight:bold; font-size:12px">REVIEW&nbsp;<span id="commentcount"><?php //echo $countrow;?></span></p>
-							<div class="p-0" style="width:12%">
+							<div class="p-0 l-review-img">
 								<?php
 									if(!isset($_SESSION['name'])){
 										echo '<img src="assets/images/MP-comment-icon.png" class="img-fluid" style="border-radius: 50%;  width:4rem; height: 4rem; border:1px solid #C7C7C7">';
@@ -522,7 +530,7 @@
 									}
 									?>
 							</div>
-							<div class="" style="width:88%">
+							<div class="l-review-form">
 								<form method="POST" action="ajax/mp_review" id="reviewform">
 									<input type="hidden" name="typeid" value="<?php echo $typeid;?>">
 									<input type="hidden" name="email" value="<?php echo $userid;?>">
@@ -553,7 +561,7 @@
 					<div id="commentspost" style="margin:0.5rem 0rem;">
 						<div class="row p-2 fillbg l-border-radius" style="text-align:end; flex-flow: wrap">
 							<p  class="heading text-left mt-1" style="margin:0.5rem 0 1rem;font-weight:bold; font-size:12px">REVIEW&nbsp;<span id="commentcount"><?php //echo $countrow;?></span></p>
-							<div class="p-0" style="width:12%">
+							<div class="p-0 l-review-img">
 								<?php
 									if(!isset($_SESSION['name'])){
 										echo '<img src="assets/images/MP-comment-icon.png" class="img-fluid" style="border-radius: 50%;  width:4rem; height: 4rem; border:1px solid #C7C7C7">';
@@ -565,7 +573,7 @@
 									}
 									?>
 							</div>
-							<div class="" style="width:88%">
+							<div class="l-review-form">
 								<form method="POST" action="ajax/mp_review" id="reviewform">
 									<input type="hidden" name="typeid" value="<?php echo $typeid;?>">
 									<input type="hidden" name="email" value="<?php echo $userid;?>">
@@ -777,7 +785,7 @@
 	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
 			<div class="text-center py-1 bg-dark">
-				<p class="h5 text-white mb-0"><?php echo $row['name'] . " Gallery"; ?></p>
+				<p class="h5 text-white mb-0 text-capitalize"><?php echo $row['name'] . " Gallery"; ?></p>
 			</div>
 			<div class="modal-body p-0">
 				<div id="galcarousel" class="carousel slide" data-ride="carousel">

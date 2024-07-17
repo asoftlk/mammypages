@@ -14,8 +14,6 @@
 	color:#666666;
 	}
 	.hospitaltype span{
-	/* background-color: #000;
-	color: #fff; */
 	padding: 2px 1px;
 	margin-left: 2px;
 	text-transform: uppercase;
@@ -238,6 +236,12 @@
 	iframe{
 		width: 100% !important;
 	}
+	@media only screen 
+		and (max-width : 767px){
+		.hospitaltype span {
+			font-size: 8px;
+		}
+		}
 </style>
 <div class="content">
 	<section class="main-content-sec">
@@ -249,8 +253,8 @@
 							<?php include "sidebar.php"; ?>
 							<div class="client-sec mb"><a class="client-btn">Sponsors</a></div>
 						</div>
-						<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-						<!-- home -->
+						<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6640694817095655" crossorigin="anonymous"></script>
+						<!-- Square -->
 						<ins class="adsbygoogle"
 							style="display:block"
 							data-ad-client="ca-pub-6640694817095655"
@@ -354,24 +358,24 @@
 										
 								    echo '<div class="col-3 col-md-3 position-relative">
 								        <p class="hospitaltype position-absolute" style="right:10px"><span>'.$row['type'].'</span></p><br>
-								        <div class="d-flex float-right">';
-										echo !empty($row['facebook']) ?  '<a href="'.$row["facebook"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-facebook p-1"></i></a>&nbsp;':"";
-										echo !empty($row['instagram']) ?  '<a href="'.$row["instagram"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-instagram p-1"></i></a>&nbsp;':"";
-										echo !empty($row['linkedin']) ?  '<a href="'.$row["linkedin"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-linkedin p-1"></i></a>&nbsp;':"";
-										echo !empty($row['youtube']) ?  '<a href="'.$row["youtube"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-youtube p-1"></i></a>&nbsp;':"";
-										echo '<div class="dropup d-flex header-settings"> 
-										<a href="#" class="nav-link p-1" data-toggle="dropdown" style="display:flex; text-decoration:none; color:black"><i class="bi bi-share"  style=""></i></a> 
-										<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" style="" > 
-											<div class="d-flex" >
-												<a class="dropdown-item d-flex"  href=""><img src="assets/images/MP-Favi.png" style="width:32px; height:30px;"></a>
-												<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://www.facebook.com/sharer/sharer.php?u='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/Facebook.png" style="width:32px; height:30px;"></a> 
-												<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://twitter.com/intent/tweet?url='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;"href=""><img src="assets/images/Twitter.png" style="width:32px; height:30px;"></a> 
-												<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://www.linkedin.com/shareArticle?mini=true&url='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/linkedin.png" style="width:32px; height:30px;"></a> 
-												<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://telegram.me/share/url?url='.$urltelegram.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/telegram.png" style="width:32px; height:30px;"></a> 
-												<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://api.whatsapp.com/send?text='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/Whatsapp.png" style="width:32px; height:30px;"></a> 
+								        <div class="desktopview d-flex float-right">';
+											echo !empty($row['facebook']) ?  '<a href="'.$row["facebook"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-facebook p-1"></i></a>&nbsp;':"";
+											echo !empty($row['instagram']) ?  '<a href="'.$row["instagram"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-instagram p-1"></i></a>&nbsp;':"";
+											echo !empty($row['linkedin']) ?  '<a href="'.$row["linkedin"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-linkedin p-1"></i></a>&nbsp;':"";
+											echo !empty($row['youtube']) ?  '<a href="'.$row["youtube"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-youtube p-1"></i></a>&nbsp;':"";
+											echo '<div class="dropup d-flex header-settings"> 
+											<a href="#" class="nav-link p-1" data-toggle="dropdown" style="display:flex; text-decoration:none; color:black"><i class="bi bi-share"  style=""></i></a> 
+											<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" style="" > 
+												<div class="d-flex" >
+													<a class="dropdown-item d-flex"  href=""><img src="assets/images/MP-Favi.png" style="width:32px; height:30px;"></a>
+													<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://www.facebook.com/sharer/sharer.php?u='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/Facebook.png" style="width:32px; height:30px;"></a> 
+													<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://twitter.com/intent/tweet?url='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;"href=""><img src="assets/images/Twitter.png" style="width:32px; height:30px;"></a> 
+													<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://www.linkedin.com/shareArticle?mini=true&url='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/linkedin.png" style="width:32px; height:30px;"></a> 
+													<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://telegram.me/share/url?url='.$urltelegram.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/telegram.png" style="width:32px; height:30px;"></a> 
+													<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://api.whatsapp.com/send?text='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/Whatsapp.png" style="width:32px; height:30px;"></a> 
+												</div>
 											</div>
-										</div>
-										</div>';
+											</div>';
 											$followstatus = mysqli_query($conn, "SELECT * FROM mp_comments WHERE userid='$userid' AND mp_id='{$row['hospital_id']}' AND follow_status=1");
 											$followstatusrow = mysqli_fetch_array($followstatus);
 
@@ -385,7 +389,38 @@
 												echo '<button class="btn btn-success followbtn" value="'.$row["hospital_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
 											}
 									echo '</div>
-								</div>
+									</div>
+									<div class="mobileview d-flex float-left mb-2">';
+											echo !empty($row['facebook']) ?  '<a href="'.$row["facebook"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-facebook p-1"></i></a>&nbsp;':"";
+											echo !empty($row['instagram']) ?  '<a href="'.$row["instagram"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-instagram p-1"></i></a>&nbsp;':"";
+											echo !empty($row['linkedin']) ?  '<a href="'.$row["linkedin"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-linkedin p-1"></i></a>&nbsp;':"";
+											echo !empty($row['youtube']) ?  '<a href="'.$row["youtube"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-youtube p-1"></i></a>&nbsp;':"";
+											echo '<div class="dropup d-flex header-settings"> 
+											<a href="#" class="nav-link p-1" data-toggle="dropdown" style="display:flex; text-decoration:none; color:black"><i class="bi bi-share"  style=""></i></a> 
+											<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" style="" > 
+												<div class="d-flex" >
+													<a class="dropdown-item d-flex"  href=""><img src="assets/images/MP-Favi.png" style="width:32px; height:30px;"></a>
+													<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://www.facebook.com/sharer/sharer.php?u='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/Facebook.png" style="width:32px; height:30px;"></a> 
+													<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://twitter.com/intent/tweet?url='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;"href=""><img src="assets/images/Twitter.png" style="width:32px; height:30px;"></a> 
+													<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://www.linkedin.com/shareArticle?mini=true&url='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/linkedin.png" style="width:32px; height:30px;"></a> 
+													<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://telegram.me/share/url?url='.$urltelegram.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/telegram.png" style="width:32px; height:30px;"></a> 
+													<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://api.whatsapp.com/send?text='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/Whatsapp.png" style="width:32px; height:30px;"></a> 
+												</div>
+											</div>
+											</div>';
+											$followstatus = mysqli_query($conn, "SELECT * FROM mp_comments WHERE userid='$userid' AND mp_id='{$row['hospital_id']}' AND follow_status=1");
+											$followstatusrow = mysqli_fetch_array($followstatus);
+
+											if ($followstatusrow && isset($followstatusrow['follow_status'])) {
+												if ($followstatusrow['follow_status'] == 0) {
+													echo '<button class="btn btn-success followbtn ml-2" value="'.$row["hospital_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
+												} else {
+													echo '<button class="btn btn-secondary followbtn ml-2" value="'.$row["hospital_id"].'" style="font-size: 13px; padding: 0 5px;">Following</button>';
+												}
+											} else {
+												echo '<button class="btn btn-success followbtn ml-2" value="'.$row["hospital_id"].'" style="font-size: 13px; padding: 0 5px;">Follow</button>';
+											}
+									echo '</div>
 								</div>';
 									echo '<div class="row fillbg mt-1 l-border-radius py-2">
 									        <h5 class="heading mt-1" style="font-weight:bold; font-size:12px">ABOUT HOSPITAL';
@@ -440,7 +475,7 @@
 					<div id="commentspost" style="margin:0.5rem 0rem;">
 						<div class="row p-2 fillbg l-border-radius" style="text-align:end; flex-flow: wrap">
 							<p  class="heading text-left mt-1" style="margin:0.5rem 0 1rem;font-weight:bold; font-size:12px">REVIEW&nbsp;<span id="commentcount"><?php //echo $countrow;?></span></p>
-							<div class="p-0" style="width:12%">
+							<div class="p-0 l-review-img">
 								<?php
 									if(!isset($_SESSION['name'])){
 										echo '<img src="assets/images/MP-comment-icon.png" class="img-fluid" style="border-radius: 50%;  width:4rem; height: 4rem; border:1px solid #C7C7C7">';
@@ -452,7 +487,7 @@
 									}
 									?>
 							</div>
-							<div class="" style="width:88%">
+							<div class="l-review-form" >
 								<form method="POST" action="ajax/mp_review" id="reviewform">
 									<input type="hidden" name="typeid" value="<?php echo $typeid;?>">
 									<input type="hidden" name="email" value="<?php echo $userid;?>">
@@ -483,7 +518,7 @@
 					<div id="commentspost" style="margin:0.5rem 0rem;">
 						<div class="row p-2 fillbg l-border-radius" style="text-align:end; flex-flow: wrap">
 							<p  class="heading text-left mt-1" style="margin:0.5rem 0 1rem;font-weight:bold; font-size:12px">REVIEW&nbsp;<span id="commentcount"><?php //echo $countrow;?></span></p>
-							<div class="p-0" style="width:12%">
+							<div class="p-0 l-review-img">
 								<?php
 									if(!isset($_SESSION['name'])){
 										echo '<img src="assets/images/MP-comment-icon.png" class="img-fluid" style="border-radius: 50%;  width:4rem; height: 4rem; border:1px solid #C7C7C7">';
@@ -495,7 +530,7 @@
 									}
 									?>
 							</div>
-							<div class="" style="width:88%">
+							<div class="l-review-form" style="width:88%">
 								<form method="POST" action="ajax/mp_review" id="reviewform">
 									<input type="hidden" name="typeid" value="<?php echo $row["hospital_id"]?>">
 									<input type="hidden" name="email" value="<?php echo $userid;?>">
@@ -595,7 +630,7 @@
 							?>
 					</div>
 				</div>
-				<div class="col-md-3">
+				<div class="col-md-3 mt-3 mt-sm-0">
 					<div class="right-cont-part">
 						<div class="card l-border-radius">
 							<?php	if(strpos($row["map"], 'iframe')){

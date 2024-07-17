@@ -121,7 +121,7 @@ include "../mp.php";
                     </select>
                 </label>
                 <label class="select">
-                    <select name="type" class="filter-box" id="type">
+                    <select name="type" class="filter-box form-select form-select-sm" id="type">
                         <option value="">Select type</option>
                         <?php
                             $typeQuery = mysqli_query($conn, "SELECT DISTINCT type FROM midwife");
@@ -135,7 +135,7 @@ include "../mp.php";
                     </select>
                 </label>
                 <label class="select">
-                    <select name="city"  class="filter-box" id="city">
+                    <select name="city"  class="filter-box form-select form-select-sm" id="city">
                         <option value="">Select City</option>
                         <?php
                             $cityQuery = mysqli_query($conn, "SELECT DISTINCT city FROM midwife");
@@ -181,7 +181,7 @@ include "../mp.php";
                             </div>
 							<div class="d-flex">
 							<p class="text">&nbsp;'.$speciality.'</P>
-							<div class="ml-auto">';
+							<div class="ml-auto star-bar">';
 							
 							$ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$row[midwife_id]'");
 							$ratingrow = mysqli_fetch_assoc($ratingquery);
@@ -357,7 +357,7 @@ include "../mp.php";
                             var encodedName = encodeURIComponent(midwife.name.replace(/\s+/g, '_'));
                             var midwifeId = midwife.midwife_id;
                             
-                            html += '<div class="row m-0" style="border-bottom: 1px solid #f4f4f4;">';
+                            html += '<div class="row m-0 sort-item">';
                             html += '<div class="col-md-3" style="margin:auto">';
                             html += '<a href="mpconnect/midwife/' + encodedName + '">';
                             html += '<img src="directory/midwife/' + midwife.logo + '" class="img-fluid" style="max-height:5rem"></a>';

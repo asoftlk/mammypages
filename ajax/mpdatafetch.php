@@ -21,9 +21,9 @@ if(mysqli_num_rows($result) > 0)
 			$openTime = $row[$currentDay . '_open'];
 			$closeTime = $row[$currentDay . '_close'];
             if($type !== 'doctor') {
-                $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1" style="float:right">Open</span>' : '<span class="text-danger text mr-1" style="float:right">Closed</span>';
+                $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1 " style="float:right">Open</span>' : '<span class="text-danger text mr-1" style="float:right">Closed</span>';
             } else {
-                $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1" style="float:right">Available</span>' : '<span class="text-danger text mr-1" style="float:right">Not Available</span>';
+                $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1 " style="float:right">Available</span>' : '<span class="text-danger text mr-1" style="float:right">Not Available</span>';
             }
 
 			if (isset($row['main_id']) && !empty($row['main_id']) && $row['main_id'] != 0) {
@@ -48,8 +48,8 @@ if(mysqli_num_rows($result) > 0)
 								<img src="directory/'.$type.'/'.$row['logo'].'" class="img-fluid" style="max-height:5rem">
 							</div>
 							</div>
-							<div class="col-md-9 pl-0" style="margin:1rem 0">
-								<div style="float:right">
+							<div class="col-md-9 pl-2 pl-sm-0" style="margin:1rem 0">
+								<div style="float:right" class="star-bar">
 								<strong>' . $isOpen . '</strong><br>';
 									$ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$row[$id_column]'");
 									$ratingrow = mysqli_fetch_assoc($ratingquery);
@@ -76,13 +76,17 @@ if(mysqli_num_rows($result) > 0)
 							$output .= '</div><p class="text-heading">&nbsp;'.$type_name.'</p>
 							<p class="text">&nbsp;'.$speciality.'</P>
 							<div class="d-flex justify-content-between">
-							<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           
-										<form action="mpconnect/'.$type.'/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
-								<input type="hidden" name="' . $type . '_id" value="' . $row[$type . '_id'] . '">
-								<button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;'.$type.'</button>
+								<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           
+									<form class="desktopview" action="mpconnect/'.$type.'/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
+									<input type="hidden" name="' . $type . '_id" value="' . $row[$type . '_id'] . '">
+									<button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;'.$type.'</button>
 								</form>
 								
 							</div>
+								<form class="mobileview mt-2" action="mpconnect/'.$type.'/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
+									<input type="hidden" name="' . $type . '_id" value="' . $row[$type . '_id'] . '">
+									<button type="submit" class="btn btn-success p-1 mt-2" style="font-size:12px; height:28px">View&nbsp;'.$type.'</button>
+								</form>
 						</div>   
 						</div>';  
 	}  
