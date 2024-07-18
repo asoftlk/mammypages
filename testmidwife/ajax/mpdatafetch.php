@@ -27,7 +27,7 @@ if(mysqli_num_rows($result) > 0)
                <div class="row m-0 sort-item">
 							<div class="col-md-3" style="margin:auto">
 							<div>
-								<a href="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $row["name"])).'"><img src="directory/'.$type.'/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>
+								<a href="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $row["name"])).'"><img src="directory/'.$type.'/'.$row['logo'].'" class="img-fluid sort-item-img" style="max-height:5rem"></a>
 							</div>
 							</div>
 							<div class="col-md-9 pl-0" style="margin:1rem 0">

@@ -131,17 +131,17 @@
 									
 			
 								echo '<div class="row m-0 priority-list sort-item">
-										<div class="col-md-3" style="margin:auto">
+										<div class="col-md-2" style="margin:auto">
 										<div>
-											<img src="directory/hospital/'.$row['logo'].'" class="img-fluid" style="max-height:5rem">
+											<img src="directory/hospital/'.$row['logo'].'" class="img-fluid sort-item-img" style="max-height:5rem">
 										</div>
 										</div>
-										<div class="col-md-9 pl-2 pl-sm-0" style="margin:1rem 0">
+										<div class="col-md-10 pl-2 pl-sm-0" style="margin:1rem 0">
 										<div class="d-flex">
 											<p class="text">
 												<p class="text-heading">&nbsp;'.$row['name'].'</p>
 												<img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
-												<strong>' . $isOpen . '</strong>
+												<span class="ml-auto"><strong>' . $isOpen . '</strong></span>
 										</div>
 										<div class="d-flex">
 										<p class="text">&nbsp;'.$speciality.'</P>
@@ -324,11 +324,11 @@
         //                     var hospitalId = hospital.hospital_id;
 	                        
 	    //                     html += '<div class="row m-0" style="border-bottom: 8px solid #f4f4f4;">';
-	    //                     html += '<div class="col-md-3" style="margin:auto">';
+	    //                     html += '<div class="col-md-2" style="margin:auto">';
 	    //                     html += '<a href="mpconnect/hospital/' + encodedName + '">';  
 	    //                     html += '<img src="directory/hospital/' + hospital.logo + '" class="img-fluid" style="max-height:5rem"></a>';
 	    //                     html += '</div>';
-	    //                     html += '<div class="col-md-9 pl-0" style="margin:1rem 0">';
+	    //                     html += '<div class="col-md-10 pl-0" style="margin:1rem 0">';
 	    //                     html += '<div class="d-flex">';
 	    //                     html += '<p class="text"><a href="mpconnect/hospital/' + encodedName + '" class="namehref">';
 	    //                     html += '<p class="text-heading">&nbsp;' + hospital.name + '</p></a>';
@@ -407,10 +407,10 @@
                             var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success text mt-2 mr-1 l-open">Open</span>' : '<span class="text-danger text mt-2 mr-1 l-close">Closed</span>';
 
                             html += '<div class="row m-0 sort-item">';
-                            html += '<div class="col-md-3" style="margin:auto">';
+                            html += '<div class="col-md-2" style="margin:auto">';
                             html += '<img src="directory/hospital/' + hospital.logo + '" class="img-fluid" style="max-height:5rem">';
                             html += '</div>';
-                            html += '<div class="col-md-9 pl-2 pl-sm-0" style="margin:1rem 0">';
+                            html += '<div class="col-md-10 pl-2 pl-sm-0" style="margin:1rem 0">';
                             html += '<div class="d-flex">';
                             html += '<p class="text">';
                             if (hospital.priority > 0) {

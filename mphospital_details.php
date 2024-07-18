@@ -301,7 +301,7 @@
 						}
 						if((mysqli_num_rows($hospital)>0)){
 							$url=urlencode('https://www.mammypages.com/mpconnect/hospital/'.$passName);
-							$urltelegram=urlencode('https://www.mammypages.com/mpdetails?type=Hospital&id='.$row["hospital_id"].'&text='.$row["name"]);
+							$urltelegram=urlencode('https://www.mammypages.com/hospital/'.$passName);
 						echo '<div class="row fillbg l-border-radius-top">
 								<div class="text-center p-0">
 								<img src="directory/hospital/'.$row["image"].'" class="img-fluid mb-2" style="width:100%; max-height:250px; border-radius: 15px;">
@@ -361,6 +361,7 @@
 								        <p class="hospitaltype position-absolute" style="right:10px"><span>'.$row['type'].'</span></p><br>
 								        <div class="desktopview d-flex float-right">';
 											echo !empty($row['facebook']) ?  '<a href="'.$row["facebook"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-facebook p-1"></i></a>&nbsp;':"";
+											echo !empty($row['facebook']) ?  '<a href="#" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-tiktok p-1"></i></a>&nbsp;':"";
 											echo !empty($row['instagram']) ?  '<a href="'.$row["instagram"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-instagram p-1"></i></a>&nbsp;':"";
 											echo !empty($row['linkedin']) ?  '<a href="'.$row["linkedin"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-linkedin p-1"></i></a>&nbsp;':"";
 											echo !empty($row['youtube']) ?  '<a href="'.$row["youtube"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-youtube p-1"></i></a>&nbsp;':"";
@@ -368,7 +369,6 @@
 											<a href="#" class="nav-link p-1" data-toggle="dropdown" style="display:flex; text-decoration:none; color:black"><i class="bi bi-share"  style=""></i></a> 
 											<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" style="" > 
 												<div class="d-flex" >
-													<a class="dropdown-item d-flex"  href=""><img src="assets/images/MP-Favi.png" style="width:32px; height:30px;"></a>
 													<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://www.facebook.com/sharer/sharer.php?u='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/Facebook.png" style="width:32px; height:30px;"></a> 
 													<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://twitter.com/intent/tweet?url='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;"href=""><img src="assets/images/Twitter.png" style="width:32px; height:30px;"></a> 
 													<a class="dropdown-item d-flex" onClick="MyWindow=window.open(\'https://www.linkedin.com/shareArticle?mini=true&url='.$url.'\',\'MyWindow\',\'width=600,height=400\'); return false;" href=""><img src="assets/images/linkedin.png" style="width:32px; height:30px;"></a> 

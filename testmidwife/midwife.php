@@ -171,7 +171,7 @@ include "../mp.php";
 					echo '<div class="row m-0 priority-list sort-item">
 							<div class="col-md-3" style="margin:auto">
 							<div>
-								<a href="mpconnect/midwife/' .urlencode(str_replace(' ', '_', $row["name"])). '"><img src="directory/midwife/'.$row['logo'].'" class="img-fluid" style="max-height:5rem"></a>
+								<a href="mpconnect/midwife/' .urlencode(str_replace(' ', '_', $row["name"])). '"><img src="directory/midwife/'.$row['logo'].'" class="img-fluid sort-item-img" style="max-height:5rem"></a>
 							</div>
 							</div>
 							<div class="col-md-9 pl-0" style="margin:1rem 0">
