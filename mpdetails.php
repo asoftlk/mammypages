@@ -277,10 +277,12 @@
 						$type = isset($_GET['type']) ? mysqli_real_escape_string($conn, $_GET['type']) : '';
                         $id = isset($_POST[$type . '_id']) ? $_POST[$type . '_id'] : '';
                         $name = isset($_GET['name']) ? mysqli_real_escape_string($conn, str_replace('_', ' ', $_GET['name'])) : '';
+                        $passName = isset($_GET['name']) ? $_GET['name']:"";
 						if (!empty($type) && !empty($name)) {
 							$tablegallery_name = "mp" . $type . "_gallery";
 							$id_column = $type . '_id';
-                            $query = "SELECT * FROM `$type` AS h INNER JOIN `" . $type . "_working_times` AS hwt ON hwt.`" . $type . "_id` = h.`" . $type . "_id` WHERE h.`" . $type . "_id` = '$id'";
+                            $query = "SELECT * FROM `$type` AS h INNER JOIN `" . $type . "_working_times` AS hwt ON hwt.`" . $type . "_id` = h.`" . $type . "_id` WHERE h.name = '$name'";
+                            
 							$typequery = mysqli_query($conn, $query);
 						}		
             				
@@ -323,7 +325,7 @@
 							$targetUrl = $type;
 						}
 						if(($type == $type) && (mysqli_num_rows($typequery)>0)){
-							$url=urlencode('https://www.mammypages.com/mpstudio_details?type=studio&id='.$row["$id_column"]);
+							$url=urlencode('https://www.mammypages.com/'.$type.'/'.$passName);
 							$urltelegram=urlencode('https://www.mammypages.com/mpstudio_details?type=studio&id='.$row["$id_column"].'&text='.$row["name"]);
 						echo '<div class="row fillbg l-border-radius-top">
 								<div class="text-center p-0">

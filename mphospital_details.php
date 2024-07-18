@@ -269,8 +269,9 @@
 				<div class="col-md-6">
 					<?php 
                         $id = isset($_POST['hospital_id']) ? $_POST['hospital_id'] : '';
+                        $passName = isset($_GET['name']) ? $_GET['name']:"";
                         $name = isset($_GET['name']) ? mysqli_real_escape_string($conn, str_replace('_', ' ', $_GET['name'])) : '';
-						$hospital =mysqli_query($conn, "SELECT * FROM hospital h INNER JOIN hospital_working_times hwt ON hwt.hospital_id = h.hospital_id  WHERE h.hospital_id= '$id'");				
+						$hospital =mysqli_query($conn, "SELECT * FROM hospital h INNER JOIN hospital_working_times hwt ON hwt.hospital_id = h.hospital_id  WHERE h.name= '$name'");				
 						$row= mysqli_fetch_array($hospital);
 						$specialityarray = explode(" ///", $row['speciality']);
 						$speciality = "";
@@ -299,7 +300,7 @@
 							}			
 						}
 						if((mysqli_num_rows($hospital)>0)){
-							$url=urlencode('https://www.mammypages.com/mpdetails?type=Hospital&id='.$row["hospital_id"]);
+							$url=urlencode('https://www.mammypages.com/mpconnect/hospital/'.$passName);
 							$urltelegram=urlencode('https://www.mammypages.com/mpdetails?type=Hospital&id='.$row["hospital_id"].'&text='.$row["name"]);
 						echo '<div class="row fillbg l-border-radius-top">
 								<div class="text-center p-0">

@@ -172,12 +172,12 @@
 										<div class="d-flex justify-content-between">
                                             <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</p>                           
                                             
-                                            <form class="desktopview" action="mpconnect/hospital/' . urlencode(str_replace(' ', '', $row["name"])) . '" method="post" style="display:inline;">
+                                            <form class="desktopview" action="mpconnect/hospital/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
                                             <input type="hidden" name="hospital_id" value="' . $row["hospital_id"] . '">
                                             <button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Hospital</button>
                                             </form>
                                             </div>
-											 <form class="mobileview" action="mpconnect/hospital/' . urlencode(str_replace(' ', '', $row["name"])) . '" method="post" style="display:inline;">
+											 <form class="mobileview" action="mpconnect/hospital/' . urlencode(str_replace(' ', '_', $row["name"])) . '" method="post" style="display:inline;">
                                             <input type="hidden" name="hospital_id" value="' . $row["hospital_id"] . '">
                                             <button type="submit" class="btn btn-success p-1 mt-2" style="font-size:12px; height:28px">View&nbsp;Hospital</button>
                                             </form>
