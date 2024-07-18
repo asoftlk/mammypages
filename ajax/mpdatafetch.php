@@ -73,7 +73,7 @@ if(mysqli_num_rows($result) > 0)
 								}
                                 $speciality = isset($row['speciality']) ? $row['speciality'] : '';
 
-							$output .= '</div><p class="text-heading">&nbsp;'.$type_name.'</p>
+							$output .= '</div><p class="text-heading text-capitalize">&nbsp;'.$type_name.'</p>
 							<p class="text">&nbsp;'.$speciality.'</P>
 							<div class="d-flex justify-content-between">
 								<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           

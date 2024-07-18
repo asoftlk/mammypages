@@ -45,7 +45,7 @@ if(mysqli_num_rows($result) > 0)
     								}
     								$rating=$rating-1;									
     							}
-							$output .= '</div><a href="mpdetails.php?type=doctor&id='.$row["doctor_id"].'" style=" text-decoration: none ;color:black" class="namehref"><p class="text-heading">&nbsp;'.$row["name"].'</p></a>
+							$output .= '</div><a href="mpdetails.php?type=doctor&id='.$row["doctor_id"].'" style=" text-decoration: none ;color:black" class="namehref"><p class="text-heading text-capitalize">&nbsp;'.$row["name"].'</p></a>
 							<div class="d-flex">
 							
 						<p class="text">&nbsp;'.$row["qualification"].'</P>

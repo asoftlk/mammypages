@@ -181,7 +181,7 @@ include "mp.php";
 							</div>
 							<div class="col-md-10 pl-2 pl-sm-0" style="margin:1rem 0">
 							<div class="d-flex">
-                            <p class="text"><p class="text-heading">&nbsp;'.$type_name_head.'</p>
+                            <p class="text"><p class="text-heading text-capitalize">&nbsp;'.$type_name_head.'</p>
                                 <img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
                                 <span class="ml-auto"><strong>' . $isOpen . '</strong></span>
                             </div>
@@ -381,7 +381,7 @@ include "mp.php";
                             html += '<p class="text">';
                         
                             if (saloon.priority > 0) {
-								html += '<p class="text-heading">&nbsp;' + saloon.typeName + '</p>';
+								html += '<p class="text-heading text-capitalize">&nbsp;' + saloon.typeName + '</p>';
                                 html += '<img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }

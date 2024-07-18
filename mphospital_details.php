@@ -312,9 +312,9 @@
 								    <div class="col-4 col-md-3"><img src="directory/hospital/'.$row["logo"].'" class="img-fluid l-main-logo"></div>
 								    <div class="col-5 col-md-6">';
 										if (!empty($row1['name']) && $row1['name'] != 0) {
-											echo '<p class="typename mb-0">' . $row1['name'] . ' - ' . $row['name'] . '</p>';
+											echo '<p class="typename mb-0 text-capitalize">' . $row1['name'] . ' - ' . $row['name'] . '</p>';
 										} else {
-											echo '<p class="typename mb-0">' . $row['name'] . '</p>';
+											echo '<p class="typename mb-0 text-capitalize">' . $row['name'] . '</p>';
 										}
 								        if(!empty($speciality)){
 											echo '<p class="mb-0">'.$speciality.'</p>';

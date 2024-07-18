@@ -176,7 +176,7 @@ include "../mp.php";
 							</div>
 							<div class="col-md-9 pl-0" style="margin:1rem 0">
 							<div class="d-flex">
-                            <p class="text"><a href="mpconnect/midwife/' .urlencode(str_replace(' ', '_', $row["name"])). '" class="namehref"><p class="text-heading">&nbsp;'.$row["name"].'</p></a>
+                            <p class="text"><a href="mpconnect/midwife/' .urlencode(str_replace(' ', '_', $row["name"])). '" class="namehref"><p class="text-heading text-capitalize">&nbsp;'.$row["name"].'</p></a>
                                 <img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
                             </div>
 							<div class="d-flex">
@@ -365,7 +365,7 @@ include "../mp.php";
                             html += '<div class="col-md-9 pl-0" style="margin:1rem 0">';
                             html += '<div class="d-flex">';
                             html += '<p class="text"><a href="mpconnect/midwife/' + encodedName + '" class="namehref">';
-                            html += '<p class="text-heading">&nbsp;' + midwife.name + '</p></a>';
+                            html += '<p class="text-heading text-capitalize">&nbsp;' + midwife.name + '</p></a>';
                             if (midwife.priority > 0) {
                                 html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
                                 

@@ -155,7 +155,7 @@ include "mp.php";
 							</div>
 							<div class="col-md-10 pl-0" style="margin:1rem 0">
 							<div class="d-flex">
-                            <p class="text"><p class="text-heading">&nbsp;'.$row["name"].'</p>
+                            <p class="text"><p class="text-heading text-capitalize">&nbsp;'.$row["name"].'</p>
                                 <img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
                                 <span class="ml-auto"><strong>' . $isOpen . '</strong></span>
                             </div>
@@ -335,7 +335,7 @@ include "mp.php";
                             html += '<div class="col-md-10 pl-0" style="margin:1rem 0">';
                             html += '<div class="d-flex">';
                             html += '<p class="text">';
-                            html += '<p class="text-heading">&nbsp;' + doctor.name + '</p>';
+                            html += '<p class="text-heading text-capitalize">&nbsp;' + doctor.name + '</p>';
                             if (doctor.priority > 0) {
                                 html += '<img src="assets/images/Paid.png" class="ml-auto priority-img " data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
                                 

@@ -52,7 +52,7 @@ if(mysqli_num_rows($result) > 0)
     								}
     								$rating=$rating-1;									
     							}
-							$output .= '</div><a href="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $row["name"])).'" class="namehref"><p class="text-heading">&nbsp;'.$row["name"].'</p></a>
+							$output .= '</div><a href="mpconnect/'.$type.'/'.urlencode(str_replace(' ', '_', $row["name"])).'" class="namehref"><p class="text-heading text-capitalize">&nbsp;'.$row["name"].'</p></a>
 							<p class="text">&nbsp;'.$speciality.'</P>
 							<div class="d-flex justify-content-between">
                             <p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           

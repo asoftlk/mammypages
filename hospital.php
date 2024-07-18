@@ -139,7 +139,7 @@
 										<div class="col-md-10 pl-2 pl-sm-0" style="margin:1rem 0">
 										<div class="d-flex">
 											<p class="text">
-												<p class="text-heading">&nbsp;'.$row['name'].'</p>
+												<p class="text-heading text-capitalize">&nbsp;'.$row['name'].'</p>
 												<img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
 												<span class="ml-auto"><strong>' . $isOpen . '</strong></span>
 										</div>
@@ -331,7 +331,7 @@
 	    //                     html += '<div class="col-md-10 pl-0" style="margin:1rem 0">';
 	    //                     html += '<div class="d-flex">';
 	    //                     html += '<p class="text"><a href="mpconnect/hospital/' + encodedName + '" class="namehref">';
-	    //                     html += '<p class="text-heading">&nbsp;' + hospital.name + '</p></a>';
+	    //                     html += '<p class="text-heading text-capitalize">&nbsp;' + hospital.name + '</p></a>';
 	    //                     if (hospital.priority > 0) {
 	    //                         html += '<img src="assets/images/Paid.png" width="16" height="20" class="ml-auto" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 	    //                     }
@@ -414,7 +414,7 @@
                             html += '<div class="d-flex">';
                             html += '<p class="text">';
                             if (hospital.priority > 0) {
-								html += '<p class="text-heading">&nbsp;yy' + hospital.name + '</p>';
+								html += '<p class="text-heading text-capitalize">&nbsp;yy' + hospital.name + '</p>';
                                 html += '<img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }
