@@ -43,12 +43,12 @@ if(mysqli_num_rows($result) > 0)
 			};
 		$output .= '  
 			<div class="row m-0 sort-item">
-							<div class="col-md-3" style="margin:auto">
+							<div class="col-md-2" style="margin:auto">
 							<div>
-								<img src="directory/'.$type.'/'.$row['logo'].'" class="img-fluid" style="max-height:5rem">
+								<img src="directory/'.$type.'/'.$row['logo'].'" class="img-fluid sort-item-img" style="max-height:5rem">
 							</div>
 							</div>
-							<div class="col-md-9 pl-2 pl-sm-0" style="margin:1rem 0">
+							<div class="col-md-10 pl-2 pl-sm-0" style="margin:1rem 0">
 								<div style="float:right" class="star-bar">
 								<strong>' . $isOpen . '</strong><br>';
 									$ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$row[$id_column]'");
@@ -73,7 +73,7 @@ if(mysqli_num_rows($result) > 0)
 								}
                                 $speciality = isset($row['speciality']) ? $row['speciality'] : '';
 
-							$output .= '</div><p class="text-heading">&nbsp;'.$type_name.'</p>
+							$output .= '</div><p class="text-heading text-capitalize">&nbsp;'.$type_name.'</p>
 							<p class="text">&nbsp;'.$speciality.'</P>
 							<div class="d-flex justify-content-between">
 								<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           

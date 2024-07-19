@@ -386,15 +386,16 @@ display: none;
   text-transform: capitalize;
   font-size: 14px;
 }
-.sort-item .col-md-3 .img-fluid{
+.sort-item .sort-item-img{
   border-radius: 50% !important;
   width: 80px;
   height: 80px;
   object-fit: contain;
+  border: 1px solid #ebebeb;
 }
 .priority-img{
-  position: relative;
-  left: 4.78rem;
+  position: absolute;
+  right: -1rem;
   top: -1rem;
   border-top-right-radius: 17px;
   width: 30px;
@@ -415,8 +416,8 @@ display: none;
 @media only screen 
 and (max-width : 767px){
   .priority-img {
-    position: relative;
-    left: 4.78rem;
+    position: absolute;
+    right: -1rem;
     top: -6rem;
     border-top-right-radius: 17px;
     width: 30px;

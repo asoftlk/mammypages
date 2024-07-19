@@ -148,16 +148,16 @@ include "mp.php";
                         $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1 l-open" style="float:right">Available</span>' : '<span class="text-danger text mr-1 l-open" style="float:right">Not Available</span>';
 
 					echo '<div class="row m-0 priority-list sort-item">
-							<div class="col-md-3" style="margin:auto">
+							<div class="col-md-2" style="margin:auto">
 							<div>
-								<img src="directory/doctor/'.$row['logo'].'" class="img-fluid" style="max-height:5rem">
+								<img src="directory/doctor/'.$row['logo'].'" class="img-fluid sort-item-img" style="max-height:5rem">
 							</div>
 							</div>
-							<div class="col-md-9 pl-0" style="margin:1rem 0">
+							<div class="col-md-10 pl-0" style="margin:1rem 0">
 							<div class="d-flex">
-                            <p class="text"><p class="text-heading">&nbsp;'.$row["name"].'</p>
-                                <img src="assets/images/Paid.png" class="ml-auto priority-img " data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
-                                <strong>' . $isOpen . '</strong>
+                            <p class="text"><p class="text-heading text-capitalize">&nbsp;'.$row["name"].'</p>
+                                <img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
+                                <span class="ml-auto"><strong>' . $isOpen . '</strong></span>
                             </div>
 							<div class="d-flex">
 							<p class="text">&nbsp;'.$speciality.'</P>
@@ -329,13 +329,13 @@ include "mp.php";
                             var doctorId = doctor.doctor_id;
                             
                             html += '<div class="row m-0 sort-item">';
-                            html += '<div class="col-md-3" style="margin:auto">';
+                            html += '<div class="col-md-2" style="margin:auto">';
                             html += '<img src="directory/doctor/' + doctor.logo + '" class="img-fluid" style="max-height:5rem">';
                             html += '</div>';
-                            html += '<div class="col-md-9 pl-0" style="margin:1rem 0">';
+                            html += '<div class="col-md-10 pl-0" style="margin:1rem 0">';
                             html += '<div class="d-flex">';
                             html += '<p class="text">';
-                            html += '<p class="text-heading">&nbsp;' + doctor.name + '</p>';
+                            html += '<p class="text-heading text-capitalize">&nbsp;' + doctor.name + '</p>';
                             if (doctor.priority > 0) {
                                 html += '<img src="assets/images/Paid.png" class="ml-auto priority-img " data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
                                 
