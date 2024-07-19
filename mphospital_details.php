@@ -653,10 +653,20 @@
 									?>
 							</div>
 						</div>
-						<div class="card mt-1 l-border-radius">
+                        <?php
+                            $query1 = mysqli_query($conn, "SELECT * FROM hospital WHERE main_id = (SELECT id FROM hospital WHERE hospital_id = '$id')");
+                            $hasResults1 = mysqli_num_rows($query1) > 0;
+
+                            $query2 = mysqli_query($conn, "SELECT * FROM hospital WHERE main_id =(SELECT main_id FROM hospital WHERE hospital_id = '$id' AND main_id != 0) AND hospital_id != '$id' UNION SELECT * FROM hospital WHERE id =(SELECT main_id FROM hospital WHERE hospital_id = '$id')");
+                            $hasResults2 = mysqli_num_rows($query2) > 0;
+
+                            $divClass = ($hasResults1 || $hasResults2) ? '' : 'd-none';
+                        ?>
+						<div class="card mt-1 l-border-radius <?php echo $divClass; ?>">
 							<div class="card-body">
 								<label class="border-bottom pb-2 w-100 small text-uppercase font-weight-bold">Branches</label>
-								<?php $query1=mysqli_query($conn, "SELECT * FROM hospital WHERE main_id = (SELECT id FROM hospital WHERE hospital_id = '$id')");
+								<?php 
+                                // $query1=mysqli_query($conn, "SELECT * FROM hospital WHERE main_id = (SELECT id FROM hospital WHERE hospital_id = '$id')");
 									while($branches1=mysqli_fetch_array($query1)){
 									echo '<form action="mpconnect/hospital/'. urlencode(str_replace(' ', '_', $branches1["name"])) .'" method="post" style="display:inline;">
 									<input type="hidden" name="hospital_id" value="'.$branches1["hospital_id"].'">
@@ -664,9 +674,9 @@
 									</form>';
 								}?>
 								<?php 
-                                $query2=mysqli_query($conn, "SELECT * FROM hospital WHERE main_id =(SELECT main_id FROM hospital WHERE hospital_id = '$id'
-                                AND main_id = !0) AND hospital_id != '$id' UNION
-									SELECT * FROM hospital WHERE id =(SELECT main_id FROM hospital WHERE hospital_id = '$id')");
+                                // $query2=mysqli_query($conn, "SELECT * FROM hospital WHERE main_id =(SELECT main_id FROM hospital WHERE hospital_id = '$id'
+                                // AND main_id = !0) AND hospital_id != '$id' UNION
+									// SELECT * FROM hospital WHERE id =(SELECT main_id FROM hospital WHERE hospital_id = '$id')");
 									while($branches2=mysqli_fetch_array($query2)){
 									echo '<form action="mpconnect/hospital/'. urlencode(str_replace(' ', '_', $branches2["name"])) .'" method="post" style="display:inline;">
 									<input type="hidden" name="hospital_id" value="'.$branches2["hospital_id"].'">
