@@ -266,6 +266,7 @@ include "mp.php";
                         $('#btn_more').attr("class", "btn btn-secondary form-control");
                         $('#btn_more').attr("disabled", "true");
                         $('#btn_more').html("No More Data");
+                        initialData= '';
                     }
                 }
             });
@@ -273,7 +274,7 @@ include "mp.php";
 
         $(document).on('search', 'input[type="search"]', function(e) {
             if ($(this).val().trim().length === 0) {
-                $('#load_data').append(initialData);
+                // $('#load_data').append(initialData);
             }
         });
 
@@ -327,6 +328,15 @@ include "mp.php";
                             var rating = doctor.rating ? parseFloat(doctor.rating) : 0;
                             var encodedName = encodeURIComponent(doctor.name.replace(/\s+/g, '_'));
                             var doctorId = doctor.doctor_id;
+                            var now = new Date().toLocaleString("en-US", {timeZone: "Asia/Colombo"});
+                            var currentDate = new Date(now);
+                            var currentDay = currentDate.toLocaleString("en-US", {weekday: "long"}).toLowerCase();
+                            var currentTime = currentDate.toTimeString().split(" ")[0];
+
+                            var openTime = doctor[currentDay + '_open'];
+                            var closeTime = doctor[currentDay + '_close'];
+
+                            var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success text mr-1 l-open">Available</span>' : '<span class="text-danger text mr-1 l-close">Not Available</span>';
                             
                             html += '<div class="row m-0 sort-item">';
                             html += '<div class="col-md-2" style="margin:auto">';
@@ -338,7 +348,10 @@ include "mp.php";
                             html += '<p class="text-heading text-capitalize">&nbsp;' + doctor.name + '</p>';
                             if (doctor.priority > 0) {
                                 html += '<img src="assets/images/Paid.png" class="ml-auto priority-img " data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
+                                html += '<span class="ml-auto"><strong>' + isOpen + '</strong></span>';
                                 
+                            } else {
+                                html += '<span class="ml-auto"><strong>' + isOpen + '</strong></span><br>';
                             }
                             html += '</div>';
                             html += '<div class="d-flex">';
@@ -363,7 +376,7 @@ include "mp.php";
                             html += '<input type="hidden" name="doctor_id" value="'+doctorId+'">';
                             html += '<button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Doctor</button>';
                             html += '</form>'; 
-                            html += '</div>;';
+                            html += '</div>';
                             html += '<form class="mobileview" action="mpconnect/doctor/'+ encodedName +'" method="post" style="display:inline;">';
                             html += '<input type="hidden" name="doctor_id" value="'+doctorId+'">';
                             html += '<button type="submit" class="btn btn-success p-1" style="font-size:12px; height:28px">View&nbsp;Doctor</button>';

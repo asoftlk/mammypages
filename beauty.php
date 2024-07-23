@@ -296,6 +296,7 @@ include "mp.php";
                         $('#btn_more').attr("class", "btn btn-secondary form-control");
                         $('#btn_more').attr("disabled", "true");
                         $('#btn_more').html("No More Data");
+                        initialData= '';
                     }
                 }
             });
@@ -383,11 +384,11 @@ include "mp.php";
                             if (saloon.priority > 0) {
 								html += '<p class="text-heading text-capitalize">&nbsp;' + saloon.typeName + '</p>';
                                 html += '<img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
-								html += '<strong>' + isOpen + '</strong>';
+								html += '<span class="ml-auto"><strong>' + isOpen + '</strong></span>';
                             }
 							else{
 								html += '<p class="text-heading mr-auto">&nbsp;' + saloon.typeName + '</p>';
-								html += '<strong>' + isOpen + '</strong><br>';
+								html += '<span class="ml-auto"><strong>' + isOpen + '</strong></span><br>';
 							}
 
                             html += '</div>';

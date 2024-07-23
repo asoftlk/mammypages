@@ -268,6 +268,7 @@ include "mp.php";
                         $('#btn_more').attr("class", "btn btn-secondary form-control");
                         $('#btn_more').attr("disabled", "true");
                         $('#btn_more').html("No More Data");
+                        initialData= '';
                     }
                 }
             });
@@ -275,7 +276,7 @@ include "mp.php";
 
         $(document).on('search', 'input[type="search"]', function(e) {
             if ($(this).val().trim().length === 0) {
-                $('#load_data').append(initialData);
+                // $('#load_data').append(initialData);
             }
         });
 

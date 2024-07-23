@@ -236,7 +236,6 @@
 	$(document).ready(function() {
 	    $(document).on('click', '#btn_more', function() {
 	        var count = $(this).data("vid");
-            console.log(count);
 	        $('#btn_more').html("Loading...");
 	        $.ajax({
 	            url: "ajax/mphospitaldatafetch",
@@ -263,7 +262,7 @@
 	
 	    $(document).on('search', 'input[type="search"]', function(e) {
 	        if ($(this).val().trim().length === 0) {
-	            $('#load_data').append(initialData);
+	            // $('#load_data').append(initialData);
 	        }
 	    });
 	
@@ -389,11 +388,10 @@
                     if (result.data.length > 0) {
                         var html = '';
                         result.data.forEach(function(hospital) {
-                        console.log(hospital);
                             var specialityArray = hospital.speciality.split(" ///");
                             var speciality = specialityArray.join(", ");
                             var rating = hospital.rating ? parseFloat(hospital.rating) : 0;
-                            var encodedName = encodeURIComponent(hospital.name.replace(/\s+/g, ''));
+                            var encodedName = encodeURIComponent(hospital.name.replace(/\s+/g, '_'));
                             var hospitalId = hospital.hospital_id;
 
                             var now = new Date().toLocaleString("en-US", {timeZone: "Asia/Colombo"});
@@ -414,7 +412,7 @@
                             html += '<div class="d-flex">';
                             html += '<p class="text">';
                             if (hospital.priority > 0) {
-								html += '<p class="text-heading text-capitalize">&nbsp;yy' + hospital.name + '</p>';
+								html += '<p class="text-heading text-capitalize">&nbsp;' + hospital.name + '</p>';
                                 html += '<img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }
