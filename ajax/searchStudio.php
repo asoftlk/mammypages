@@ -47,7 +47,7 @@ if (isset($_POST["search"])) {
                 }
             }
             $row['typeName'] = $type_name_head;
-            $html .= '<li><div class="d-flex"><img src="directory/studio/'.$row["image"].'" style="width:50px; height:40px; object-fit:cover; margin-right:5px; border-radius:5px"><p class="mb-0">'.$type_name_head.'</p></div></li>';
+            $html .= '<li><a class="title-list" href="mpconnect/studio/' . urlencode(str_replace(' ', '_', $row["name"])) . '" style="text-decoration:none; color:black"><div class="d-flex"><div class="d-flex"><img src="directory/studio/'.$row["image"].'" style="width:50px; height:40px; object-fit:cover; margin-right:5px; border-radius:5px"><p class="mb-0">'.$type_name_head.'</p></div></a></li>';
             $list[] = $row;
         }
     } else {

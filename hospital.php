@@ -97,7 +97,7 @@
                                             ?>
                                     </select>
                                  </label>
-								<a class="btn btn-sm filter-btn" type="button" id="clearFilters">Clear Filters</a>
+								<a class="btn btn-sm filter-btn" type="button" id="clearFilters">Clear</a>
 							</div>
 						</form>
 						<div class="d-flex justify-content-end">
@@ -406,13 +406,13 @@
 
                             html += '<div class="row m-0 sort-item">';
                             html += '<div class="col-md-2" style="margin:auto">';
-                            html += '<img src="directory/hospital/' + hospital.logo + '" class="img-fluid" style="max-height:5rem">';
+                            html += '<img src="directory/hospital/' + hospital.logo + '" class="img-fluid sort-item-img" style="max-height:5rem">';
                             html += '</div>';
                             html += '<div class="col-md-10 pl-2 pl-sm-0" style="margin:1rem 0">';
                             html += '<div class="d-flex">';
                             html += '<p class="text">';
                             if (hospital.priority > 0) {
-								html += '<p class="text-heading text-capitalize">&nbsp;' + hospital.name + '</p>';
+								html += '<p class="text-heading text-capitalize mr-auto">&nbsp;' + hospital.name + '</p>';
                                 html += '<img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }

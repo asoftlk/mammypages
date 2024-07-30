@@ -304,7 +304,7 @@
 							$urltelegram=urlencode('https://www.mammypages.com/hospital/'.$passName);
 						echo '<div class="row fillbg l-border-radius-top">
 								<div class="text-center p-0">
-								<img src="directory/hospital/'.$row["image"].'" class="img-fluid mb-2" style="width:100%; max-height:250px; border-radius: 15px;">
+								<img src="directory/hospital/'.$row["image"].'" class="img-fluid mb-2" style="width:100%; max-height:250px; object-fit: cover; border-radius: 15px;">
 								<a href="hospital"><i class="bi bi-caret-left backbutton" data-toggle="tooltip" title="Back" data-placement="left" area-hidden="true"></i></a>
 								</div>
 							 </div>
@@ -361,9 +361,9 @@
 								        <p class="hospitaltype position-absolute" style="right:10px"><span>'.$row['type'].'</span></p><br>
 								        <div class="desktopview d-flex float-right">';
 											echo !empty($row['facebook']) ?  '<a href="'.$row["facebook"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-facebook p-1"></i></a>&nbsp;':"";
-											echo !empty($row['facebook']) ?  '<a href="#" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-tiktok p-1"></i></a>&nbsp;':"";
+											
 											echo !empty($row['instagram']) ?  '<a href="'.$row["instagram"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-instagram p-1"></i></a>&nbsp;':"";
-											echo !empty($row['linkedin']) ?  '<a href="'.$row["linkedin"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-linkedin p-1"></i></a>&nbsp;':"";
+											echo !empty($row['linkedin']) ?  '<a href="'.$row["linkedin"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-tiktok p-1"></i></a>&nbsp;':"";
 											echo !empty($row['youtube']) ?  '<a href="'.$row["youtube"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-youtube p-1"></i></a>&nbsp;':"";
 											echo '<div class="dropup d-flex header-settings"> 
 											<a href="#" class="nav-link p-1" data-toggle="dropdown" style="display:flex; text-decoration:none; color:black"><i class="bi bi-share"  style=""></i></a> 
@@ -394,7 +394,7 @@
 									<div class="mobileview d-flex float-left mb-2">';
 											echo !empty($row['facebook']) ?  '<a href="'.$row["facebook"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-facebook p-1"></i></a>&nbsp;':"";
 											echo !empty($row['instagram']) ?  '<a href="'.$row["instagram"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-instagram p-1"></i></a>&nbsp;':"";
-											echo !empty($row['linkedin']) ?  '<a href="'.$row["linkedin"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-linkedin p-1"></i></a>&nbsp;':"";
+											echo !empty($row['linkedin']) ?  '<a href="'.$row["linkedin"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-tiktok p-1"></i></a>&nbsp;':"";
 											echo !empty($row['youtube']) ?  '<a href="'.$row["youtube"].'" target="_blank" class="text-decoration-none text-dark"><i class="bi bi-youtube p-1"></i></a>&nbsp;':"";
 											echo '<div class="dropup d-flex header-settings"> 
 											<a href="#" class="nav-link p-1" data-toggle="dropdown" style="display:flex; text-decoration:none; color:black"><i class="bi bi-share"  style=""></i></a> 
@@ -573,7 +573,11 @@
 											<img src="images/'.$reviewrow["profile_image"].'" onerror="this.src=\'assets/images/MP-comment-icon.png\'" style="border-radius: 50%; width: 3rem; height: 3rem; border:1px solid #C7C7C7">
 										</div>
 										<div class="col-sm-11">
-										<div class="d-flex" style="justify-content: space-between; margin-bottom:0.1rem; flex-flow: wrap"><p style="text-align:left; font-size:.8rem; font-weight:bold; margin-bottom:0.1rem">'.$reviewrow['first_name'].' '.$reviewrow['last_name'].' | '.time_elapsed_string($reviewrow["datetime"], $full=false).' | ';
+										<div>
+										<div class="d-flex" style="justify-content: space-between; margin-bottom:0.1rem; flex-flow: wrap">
+										<p style="text-align:left; font-size:1rem; font-weight:bold; margin-bottom:0rem">'.$reviewrow['first_name'].' '.$reviewrow['last_name'].' </p>
+										<p class="mb-0">
+										';
 										$rating= $reviewrow['rating'];
 											for($j=0; $j<5; $j++){
 												if($rating>=1){
@@ -587,10 +591,15 @@
 												}
 												$rating=$rating-1;									
 											}
-										echo '</p>';
+										echo '</p>
+										</div>
+										<p class="small">'.time_elapsed_string($reviewrow["datetime"], $full=false).' </p> ';
 									if($userid==$reviewrow["email"]){
-										echo '<div class="d-flex" style="font-size:0.8rem; margin-bottom:0.1rem"><input type="button" id="edit'.$i.'" class="edit" style="border:none; background:transparent;" value="Edit">
-										<p style="margin-bottom:0.1rem">&nbsp;|&nbsp;</p><input type="button" id="delete'.$i.'" class="delete" style="border:none; background:transparent; float:right;" value="Delete"></div>';
+										echo '<div class="d-flex" style="font-size:0.8rem; margin-bottom:0.1rem">
+										<input type="button" id="edit'.$i.'" class="edit" style="border:none; background:transparent;" value="Edit">
+										<p style="margin-bottom:0.1rem">&nbsp;|&nbsp;</p>
+										<input type="button" id="delete'.$i.'" class="delete" style="border:none; background:transparent; float:right;" value="Delete">
+										</div>';
 									}
 								echo '</div><form method="POST" action="ajax/mp_review" id="reviewform'.$i.'">
 											<input type="hidden" name="mp_id" value="'.$reviewrow["mp_id"].'">
@@ -701,33 +710,33 @@
 
 										date_default_timezone_set('Asia/Colombo');
 										$currentDay = strtolower(date('l')); 
-                                        // var_dump($currentDay);exit;
 										$currentTime = date('H:i:s');
-										$curDayOpen =$hospital[$currentDay. '_open'];
-										$curDayClose =$hospital[$currentDay. '_close'];
+										$curDayOpen = $hospital[$currentDay . '_open'];
+										$curDayClose = $hospital[$currentDay . '_close'];
 										$isOpen = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose) ? 
-										'<span class="text-success">Now open</span>' : 
-										'<span class="text-danger">Now closed</span>';
+												'<span class="text-success">Now open</span>' : 
+												'<span class="text-danger">Now closed</span>';
 
 										$output = '<p class="small font-weight-bold">HOURS OF OPERATION</p>';
-									
+
 										$output .= '<div class="hospital-timings ml-4">';
 										foreach ($daysOfWeek as $dayKey => $dayName) {
 											$openTimeKey = $dayKey . '_open';
 											$closeTimeKey = $dayKey . '_close';
 
-											$fmtOpenTime = date('H:i', strtotime($hospital[$openTimeKey]));
-											$fmtCloseTime = date('H:i', strtotime($hospital[$closeTimeKey]));
-                                            $isToday = (strtolower($dayName) == strtolower($currentDay)) ? 'text-success':'';
-									
+											$fmtOpenTime = date('h:i A', strtotime($hospital[$openTimeKey]));
+											$fmtCloseTime = date('h:i A', strtotime($hospital[$closeTimeKey]));
+											$isToday = (strtolower($dayName) == strtolower($currentDay)) ? 'text-success' : '';
+
 											if ($hospital[$openTimeKey] === "00:00:00" && $hospital[$closeTimeKey] === "00:00:00") {
-												$output .= '<p class="mb-1 small font-weight-bold "><span class="text-uppercase">' . $dayName . ':</span> Closed</p>';
+												$output .= '<p class="mb-1 small"><span class="text-uppercase">' . $dayName . ':</span> Closed</p>';
 											} else {
-												$output .= '<p class="mb-1 small text-uppercase font-weight-bold '.$isToday.'">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime. '</p>';
+												$output .= '<p class="mb-1 small text-uppercase ' . $isToday . '">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime . '</p>';
 											}
 										}
 										$output .= '</div>';                             
 										return $output;
+
 									}
 								
 									echo displayHospitalTimings($row);?>

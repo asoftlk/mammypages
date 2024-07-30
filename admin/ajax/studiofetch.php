@@ -121,7 +121,7 @@ $output = '
     <th>Website</th>
     <th>Facebook Link</th>
     <th>Instagram Link</th>
-    <th>Linkedin Link</th>
+    <th>TikTok Link</th>
     <th>Youtube Link</th>
     <!--th>About</th-->
      <th>Service</th>

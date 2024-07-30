@@ -116,7 +116,7 @@ $output = '
     <th>Doctor Name</th>
     <th>Facebook Link</th>
     <th>Instagram Link</th>
-    <th>Linkedin Link</th>
+    <th>TikTok Link</th>
     <th>Status</th>
     <th>Priority</th>
     <th>logo Image</th>

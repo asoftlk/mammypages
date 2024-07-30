@@ -268,8 +268,8 @@
 													<input type="url" name="insta" class="form-control" id="insta" placeholder="Instagram Link">
 												</div>
 												<div class="col-md-3">
-													<label for="linkedin">Linkedin Link</label>
-													<input type="url" name="linkedin" class="form-control" id="linkedin" placeholder="Linkedin Link">
+													<label for="linkedin">TikTok Link</label>
+													<input type="url" name="linkedin" class="form-control" id="linkedin" placeholder="TikTok Link">
 												</div>
 												<div class="col-md-3">
 													<label for="youtube">Youtube Link</label>

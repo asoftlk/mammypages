@@ -207,8 +207,8 @@ ul.ui-autocomplete {
 						  <input type="url" name="doctorinsta" class="form-control" id="doctorinsta" placeholder="Instagram Link">
 						</div>
 						<div class="col-md-4">
-						  <label for="doctorln">Linkedin Link</label>
-						  <input type="url" name="doctorln" class="form-control" id="doctorln" placeholder="Linkedin Link">
+						  <label for="doctorln">TikTok Link</label>
+						  <input type="url" name="doctorln" class="form-control" id="doctorln" placeholder="TikTok Link">
 						</div>
 					</div>
 					<div class="form-group">

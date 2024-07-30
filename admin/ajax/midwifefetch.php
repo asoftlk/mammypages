@@ -119,7 +119,7 @@ $output = '
     <th>Hours of Operation</th>
     <th>Facebook Link</th>
     <th>Instagram Link</th>
-    <th>Linkedin Link</th>
+    <th>TikTok Link</th>
     <th>Status</th>
     <!--th>About</th-->
     <th>Priority</th>

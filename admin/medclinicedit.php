@@ -211,8 +211,8 @@ foreach ($days as $abbr => $day) {
                                         <input type="url" name="insta" class="form-control" id="insta" value="<?php echo $row['instagram']; ?>" placeholder="Instagram Link">
                                     </div>
                                     <div class="col-md-3 form-group">
-                                        <label for="linkedin">Linkedin Link</label>
-                                        <input type="url" name="linkedin" class="form-control" id="linkedin" value="<?php echo $row['linkedin']; ?>" placeholder="Linkedin Link">
+                                        <label for="linkedin">TikTok Link</label>
+                                        <input type="url" name="linkedin" class="form-control" id="linkedin" value="<?php echo $row['linkedin']; ?>" placeholder="TikTok Link">
                                     </div>
                                     <div class="col-md-3 form-group">
                                         <label for="youtube">3</label>

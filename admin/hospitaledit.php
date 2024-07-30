@@ -246,8 +246,8 @@
 										<input type="url" name="hospitalinsta" class="form-control" id="hospitalinsta" value="<?php echo $row['instagram']; ?>" placeholder="Instagram Link">
 									</div>
 									<div class="col-md-3 form-group">
-										<label for="hospitalln">Linkedin Link</label>
-										<input type="url" name="hospitalln" class="form-control" id="hospitalln"  value="<?php echo $row['linkedin']; ?>" placeholder="Linkedin Link">
+										<label for="hospitalln">TikTok Link</label>
+										<input type="url" name="hospitalln" class="form-control" id="hospitalln"  value="<?php echo $row['linkedin']; ?>" placeholder="TikTok Link">
 									</div>
 									<div class="col-md-3 form-group">
 										<label for="hospitalfb">Facebook Link</label>

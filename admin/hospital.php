@@ -242,8 +242,8 @@
 													<input type="url" name="hospitalinsta" class="form-control" id="hospitalinsta" placeholder="Instagram Link">
 												</div>
 												<div class="col-md-4">
-													<label for="hospitalln">Linkedin Link</label>
-													<input type="url" name="hospitalln" class="form-control" id="hospitalln" placeholder="Linkedin Link">
+													<label for="hospitalln">TikTok Link</label>
+													<input type="url" name="hospitalln" class="form-control" id="hospitalln" placeholder="TikTok Link">
 												</div>
 											</div>
 											<div class="form-group">
@@ -429,8 +429,8 @@
 														<input type="url" name="branchinsta" class="form-control" id="branchinsta" placeholder="Instagram Link">
 													</div>
 													<div class="col-md-4">
-														<label for="branchln">Linkedin Link</label>
-														<input type="url" name="branchln" class="form-control" id="branchln" placeholder="Linkedin Link">
+														<label for="branchln">TikTok Link</label>
+														<input type="url" name="branchln" class="form-control" id="branchln" placeholder="TikTok Link">
 													</div>
 												</div>
 												<div class="form-group">
@@ -652,8 +652,8 @@
 													<input type="url" name="hospitalinsta" class="form-control" id="hospitalinsta" placeholder="Instagram Link">
 												</div>
 												<div class="col-md-3">
-													<label for="hospitalln">Linkedin Link</label>
-													<input type="url" name="hospitalln" class="form-control" id="hospitalln" placeholder="Linkedin Link">
+													<label for="hospitalln">TikTok Link</label>
+													<input type="url" name="hospitalln" class="form-control" id="hospitalln" placeholder="TikTok Link">
 												</div>
 												<div class="col-md-3">
 													<label for="hospitalyt">Yotube Link</label>

@@ -209,8 +209,8 @@ $(document).ready(function() {
 						  <input type="url" name="doctorinsta" class="form-control" id="doctorinsta" value="<?php echo $row['instagram']; ?>" placeholder="Instagram Link">
 						</div>
 						<div class="col-md-4 form-group">
-						<label for="doctortln">Linkedin Link</label>
-						  <input type="url" name="doctorln" class="form-control" id="doctorln"  value="<?php echo $row['linkedin']; ?>" placeholder="Linkedin Link">
+						<label for="doctortln">TikTok Link</label>
+						  <input type="url" name="doctorln" class="form-control" id="doctorln"  value="<?php echo $row['linkedin']; ?>" placeholder="TikTok Link">
 						</div>					  
 					</div>
 					

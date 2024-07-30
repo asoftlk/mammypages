@@ -347,13 +347,13 @@
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<label>Linkedin Link :</label>
+									<label>TikTok Link :</label>
 									<input type="text" class="form-control" id="linkedin">
 								</div>
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<label>Linkedin Link :</label>
+									<label>TikTok Link :</label>
 									<input type="text" class="form-control" id="youtube">
 								</div>
 							</div>

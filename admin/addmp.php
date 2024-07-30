@@ -109,8 +109,8 @@
 						  <input type="url" name="hospitalinsta" class="form-control" id="hospitalinsta" placeholder="Instagram Link">
 						</div>
 						<div class="col-md-4">
-						  <label for="hospitalln">Linkedin Link</label>
-						  <input type="url" name="hospitalln" class="form-control" id="hospitalln" placeholder="Linkedin Link">
+						  <label for="hospitalln">TikTok Link</label>
+						  <input type="url" name="hospitalln" class="form-control" id="hospitalln" placeholder="Tik Link">
 						</div>
 					</div>
 					<div class="form-group">

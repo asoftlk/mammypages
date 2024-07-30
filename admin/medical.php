@@ -146,7 +146,7 @@
                                             </div>
 											<div class="form-group">
 												<label class="required">Year of Establishment</label>
-												<input type="text" name="estYear" class="form-control" id="address" placeholder="Address">
+												<input type="text" name="estYear" class="form-control" id="estYear" placeholder="Year of Establishment">
 											</div>
 											<div class="form-group">
 												<label class="required" for="address">Address</label>
@@ -224,12 +224,12 @@
 													<input type="url" name="insta" class="form-control" id="insta" placeholder="Instagram Link">
 												</div>
 												<div class="col-md-3">
-													<label for="linkedin">Linkedin Link</label>
-													<input type="url" name="linkedin" class="form-control" id="linkedin" placeholder="Linkedin Link">
+													<label for="linkedin">TikTok Link</label>
+													<input type="url" name="linkedin" class="form-control" id="linkedin" placeholder="TikTok Link">
 												</div>
 												<div class="col-md-3">
 													<label for="youtube">Youtube Link</label>
-													<input type="url" name="youtube" class="form-control" id="youtube" placeholder="3">
+													<input type="url" name="youtube" class="form-control" id="youtube" placeholder="Youtube Link">
 												</div>
 											</div>
 											<div class="form-group">

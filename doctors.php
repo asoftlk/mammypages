@@ -340,14 +340,14 @@ include "mp.php";
                             
                             html += '<div class="row m-0 sort-item">';
                             html += '<div class="col-md-2" style="margin:auto">';
-                            html += '<img src="directory/doctor/' + doctor.logo + '" class="img-fluid" style="max-height:5rem">';
+                            html += '<img src="directory/doctor/' + doctor.logo + '" class="img-fluid sort-item-img" style="max-height:5rem">';
                             html += '</div>';
                             html += '<div class="col-md-10 pl-0" style="margin:1rem 0">';
                             html += '<div class="d-flex">';
                             html += '<p class="text">';
-                            html += '<p class="text-heading text-capitalize">&nbsp;' + doctor.name + '</p>';
+                            html += '<p class="text-heading text-capitalize mr-auto">&nbsp;' + doctor.name + '</p>';
                             if (doctor.priority > 0) {
-                                html += '<img src="assets/images/Paid.png" class="ml-auto priority-img " data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
+                                html += '<img src="assets/images/Paid.png" class="ml-auto priority-img" style="right: 0rem;" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
                                 html += '<span class="ml-auto"><strong>' + isOpen + '</strong></span>';
                                 
                             } else {

@@ -285,8 +285,8 @@ $(document).ready(function() {
 						  <input type="url" name="studioinsta" class="form-control" id="studioinsta" value="<?php echo $row['instagram']; ?>" placeholder="Instagram Link">
 						</div>
 						<div class="col-md-3 form-group">
-						    <label for="studioln">Linkedin Link</label>
-						  <input type="url" name="studioln" class="form-control" id="studioln"  value="<?php echo $row['linkedin']; ?>" placeholder="Linkedin Link">
+						    <label for="studioln">TikTok Link</label>
+						  <input type="url" name="studioln" class="form-control" id="studioln"  value="<?php echo $row['linkedin']; ?>" placeholder="TikTok Link">
 						</div>		
 						<div class="col-md-3 form-group">
 						    <label for="studioyt">Youtube Link</label>
