@@ -381,12 +381,12 @@ include "mp.php";
                             html += '<div class="d-flex">';
                            
                             if (medical.priority > 0) {
-								html += '<p class="text-heading text-capitalize mr-auto">&nbsp;' + medical.typeName + '</p>';
+								html += '<a href="mpconnect/medical/'+ encodedName +'" class="text-heading text-decoration-none lci mr-auto"><p class="text-heading text-capitalize">&nbsp;' + medical.typeName + '</p></a>';
                                 html += '<img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }
 							else{
-								html += '<p class="text-heading mr-auto">&nbsp;' + medical.typeName + '</p>';
+								html += '<a href="mpconnect/medical/'+ encodedName +'" class="text-heading text-decoration-none lci mr-auto"><p class="text-heading text-capitalize">&nbsp;' + medical.typeName + '</p></a>';
 								html += '<strong>' + isOpen + '</strong><br>';
 							}
 

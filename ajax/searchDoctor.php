@@ -36,7 +36,7 @@ if (isset($_POST["search"])) {
                 $row['rating'] = 0;
             }
 
-            $html .= '<li><a class="title-list" href="mpconnect/doctor/' . urlencode(str_replace(' ', '_', $row["name"])) . '" style="text-decoration:none; color:black"><div class="d-flex"><img src="directory/doctor/'.$row["image"].'" style="width:50px; height:40px; object-fit:cover; margin-right:5px; border-radius:5px"><p class="mb-0">'.$row["name"].'</p></div></a></li>';
+            $html .= '<li><a class="title-list" href="mpconnect/doctor/' . urlencode(str_replace(' ', '_', $row["name"])) . '" style="text-decoration:none; color:black"><div class="d-flex"><img src="directory/doctor/'.$row["logo"].'" style="width:50px; height:40px; object-fit:cover; margin-right:5px; border-radius:5px"><p class="mb-0">'.$row["name"].'</p></div></a></li>';
             $list[] = $row;
         }
     } else {

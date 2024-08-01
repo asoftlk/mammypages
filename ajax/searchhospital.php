@@ -21,7 +21,7 @@ if (isset($_POST["search"])) {
                 $row['rating'] = 0;
             }
 
-            $html .= '<li><a class="title-list" href="mpdetails?type=Hospital&id='.$row["hospital_id"].'" style="text-decoration:none; color:black"><div class="d-flex"><img src="directory/hospital/'.$row["image"].'" style="width:50px; height:40px; object-fit:cover; margin-right:5px; border-radius:5px"><p class="mb-0">'.$row["name"].'</p></div></a></li>';
+            $html .= '<li><a class="title-list" href="mpdetails?type=Hospital&id='.$row["hospital_id"].'" style="text-decoration:none; color:black"><div class="d-flex"><img src="directory/hospital/'.$row["logo"].'" style="width:50px; height:40px; object-fit:cover; margin-right:5px; border-radius:5px"><p class="mb-0">'.$row["name"].'</p></div></a></li>';
             $list[] = $row;
         }
     } else {
@@ -91,7 +91,7 @@ if (isset($_POST["search"])) {
             }
             $row['typeName'] = $type_name_head;
 
-            $html .= '<li><a class="title-list" href="mpconnect/hospital/' . urlencode(str_replace(' ', '_', $row["name"])) . '" style="text-decoration:none; color:black"><div class="d-flex"><img src="directory/hospital/'.$row["image"].'" style="width:50px; height:40px; object-fit:cover; margin-right:5px; border-radius:5px"><p class="mb-0">'.$type_name_head.'</p></div></a></li>';
+            $html .= '<li><a class="title-list" href="mpconnect/hospital/' . urlencode(str_replace(' ', '_', $row["name"])) . '" style="text-decoration:none; color:black"><div class="d-flex"><img src="directory/hospital/'.$row["logo"].'" style="width:50px; height:40px; object-fit:cover; margin-right:5px; border-radius:5px"><p class="mb-0">'.$type_name_head.'</p></div></a></li>';
             $list[] = $row;
         }
     } else {

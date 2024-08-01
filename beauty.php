@@ -385,12 +385,12 @@ include "mp.php";
                             html += '<p class="text">';
                         
                             if (saloon.priority > 0) {
-								html += '<p class="text-heading text-capitalize mr-auto">&nbsp;' + saloon.typeName + '</p>';
+								html += '<a href="mpconnect/saloon/'+ encodedName +'" class="text-heading text-decoration-none lci mr-auto"><p class="text-heading text-capitalize mr-auto">&nbsp;' + saloon.typeName + '</p></a>';
                                 html += '<img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<span class="ml-auto"><strong>' + isOpen + '</strong></span>';
                             }
 							else{
-								html += '<p class="text-heading mr-auto">&nbsp;' + saloon.typeName + '</p>';
+								html += '<a href="mpconnect/saloon/'+ encodedName +'" class="text-heading text-decoration-none lci mr-auto"><p class="text-heading mr-auto">&nbsp;' + saloon.typeName + '</p></a>';
 								html += '<span class="ml-auto"><strong>' + isOpen + '</strong></span><br>';
 							}
 

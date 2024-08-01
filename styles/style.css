@@ -446,3 +446,6 @@ and (max-width : 767px){
     width:80% !important;
   }
 }
+.lci, .lci:hover{
+  color: inherit;
+}

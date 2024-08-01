@@ -778,15 +778,15 @@
     
                                                     $fmtOpenTime = date('H:i A', strtotime($typequery[$openTimeKey]));
                                                     $fmtCloseTime = date('H:i A', strtotime($typequery[$closeTimeKey]));
-                                                    $isToday = (strtolower($dayName) == strtolower($currentDay)) ? 'text-success':'text-danger';
+                                                    $isToday = (strtolower($dayName) == strtolower($currentDay)) ? 'text-success':'';
                                                     if ($typequery[$openTimeKey] === "00:00:00" && $typequery[$closeTimeKey] === "00:00:00") {
-                                                        if(isset($typequery['doctor_id'])){
-                                                            $output .= '<p class="mb-1 small '.$isToday.'"><span class="text-uppercase">' . $dayName . ':</span> Not Available</p>';
+                                                        if(isset($typequery['doctor_id'])&& !isset($typequery['medical_id'])){
+                                                            $output .= '<p class="mb-1 small"><span class="text-uppercase">' . $dayName . ':</span> Not Available</p>';
                                                         }else {
-                                                            $output .= '<p class="mb-1 small '.$isToday.'"><span class="text-uppercase">' . $dayName . ':</span> Closed</p>';
+                                                            $output .= '<p class="mb-1 small"><span class="text-uppercase">' . $dayName . ':</span> Closed</p>';
                                                         }
                                                     } else {
-														if(isset($typequery['doctor_id'])){
+														if(isset($typequery['doctor_id'])&& !isset($typequery['medical_id'])){
 															$output .= '<p class="mb-1 small '.$isToday.'"><span class="text-uppercase">' . $dayName . ': </span> Available</p>';
 														}
 														else{

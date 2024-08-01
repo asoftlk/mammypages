@@ -152,7 +152,7 @@ include "mp.php";
 					echo '<div class="row m-0 priority-list sort-item">
 							<div class="col-md-2" style="margin:auto">
 							<div>
-                                <a href="mpconnect/pharmacy/' . urlencode(str_replace(' ', '_', $row["name"])) . '"><img src="directory/pharmacy/' . $row['logo'] . '" class="img-fluid" style="max-height:5rem"></a>
+                                <a href="mpconnect/pharmacy/' . urlencode(str_replace(' ', '_', $row["name"])) . '"><img src="directory/pharmacy/' . $row['logo'] . '" class="img-fluid sort-item-img" style="max-height:5rem"></a>
 							</div>
 							</div>
 							<div class="col-md-10 pl-0" style="margin:1rem 0">
@@ -349,12 +349,12 @@ include "mp.php";
                             html += '<div class="d-flex">';
                            
                             if (pharmacy.priority > 0) {
-								html += '<p class="text-heading text-capitalize mr-auto">&nbsp;' + pharmacy.typeName + '</p>';
+								html += '<a href="mpconnect/pharmacy/'+ encodedName +'" class="text-heading text-decoration-none lci mr-auto"><p class="text-heading text-capitalize mr-auto">&nbsp;' + pharmacy.typeName + '</p></a>';
                                 html += '<img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }
 							else{
-								html += '<p class="text-heading mr-auto">&nbsp;' + pharmacy.typeName + '</p>';
+								html += '<a href="mpconnect/pharmacy/'+ encodedName +'" class="text-heading text-decoration-none lci mr-auto"><p class="text-heading mr-auto">&nbsp;' + pharmacy.typeName + '</p></a>';
 								html += '<strong>' + isOpen + '</strong><br>';
 							}
 

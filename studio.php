@@ -189,12 +189,14 @@ include "mp.php";
 					echo '<div class="row m-0 priority-list sort-item">
 							<div class="col-md-2" style="margin:auto">
 							<div>
-								<img src="directory/studio/'.$row['logo'].'" class="img-fluid sort-item-img" style="max-height:5rem">
+								<a href="mpconnect/studio/' . urlencode(str_replace(' ', '_', $row["name"])) . '"><img src="directory/studio/'.$row['logo'].'" class="img-fluid sort-item-img" style="max-height:5rem"></a>
 							</div>
 							</div>
 							<div class="col-md-10 pl-0" style="margin:1rem 0">
 							<div class="d-flex">
-                            <p class="text"><p class="text-heading text-capitalize">&nbsp;'.$type_name_head.'</p>
+                                <a href="javascript:void(0)" onclick="location.href=\'mpconnect/studio/' . urlencode(str_replace(' ', '_', $row['name'])) . '\'" style="color: inherit; text-decoration: none;" class="text-heading text-capitalize">
+                                    <p class="text"><p class="text-heading text-capitalize">&nbsp;'.$type_name_head.'</p>
+                                </a>
                                 <img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
                                 <span class="ml-auto"><strong>' . $isOpen . '</strong></span>
                             </div>
@@ -385,18 +387,18 @@ include "mp.php";
                             
                             html += '<div class="row m-0 sort-item">';
                             html += '<div class="col-md-2" style="margin:auto">';
-                            html += '<img src="directory/studio/' + studio.logo + '" class="img-fluid sort-item-img" style="max-height:5rem">';
+                            html += '<a href="mpconnect/studio/'+ encodedName +'"><img src="directory/studio/' + studio.logo + '" class="img-fluid sort-item-img" style="max-height:5rem"</a>';
                             html += '</div>';
                             html += '<div class="col-md-10 pl-0" style="margin:1rem 0">';
                             html += '<div class="d-flex">';
                            
                             if (studio.priority > 0) {
-								html += '<p class="text-heading text-capitalize mr-auto">&nbsp;' + studio.typeName + '</p>';
+								html += '<a href="mpconnect/studio/'+ encodedName +'" class="text-heading text-decoration-none lci mr-auto"><p class="text-heading text-capitalize mr-auto">&nbsp;' + studio.typeName + '</p></a>';
                                 html += '<img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
 								html += '<strong>' + isOpen + '</strong>';
                             }
 							else{
-								html += '<p class="text-heading mr-auto">&nbsp;' + studio.typeName + '</p>';
+								html += '<a href="mpconnect/studio/'+ encodedName +'" class="text-heading text-decoration-none lci mr-auto"><p class="text-heading mr-auto">&nbsp;' + studio.typeName + '</p></a>';
 								html += '<strong>' + isOpen + '</strong><br>';
 							}
                             
