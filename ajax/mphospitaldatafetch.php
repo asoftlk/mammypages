@@ -152,7 +152,9 @@ if(mysqli_num_rows($result) > 0)
         <div class="row m-0 sort-item">
             <div class="col-md-2" style="margin:auto">
                 <div>
+                    <a href="mpconnect/hospital/' . urlencode(str_replace(' ', '_', $row["name"])) . '">
                     <img src="directory/hospital/' . $row['logo'] . '" class="img-fluid" style="max-height:5rem">
+                    </a>
                 </div>
             </div>
             <div class="col-md-10 pl-2 pl-sm-0" style="margin:1rem 0">
@@ -176,9 +178,10 @@ if(mysqli_num_rows($result) > 0)
                         }
                         $rating = $rating - 1;									
                     }
-                $output .= '</div>
-                
-                <p class="text-heading text-capitalize">&nbsp;' . $row['name'] . '</p>
+                $output .= '</div>       
+                <a href="javascript:void(0)" onclick="location.href=\'mpconnect/hospital/' . urlencode(str_replace(' ', '_', $row['name'])) . '\'" style="color: inherit; text-decoration: none;" class="text-heading text-capitalize">
+                    <p class="text-heading text-capitalize">&nbsp;' . $row['name'] . '</p>
+                </a>
                 <p class="text">&nbsp;' . $speciality . '</p>
                 <div class="d-flex justify-content-between">
                     <p class="text">

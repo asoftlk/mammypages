@@ -150,12 +150,16 @@ include "mp.php";
 					echo '<div class="row m-0 priority-list sort-item">
 							<div class="col-md-2" style="margin:auto">
 							<div>
+                                <a href="mpconnect/doctor/' . urlencode(str_replace(' ', '_', $row["name"])) . '">
 								<img src="directory/doctor/'.$row['logo'].'" class="img-fluid sort-item-img" style="max-height:5rem">
+                                </a>
 							</div>
 							</div>
 							<div class="col-md-10 pl-0" style="margin:1rem 0">
 							<div class="d-flex">
-                            <p class="text"><p class="text-heading text-capitalize">&nbsp;'.$row["name"].'</p>
+                            <p class="text">
+                            <a href="javascript:void(0)" onclick="location.href=\'mpconnect/doctor/' . urlencode(str_replace(' ', '_', $row['name'])) . '\'" style="color: inherit; text-decoration: none;" class="text-heading text-capitalize">
+                            <p class="text-heading text-capitalize">&nbsp;'.$row["name"].'</p></a>
                                 <img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
                                 <span class="ml-auto"><strong>' . $isOpen . '</strong></span>
                             </div>
@@ -340,12 +344,12 @@ include "mp.php";
                             
                             html += '<div class="row m-0 sort-item">';
                             html += '<div class="col-md-2" style="margin:auto">';
-                            html += '<img src="directory/doctor/' + doctor.logo + '" class="img-fluid sort-item-img" style="max-height:5rem">';
+                            html += '<a href="mpconnect/doctor/'+ encodedName +'"><img src="directory/doctor/' + doctor.logo + '" class="img-fluid sort-item-img" style="max-height:5rem"></a>';
                             html += '</div>';
                             html += '<div class="col-md-10 pl-0" style="margin:1rem 0">';
                             html += '<div class="d-flex">';
                             html += '<p class="text">';
-                            html += '<p class="text-heading text-capitalize mr-auto">&nbsp;' + doctor.name + '</p>';
+                            html += '<a href="mpconnect/doctor/'+ encodedName +'" style="color: inherit; text-decoration: none;"><p class="text-heading text-capitalize mr-auto">&nbsp;' + doctor.name + '</p></a>';
                             if (doctor.priority > 0) {
                                 html += '<img src="assets/images/Paid.png" class="ml-auto priority-img" style="right: 0rem;" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">';
                                 html += '<span class="ml-auto"><strong>' + isOpen + '</strong></span>';

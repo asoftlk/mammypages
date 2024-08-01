@@ -176,12 +176,15 @@ include "mp.php";
 					echo '<div class="row m-0 priority-list sort-item">
 							<div class="col-md-2" style="margin:auto">
 							<div>
-								<img src="directory/saloon/'.$row['logo'].'" class="img-fluid sort-item-img" style="max-height:5rem">
+                            <a href="mpconnect/saloon/' . urlencode(str_replace(' ', '_', $row["name"])) . '"><img src="directory/saloon/' . $row['logo'] . '" class="img-fluid" style="max-height:5rem"></a>
 							</div>
 							</div>
 							<div class="col-md-10 pl-2 pl-sm-0" style="margin:1rem 0">
 							<div class="d-flex">
-                            <p class="text"><p class="text-heading text-capitalize">&nbsp;'.$type_name_head.'</p>
+                            <p class="text">
+                            <a href="javascript:void(0)" onclick="location.href=\'mpconnect/saloon/' . urlencode(str_replace(' ', '_', $row['name'])) . '\'" style="color: inherit; text-decoration: none;" class="text-heading text-capitalize">
+                                                <p class="text-heading text-capitalize">&nbsp;'.$type_name_head.'</p>
+                                                </a>
                                 <img src="assets/images/Paid.png" class="ml-auto mr-3 priority-img" data-toggle="tooltip" title="Paid List" data-placement="left" area-hidden="true">
                                 <span class="ml-auto"><strong>' . $isOpen . '</strong></span>
                             </div>
@@ -375,7 +378,7 @@ include "mp.php";
                             
                             html += '<div class="row m-0 sort-item">';
                             html += '<div class="col-md-2" style="margin:auto">';
-                            html += '<img src="directory/saloon/' + saloon.logo + '" class="img-fluid sort-item-img" style="max-height:5rem">';
+                            html += '<a href="mpconnect/saloon/'+ encodedName +'"><img src="directory/saloon/' + saloon.logo + '" class="img-fluid sort-item-img" style="max-height:5rem"></a>';
                             html += '</div>';
                             html += '<div class="col-md-10 pl-0" style="margin:1rem 0">';
                             html += '<div class="d-flex">';

@@ -45,7 +45,9 @@ if(mysqli_num_rows($result) > 0)
 			<div class="row m-0 sort-item">
 							<div class="col-md-2" style="margin:auto">
 							<div>
-								<img src="directory/'.$type.'/'.$row['logo'].'" class="img-fluid sort-item-img" style="max-height:5rem">
+                                <a href="mpconnect/'.$type.'/' . urlencode(str_replace(' ', '_', $row["name"])) . '">
+								    <img src="directory/'.$type.'/'.$row['logo'].'" class="img-fluid sort-item-img" style="max-height:5rem">
+                                </a>
 							</div>
 							</div>
 							<div class="col-md-10 pl-2 pl-sm-0" style="margin:1rem 0">
@@ -73,7 +75,10 @@ if(mysqli_num_rows($result) > 0)
 								}
                                 $speciality = isset($row['speciality']) ? $row['speciality'] : '';
 
-							$output .= '</div><p class="text-heading text-capitalize">&nbsp;'.$type_name.'</p>
+							$output .= '</div>
+                            <a href="javascript:void(0)" onclick="location.href=\'mpconnect/'.$type.'/' . urlencode(str_replace(' ', '_', $row['name'])) . '\'" style="color: inherit; text-decoration: none;" class="text-heading text-capitalize">
+                                <p class="text-heading text-capitalize">&nbsp;' . $row['name'] . '</p>
+                            </a>
 							<p class="text">&nbsp;'.$speciality.'</P>
 							<div class="d-flex justify-content-between">
 								<p class="text"><img src="assets/images/placeholder.png" class="img-fluid" style="border-radius:10px; width:16px">&nbsp;'.$row["address"].'</P>                           
