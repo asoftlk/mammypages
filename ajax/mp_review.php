@@ -1,6 +1,7 @@
 <?php
 include "../connect.php";
 
+date_default_timezone_set('Asia/Colombo');
 mysqli_set_charset($conn,"utf8mb4"); 
 if(isset($_POST['submitreview'])){
 	if(isset($_POST['id'])){
@@ -40,7 +41,8 @@ if(isset($_POST['submitreview'])){
 				
 		if($userid != null){
 			if(strlen($comment)>=2){
-				$insert= mysqli_query($conn, "INSERT INTO mp_comments (mp_id, userid, comment,rating) VALUES('$mp_id', '$userid', '$comment','$rating')");
+                $datetime = date('Y-m-d H:i:s');
+				$insert= mysqli_query($conn, "INSERT INTO mp_comments (mp_id, userid, comment,rating,datetime) VALUES('$mp_id', '$userid', '$comment','$rating','$datetime')");
 			//INSERT INTO `mp_comments`(`id`, `mp_id`, `comment`, `rating`, `follow_status`, `datetime`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]')
 				if($insert){
 					echo "Posted Successfully";

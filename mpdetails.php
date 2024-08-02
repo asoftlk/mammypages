@@ -766,8 +766,8 @@
                                                 $curDayOpen =$typequery[$currentDay. '_open'];
                                                 $curDayClose =$typequery[$currentDay. '_close'];
                                                 $isOpen = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose) ? 
-                                                '<span class="text-success">Now open</span>' : 
-                                                '<span class="text-danger">Now closed</span>';
+												'text-success' : 
+												'text-danger';
     
                                                 $output = '<p class="small font-weight-bold">HOURS OF OPERATION</p>';
                                             
@@ -778,19 +778,34 @@
     
                                                     $fmtOpenTime = date('H:i A', strtotime($typequery[$openTimeKey]));
                                                     $fmtCloseTime = date('H:i A', strtotime($typequery[$closeTimeKey]));
-                                                    $isToday = (strtolower($dayName) == strtolower($currentDay)) ? 'text-success':'';
+                                                    $isToday = (strtolower($dayName) == strtolower($currentDay)) ? 'text-danger' : '';
+                                                    $isOpen=null;
+                                                    if((strtolower($dayName) == strtolower($currentDay))){
+                                                        $isOpen = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose)? 'text-success' : 'text-danger';
+                                                    }
+                                                    $doctorAvailable=null;
+                                                    if((strtolower($dayName) == strtolower($currentDay))){
+                                                        $doctorAvailable = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose)? 'Available' : 'Not Available';
+                                                    }
+
                                                     if ($typequery[$openTimeKey] === "00:00:00" && $typequery[$closeTimeKey] === "00:00:00") {
                                                         if(isset($typequery['doctor_id'])&& !isset($typequery['medical_id'])){
-                                                            $output .= '<p class="mb-1 small"><span class="text-uppercase">' . $dayName . ':</span> Not Available</p>';
+                                                            $output .= '<p class="mb-1 small">
+                                                            <span class="text-uppercase  '.$isToday.'">' . $dayName . ':</span> 
+                                                             <span class="'.$isToday.'"> Not Available</span>
+                                                            </p>';
                                                         }else {
-                                                            $output .= '<p class="mb-1 small"><span class="text-uppercase">' . $dayName . ':</span> Closed</p>';
+                                                            $output .= '<p class="mb-1 small">
+                                                            <span class="text-uppercase '.$isToday.'">' . $dayName . ':</span>
+                                                            <span class="'.$isToday.'">Closed</span>
+                                                            </p>';
                                                         }
                                                     } else {
 														if(isset($typequery['doctor_id'])&& !isset($typequery['medical_id'])){
-															$output .= '<p class="mb-1 small '.$isToday.'"><span class="text-uppercase">' . $dayName . ': </span> Available</p>';
+															$output .= '<p class="mb-1 small '.$isOpen.'"><span class="text-uppercase">' . $dayName . ': </span> '.$doctorAvailable.'</p>';
 														}
 														else{
-															$output .= '<p class="mb-1 small text-uppercase '.$isToday.'">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime. '</p>';
+															$output .= '<p class="mb-1 small text-uppercase '.$isOpen.'">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime. '</p>';
 														}
                                                     }
                                                 }
