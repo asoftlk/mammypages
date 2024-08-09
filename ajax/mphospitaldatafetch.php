@@ -121,7 +121,7 @@ include "../connect.php";
 $output = '';  
 $count = ''; 
 $type = $_POST['type']; 
-$sql = "SELECT * FROM hospital INNER JOIN hospital_working_times hwt ON hwt.hospital_id= hospital.hospital_id WHERE priority = 0  LIMIT 10 OFFSET ".$_POST['count']; 
+$sql = "SELECT * FROM hospital INNER JOIN hospital_working_times hwt ON hwt.hospital_id= hospital.hospital_id WHERE priority = 0 ORDER BY  hospital.id DESC LIMIT 10 OFFSET ".$_POST['count']; 
 $result = mysqli_query($conn, $sql);  
 if(mysqli_num_rows($result) > 0)  
 {  
