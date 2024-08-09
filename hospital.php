@@ -133,7 +133,7 @@
 								echo '<div class="row m-0 priority-list sort-item">
 										<div class="col-md-2" style="margin:auto">
 										<div>
-											<a href="mpconnect/hospital/' . urlencode(str_replace(' ', '_', $row["name"])) . '"><img src="directory/hospital/' . $row['logo'] . '" class="img-fluid" style="max-height:5rem"></a>
+											<a href="mpconnect/hospital/' . urlencode(str_replace(' ', '_', $row["name"])) . '"><img src="directory/hospital/' . $row['logo'] . '" class="img-fluid sort-item-img" style="max-height:5rem"></a>
 										</div>
 										</div>
 										<div class="col-md-10 pl-2 pl-sm-0" style="margin:1rem 0">
