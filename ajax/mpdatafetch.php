@@ -6,7 +6,7 @@ $type = $_POST['type']; ;
 $id_column = $type . '_id';
 $workingTimeTable = $type.'_working_times';
 
-$sql = "SELECT * FROM $type INNER JOIN $workingTimeTable wt ON wt.$id_column= $type.$id_column WHERE priority = 0 LIMIT 10 OFFSET ".$_POST['count']; 
+$sql = "SELECT * FROM $type INNER JOIN $workingTimeTable wt ON wt.$id_column= $type.$id_column WHERE priority = 0 ORDER BY $type.id DESC LIMIT 10 OFFSET ".$_POST['count']; 
 $result = mysqli_query($conn, $sql);  
 if(mysqli_num_rows($result) > 0)  
 {  
