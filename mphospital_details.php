@@ -713,9 +713,6 @@
 										$currentTime = date('H:i:s');
 										$curDayOpen = $hospital[$currentDay . '_open'];
 										$curDayClose = $hospital[$currentDay . '_close'];
-										$isOpen = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose) ? 
-												'<span class="text-success">Now open</span>' : 
-												'<span class="text-danger">Now closed</span>';
 
 										$output = '<p class="small font-weight-bold">HOURS OF OPERATION</p>';
 
@@ -726,12 +723,18 @@
 
 											$fmtOpenTime = date('h:i A', strtotime($hospital[$openTimeKey]));
 											$fmtCloseTime = date('h:i A', strtotime($hospital[$closeTimeKey]));
-											$isToday = (strtolower($dayName) == strtolower($currentDay)) ? 'text-success' : '';
+											$isToday = (strtolower($dayName) == strtolower($currentDay)) ? 'text-danger' : '';
+                                            $isOpen=null;
+                                            if((strtolower($dayName) == strtolower($currentDay))){
+                                                $isOpen = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose)? 'text-success' : 'text-danger';
+                                            }
 
 											if ($hospital[$openTimeKey] === "00:00:00" && $hospital[$closeTimeKey] === "00:00:00") {
-												$output .= '<p class="mb-1 small"><span class="text-uppercase">' . $dayName . ':</span> Closed</p>';
+												$output .= '<p class="mb-1 small">
+                                                <span class="text-uppercase '.$isToday.'">' . $dayName . ':</span>
+                                                <span class="'.$isToday.'">Closed</span></p>';
 											} else {
-												$output .= '<p class="mb-1 small text-uppercase ' . $isToday . '">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime . '</p>';
+												$output .= '<p class="mb-1 small text-uppercase '.$isOpen.'">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime . '</p>';
 											}
 										}
 										$output .= '</div>';                             
