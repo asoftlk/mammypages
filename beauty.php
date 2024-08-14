@@ -104,10 +104,10 @@ include "mp.php";
             <div id="suggesstion-box" class="position-absolute" style="z-index:1000" ></div>
                 
             <div class="d-flex justify-content-start">
-                <label class="select">
+                <!-- <label class="select">
                     <select name="speciality"class="filter-box form-select form-select-sm"  id="speciality">
                         <option value="">Select Speciality</option>
-                        <?php
+                        <?php /*
                             $specialityQuery = mysqli_query($conn, "SELECT DISTINCT speciality FROM saloon");
                             while ($specialityRow = mysqli_fetch_array($specialityQuery)) {
                                 $specialityArray = explode(" ///", $specialityRow['speciality']);
@@ -115,9 +115,9 @@ include "mp.php";
                                     echo '<option value="' . $spec . '">' . $spec . '</option>';
                                 }
                             }
-                            ?>
+                            */?>
                     </select>
-                </label>
+                </label> -->
                 <label class="select">
                     <select name="city"  class="filter-box form-select form-select-sm" id="city">
                         <option value="">Select City</option>
@@ -144,20 +144,43 @@ include "mp.php";
                     $currentDay = strtolower(date('l')); 
                     $currentTime = date('H:i:s'); 
 					while($row=mysqli_fetch_array($saloon)){
-						$specialityarray = explode(" ///", $row['speciality']);
-						$speciality = "";
-						for($i=0; $i< count($specialityarray); $i++){
-							if($i == count($specialityarray)-1){
+						// $specialityarray = explode(" ///", $row['speciality']);
+						// $speciality = "";
+						// for($i=0; $i< count($specialityarray); $i++){
+						// 	if($i == count($specialityarray)-1){
 								
-								$speciality .= $specialityarray[$i];
-							}
-							else{
-								$speciality .= $specialityarray[$i].", ";
-							}
-						}
+						// 		$speciality .= $specialityarray[$i];
+						// 	}
+						// 	else{
+						// 		$speciality .= $specialityarray[$i].", ";
+						// 	}
+						// }
                         $openTime = $row[$currentDay . '_open'];
                         $closeTime = $row[$currentDay . '_close'];
-                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1 l-open">Open</span>' : '<span class="text-danger text mr-1 l-close">Closed</span>';
+                        // $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1 l-open">Open</span>' : '<span class="text-danger text mr-1 l-close">Closed</span>';
+                        $isOpen24 = substr($currentDay, 0, 3).'24';
+                        $extends = substr($currentDay, 0, 3).'extends';
+                        $isOpen = null;
+
+                        if($row[$isOpen24]==='Y'){
+                            $isOpen = '<span class="text-success text mr-1" style="float:right">Open</span>';
+                        }else if($row[$extends] === 'Y'){
+                            $currentDate = date('Y-m-d'); 
+                            $date = new DateTime($currentDate);
+                            $date->modify('+1 day');
+                            $nextDate= $date->format('Y-m-d');
+
+                            $extOpenTime = $currentDate . ' ' . $openTime; 
+                            $extCloseTime = $nextDate . ' ' . $closeTime; 
+                            $openDateTime = new DateTime($extOpenTime); 
+                            $closeDateTime = new DateTime($extCloseTime); 
+                            $extCurrrentTime =  new DateTime();
+
+                            $isOpen = ($extCurrrentTime >= $openDateTime && $extCurrrentTime <= $closeDateTime)? '<span class="text-success text mr-1" style="float:right">Open</span>' : '<span class="text-danger text mr-1" style="float:right">Closed</span>';
+                        } else {
+                            $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1" style="float:right">Open</span>' : '<span class="text-danger text mr-1" style="float:right">Closed</span>';
+
+                        }
                         if (isset($row['main_id']) && !empty($row['main_id']) && $row['main_id'] != 0) {
                             $mainid = $row['main_id'];
                         
@@ -189,7 +212,6 @@ include "mp.php";
                                 <span class="ml-auto"><strong>' . $isOpen . '</strong></span>
                             </div>
 							<div class="d-flex">
-							<p class="text">&nbsp;'.$speciality.'</P>
 							<div class="ml-auto star-bar">';
 							
 							$ratingquery= mysqli_query($conn, "SELECT SUM(rating) AS total, COUNT(rating) as count from mp_comments WHERE mp_id= '$row[saloon_id]'");
@@ -312,14 +334,13 @@ include "mp.php";
             }
         });
 
-        $('#searchsaloon, #speciality, #type, #city').on('input change keyup', function() {
+        $('#searchsaloon,  #type, #city').on('input change keyup', function() {
             var query = $('#searchsaloon').val();
-            var speciality = $('#speciality').val();
             var type = $('#type').val();
             var city = $('#city').val();
 
-            if (query.length >= 1 || speciality || type || city) {
-                load_data(query, speciality, type, city);
+            if (query.length >= 1 ||  type || city) {
+                load_data(query, type, city);
                 $('.priority-list').hide();
             } else {
                 $("#suggesstion-box").hide();
@@ -330,7 +351,6 @@ include "mp.php";
 
         $('#clearFilters').click(function() {
             $('#searchsaloon').val('');
-            $('#speciality').val('');
             $('#type').val('');
             $('#city').val('');
 
@@ -339,14 +359,13 @@ include "mp.php";
             $('.priority-list').show();
         });
 
-        function load_data(value,speciality, type, city) {
+        function load_data(value, type, city) {
             $.ajax({
                 url: "ajax/searchSaloon",
                 method: "POST",
                 data: {
                     search: "search",
                     value: value,
-                    speciality: speciality,
                     type: type,
                     city: city
                 },
@@ -361,8 +380,6 @@ include "mp.php";
                     if (result.data.length > 0) {
                         var html = '';
                         result.data.forEach(function(saloon) {
-                            var specialityArray = saloon.speciality.split(" ///");
-                            var speciality = specialityArray.join(", ");
                             var rating = saloon.rating ? parseFloat(saloon.rating) : 0;
                             var encodedName = encodeURIComponent(saloon.name.replace(/\s+/g, '_'));
                             var saloonId = saloon.saloon_id;
@@ -374,7 +391,35 @@ include "mp.php";
                             var openTime = saloon[currentDay + '_open'];
                             var closeTime = saloon[currentDay + '_close'];
 
-                            var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success text mr-1 l-open">Open</span>' : '<span class="text-danger text mr-1 l-close">Closed</span>';
+                            const today = new Date();
+           
+                            const isOpen24Key = currentDay.substring(0, 3) + '24';
+                            const extendsKey = currentDay.substring(0, 3) + 'extends';
+                            let isOpen = null;
+
+                            if (saloon[isOpen24Key] === 'Y') {
+                                isOpen = '<span class="text-success text mr-1" style="float:right">Open</span>';
+                            } else if (saloon[extendsKey] === 'Y') {
+                                const newCurrentDate = today.toISOString().split('T')[0]; 
+                                const nextDate = new Date(today);
+                                nextDate.setDate(today.getDate() + 1);
+                                const nextDateString = nextDate.toISOString().split('T')[0]; 
+
+                                const extOpenTime = new Date(newCurrentDate + 'T' + openTime);
+                                const extCloseTime = new Date(nextDateString + 'T' + closeTime);
+                                const extCurrentTime = today;
+
+                                isOpen = (extCurrentTime >= extOpenTime && extCurrentTime <= extCloseTime) ? 
+                                    '<span class="text-success text mr-1" style="float:right">Open</span>' : 
+                                    '<span class="text-danger text mr-1" style="float:right">Closed</span>';
+                            } else {
+                                const openDateTime = new Date(currentDate.toISOString().split('T')[0] + 'T' + openTime);
+                                const closeDateTime = new Date(currentDate.toISOString().split('T')[0] + 'T' + closeTime);
+
+                                isOpen = (today >= openDateTime && today <= closeDateTime) ? 
+                                    '<span class="text-success text mr-1" style="float:right">Open</span>' : 
+                                    '<span class="text-danger text mr-1" style="float:right">Closed</span>';
+                            }
                             
                             html += '<div class="row m-0 sort-item">';
                             html += '<div class="col-md-2" style="margin:auto">';
@@ -396,7 +441,7 @@ include "mp.php";
 
                             html += '</div>';
                             html += '<div class="d-flex">';
-                            html += '<p class="text">&nbsp;' + speciality + '</P>';
+        
                             html += '<div class="ml-auto star-bar">';
                             
                             for (var i = 0; i < 5; i++) {

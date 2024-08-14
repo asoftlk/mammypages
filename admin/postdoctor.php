@@ -109,8 +109,47 @@ if(isset($_POST['sub-hos'])){
 		 	        values ('$doctorid', '$doctorname', '$doctorspecialist', '$doctorqualification','$doctoraddr',  '$doctorcont',  '$doctoremail', '$doctorweb', '$visitHospital', '$doctorworking', '$doctorfb',  '$doctorinsta', '$doctorln', '$logotarget', '$status', '$about','$priority','$featuretarget')";
 			$result = mysqli_query($conn, $query);
 
-			$workingTimesQuery = "INSERT INTO doctor_working_times (dtime_id, doctor_id,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
-								VALUES ('$dtime_id','$doctorid', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
+			// $workingTimesQuery = "INSERT INTO doctor_working_times (dtime_id, doctor_id,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
+			// 					VALUES ('$dtime_id','$doctorid', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
+            $daysOfWeek = [
+                'mon' => ['open' => 'monday_open', 'close' => 'monday_close'],
+                'tue' => ['open' => 'tuesday_open', 'close' => 'tuesday_close'],
+                'wed' => ['open' => 'wednesday_open', 'close' => 'wednesday_close'],
+                'thu' => ['open' => 'thursday_open', 'close' => 'thursday_close'],
+                'fri' => ['open' => 'friday_open', 'close' => 'friday_close'],
+                'sat' => ['open' => 'saturday_open', 'close' => 'saturday_close'],
+                'sun' => ['open' => 'sunday_open', 'close' => 'sunday_close']
+            ];
+
+            $columns = [];
+            $values = [];
+
+            foreach ($daysOfWeek as $day => $times) {
+                $openKey = $times['open'];
+                $closeKey = $times['close'];
+                $extendsKey = substr($day, 0, 3) . 'extends';
+                $isOpen24Key = substr($day, 0, 3) . '24';
+
+                $openValue = filter_input(INPUT_POST, $day . 'opentime');
+                $closeValue = filter_input(INPUT_POST, $day . 'endtime');
+                $extendsValue = filter_input(INPUT_POST, $day . 'extends')=== '1' ? 'Y' : 'N';
+                $isOpen24Value = filter_input(INPUT_POST, $day . '24')=== '1' ? 'Y' : 'N';
+
+                $columns[] = $openKey;
+                $columns[] = $closeKey;
+                $columns[] = $extendsKey;
+                $columns[] = $isOpen24Key;
+
+                $values[] = "'$openValue'";
+                $values[] = "'$closeValue'";
+                $values[] = "'$extendsValue'";
+                $values[] = "'$isOpen24Value'";
+            }
+
+            $columns = implode(', ', array_merge(['dtime_id', 'doctor_id'], $columns));
+            $values = implode(', ', array_merge(["'$dtime_id'", "'$doctorid'"], $values));
+
+            $workingTimesQuery = "INSERT INTO doctor_working_times ($columns) VALUES ($values)";
 			$resultWorkingTimes = mysqli_query($conn, $workingTimesQuery);
 			 if($result){
 				echo "Posted Successfully";

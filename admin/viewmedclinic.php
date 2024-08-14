@@ -322,7 +322,7 @@
 							</div>
 							<div class="col-md-3">
 								<div class="form-group">
-									<label>3 :</label>
+									<label>YouTube Link :</label>
 									<input type="text" class="form-control" id="youtube">
 								</div>
 							</div>

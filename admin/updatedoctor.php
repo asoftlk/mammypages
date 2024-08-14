@@ -123,18 +123,38 @@ $logoimage =$_FILES['logoimage']['name'];
 			$updatequery .= " WHERE id='$id'";
 		   $update =mysqli_query($conn, $updatequery);
 
-		   $updateWorkingTimesQuery = "UPDATE doctor_working_times 
-		   SET monday_open='$mon_open', monday_close='$mon_close', 
-			   tuesday_open='$tue_open', tuesday_close='$tue_close', 
-			   wednesday_open='$wed_open', wednesday_close='$wed_close', 
-			   thursday_open='$thu_open', thursday_close='$thu_close', 
-			   friday_open='$fri_open', friday_close='$fri_close', 
-			   saturday_open='$sat_open', saturday_close='$sat_close', 
-			   sunday_open='$sun_open', sunday_close='$sun_close' 
-		   WHERE doctor_id='$doctor_id'";
-		$updateWorkingTimes = mysqli_query($conn, $updateWorkingTimesQuery);
+		//    $updateWorkingTimesQuery = "UPDATE doctor_working_times 
+		//    SET monday_open='$mon_open', monday_close='$mon_close', 
+		// 	   tuesday_open='$tue_open', tuesday_close='$tue_close', 
+		// 	   wednesday_open='$wed_open', wednesday_close='$wed_close', 
+		// 	   thursday_open='$thu_open', thursday_close='$thu_close', 
+		// 	   friday_open='$fri_open', friday_close='$fri_close', 
+		// 	   saturday_open='$sat_open', saturday_close='$sat_close', 
+		// 	   sunday_open='$sun_open', sunday_close='$sun_close' 
+		//    WHERE doctor_id='$doctor_id'";
+        $days = [
+            'mon' => ['open' => 'monday_open', 'close' => 'monday_close'],
+            'tue' => ['open' => 'tuesday_open', 'close' => 'tuesday_close'],
+            'wed' => ['open' => 'wednesday_open', 'close' => 'wednesday_close'],
+            'thu' => ['open' => 'thursday_open', 'close' => 'thursday_close'],
+            'fri' => ['open' => 'friday_open', 'close' => 'friday_close'],
+            'sat' => ['open' => 'saturday_open', 'close' => 'saturday_close'],
+            'sun' => ['open' => 'sunday_open', 'close' => 'sunday_close']
+        ];
 
-	if($update && $updateWorkingTimes){
+        foreach ($days as $day => $times) {
+            $open = mysqli_real_escape_string($conn, $_POST[$day . 'opentime']);
+            $close = mysqli_real_escape_string($conn, $_POST[$day . 'endtime']);
+            $extends = mysqli_real_escape_string($conn, $_POST[$day . 'extends']) === '1' ? 'Y' : 'N';
+            $isOpen24Hours = mysqli_real_escape_string($conn, $_POST[$day . '24']) === '1' ? 'Y' : 'N';
+
+            $updateWorkingTime = "UPDATE doctor_working_times SET {$times['open']} = '$open', {$times['close']} = '$close', 
+            {$day}extends = '$extends', {$day}24 = '$isOpen24Hours' WHERE doctor_id = '$doctor_id'";
+
+            mysqli_query($conn, $updateWorkingTime);
+        }
+		
+	if($update){
 		echo 'Doctor Updated';
 	}
 	else{

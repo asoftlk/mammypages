@@ -580,8 +580,8 @@
 												<label class="required" for="hospitaltype">Hospital type</label>
 												<select class="form-control" name="hospitaltype" id="hospitaltype">
 													<option selected="" disabled="" value="null" class="hidden">--Select Hospital Type</option>
-													<option value="Government hospital">Government Hospital</option>
-													<option value="Private hospital">Private Hospital</option>
+													<option value="Government Hospital">Government Hospital</option>
+													<option value="Private Hospital">Private Hospital</option>
 												</select>
 											</div>
 											<div class="form-group hospitalsubtype">
@@ -612,6 +612,8 @@
                                                             <th>Day</th>
                                                             <th>Open time</th>
                                                             <th>End time</th>
+                                                            <th>Extends to Next Day</th>
+                                                            <th>24 x 7 Open</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -632,6 +634,22 @@
                                                                         class="form-control form-control-sm border-0" 
                                                                         id="<?php echo $abbr; ?>endtime" 
                                                                         placeholder="<?php echo ucfirst($day); ?> End Time" 
+                                                                    >
+                                                                </td>
+                                                                <td>
+                                                                    <input type="hidden" name="<?php echo $abbr; ?>extends" value="0">
+                                                                    <input type="checkbox" 
+                                                                        name="<?php echo $abbr; ?>extends" 
+                                                                        id="<?php echo $abbr; ?>extends"
+                                                                        value="1" 
+                                                                    >
+                                                                </td>
+                                                                <td>
+                                                                    <input type="hidden" name="<?php echo $abbr; ?>24" value="0">
+                                                                    <input type="checkbox" 
+                                                                        name="<?php echo $abbr; ?>24" 
+                                                                        id="<?php echo $abbr; ?>24"
+                                                                        value="1"
                                                                     >
                                                                 </td>
                                                                 <td>

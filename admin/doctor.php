@@ -166,6 +166,8 @@ ul.ui-autocomplete {
 									<th>Day</th>
 									<th>Open time</th>
 									<th>End time</th>
+                                    <th>Extends to Next Day</th>
+                                    <th>24 x 7 Open</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -186,6 +188,22 @@ ul.ui-autocomplete {
                                             class="form-control form-control-sm border-0" 
                                             id="<?php echo $abbr; ?>endtime" 
                                             placeholder="<?php echo ucfirst($day); ?> End Time" 
+                                        >
+                                    </td>
+                                    <td>
+                                        <input type="hidden" name="<?php echo $abbr; ?>extends" value="0">
+                                        <input type="checkbox" 
+                                            name="<?php echo $abbr; ?>extends" 
+                                            id="<?php echo $abbr; ?>extends"
+                                            value="1" 
+                                        >
+                                    </td>
+                                    <td>
+                                        <input type="hidden" name="<?php echo $abbr; ?>24" value="0">
+                                        <input type="checkbox" 
+                                            name="<?php echo $abbr; ?>24" 
+                                            id="<?php echo $abbr; ?>24"
+                                            value="1" 
                                         >
                                     </td>
                                     <td>
@@ -592,6 +610,19 @@ $( function() {
       source: availableTags
     });
   } );
+</script>
+<script>
+    function clearTimeInputs(day) {
+        var openInput = document.getElementById(day + 'opentime');
+        var closeInput = document.getElementById(day + 'endtime');
+        var extendsCheckBox = document.getElementById(day + 'extends');
+        var op24CheckBox = document.getElementById(day + '24');
+
+        openInput.value = '';
+        closeInput.value = '';
+        extendsCheckBox.checked = false;
+        op24CheckBox.checked = false;
+    }
 </script>
 
 </body>

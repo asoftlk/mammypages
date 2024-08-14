@@ -7,16 +7,16 @@
 	 $id = mysqli_real_escape_string($conn, $_POST['id']);
 	 $studioid = mysqli_real_escape_string($conn, $_POST['studioid']);
 	 $name = mysqli_real_escape_string($conn, $_POST['studioname']);
-	 $speciality1 = $_POST['studiospecialist'];
-	 $speciality ="";
-		 for($i=0; $i<count($speciality1);$i++){
-			 if($i==(count($speciality1)-1)){
-				 $speciality .= $speciality1[$i];
-			 }
-			 else{
-			 $speciality .= $speciality1[$i]." ///";
-			 }
-		 }
+	//  $speciality1 = $_POST['studiospecialist'];
+	//  $speciality ="";
+	// 	 for($i=0; $i<count($speciality1);$i++){
+	// 		 if($i==(count($speciality1)-1)){
+	// 			 $speciality .= $speciality1[$i];
+	// 		 }
+	// 		 else{
+	// 		 $speciality .= $speciality1[$i]." ///";
+	// 		 }
+	// 	 }
 	 $address = mysqli_real_escape_string($conn, $_POST['studioaddr']);
 	 $map = mysqli_real_escape_string($conn, $_POST['studiomap']);
 	 $city = mysqli_real_escape_string($conn, $_POST['studiocity']);
@@ -129,7 +129,7 @@
 	           $articleinsert= mysqli_query($conn, "INSERT INTO mpstudio_gallery ( studio_id, image_name) VALUES ('$studioid', '$target')");
 	       }
 	}	   
-	$updatequery = "Update studio SET name='$name',speciality='$speciality',registraion_no='$studioregno', establishment='$studioestablishment', contact_person='$studiocontactperson',address='$address', map='$map', city='$city', mobile='$mobile',email='$email',whatsapp='$whatsapp',website='$website', facebook='$facebook', instagram='$instagram', linkedin='$linkedin',youtube='$youtube',about='$about',services='$service' ";		
+	$updatequery = "Update studio SET name='$name',registraion_no='$studioregno', establishment='$studioestablishment', contact_person='$studiocontactperson',address='$address', map='$map', city='$city', mobile='$mobile',email='$email',whatsapp='$whatsapp',website='$website', facebook='$facebook', instagram='$instagram', linkedin='$linkedin',youtube='$youtube',about='$about',services='$service' ";		
 	
 				$profileimage = $_FILES['profileimage']['name'];
 	            if($profileimage != ""){
@@ -312,9 +312,14 @@
             foreach ($days as $day => $times) {
                 $open = mysqli_real_escape_string($conn, $_POST[$day . 'opentime']);
                 $close = mysqli_real_escape_string($conn, $_POST[$day . 'endtime']);
-                $updateWorkingTime = "UPDATE studio_working_times 
-                                      SET {$times['open']} = '$open', {$times['close']} = '$close'
-                                      WHERE studio_id = '$studioid'";
+                // $updateWorkingTime = "UPDATE studio_working_times 
+                //                       SET {$times['open']} = '$open', {$times['close']} = '$close'
+                //                       WHERE studio_id = '$studioid'";
+                $extends = mysqli_real_escape_string($conn, $_POST[$day . 'extends']) === '1' ? 'Y' : 'N';
+                $isOpen24Hours = mysqli_real_escape_string($conn, $_POST[$day . '24']) === '1' ? 'Y' : 'N';
+
+                $updateWorkingTime = "UPDATE studio_working_times SET {$times['open']} = '$open', {$times['close']} = '$close', 
+                {$day}extends = '$extends', {$day}24 = '$isOpen24Hours' WHERE studio_id = '$studioid'";
                 mysqli_query($conn, $updateWorkingTime);
             }
 			echo 'studio Updated';

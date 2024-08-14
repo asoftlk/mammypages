@@ -145,7 +145,30 @@ include "mp.php";
                         $currentTime = date('H:i:s'); 
                         $openTime = $row[$currentDay . '_open'];
                         $closeTime = $row[$currentDay . '_close'];
-                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1 l-open" style="float:right">Available</span>' : '<span class="text-danger text mr-1 l-open" style="float:right">Not Available</span>';
+                        // $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1 l-open" style="float:right">Available</span>' : '<span class="text-danger text mr-1 l-open" style="float:right">Not Available</span>';
+                        $isOpen24 = substr($currentDay, 0, 3).'24';
+                        $extends = substr($currentDay, 0, 3).'extends';
+                        $isOpen = null;
+
+                        if($row[$isOpen24]==='Y'){
+                            $isOpen = '<span class="text-success text mr-1" style="float:right">Available</span>';
+                        }else if($row[$extends] === 'Y'){
+                            $currentDate = date('Y-m-d'); 
+                            $date = new DateTime($currentDate);
+                            $date->modify('+1 day');
+                            $nextDate= $date->format('Y-m-d');
+
+                            $extOpenTime = $currentDate . ' ' . $openTime; 
+                            $extCloseTime = $nextDate . ' ' . $closeTime; 
+                            $openDateTime = new DateTime($extOpenTime); 
+                            $closeDateTime = new DateTime($extCloseTime); 
+                            $extCurrrentTime =  new DateTime();
+
+                            $isOpen = ($extCurrrentTime >= $openDateTime && $extCurrrentTime <= $closeDateTime)? '<span class="text-success text mr-1" style="float:right">Available</span>' : '<span class="text-danger text mr-1" style="float:right">Not Available</span>';
+                        } else {
+                            $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1" style="float:right">Available</span>' : '<span class="text-danger text mr-1" style="float:right">Not Available</span>';
+
+                        }
 
 					echo '<div class="row m-0 priority-list sort-item">
 							<div class="col-md-2" style="margin:auto">
@@ -340,7 +363,38 @@ include "mp.php";
                             var openTime = doctor[currentDay + '_open'];
                             var closeTime = doctor[currentDay + '_close'];
 
-                            var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success text mr-1 l-open">Available</span>' : '<span class="text-danger text mr-1 l-close">Not Available</span>';
+                            const today = new Date();
+           
+                            const isOpen24Key = currentDay.substring(0, 3) + '24';
+                            const extendsKey = currentDay.substring(0, 3) + 'extends';
+                            let isOpen = null;
+                            console.log(doctor);
+                            
+                            if (doctor[isOpen24Key] === 'Y') {
+                                isOpen = '<span class="text-success text mr-1" style="float:right">Available</span>';
+                            } else if (doctor[extendsKey] === 'Y') {
+                                const newCurrentDate = today.toISOString().split('T')[0]; 
+                                const nextDate = new Date(today);
+                                nextDate.setDate(today.getDate() + 1);
+                                const nextDateString = nextDate.toISOString().split('T')[0]; 
+
+                                const extOpenTime = new Date(newCurrentDate + 'T' + openTime);
+                                const extCloseTime = new Date(nextDateString + 'T' + closeTime);
+                                const extCurrentTime = today;
+
+                                isOpen = (extCurrentTime >= extOpenTime && extCurrentTime <= extCloseTime) ? 
+                                    '<span class="text-success text mr-1" style="float:right">Available</span>' : 
+                                    '<span class="text-danger text mr-1" style="float:right">Not Available</span>';
+                            } else {
+                                const openDateTime = new Date(currentDate.toISOString().split('T')[0] + 'T' + openTime);
+                                const closeDateTime = new Date(currentDate.toISOString().split('T')[0] + 'T' + closeTime);
+
+                                isOpen = (today >= openDateTime && today <= closeDateTime) ? 
+                                    '<span class="text-success text mr-1" style="float:right">Available</span>' : 
+                                    '<span class="text-danger text mr-1" style="float:right">Not Available</span>';
+                            }
+
+                            // var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success text mr-1 l-open">Available</span>' : '<span class="text-danger text mr-1 l-close">Not Available</span>';
                             
                             html += '<div class="row m-0 sort-item">';
                             html += '<div class="col-md-2" style="margin:auto">';

@@ -33,12 +33,18 @@ label:not(.form-check-label):not(.custom-file-label) {
 
     $days = ['mon' => 'monday', 'tue' => 'tuesday', 'wed' => 'wednesday', 'thu' => 'thursday', 'fri' => 'friday', 'sat' => 'saturday', 'sun' => 'sunday'];
     $times = [];
+    $extends = [];
+    $open24 = [];
 
     foreach ($days as $abbr => $day) {
         $openKey = $day . '_open';
         $closeKey = $day . '_close';
+        $extendsKey = $abbr . 'extends';
+        $open24Key = $abbr . '24';
         $times[$abbr . 'open'] = $row[$openKey] == '00:00:00' ? '' : $row[$openKey];
         $times[$abbr . 'close'] = $row[$closeKey] == '00:00:00' ? '' : $row[$closeKey];
+        $extends[$abbr] = $row[$extendsKey] === 'Y' ? 'checked' : '';
+        $open24[$abbr] = $row[$open24Key] === 'Y' ? 'checked' : '';
     }
 
 ?>
@@ -286,6 +292,8 @@ $(document).ready(function() {
                                     <th>Day</th>
                                     <th>Open time</th>
                                     <th>End time</th>
+                                    <th>Extends to Next Day</th>
+                                    <th>24 x 7 Open</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -307,6 +315,22 @@ $(document).ready(function() {
                                         id="<?php echo $abbr; ?>endtime" 
                                         placeholder="<?php echo ucfirst($day); ?> End Time" 
                                         value="<?php echo $times[$abbr . 'close']; ?>">
+                                </td>
+                                <td>
+                                    <input type="hidden" name="<?php echo $abbr; ?>extends" value="0">
+                                    <input type="checkbox" 
+                                        name="<?php echo $abbr; ?>extends" 
+                                        id="<?php echo $abbr; ?>extends"
+                                        value="1" <?php echo $extends[$abbr]; ?>
+                                    >
+                                </td>
+                                <td>
+                                    <input type="hidden" name="<?php echo $abbr; ?>24" value="0">
+                                    <input type="checkbox" 
+                                        name="<?php echo $abbr; ?>24" 
+                                        id="<?php echo $abbr; ?>24"
+                                        value="1" <?php echo $open24[$abbr]; ?>
+                                    >
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-sm btn-info" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
@@ -781,8 +805,12 @@ $(document).on('change', '#type', function(){
     function clearTimeInputs(day) {
         var openInput = document.getElementById(day + 'opentime');
         var closeInput = document.getElementById(day + 'endtime');
-        
+        var extendsCheckBox = document.getElementById(day + 'extends');
+        var op24CheckBox = document.getElementById(day + '24');
+
         openInput.value = '';
         closeInput.value = '';
+        extendsCheckBox.checked = false;
+        op24CheckBox.checked = false;
     }
 </script>

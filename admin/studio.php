@@ -61,12 +61,12 @@
 	<section class="content">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-12">
+				<!-- <div class="col-12">
 					<a href="viewstudio.php" class="btn btn-mammy float-right">View Studios</a>
 					<button type="button" class="btn btn-mammy" id="btnspeciality">+ Add Speciality</button>
-				</div>
+				</div> -->
 				<br><br>
-				<div class="col-12">
+				<!-- <div class="col-12">
 					<div class="card card-primary specialityview" style="display:none">
 						<div class="card-body">
 							<h5>Add New Speciality</h5>
@@ -75,11 +75,11 @@
 									<label class="required">Speciality</label>
 									<select class="form-control" name="specialityselect" id="specialityselect">
 										<option selected="" disabled="" value="null" class="hidden">--Select Speciality</option>
-										<?php $specialityquery = mysqli_query($conn, "SELECT * FROM studio_speciality");
+										<?php /* $specialityquery = mysqli_query($conn, "SELECT * FROM studio_speciality");
 											While($specialityrow= mysqli_fetch_assoc($specialityquery)){
 												echo '<option value="'.$specialityrow["id"].'">'.$specialityrow["speciality"].'</option>';
 											}
-											?>
+											 */ ?>
 									</select>
 								</div>
 								<div class="form-group specialityselectview">
@@ -98,7 +98,7 @@
 							</form>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				<!-- left column -->
 				<div class="col-md-12">
 					<div class="card card-primary">
@@ -140,15 +140,15 @@
 												<label class="required" for="studioname">Studio Name</label>
 												<input type="text" name="studioname" class="form-control" id="studioname" placeholder="Studio Name">
 											</div>
-											<div class="form-group">
+											<!-- <div class="form-group">
 												<label class="required">Speciality</label>
 												<select class="form-control select2" name="studiospecialist[]" id="studiospecialist" multiple data-placeholder='--Select Speciality--'>
-												<?php $query=mysqli_query($conn, "SELECT * FROM studio_speciality");
+												<?php /* $query=mysqli_query($conn, "SELECT * FROM studio_speciality");
 													while($row=mysqli_fetch_array($query)){
 													echo   '<option value="'.$row["speciality"].'">'.$row["speciality"].'</option>';
-													}?>
+													}*/?>
 												</select>
-											</div>
+											</div> -->
 											<div class="form-group row">
 												<div class="col-md-6">
 													<label class="required" for="studioregno">Studio Registration No</label>
@@ -219,10 +219,11 @@
                                                             <th>Day</th>
                                                             <th>Open time</th>
                                                             <th>End time</th>
+                                                            <th>Extends to Next Day</th>
+                                                            <th>24 x 7 Open</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <!-- PHP to generate days and time inputs -->
                                                         <?php foreach ($days as $abbr => $day): ?>
                                                             <tr>
                                                                 <td><?php echo ucfirst($day); ?></td>
@@ -240,6 +241,22 @@
                                                                         class="form-control form-control-sm border-0" 
                                                                         id="<?php echo $abbr; ?>endtime" 
                                                                         placeholder="<?php echo ucfirst($day); ?> End Time" 
+                                                                    >
+                                                                </td>
+                                                                <td>
+                                                                    <input type="hidden" name="<?php echo $abbr; ?>extends" value="0">
+                                                                    <input type="checkbox" 
+                                                                        name="<?php echo $abbr; ?>extends" 
+                                                                        id="<?php echo $abbr; ?>extends"
+                                                                        value="1" 
+                                                                    >
+                                                                </td>
+                                                                <td>
+                                                                    <input type="hidden" name="<?php echo $abbr; ?>24" value="0">
+                                                                    <input type="checkbox" 
+                                                                        name="<?php echo $abbr; ?>24" 
+                                                                        id="<?php echo $abbr; ?>24"
+                                                                        value="1" 
                                                                     >
                                                                 </td>
                                                                 <td>
@@ -696,6 +713,19 @@
             }
         });
     });
+</script>
+<script>
+    function clearTimeInputs(day) {
+        var openInput = document.getElementById(day + 'opentime');
+        var closeInput = document.getElementById(day + 'endtime');
+        var extendsCheckBox = document.getElementById(day + 'extends');
+        var op24CheckBox = document.getElementById(day + '24');
+
+        openInput.value = '';
+        closeInput.value = '';
+        extendsCheckBox.checked = false;
+        op24CheckBox.checked = false;
+    }
 </script>
 </body>
 </html>

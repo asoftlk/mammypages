@@ -282,7 +282,6 @@
 							$tablegallery_name = "mp" . $type . "_gallery";
 							$id_column = $type . '_id';
                             $query = "SELECT * FROM `$type` AS h INNER JOIN `" . $type . "_working_times` AS hwt ON hwt.`" . $type . "_id` = h.`" . $type . "_id` WHERE h.name = '$name'";
-                            
 							$typequery = mysqli_query($conn, $query);
 						}		
             				
@@ -758,6 +757,7 @@
 												'saturday' => 'Saturday',
 												'sunday' => 'Sunday'
 											];
+                                            $type = $_GET['type'];
 
 											date_default_timezone_set('Asia/Colombo');
 											$currentDay = strtolower(date('l')); 
@@ -771,40 +771,83 @@
     
                                                 $output = '<p class="small font-weight-bold">HOURS OF OPERATION</p>';
                                             
-                                                $output .= '<div class="hospital-timings ml-4">';
+                                                $output .= '<div class="hospital-timings ml-3">';
                                                 foreach ($daysOfWeek as $dayKey => $dayName) {
                                                     $openTimeKey = $dayKey . '_open';
                                                     $closeTimeKey = $dayKey . '_close';
+                                                    $isOpen24 = substr($dayKey, 0, 3).'24';
+                                                    $extends = substr($dayKey, 0, 3).'extends';
     
-                                                    $fmtOpenTime = date('H:i A', strtotime($typequery[$openTimeKey]));
-                                                    $fmtCloseTime = date('H:i A', strtotime($typequery[$closeTimeKey]));
+                                                    $fmtOpenTime = date('h:i A', strtotime($typequery[$openTimeKey]));
+                                                    $fmtCloseTime = date('h:i A', strtotime($typequery[$closeTimeKey]));
                                                     $isToday = (strtolower($dayName) == strtolower($currentDay)) ? 'text-danger' : '';
+                                                    $is24HrsToday = (strtolower($dayName) == strtolower($currentDay)) ? 'text-success' : '';
                                                     $isOpen=null;
-                                                    if((strtolower($dayName) == strtolower($currentDay))){
-                                                        $isOpen = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose)? 'text-success' : 'text-danger';
-                                                    }
                                                     $doctorAvailable=null;
-                                                    if((strtolower($dayName) == strtolower($currentDay))){
+
+                                                    if($typequery[$extends] === 'Y' && (strtolower($dayName) == strtolower($currentDay))){
+                                                        $currentDate = date('Y-m-d'); 
+                                                        $date = new DateTime($currentDate);
+                                                        $date->modify('+1 day');
+                                                        $nextDate= $date->format('Y-m-d');
+        
+                                                        $extOpenTime = $currentDate . ' ' . $fmtOpenTime; 
+                                                        $extCloseTime = $nextDate . ' ' . $fmtCloseTime; 
+                                                        $openDateTime = new DateTime($extOpenTime); 
+                                                        $closeDateTime = new DateTime($extCloseTime); 
+                                                        $extCurrrentTime =  new DateTime();
+        
+                                                        $isOpen = ($extCurrrentTime >= $openDateTime && $extCurrrentTime <= $closeDateTime)? 'text-success' : 'text-danger';
+                                                        $doctorAvailable = ($extCurrrentTime >= $openDateTime && $extCurrrentTime <= $closeDateTime)? 'Available' : 'Not Available';
+                                                    }
+                                                    else if($typequery[$extends] !== 'Y' &&(strtolower($dayName) == strtolower($currentDay))){
+                                                        $isOpen = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose)? 'text-success' : 'text-danger';
                                                         $doctorAvailable = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose)? 'Available' : 'Not Available';
                                                     }
 
-                                                    if ($typequery[$openTimeKey] === "00:00:00" && $typequery[$closeTimeKey] === "00:00:00") {
-                                                        if(isset($typequery['doctor_id'])&& !isset($typequery['medical_id'])){
+                                                    // if($typequery[$extends] === 'Y' && (strtolower($dayName) == strtolower($currentDay))){
+                                                    //     $isOpen = 'text-success';
+                                                    //     $doctorAvailable = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose)? 'Available' : 'Not Available';
+                                                    // } else if($typequery[$extends] !== 'Y' && (strtolower($dayName) == strtolower($currentDay))) {
+                                                    //     $isOpen = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose)? 'text-success' : 'text-danger';
+                                                    // }
+                                                
+
+                                                    if($typequery[$isOpen24]==='Y'){
+                                                        if($type === 'doctor'){
+                                                            $output .= '<p class="mb-1 small">
+                                                            <span class="text-uppercase  '.$is24HrsToday.'">' . $dayName . ':</span> 
+                                                             <span class="'.$is24HrsToday.'">24 x 7 Available</span>
+                                                            </p>';
+                                                        }else {
+                                                            $output .= '<p class="mb-1 small">
+                                                            <span class="text-uppercase '.$is24HrsToday.'">' . $dayName . ':</span>
+                                                            <span class="'.$is24HrsToday.'">24 x 7 Open</span>
+                                                            </p>';
+                                                        }
+                                                    } else if ($typequery[$extends] === "Y"){
+                                                        if($type === 'doctor'){
+                                                            $output .= '<p class="mb-1 small '.$isOpen.'"><span class="text-uppercase">' . $dayName . ': </span> '.$doctorAvailable.' ( '. $fmtOpenTime . ' - ' . $fmtCloseTime . ' )</p>';
+
+                                                        } else {
+                                                            $output .= '<p class="mb-1 small text-uppercase '.$isOpen.'">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime . '</p>';
+                                                        }
+                                                    } else if ($typequery[$openTimeKey] === "00:00:00" && $typequery[$closeTimeKey] === "00:00:00") {
+                                                        if($type === 'doctor'){
                                                             $output .= '<p class="mb-1 small">
                                                             <span class="text-uppercase  '.$isToday.'">' . $dayName . ':</span> 
                                                              <span class="'.$isToday.'"> Not Available</span>
                                                             </p>';
-                                                        }else {
+                                                        } else {
                                                             $output .= '<p class="mb-1 small">
                                                             <span class="text-uppercase '.$isToday.'">' . $dayName . ':</span>
                                                             <span class="'.$isToday.'">Closed</span>
                                                             </p>';
                                                         }
                                                     } else {
-														if(isset($typequery['doctor_id'])&& !isset($typequery['medical_id'])){
-															$output .= '<p class="mb-1 small '.$isOpen.'"><span class="text-uppercase">' . $dayName . ': </span> '.$doctorAvailable.'</p>';
-														}
-														else{
+														if($type === 'doctor'){
+															$output .= '<p class="mb-1 small '.$isOpen.'"><span class="text-uppercase">' . $dayName . ': </span> '.$doctorAvailable.' ( '. $fmtOpenTime . ' - ' . $fmtCloseTime . ' )</p>';
+														} else{
 															$output .= '<p class="mb-1 small text-uppercase '.$isOpen.'">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime. '</p>';
 														}
                                                     }

@@ -145,13 +145,62 @@
 						values ('$hospital_id', '$hospitalname', '$hospitalspecialist', '$hospitaladdr', '$isMain','$mainId', '$hospitalmap', '$hospitalcity', '$hospitalcont',  '$hospitalemail','$hospitalwhatsapp',  '$hospitalweb', '$hospitaltype', '$hospitalsubtype', '$hospitalworking', '$hospitalfb',  '$hospitalinsta', '$hospitalln', '$hospitalyt', '$logotarget', '$status', '$about', '$service','$priority','$featuretarget', '$videotarget')";
 				$result = mysqli_query($conn, $query);
 
-				$workingTimesQuery = "INSERT INTO hospital_working_times (htime_id, hospital_id, hospital_type,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
-							VALUES ('$hosttime_id','$hospital_id', '$hospitaltype', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
-				$resultWorkingTimes = mysqli_query($conn, $workingTimesQuery);
-				if($result && $resultWorkingTimes){
-					$conn->commit();
-					echo "Posted Successfully";
-				}
+				// $workingTimesQuery = "INSERT INTO hospital_working_times (htime_id, hospital_id, hospital_type,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
+				// 			VALUES ('$hosttime_id','$hospital_id', '$hospitaltype', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
+				// $resultWorkingTimes = mysqli_query($conn, $workingTimesQuery);
+				// if($result && $resultWorkingTimes){
+				// 	$conn->commit();
+				// 	echo "Posted Successfully";
+				// }
+                $daysOfWeek = [
+                    'mon' => ['open' => 'monday_open', 'close' => 'monday_close'],
+                    'tue' => ['open' => 'tuesday_open', 'close' => 'tuesday_close'],
+                    'wed' => ['open' => 'wednesday_open', 'close' => 'wednesday_close'],
+                    'thu' => ['open' => 'thursday_open', 'close' => 'thursday_close'],
+                    'fri' => ['open' => 'friday_open', 'close' => 'friday_close'],
+                    'sat' => ['open' => 'saturday_open', 'close' => 'saturday_close'],
+                    'sun' => ['open' => 'sunday_open', 'close' => 'sunday_close']
+                ];
+
+                $columns = [];
+                $values = [];
+
+                foreach ($daysOfWeek as $day => $times) {
+                    $openKey = $times['open'];
+                    $closeKey = $times['close'];
+                    $extendsKey = substr($day, 0, 3) . 'extends';
+                    $isOpen24Key = substr($day, 0, 3) . '24';
+
+                    // Use filter_input to retrieve POST values
+                    $openValue = filter_input(INPUT_POST, $day . 'opentime');
+                    $closeValue = filter_input(INPUT_POST, $day . 'endtime');
+                    $extendsValue = filter_input(INPUT_POST, $day . 'extends')=== '1' ? 'Y' : 'N';
+                    $isOpen24Value = filter_input(INPUT_POST, $day . '24')=== '1' ? 'Y' : 'N';
+
+                    $columns[] = $openKey;
+                    $columns[] = $closeKey;
+                    $columns[] = $extendsKey;
+                    $columns[] = $isOpen24Key;
+
+                    $values[] = "'$openValue'";
+                    $values[] = "'$closeValue'";
+                    $values[] = "'$extendsValue'";
+                    $values[] = "'$isOpen24Value'";
+                }
+
+                // Add static columns
+                $columns = implode(', ', array_merge(['htime_id', 'hospital_id', 'hospital_type'], $columns));
+                $values = implode(', ', array_merge(["'$hosttime_id'", "'$hospital_id'", "'$hospitaltype'"], $values));
+
+                // Construct the query
+                $workingTimesQuery = "INSERT INTO hospital_working_times ($columns) VALUES ($values)";
+                // var_dump($workingTimesQuery);exit;
+                $resultWorkingTimes = mysqli_query($conn, $workingTimesQuery);
+
+                if($result && $resultWorkingTimes){
+                    $conn->commit();
+                    echo "Posted Successfully";
+                }
 				else{
 					$conn->rollback();
 					echo "Failed to Post";

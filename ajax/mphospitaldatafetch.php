@@ -145,8 +145,30 @@ if(mysqli_num_rows($result) > 0)
         $currentTime = date('H:i:s');   
         $openTime = $row[$currentDay . '_open'];
         $closeTime = $row[$currentDay . '_close'];
-        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1" style="float:right">Open</span>' : '<span class="text-danger text mr-1" style="float:right">Closed</span>'
-    ;
+        $isOpen24 = substr($currentDay, 0, 3).'24';
+        $extends = substr($currentDay, 0, 3).'extends';
+        $isOpen = null;
+
+        if($row[$isOpen24]==='Y'){
+            $isOpen = '<span class="text-success text mr-1" style="float:right">Open</span>';
+        }else if($row[$extends] === 'Y'){
+            $currentDate = date('Y-m-d'); 
+            $date = new DateTime($currentDate);
+            $date->modify('+1 day');
+            $nextDate= $date->format('Y-m-d');
+
+            $extOpenTime = $currentDate . ' ' . $openTime; 
+            $extCloseTime = $nextDate . ' ' . $closeTime; 
+            $openDateTime = new DateTime($extOpenTime); 
+            $closeDateTime = new DateTime($extCloseTime); 
+            $extCurrrentTime =  new DateTime();
+
+            $isOpen = ($extCurrrentTime >= $openDateTime && $extCurrrentTime <= $closeDateTime)? '<span class="text-success text mr-1" style="float:right">Open</span>' : '<span class="text-danger text mr-1" style="float:right">Closed</span>';
+        } else {
+            $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1" style="float:right">Open</span>' : '<span class="text-danger text mr-1" style="float:right">Closed</span>';
+
+        }
+
         
         $output .= '  
         <div class="row m-0 sort-item">

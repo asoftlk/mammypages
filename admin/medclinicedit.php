@@ -36,12 +36,19 @@ $row = mysqli_fetch_array($result);
 
 $days = ['mon' => 'monday', 'tue' => 'tuesday', 'wed' => 'wednesday', 'thu' => 'thursday', 'fri' => 'friday', 'sat' => 'saturday', 'sun' => 'sunday'];
 $times = [];
+$extends = [];
+$open24 = [];
 
 foreach ($days as $abbr => $day) {
     $openKey = $day . '_open';
     $closeKey = $day . '_close';
+    $extendsKey = $abbr . 'extends';
+    $open24Key = $abbr . '24';
+
     $times[$abbr . 'open'] = $row[$openKey] == '00:00:00' ? '' : $row[$openKey];
     $times[$abbr . 'close'] = $row[$closeKey] == '00:00:00' ? '' : $row[$closeKey];
+    $extends[$abbr] = $row[$extendsKey] === 'Y' ? 'checked' : '';
+    $open24[$abbr] = $row[$open24Key] === 'Y' ? 'checked' : '';
 }
 
 ?>
@@ -130,7 +137,6 @@ foreach ($days as $abbr => $day) {
                                         ?>
                                     </select>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-md-6 form-group">
                                         <label class="required" for="address">Address</label>
@@ -140,19 +146,15 @@ foreach ($days as $abbr => $day) {
                                         <label class="required" for="city">City</label>
                                         <input type="text" name="city" class="form-control" id="city" value="<?php echo $row['city']; ?>" placeholder="City">
                                     </div>
-
                                     <div class="col-md-6 form-group">
                                         <label class="required" for="mapLocation">Location (Map)</label>
                                         <input type="text" name="mapLocation" class="form-control" id="mapLocation" value="<?php echo htmlspecialchars($row['map']); ?>" placeholder="Copy form Google Map by poining the location">
                                     </div>
                                 </div>
-
                                 <div class="col-md-6 form-group">
                                     <label class="required" for="contactNumber">Contact Number</label>
                                     <input type="tel" name="contactNumber" class="form-control" id="contactNumber" value="<?php echo $row['mobile']; ?>" placeholder="Contact Number">
                                 </div>
-
-
                                 <div class="">
                                     <div class="col-md-6 form-group">
                                         <label for="whatsapp">Whatsapp Number</label>
@@ -163,16 +165,12 @@ foreach ($days as $abbr => $day) {
                                         <input type="email" name="email" class="form-control" id="email" value="<?php echo $row['email']; ?>" placeholder="Email ID">
                                     </div>
                                 </div>
-
-
                                 <div class="row">
                                     <div class="col-md-6 form-group">
                                         <label for="web">Website</label>
                                         <input type="url" name="web" class="form-control" id="web" value="<?php echo $row['website']; ?>" placeholder="Website">
                                     </div>
-
                                 </div>
-
                                 <div class="form-group">
                                     <label class="required" for="branchworking">Hours of Operation</label>
                                     <table class="table table-sm table-bordered">
@@ -181,6 +179,8 @@ foreach ($days as $abbr => $day) {
                                                 <th>Day</th>
                                                 <th>Open time</th>
                                                 <th>End time</th>
+                                                <th>Extends to Next Day</th>
+                                                <th>24 x 7 Open</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -194,8 +194,24 @@ foreach ($days as $abbr => $day) {
                                                         <input type="time" name="<?php echo $abbr; ?>endtime" class="form-control form-control-sm border-0" id="<?php echo $abbr; ?>endtime" placeholder="<?php echo ucfirst($day); ?> End Time" value="<?php echo $times[$abbr . 'close']; ?>">
                                                     </td>
                                                     <td>
-                                                        <button type="button" class="btn btn-sm btn-info" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
+                                                        <input type="hidden" name="<?php echo $abbr; ?>extends" value="0">
+                                                        <input type="checkbox" 
+                                                            name="<?php echo $abbr; ?>extends" 
+                                                            id="<?php echo $abbr; ?>extends"
+                                                            value="1" <?php echo $extends[$abbr]; ?>
+                                                        >
                                                     </td>
+                                                    <td>
+                                                        <input type="hidden" name="<?php echo $abbr; ?>24" value="0">
+                                                        <input type="checkbox" 
+                                                            name="<?php echo $abbr; ?>24" 
+                                                            id="<?php echo $abbr; ?>24"
+                                                            value="1" <?php echo $open24[$abbr]; ?>
+                                                        >
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-sm btn-info" onclick="clearTimeInputs('<?php echo $abbr; ?>')">Clear</button>
+                                                    </td>           
                                                 </tr>
                                             <?php endforeach; ?>
                                         </tbody>
@@ -215,7 +231,7 @@ foreach ($days as $abbr => $day) {
                                         <input type="url" name="linkedin" class="form-control" id="linkedin" value="<?php echo $row['linkedin']; ?>" placeholder="TikTok Link">
                                     </div>
                                     <div class="col-md-3 form-group">
-                                        <label for="youtube">3</label>
+                                        <label for="youtube">Youtube Link</label>
                                         <input type="url" name="youtube" class="form-control" id="youtube" value="<?php echo $row['youtube']; ?>">
                                     </div>                
                                 </div>
@@ -393,7 +409,7 @@ foreach ($days as $abbr => $day) {
             })
             .then(function(value) {
                 //console.log('returned value:', value);
-                if (data == "Doctor Clinics & Nursing homes Updated") {
+                if (data.trim() == "Doctor Clinics & Nursing homes Updated") {
                     window.location.href = "viewmedclinic";
                 }
 
@@ -644,8 +660,12 @@ foreach ($days as $abbr => $day) {
     function clearTimeInputs(day) {
         var openInput = document.getElementById(day + 'opentime');
         var closeInput = document.getElementById(day + 'endtime');
+        var extendsCheckBox = document.getElementById(day + 'extends');
+        var op24CheckBox = document.getElementById(day + '24');
 
         openInput.value = '';
         closeInput.value = '';
+        extendsCheckBox.checked = false;
+        op24CheckBox.checked = false;
     }
 </script>

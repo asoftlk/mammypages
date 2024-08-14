@@ -4,7 +4,7 @@
 	$time = date("d-m-Y")."-".time();
 	if(isset($_POST['pharmacy'])){
 		$pharmacy_Id = "pharmacy-".mt_rand(1000000,9999999);
-		$midtime_id = "medtime-".mt_rand(1000000,9999999);
+		$phartime_id = "phartime-".mt_rand(1000000,9999999);
 
         $name = mysqli_real_escape_string($conn, $_POST['mpname']); 
         $isMain = null;
@@ -128,8 +128,47 @@
 						values ('$pharmacy_Id', '$name', '$estYear', '$address', '$isMain','$mainId', '$mapLocation', '$city', '$contactNumber',  '$email','$whatsapp',  '$web', '$cerNo', '$service', '$working', '$facebook',  '$instagram','$youtube', '$linkedin', '$logotarget', '$status', '$about','$priority','$featuretarget', '$videotarget')";
 				$result = mysqli_query($conn, $query);
 
-				$workingTimesQuery = "INSERT INTO pharmacy_working_times (ptime_id, pharmacy_Id,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
-							VALUES ('$midtime_id','$pharmacy_Id', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
+				// $workingTimesQuery = "INSERT INTO pharmacy_working_times (ptime_id, pharmacy_Id,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
+				// 			VALUES ('$phartime_id','$pharmacy_Id', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
+                $daysOfWeek = [
+                    'mon' => ['open' => 'monday_open', 'close' => 'monday_close'],
+                    'tue' => ['open' => 'tuesday_open', 'close' => 'tuesday_close'],
+                    'wed' => ['open' => 'wednesday_open', 'close' => 'wednesday_close'],
+                    'thu' => ['open' => 'thursday_open', 'close' => 'thursday_close'],
+                    'fri' => ['open' => 'friday_open', 'close' => 'friday_close'],
+                    'sat' => ['open' => 'saturday_open', 'close' => 'saturday_close'],
+                    'sun' => ['open' => 'sunday_open', 'close' => 'sunday_close']
+                ];
+
+                $columns = [];
+                $values = [];
+
+                foreach ($daysOfWeek as $day => $times) {
+                    $openKey = $times['open'];
+                    $closeKey = $times['close'];
+                    $extendsKey = substr($day, 0, 3) . 'extends';
+                    $isOpen24Key = substr($day, 0, 3) . '24';
+
+                    $openValue = filter_input(INPUT_POST, $day . 'opentime');
+                    $closeValue = filter_input(INPUT_POST, $day . 'endtime');
+                    $extendsValue = filter_input(INPUT_POST, $day . 'extends')=== '1' ? 'Y' : 'N';
+                    $isOpen24Value = filter_input(INPUT_POST, $day . '24')=== '1' ? 'Y' : 'N';
+
+                    $columns[] = $openKey;
+                    $columns[] = $closeKey;
+                    $columns[] = $extendsKey;
+                    $columns[] = $isOpen24Key;
+
+                    $values[] = "'$openValue'";
+                    $values[] = "'$closeValue'";
+                    $values[] = "'$extendsValue'";
+                    $values[] = "'$isOpen24Value'";
+                }
+
+                $columns = implode(', ', array_merge(['ptime_id', 'pharmacy_id'], $columns));
+                $values = implode(', ', array_merge(["'$phartime_id'", "'$pharmacy_Id'"], $values));
+
+                $workingTimesQuery = "INSERT INTO pharmacy_working_times ($columns) VALUES ($values)";
 				$resultWorkingTimes = mysqli_query($conn, $workingTimesQuery);
 				if($result && $resultWorkingTimes){
 					$conn->commit();

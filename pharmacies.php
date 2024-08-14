@@ -132,7 +132,30 @@ include "mp.php";
 					while($row=mysqli_fetch_array($pharmacy)){
                         $openTime = $row[$currentDay . '_open'];
                         $closeTime = $row[$currentDay . '_close'];
-                        $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1 l-open">Open</span>' : '<span class="text-danger text mr-1 l-close">Closed</span>';
+                        // $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1 l-open">Open</span>' : '<span class="text-danger text mr-1 l-close">Closed</span>';
+                        $isOpen24 = substr($currentDay, 0, 3).'24';
+                        $extends = substr($currentDay, 0, 3).'extends';
+                        $isOpen = null;
+
+                        if($row[$isOpen24]==='Y'){
+                            $isOpen = '<span class="text-success text mr-1" style="float:right">Open</span>';
+                        }else if($row[$extends] === 'Y'){
+                            $currentDate = date('Y-m-d'); 
+                            $date = new DateTime($currentDate);
+                            $date->modify('+1 day');
+                            $nextDate= $date->format('Y-m-d');
+
+                            $extOpenTime = $currentDate . ' ' . $openTime; 
+                            $extCloseTime = $nextDate . ' ' . $closeTime; 
+                            $openDateTime = new DateTime($extOpenTime); 
+                            $closeDateTime = new DateTime($extCloseTime); 
+                            $extCurrrentTime =  new DateTime();
+
+                            $isOpen = ($extCurrrentTime >= $openDateTime && $extCurrrentTime <= $closeDateTime)? '<span class="text-success text mr-1" style="float:right">Open</span>' : '<span class="text-danger text mr-1" style="float:right">Closed</span>';
+                        } else {
+                            $isOpen = ($currentTime >= $openTime && $currentTime <= $closeTime) ? '<span class="text-success text mr-1" style="float:right">Open</span>' : '<span class="text-danger text mr-1" style="float:right">Closed</span>';
+
+                        }
                         
                         if (isset($row['main_id']) && !empty($row['main_id']) && $row['main_id'] != 0) {
                             $mainid = $row['main_id'];
@@ -338,8 +361,37 @@ include "mp.php";
 
                             var openTime = pharmacy[currentDay + '_open'];
                             var closeTime = pharmacy[currentDay + '_close'];
+                            const today = new Date();
+           
+                            const isOpen24Key = currentDay.substring(0, 3) + '24';
+                            const extendsKey = currentDay.substring(0, 3) + 'extends';
+                            let isOpen = null;
 
-                            var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success text mr-1 l-open">Open</span>' : '<span class="text-danger text mr-1 l-close">Closed</span>';
+                            if (pharmacy[isOpen24Key] === 'Y') {
+                                isOpen = '<span class="text-success text mr-1" style="float:right">Open</span>';
+                            } else if (pharmacy[extendsKey] === 'Y') {
+                                const newCurrentDate = today.toISOString().split('T')[0]; 
+                                const nextDate = new Date(today);
+                                nextDate.setDate(today.getDate() + 1);
+                                const nextDateString = nextDate.toISOString().split('T')[0]; 
+
+                                const extOpenTime = new Date(newCurrentDate + 'T' + openTime);
+                                const extCloseTime = new Date(nextDateString + 'T' + closeTime);
+                                const extCurrentTime = today;
+
+                                isOpen = (extCurrentTime >= extOpenTime && extCurrentTime <= extCloseTime) ? 
+                                    '<span class="text-success text mr-1" style="float:right">Open</span>' : 
+                                    '<span class="text-danger text mr-1" style="float:right">Closed</span>';
+                            } else {
+                                const openDateTime = new Date(currentDate.toISOString().split('T')[0] + 'T' + openTime);
+                                const closeDateTime = new Date(currentDate.toISOString().split('T')[0] + 'T' + closeTime);
+
+                                isOpen = (today >= openDateTime && today <= closeDateTime) ? 
+                                    '<span class="text-success text mr-1" style="float:right">Open</span>' : 
+                                    '<span class="text-danger text mr-1" style="float:right">Closed</span>';
+                            }
+
+                            // var isOpen = (currentTime >= openTime && currentTime <= closeTime) ? '<span class="text-success text mr-1 l-open">Open</span>' : '<span class="text-danger text mr-1 l-close">Closed</span>';
                             
                             html += '<div class="row m-0 sort-item">';
                             html += '<div class="col-md-2" style="margin:auto">';

@@ -225,9 +225,12 @@
             foreach ($days as $day => $times) {
                 $open = mysqli_real_escape_string($conn, $_POST[$day . 'opentime']);
                 $close = mysqli_real_escape_string($conn, $_POST[$day . 'endtime']);
-                $updateWorkingTime = "UPDATE pharmacy_working_times 
-                                        SET {$times['open']} = '$open', {$times['close']} = '$close'
-                                        WHERE pharmacy_id = '$mpId'";
+                $extends = mysqli_real_escape_string($conn, $_POST[$day . 'extends']) === '1' ? 'Y' : 'N';
+                $isOpen24Hours = mysqli_real_escape_string($conn, $_POST[$day . '24']) === '1' ? 'Y' : 'N';
+
+                $updateWorkingTime = "UPDATE pharmacy_working_times SET {$times['open']} = '$open', {$times['close']} = '$close', 
+                {$day}extends = '$extends', {$day}24 = '$isOpen24Hours' WHERE pharmacy_id = '$mpId'";
+
                 mysqli_query($conn, $updateWorkingTime);
             }
             echo 'Pharmacy Updated';

@@ -6,16 +6,16 @@
 		$studio_id = "studio-".mt_rand(1000000,9999999);
 		$sttime_id = "sttime-".mt_rand(1000000,9999999);
 		$studioname = filter_input(INPUT_POST, 'studioname');
-		$studiospecialist1 = $_POST['studiospecialist'];
-		$studiospecialist ="";
-		for($i=0; $i<count($studiospecialist1);$i++){
-			if($i==(count($studiospecialist1)-1)){
-				$studiospecialist .= $studiospecialist1[$i];
-			}
-			else{
-			$studiospecialist .= $studiospecialist1[$i]." ///";
-			}
-		}
+		// $studiospecialist1 = $_POST['studiospecialist'];
+		// $studiospecialist ="";
+		// for($i=0; $i<count($studiospecialist1);$i++){
+		// 	if($i==(count($studiospecialist1)-1)){
+		// 		$studiospecialist .= $studiospecialist1[$i];
+		// 	}
+		// 	else{
+		// 	$studiospecialist .= $studiospecialist1[$i]." ///";
+		// 	}
+		// }
         $isMain = filter_input(INPUT_POST, 'isMain');
 		$mainId = filter_input(INPUT_POST, 'mainId');
 		$studioaddr = filter_input(INPUT_POST, 'studioaddr');
@@ -159,14 +159,53 @@
 						
 
 				if($featureupload){
-					$query = "INSERT INTO studio (studio_id, registraion_no, name, speciality, address, establishment, contact_person, profile_pic, cover_pic, is_main, main_id, map, city, mobile, email, whatsapp, website, facebook, instagram, linkedin, youtube, logo, image, video, about, services, priority) 
-          			VALUES ('$studio_id', '$studioregno', '$studioname', '$studiospecialist', '$studioaddr', '$studioestablishment', '$studiocontactperson', '$profiletarget', '$covertarget', '$isMain', '$mainId', '$studiomap', '$studiocity', '$studiocont', '$studioemail', '$studiowhatsapp', '$studioweb', '$studiofb', '$studioinsta', '$studioln', '$studioyt', '$logotarget', '$featuretarget', '$videotarget', '$about', '$service', '$priority')";
+					$query = "INSERT INTO studio (studio_id, registraion_no, name,  address, establishment, contact_person, profile_pic, cover_pic, is_main, main_id, map, city, mobile, email, whatsapp, website, facebook, instagram, linkedin, youtube, logo, image, video, about, services, priority) 
+          			VALUES ('$studio_id', '$studioregno', '$studioname', '$studioaddr', '$studioestablishment', '$studiocontactperson', '$profiletarget', '$covertarget', '$isMain', '$mainId', '$studiomap', '$studiocity', '$studiocont', '$studioemail', '$studiowhatsapp', '$studioweb', '$studiofb', '$studioinsta', '$studioln', '$studioyt', '$logotarget', '$featuretarget', '$videotarget', '$about', '$service', '$priority')";
 
 					$result = mysqli_query($conn, $query);
 					
 
-					$workingTimesQuery = "INSERT INTO studio_working_times (sttime_id, studio_id,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
-								VALUES ('$sttime_id','$studio_id', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
+					// $workingTimesQuery = "INSERT INTO studio_working_times (sttime_id, studio_id,  monday_open, monday_close, tuesday_open, tuesday_close, wednesday_open, wednesday_close, thursday_open, thursday_close, friday_open, friday_close, saturday_open, saturday_close, sunday_open, sunday_close) 
+					// 			VALUES ('$sttime_id','$studio_id', '$mon_open', '$mon_close', '$tue_open', '$tue_close', '$wed_open', '$wed_close', '$thu_open', '$thu_close', '$fri_open', '$fri_close', '$sat_open', '$sat_close', '$sun_open', '$sun_close')";
+                    $daysOfWeek = [
+                        'mon' => ['open' => 'monday_open', 'close' => 'monday_close'],
+                        'tue' => ['open' => 'tuesday_open', 'close' => 'tuesday_close'],
+                        'wed' => ['open' => 'wednesday_open', 'close' => 'wednesday_close'],
+                        'thu' => ['open' => 'thursday_open', 'close' => 'thursday_close'],
+                        'fri' => ['open' => 'friday_open', 'close' => 'friday_close'],
+                        'sat' => ['open' => 'saturday_open', 'close' => 'saturday_close'],
+                        'sun' => ['open' => 'sunday_open', 'close' => 'sunday_close']
+                    ];
+    
+                    $columns = [];
+                    $values = [];
+    
+                    foreach ($daysOfWeek as $day => $times) {
+                        $openKey = $times['open'];
+                        $closeKey = $times['close'];
+                        $extendsKey = substr($day, 0, 3) . 'extends';
+                        $isOpen24Key = substr($day, 0, 3) . '24';
+    
+                        $openValue = filter_input(INPUT_POST, $day . 'opentime');
+                        $closeValue = filter_input(INPUT_POST, $day . 'endtime');
+                        $extendsValue = filter_input(INPUT_POST, $day . 'extends')=== '1' ? 'Y' : 'N';
+                        $isOpen24Value = filter_input(INPUT_POST, $day . '24')=== '1' ? 'Y' : 'N';
+    
+                        $columns[] = $openKey;
+                        $columns[] = $closeKey;
+                        $columns[] = $extendsKey;
+                        $columns[] = $isOpen24Key;
+    
+                        $values[] = "'$openValue'";
+                        $values[] = "'$closeValue'";
+                        $values[] = "'$extendsValue'";
+                        $values[] = "'$isOpen24Value'";
+                    }
+    
+                    $columns = implode(', ', array_merge(['sttime_id', 'studio_id'], $columns));
+                    $values = implode(', ', array_merge(["'$sttime_id'", "'$studio_id'"], $values));
+    
+                    $workingTimesQuery = "INSERT INTO studio_working_times ($columns) VALUES ($values)";
 					$resultWorkingTimes = mysqli_query($conn, $workingTimesQuery);
 					if($result && $resultWorkingTimes){
 						$conn->commit();

@@ -708,7 +708,7 @@
 											'sunday' => 'Sunday'
 										];
 
-										date_default_timezone_set('Asia/Colombo');
+                                		date_default_timezone_set('Asia/Colombo');
 										$currentDay = strtolower(date('l')); 
 										$currentTime = date('H:i:s');
 										$curDayOpen = $hospital[$currentDay . '_open'];
@@ -720,16 +720,38 @@
 										foreach ($daysOfWeek as $dayKey => $dayName) {
 											$openTimeKey = $dayKey . '_open';
 											$closeTimeKey = $dayKey . '_close';
+                                            $isOpen24 = substr($dayKey, 0, 3).'24';
+                                            $extends = substr($dayKey, 0, 3).'extends';
 
 											$fmtOpenTime = date('h:i A', strtotime($hospital[$openTimeKey]));
 											$fmtCloseTime = date('h:i A', strtotime($hospital[$closeTimeKey]));
 											$isToday = (strtolower($dayName) == strtolower($currentDay)) ? 'text-danger' : '';
+											$is24HrsToday = (strtolower($dayName) == strtolower($currentDay)) ? 'text-success' : '';
                                             $isOpen=null;
-                                            if((strtolower($dayName) == strtolower($currentDay))){
+                                            if($hospital[$extends] === 'Y' && (strtolower($dayName) == strtolower($currentDay))){
+                                                $currentDate = date('Y-m-d'); 
+                                                $date = new DateTime($currentDate);
+                                                $date->modify('+1 day');
+                                                $nextDate= $date->format('Y-m-d');
+
+                                                $extOpenTime = $currentDate . ' ' . $fmtOpenTime; 
+                                                $extCloseTime = $nextDate . ' ' . $fmtCloseTime; 
+                                                $openDateTime = new DateTime($extOpenTime); 
+                                                $closeDateTime = new DateTime($extCloseTime); 
+                                                $extCurrrentTime =  new DateTime();
+
+                                                $isOpen = ($extCurrrentTime >= $openDateTime && $extCurrrentTime <= $closeDateTime)? 'text-success' : 'text-danger';
+                                            }
+                                            else if($hospital[$extends] !== 'Y' &&(strtolower($dayName) == strtolower($currentDay))){
                                                 $isOpen = ($currentTime >= $curDayOpen && $currentTime <= $curDayClose)? 'text-success' : 'text-danger';
                                             }
-
-											if ($hospital[$openTimeKey] === "00:00:00" && $hospital[$closeTimeKey] === "00:00:00") {
+                                            if($hospital[$isOpen24]==='Y'){
+                                                $output .= '<p class="mb-1 small">
+                                                <span class="text-uppercase '.$is24HrsToday.'">' . $dayName . ':</span>
+                                                <span class="'.$is24HrsToday.'">24 x 7 Open</span></p>';
+                                            } else if ($hospital[$extends] === "Y"){
+                                                $output .= '<p class="mb-1 small text-uppercase '.$isOpen.'">' . $dayName . ': ' . $fmtOpenTime . ' - ' . $fmtCloseTime . '</p>';
+                                            } else if ($hospital[$openTimeKey] === "00:00:00" && $hospital[$closeTimeKey] === "00:00:00") {
 												$output .= '<p class="mb-1 small">
                                                 <span class="text-uppercase '.$isToday.'">' . $dayName . ':</span>
                                                 <span class="'.$isToday.'">Closed</span></p>';
